@@ -219,6 +219,13 @@ body {
     --widget-surface: #fff8fc;
     --widget-chart-surface: #fff0f8;
 }
+.theme-water {
+    --widget-accent: #3ba7d8;
+    --widget-soft: #dff4fc;
+    --widget-dark: #176482;
+    --widget-surface: #f7fcff;
+    --widget-chart-surface: #edf9fe;
+}
 
 .tracker-card {
     width: 100%;
