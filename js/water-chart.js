@@ -1,12 +1,6 @@
 const DAILY_WATER_GOAL = 72;
 
-const chartCanvas = document.getElementById("waterChart");
-
-if (!chartCanvas) {
-  throw new Error("Water chart canvas was not found.");
-}
-
-async function loadWaterChart() {
+async function loadWaterWidget() {
   try {
     const response = await fetch("/api/health/water");
 
@@ -24,89 +18,87 @@ async function loadWaterChart() {
       );
     }
 
-    if (!result.water || !result.water.length) {
-      updateWaterSummary([]);
-      showChartMessage("No water entries found.");
-      return;
-    }
+    const waterEntries = Array.isArray(result.water)
+      ? result.water
+      : [];
 
-    const labels = result.water.map((entry) =>
-      formatDate(entry.date)
-    );
+    const dailyTotals = buildDailyTotals(waterEntries);
 
-    const values = result.water.map((entry) =>
-      entry.ounces
-    );
-
-    updateWaterSummary(result.water);
-    createWaterChart(labels, values);
+    updateTodayProgress(dailyTotals);
+    updateGoalHistory(dailyTotals);
   } catch (error) {
-    console.error("Water chart error:", error);
-    showChartMessage("Water data could not be loaded.");
+    console.error("Water widget error:", error);
+    showWaterError();
   }
 }
 
-function updateWaterSummary(waterEntries) {
+function buildDailyTotals(waterEntries) {
+  const totalsByDate = {};
+
+  waterEntries.forEach((entry) => {
+    if (
+      !entry.date ||
+      typeof entry.ounces !== "number"
+    ) {
+      return;
+    }
+
+    if (!totalsByDate[entry.date]) {
+      totalsByDate[entry.date] = 0;
+    }
+
+    totalsByDate[entry.date] += entry.ounces;
+  });
+
+  return totalsByDate;
+}
+
+function updateTodayProgress(dailyTotals) {
   const waterCurrent =
     document.getElementById("waterCurrent");
 
-  const waterAverage =
-    document.getElementById("waterAverage");
+  const waterGoalAmount =
+    document.getElementById("waterGoalAmount");
+
+  const waterPercentage =
+    document.getElementById("waterPercentage");
+
+  const waterRemaining =
+    document.getElementById("waterRemaining");
 
   const waterRecognition =
     document.getElementById("waterRecognition");
 
-  const goalLabel =
-    document.getElementById("waterGoalLabel");
+  const waterTankFill =
+    document.getElementById("waterTankFill");
 
-  const goalRemaining =
-    document.getElementById("waterGoalRemaining");
-
-  const goalDetails =
-    document.getElementById("waterGoalDetails");
-
-  const progressBar =
+  const waterProgressBar =
     document.getElementById("waterProgressBar");
+
+  const waterTank =
+    document.querySelector(".water-tank");
 
   const progressTrack =
     document.querySelector(".tracker-progress-track");
 
   if (
     !waterCurrent ||
-    !waterAverage ||
+    !waterGoalAmount ||
+    !waterPercentage ||
+    !waterRemaining ||
     !waterRecognition ||
-    !goalLabel ||
-    !goalRemaining ||
-    !goalDetails ||
-    !progressBar ||
+    !waterTankFill ||
+    !waterProgressBar ||
+    !waterTank ||
     !progressTrack
   ) {
     return;
   }
 
-  const today = getTodayDateString();
+  const today = getLocalDateString(new Date());
 
-  const todayEntry = waterEntries.find(
-    (entry) => entry.date === today
-  );
-
-  const todayWater = todayEntry
-    ? todayEntry.ounces
-    : 0;
-
-  const mostRecentSevenDays =
-    waterEntries.slice(-7);
-
-  const sevenDayTotal =
-    mostRecentSevenDays.reduce(
-      (total, entry) => total + entry.ounces,
-      0
-    );
-
-  const sevenDayAverage =
-    mostRecentSevenDays.length > 0
-      ? sevenDayTotal / mostRecentSevenDays.length
-      : 0;
+  const todayWater =
+    dailyTotals[today] || 0;
 
   const percent = Math.max(
     0,
@@ -116,174 +108,244 @@ function updateWaterSummary(waterEntries) {
     )
   );
 
+  const ouncesRemaining = Math.max(
+    0,
+    DAILY_WATER_GOAL - todayWater
+  );
+
   waterCurrent.textContent =
     `${todayWater.toFixed(0)} oz`;
 
-  waterAverage.textContent =
-    `${sevenDayAverage.toFixed(0)} oz`;
+  waterGoalAmount.textContent =
+    `${DAILY_WATER_GOAL} oz`;
+
+  waterPercentage.textContent =
+    `${percent.toFixed(0)}%`;
+
+  waterTankFill.style.height =
+    `${percent}%`;
+
+  waterProgressBar.style.width =
+    `${percent}%`;
 
   if (todayWater >= DAILY_WATER_GOAL) {
+    waterRemaining.textContent =
+      "Daily goal reached!";
+
     waterRecognition.textContent =
       "💦 Hydration goal reached!";
-  } else if (todayWater >= 60) {
-    waterRecognition.textContent =
-      "🌊 Almost there!";
-  } else if (todayWater >= 48) {
-    waterRecognition.textContent =
-      "✨ Great progress!";
-  } else if (todayWater >= 24) {
-    waterRecognition.textContent =
-      "💧 Keep sipping!";
-  } else if (todayWater > 0) {
-    waterRecognition.textContent =
-      "🌱 Hydration started!";
   } else {
-    waterRecognition.textContent =
-      "🥤 Time for some water!";
+    waterRemaining.textContent =
+      `${ouncesRemaining.toFixed(0)} oz remaining`;
+
+    if (todayWater >= 60) {
+      waterRecognition.textContent =
+        "🌊 Almost there!";
+    } else if (todayWater >= 48) {
+      waterRecognition.textContent =
+        "✨ Great progress!";
+    } else if (todayWater >= 24) {
+      waterRecognition.textContent =
+        "💧 Keep sipping!";
+    } else if (todayWater > 0) {
+      waterRecognition.textContent =
+        "🌱 Hydration started!";
+    } else {
+      waterRecognition.textContent =
+        "🥤 Time for some water!";
+    }
   }
 
-  goalLabel.textContent =
-    `Daily Goal: ${DAILY_WATER_GOAL} oz`;
-
-  goalRemaining.textContent =
-    `${todayWater.toFixed(0)} / ${DAILY_WATER_GOAL} oz`;
-
-  goalDetails.textContent =
-    `${percent.toFixed(0)}% complete`;
-
-  progressBar.style.width = `${percent}%`;
-
-  progressTrack.setAttribute(
+  waterTank.setAttribute(
     "aria-valuenow",
     Math.round(percent)
   );
 
   progressTrack.setAttribute(
-    "aria-label",
-    `Progress toward ${DAILY_WATER_GOAL} ounce daily water goal`
+    "aria-valuenow",
+    Math.round(percent)
   );
 }
 
-function createWaterChart(labels, values) {
-  new Chart(chartCanvas, {
-    type: "bar",
+function updateGoalHistory(dailyTotals) {
+  const weekGoalCount =
+    document.getElementById("waterWeekGoalCount");
 
-    data: {
-      labels,
+  const monthGoalCount =
+    document.getElementById("waterMonthGoalCount");
 
-      datasets: [
-        {
-          label: "Water",
-          data: values,
+  const currentStreak =
+    document.getElementById("waterCurrentStreak");
 
-          backgroundColor: "#3b9fc4",
-          borderColor: "#3b9fc4",
-          borderWidth: 1,
-          borderRadius: 8
-        }
-      ]
-    },
+  if (
+    !weekGoalCount ||
+    !monthGoalCount ||
+    !currentStreak
+  ) {
+    return;
+  }
 
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
 
-      interaction: {
-        mode: "index",
-        intersect: false
-      },
+  const weekDates = getCurrentWeekDates(today);
 
-      plugins: {
-        legend: {
-          display: false
-        },
+  const weekGoalsHit =
+    weekDates.filter((date) => {
+      const dateString =
+        getLocalDateString(date);
 
-        tooltip: {
-          callbacks: {
-            label(context) {
-              return `${context.parsed.y} oz`;
-            }
-          }
-        }
-      },
+      return (
+        dailyTotals[dateString] >= DAILY_WATER_GOAL
+      );
+    }).length;
 
-      scales: {
-        x: {
-          grid: {
-            display: false
-          },
+  const monthGoalsHit =
+    countMonthGoalsHit(
+      dailyTotals,
+      today
+    );
 
-          ticks: {
-            maxRotation: 0
-          }
-        },
+  const streak =
+    calculateCurrentStreak(
+      dailyTotals,
+      today
+    );
 
-        y: {
-          beginAtZero: true,
-          suggestedMax: DAILY_WATER_GOAL,
+  weekGoalCount.textContent =
+    `${weekGoalsHit} / 7 days`;
 
-          grid: {
-            color(context) {
-              if (context.tick.value === DAILY_WATER_GOAL) {
-                return "#3b9fc4";
-              }
+  monthGoalCount.textContent =
+    `${monthGoalsHit} ${
+      monthGoalsHit === 1 ? "day" : "days"
+    }`;
 
-              return "rgba(0, 0, 0, 0.08)";
-            },
+  currentStreak.textContent =
+    `${streak} ${
+      streak === 1 ? "day" : "days"
+    }`;
+}
 
-            lineWidth(context) {
-              return context.tick.value === DAILY_WATER_GOAL
-                ? 2
-                : 1;
-            }
-          },
+function getCurrentWeekDates(today) {
+  const dayOfWeek = today.getDay();
 
-          ticks: {
-            callback(value) {
-              return `${value} oz`;
-            }
-          }
-        }
+  const mondayOffset =
+    dayOfWeek === 0
+      ? -6
+      : 1 - dayOfWeek;
+
+  const monday = new Date(today);
+  monday.setDate(
+    today.getDate() + mondayOffset
+  );
+
+  const dates = [];
+
+  for (let index = 0; index < 7; index += 1) {
+    const date = new Date(monday);
+
+    date.setDate(
+      monday.getDate() + index
+    );
+
+    dates.push(date);
+  }
+
+  return dates;
+}
+
+function countMonthGoalsHit(
+  dailyTotals,
+  today
+) {
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  let count = 0;
+
+  Object.entries(dailyTotals).forEach(
+    ([dateString, total]) => {
+      const date = parseLocalDate(dateString);
+
+      if (
+        date.getFullYear() === year &&
+        date.getMonth() === month &&
+        total >= DAILY_WATER_GOAL
+      ) {
+        count += 1;
       }
     }
-  });
-}
-function formatDate(dateString) {
-  const date = new Date(`${dateString}T12:00:00`);
+  );
 
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric"
-  }).format(date);
+  return count;
 }
 
-function getTodayDateString() {
-  const today = new Date();
+function calculateCurrentStreak(
+  dailyTotals,
+  today
+) {
+  let streak = 0;
 
-  const year = today.getFullYear();
+  const date = new Date(today);
+
+  while (true) {
+    const dateString =
+      getLocalDateString(date);
+
+    const total =
+      dailyTotals[dateString] || 0;
+
+    if (total < DAILY_WATER_GOAL) {
+      break;
+    }
+
+    streak += 1;
+
+    date.setDate(
+      date.getDate() - 1
+    );
+  }
+
+  return streak;
+}
+
+function getLocalDateString(date) {
+  const year = date.getFullYear();
 
   const month = String(
-    today.getMonth() + 1
+    date.getMonth() + 1
   ).padStart(2, "0");
 
   const day = String(
-    today.getDate()
+    date.getDate()
   ).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 }
 
-function showChartMessage(message) {
-  const container =
-    chartCanvas.closest(".tracker-chart-panel");
+function parseLocalDate(dateString) {
+  const [year, month, day] =
+    dateString.split("-").map(Number);
 
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = `
-    <p class="chart-message">${message}</p>
-  `;
+  return new Date(
+    year,
+    month - 1,
+    day,
+    12,
+    0,
+    0,
+    0
+  );
 }
 
-loadWaterChart();
+function showWaterError() {
+  const waterRecognition =
+    document.getElementById("waterRecognition");
+
+  if (waterRecognition) {
+    waterRecognition.textContent =
+      "Water data could not be loaded.";
+  }
+}
+
+loadWaterWidget();
