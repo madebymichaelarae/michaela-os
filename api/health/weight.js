@@ -18,8 +18,14 @@ export default async function handler(req, res) {
       ]
     });
 
-    return res.status(200).json({
-  count: pages.length
+return res.status(200).json({
+  categories: pages.map((page) => ({
+    entry:
+      page.properties?.Entry?.title?.[0]?.plain_text || "No title",
+
+    category:
+      page.properties?.Category?.select?.name || "No category"
+  }))
 });
 
     const weights = pages
