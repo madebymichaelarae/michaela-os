@@ -1,82 +1,232 @@
-<!DOCTYPE html>
-<html lang="en">
+const chartCanvas = document.getElementById("weightChart");
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+if (!chartCanvas) {
+  throw new Error("Weight chart canvas was not found.");
+}
 
-    <title>Weight Trend | Michaela OS</title>
+async function loadWeightChart() {
+  try {
+    const response = await fetch("/api/health/weight");
 
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
+    if (!response.ok) {
+      throw new Error(`Weight request failed: ${response.status}`);
+    }
 
-<body class="widget-page">
-    <main class="widget-shell">
-        <article class="widget-card">
-            <header class="widget-header">
-                <div>
-                    <p class="widget-eyebrow">Health</p>
-                    <h1 class="widget-title">Weight Trend</h1>
-                </div>
+    const result = await response.json();
 
-                <span class="widget-icon" aria-hidden="true">⚖️</span>
-            </header>
+    if (!result.success) {
+      throw new Error(result.error || "Weight data could not be loaded.");
+    }
 
-            <section class="widget-content">
-                <div class="weight-summary">
-                    <div>
-                        <p class="weight-current-label">Current weight</p>
+    if (!result.weights.length) {
+      showChartMessage("No weight entries found.");
+      return;
+    }
 
-                        <p class="weight-current">
-                            <span id="currentWeight">—</span>
-                            <span class="weight-unit">lbs</span>
-                        </p>
-                    </div>
+    const labels = result.weights.map((entry) =>
+      formatDate(entry.date)
+    );
 
-                    <div class="weight-details">
-                        <p id="weightChange">Calculating progress…</p>
-                        <p id="weightUpdated">Loading latest entry…</p>
-                    </div>
-                </div>
+    const values = result.weights.map((entry) =>
+      entry.weight
+    );
 
-                <section class="weight-goal" aria-labelledby="weightGoalLabel">
-                    <div class="weight-goal-header">
-                        <p id="weightGoalLabel">Goal 1</p>
-                        <p id="weightGoalRemaining">Calculating goal…</p>
-                    </div>
+    updateWeightSummary(result.weights);
+    createWeightChart(labels, values);
+  } catch (error) {
+    console.error("Weight chart error:", error);
+    showChartMessage("Weight data could not be loaded.");
+  }
+}
 
-                    <div
-                        class="weight-progress-track"
-                        role="progressbar"
-                        aria-label="Progress toward 200 pound goal"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        aria-valuenow="0"
-                    >
-                        <div
-                            id="weightProgressBar"
-                            class="weight-progress-bar"
-                        ></div>
-                    </div>
+function updateWeightSummary(weights) {
+  const GOAL_WEIGHT = 200;
 
-                    <p id="weightGoalDetails" class="weight-goal-details">
-                        Loading progress…
-                    </p>
-                </section>
+  const firstEntry = weights[0];
+  const latestEntry = weights[weights.length - 1];
 
-                <div class="chart-container">
-                    <canvas
-                        id="weightChart"
-                        role="img"
-                        aria-label="Line chart showing weight measurements over time."
-                    ></canvas>
-                </div>
-            </section>
-        </article>
-    </main>
+  const currentWeight = document.getElementById("currentWeight");
+  const weightChange = document.getElementById("weightChange");
+  const weightUpdated = document.getElementById("weightUpdated");
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/weight-chart.js"></script>
-</body>
+  const goalRemaining = document.getElementById(
+    "weightGoalRemaining"
+  );
 
-</html>
+  const goalDetails = document.getElementById(
+    "weightGoalDetails"
+  );
+
+  const progressBar = document.getElementById(
+    "weightProgressBar"
+  );
+
+  const progressTrack = document.querySelector(
+    ".weight-progress-track"
+  );
+
+  if (
+    !currentWeight ||
+    !weightChange ||
+    !weightUpdated ||
+    !goalRemaining ||
+    !goalDetails ||
+    !progressBar ||
+    !progressTrack
+  ) {
+    return;
+  }
+
+  const startingWeight = firstEntry.weight;
+  const latestWeight = latestEntry.weight;
+
+  currentWeight.textContent = latestWeight.toFixed(1);
+
+  const totalChange = latestWeight - startingWeight;
+  const absoluteChange = Math.abs(totalChange).toFixed(1);
+
+  if (totalChange < 0) {
+    weightChange.textContent = `↓ ${absoluteChange} lbs overall`;
+  } else if (totalChange > 0) {
+    weightChange.textContent = `↑ ${absoluteChange} lbs overall`;
+  } else {
+    weightChange.textContent = "No overall change";
+  }
+
+  weightUpdated.textContent =
+    `Last updated ${formatLongDate(latestEntry.date)}`;
+
+  const totalNeeded = startingWeight - GOAL_WEIGHT;
+  const totalCompleted = startingWeight - latestWeight;
+
+  const percent =
+    totalNeeded > 0
+      ? Math.max(
+          0,
+          Math.min(
+            100,
+            (totalCompleted / totalNeeded) * 100
+          )
+        )
+      : 100;
+
+  const poundsRemaining = Math.max(
+    0,
+    latestWeight - GOAL_WEIGHT
+  );
+
+  progressBar.style.width = `${percent}%`;
+
+  progressTrack.setAttribute(
+    "aria-valuenow",
+    Math.round(percent)
+  );
+
+  goalRemaining.textContent =
+    poundsRemaining > 0
+      ? `${poundsRemaining.toFixed(1)} lbs to goal`
+      : "Goal reached!";
+
+  goalDetails.textContent =
+    `${percent.toFixed(0)}% complete • Goal: ${GOAL_WEIGHT} lbs`;
+}
+
+function createWeightChart(labels, values) {
+  new Chart(chartCanvas, {
+    type: "line",
+
+    data: {
+      labels,
+
+      datasets: [
+        {
+          label: "Weight",
+          data: values,
+          borderWidth: 3,
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          tension: 0.35,
+          fill: false
+        }
+      ]
+    },
+
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+
+      interaction: {
+        mode: "index",
+        intersect: false
+      },
+
+      plugins: {
+        legend: {
+          display: false
+        },
+
+        tooltip: {
+          callbacks: {
+            label(context) {
+              return `${context.parsed.y} lb`;
+            }
+          }
+        }
+      },
+
+      scales: {
+        x: {
+          grid: {
+            display: false
+          },
+
+          ticks: {
+            maxRotation: 0
+          }
+        },
+
+        y: {
+          grace: "10%",
+
+          ticks: {
+            callback(value) {
+              return `${value} lb`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+function formatDate(dateString) {
+  const date = new Date(`${dateString}T12:00:00`);
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric"
+  }).format(date);
+}
+
+function formatLongDate(dateString) {
+  const date = new Date(`${dateString}T12:00:00`);
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric"
+  }).format(date);
+}
+
+function showChartMessage(message) {
+  const container = chartCanvas.closest(".chart-container");
+
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = `
+    <p class="chart-message">${message}</p>
+  `;
+}
+
+loadWeightChart();
