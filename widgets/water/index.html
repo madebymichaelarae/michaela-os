@@ -35,8 +35,47 @@
             </header>
 
             <section
-                class="tracker-stats"
-                aria-label="Today's water summary"
+                class="tracker-goal water-primary-goal"
+                aria-labelledby="waterGoalLabel"
+            >
+                <div class="tracker-goal-header">
+                    <p id="waterGoalLabel">
+                        Today’s Progress
+                    </p>
+
+                    <p id="waterGoalProgress">
+                        Calculating…
+                    </p>
+                </div>
+
+                <div
+                    class="tracker-progress-track"
+                    role="progressbar"
+                    aria-label="Progress toward 72 ounce water goal"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                >
+                    <div
+                        id="waterProgressBar"
+                        class="tracker-progress-bar"
+                    ></div>
+                </div>
+
+                <div class="tracker-goal-footer">
+                    <p id="waterPercentage">
+                        Loading progress…
+                    </p>
+
+                    <p>
+                        Daily goal: 72 oz
+                    </p>
+                </div>
+            </section>
+
+            <section
+                class="tracker-stats water-stat-grid"
+                aria-label="Water summary and goal history"
             >
                 <article class="tracker-stat">
                     <p class="tracker-stat-label">
@@ -73,52 +112,7 @@
                         Checking progress…
                     </p>
                 </article>
-            </section>
 
-            <section
-                class="tracker-goal"
-                aria-labelledby="waterGoalLabel"
-            >
-                <div class="tracker-goal-header">
-                    <p id="waterGoalLabel">
-                        Daily Goal
-                    </p>
-
-                    <p id="waterGoalProgress">
-                        Calculating goal…
-                    </p>
-                </div>
-
-                <div
-                    class="tracker-progress-track"
-                    role="progressbar"
-                    aria-label="Progress toward 72 ounce water goal"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-valuenow="0"
-                >
-                    <div
-                        id="waterProgressBar"
-                        class="tracker-progress-bar"
-                    ></div>
-                </div>
-
-              <div class="tracker-goal-footer">
-    <p id="waterPercentage">
-        Loading progress…
-    </p>
-
-    <p id="waterGoalProgress">
-        Loading progress…
-    </p>
-</div>
-                </div>
-            </section>
-
-            <section
-                class="tracker-stats"
-                aria-label="Water goal history"
-            >
                 <article class="tracker-stat">
                     <p class="tracker-stat-label">
                         This week
