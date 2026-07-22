@@ -10,12 +10,6 @@ export default async function handler(req, res) {
 
   try {
     const pages = await queryHealthEntries({
-      filter: {
-        property: "Category",
-        select: {
-          equals: "⚖️ Weight"
-        }
-      },
       sorts: [
         {
           property: "Date",
@@ -25,6 +19,12 @@ export default async function handler(req, res) {
     });
 
     const weights = pages
+      .filter((page) => {
+        const categoryName =
+          page.properties?.Category?.select?.name || "";
+
+        return categoryName.includes("Weight");
+      })
       .map((page) => {
         const date = page.properties?.Date?.date?.start;
         const weight = page.properties?.Amount?.number;
