@@ -138,17 +138,41 @@ function createWeightChart(labels, values) {
     data: {
       labels,
 
-      datasets: [
-        {
-          label: "Weight",
-          data: values,
-          borderWidth: 3,
-          pointRadius: 4,
-          pointHoverRadius: 6,
-          tension: 0.35,
-          fill: false
-        }
-      ]
+      const accent = getComputedStyle(document.body)
+  .getPropertyValue("--widget-accent")
+  .trim();
+
+const soft = getComputedStyle(document.body)
+  .getPropertyValue("--widget-soft")
+  .trim();
+
+new Chart(chartCanvas, {
+  type: "line",
+
+  data: {
+    labels,
+
+    datasets: [
+      {
+        label: "Weight",
+        data: values,
+
+       borderColor: "#d94f9a",
+pointBackgroundColor: "#d94f9a",
+pointBorderColor: "#d94f9a",
+        
+        pointBackgroundColor: accent,
+        pointBorderColor: accent,
+
+        pointRadius: 5,
+        pointHoverRadius: 7,
+
+        borderWidth: 4,
+        tension: 0.35,
+        fill: false
+      }
+    ]
+  },
     },
 
     options: {
@@ -176,9 +200,9 @@ function createWeightChart(labels, values) {
 
       scales: {
         x: {
-          grid: {
-            display: false
-          },
+       grid: {
+    color: "rgba(217,79,154,0.12)"
+},
 
           ticks: {
             maxRotation: 0
