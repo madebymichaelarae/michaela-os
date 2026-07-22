@@ -88,7 +88,10 @@ function updateWeightSummary(weights) {
   const latestWeight = latestEntry.weight;
 
   const totalChange = latestWeight - startingWeight;
-  const poundsLost = Math.max(0, startingWeight - latestWeight);
+  const poundsLost = Math.max(
+    0,
+    startingWeight - latestWeight
+  );
 
   const lowestWeight = Math.min(
     ...weights.map((entry) => entry.weight)
@@ -158,74 +161,6 @@ function updateWeightSummary(weights) {
   goalRemaining.textContent =
     poundsRemaining > 0
       ? `${poundsRemaining.toFixed(1)} lbs remaining`
-      : "Goal reached!";
-
-  goalDetails.textContent =
-    `${percent.toFixed(0)}% complete • Goal: ${GOAL_WEIGHT} lbs`;
-}
-
-  const startingWeight = firstEntry.weight;
-  const latestWeight = latestEntry.weight;
-
-  currentWeight.textContent = latestWeight.toFixed(1);
-
-  const totalChange = latestWeight - startingWeight;
-  const absoluteChange = Math.abs(totalChange).toFixed(1);
-
-  if (totalChange < 0) {
-    weightChange.textContent =
-      `↓ ${absoluteChange} lbs`;
-  } else if (totalChange > 0) {
-    weightChange.textContent =
-      `↑ ${absoluteChange} lbs`;
-  } else {
-    weightChange.textContent = "No change";
-  }
-
-  weightUpdated.textContent =
-    `Last updated ${formatLongDate(latestEntry.date)}`;
-
-  if (weightRecognition) {
-    const lowestWeight = Math.min(
-      ...weights.map((entry) => entry.weight)
-    );
-
-    if (latestWeight === lowestWeight) {
-      weightRecognition.textContent = "🏆 Lowest weight";
-    } else {
-      weightRecognition.textContent = "✨ Keep going";
-    }
-  }
-
-  const totalNeeded = startingWeight - GOAL_WEIGHT;
-  const totalCompleted = startingWeight - latestWeight;
-
-  const percent =
-    totalNeeded > 0
-      ? Math.max(
-          0,
-          Math.min(
-            100,
-            (totalCompleted / totalNeeded) * 100
-          )
-        )
-      : 100;
-
-  const poundsRemaining = Math.max(
-    0,
-    latestWeight - GOAL_WEIGHT
-  );
-
-  progressBar.style.width = `${percent}%`;
-
-  progressTrack.setAttribute(
-    "aria-valuenow",
-    Math.round(percent)
-  );
-
-  goalRemaining.textContent =
-    poundsRemaining > 0
-      ? `${poundsRemaining.toFixed(1)} lbs to goal`
       : "Goal reached!";
 
   goalDetails.textContent =
