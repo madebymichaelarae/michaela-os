@@ -42,7 +42,8 @@ async function loadWeightChart() {
 }
 
 function updateWeightSummary(weights) {
-  const GOAL_WEIGHT = 200;
+  const GOAL_ONE_WEIGHT = 200;
+  const GOAL_TWO_WEIGHT = 150;
 
   const firstEntry = weights[0];
   const latestEntry = weights[weights.length - 1];
@@ -58,6 +59,9 @@ function updateWeightSummary(weights) {
 
   const weightRecognition =
     document.getElementById("weightRecognition");
+
+  const goalLabel =
+    document.getElementById("weightGoalLabel");
 
   const goalRemaining =
     document.getElementById("weightGoalRemaining");
@@ -76,6 +80,7 @@ function updateWeightSummary(weights) {
     !weightChange ||
     !weightUpdated ||
     !weightRecognition ||
+    !goalLabel ||
     !goalRemaining ||
     !goalDetails ||
     !progressBar ||
@@ -88,6 +93,7 @@ function updateWeightSummary(weights) {
   const latestWeight = latestEntry.weight;
 
   const totalChange = latestWeight - startingWeight;
+
   const poundsLost = Math.max(
     0,
     startingWeight - latestWeight
@@ -113,27 +119,54 @@ function updateWeightSummary(weights) {
   weightUpdated.textContent =
     `Last updated ${formatLongDate(latestEntry.date)}`;
 
-  if (latestWeight <= GOAL_WEIGHT) {
-    weightRecognition.textContent = "🎉 Goal reached!";
+  if (latestWeight <= GOAL_TWO_WEIGHT) {
+    weightRecognition.textContent =
+      "🎉 Final goal reached!";
+  } else if (latestWeight <= GOAL_ONE_WEIGHT) {
+    weightRecognition.textContent =
+      "🏆 Goal 1 complete!";
   } else if (poundsLost >= 20) {
-    weightRecognition.textContent = "🏆 20 lbs down!";
+    weightRecognition.textContent =
+      "🏆 20 lbs down!";
   } else if (poundsLost >= 15) {
-    weightRecognition.textContent = "🏆 15 lbs down!";
+    weightRecognition.textContent =
+      "🏆 15 lbs down!";
   } else if (poundsLost >= 10) {
-    weightRecognition.textContent = "🎉 10 lbs down!";
+    weightRecognition.textContent =
+      "🎉 10 lbs down!";
   } else if (poundsLost >= 5) {
-    weightRecognition.textContent = "✨ 5 lbs down!";
+    weightRecognition.textContent =
+      "✨ 5 lbs down!";
   } else if (
     latestWeight === lowestWeight &&
     weights.length > 1
   ) {
-    weightRecognition.textContent = "🏆 New low!";
+    weightRecognition.textContent =
+      "🏆 New low!";
   } else {
-    weightRecognition.textContent = "✨ Keep going!";
+    weightRecognition.textContent =
+      "✨ Keep going!";
   }
 
-  const totalNeeded = startingWeight - GOAL_WEIGHT;
-  const totalCompleted = startingWeight - latestWeight;
+  let activeGoalLabel;
+  let activeGoalWeight;
+  let goalStartWeight;
+
+  if (latestWeight > GOAL_ONE_WEIGHT) {
+    activeGoalLabel = "Goal 1";
+    activeGoalWeight = GOAL_ONE_WEIGHT;
+    goalStartWeight = startingWeight;
+  } else {
+    activeGoalLabel = "Goal 2";
+    activeGoalWeight = GOAL_TWO_WEIGHT;
+    goalStartWeight = GOAL_ONE_WEIGHT;
+  }
+
+  const totalNeeded =
+    goalStartWeight - activeGoalWeight;
+
+  const totalCompleted =
+    goalStartWeight - latestWeight;
 
   const percent =
     totalNeeded > 0
@@ -148,8 +181,11 @@ function updateWeightSummary(weights) {
 
   const poundsRemaining = Math.max(
     0,
-    latestWeight - GOAL_WEIGHT
+    latestWeight - activeGoalWeight
   );
+
+  goalLabel.textContent =
+    `${activeGoalLabel}: ${activeGoalWeight} lbs`;
 
   progressBar.style.width = `${percent}%`;
 
@@ -158,15 +194,19 @@ function updateWeightSummary(weights) {
     Math.round(percent)
   );
 
+  progressTrack.setAttribute(
+    "aria-label",
+    `Progress toward ${activeGoalWeight} pound goal`
+  );
+
   goalRemaining.textContent =
     poundsRemaining > 0
       ? `${poundsRemaining.toFixed(1)} lbs remaining`
       : "Goal reached!";
 
   goalDetails.textContent =
-    `${percent.toFixed(0)}% complete • Goal: ${GOAL_WEIGHT} lbs`;
+    `${percent.toFixed(0)}% complete`;
 }
-
 function createWeightChart(labels, values) {
   new Chart(chartCanvas, {
     type: "line",
