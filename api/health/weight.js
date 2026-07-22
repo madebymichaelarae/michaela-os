@@ -65,11 +65,6 @@ export default async function handler(req, res) {
 
   return res.status(200).json(notionData);
 
-    return res.status(200).json({
-      success: true,
-      count: weights.length,
-      weights
-    });
   } catch (error) {
     console.error("Weight endpoint error:", error);
 
