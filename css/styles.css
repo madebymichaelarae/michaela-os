@@ -418,3 +418,26 @@ body {
         min-height: 230px;
     }
 }
+
+.theme-water .water-primary-goal {
+    margin-bottom: 12px;
+    padding: 18px 20px;
+}
+
+.theme-water .water-primary-goal .tracker-progress-track {
+    height: 18px;
+    margin: 12px 0;
+}
+
+.theme-water .water-stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 0;
+}
+
+.theme-water .water-stat-grid .tracker-stat {
+    min-height: 58px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
