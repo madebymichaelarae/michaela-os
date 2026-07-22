@@ -27,11 +27,18 @@ async function loadWeightChart() {
       formatDate(entry.date)
     );
 
-  const values = result.weights.map((entry) =>
-  entry.weight
-);
+    const values = result.weights.map((entry) =>
+      entry.weight
+    );
 
-updateWeightSummary(result.weights);
+    updateWeightSummary(result.weights);
+    createWeightChart(labels, values);
+
+  } catch (error) {
+    console.error("Weight chart error:", error);
+    showChartMessage("Weight data could not be loaded.");
+  }
+}
 
 function updateWeightSummary(weights) {
   const firstEntry = weights[0];
@@ -62,15 +69,6 @@ function updateWeightSummary(weights) {
     latestEntry.date
   )}`;
 }
-    
-createWeightChart(labels, values);
-
-    createWeightChart(labels, values);
-  } catch (error) {
-    console.error("Weight chart error:", error);
-    showChartMessage("Weight data could not be loaded.");
-  }
-}
 
 function createWeightChart(labels, values) {
   new Chart(chartCanvas, {
@@ -78,7 +76,6 @@ function createWeightChart(labels, values) {
 
     data: {
       labels,
-
       datasets: [
         {
           label: "Weight",
@@ -120,7 +117,6 @@ function createWeightChart(labels, values) {
           grid: {
             display: false
           },
-
           ticks: {
             maxRotation: 0
           }
@@ -128,7 +124,6 @@ function createWeightChart(labels, values) {
 
         y: {
           grace: "10%",
-
           ticks: {
             callback(value) {
               return `${value} lb`;
@@ -156,6 +151,7 @@ function formatLongDate(dateString) {
     month: "long",
     day: "numeric"
   }).format(date);
+}
 
 function showChartMessage(message) {
   const container = chartCanvas.closest(".chart-container");
