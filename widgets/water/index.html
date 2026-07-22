@@ -2,76 +2,161 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>Water Tracker</title>
 
-    <link rel="stylesheet" href="../../css/styles.css">
+    <link
+        rel="stylesheet"
+        href="../../css/styles.css">
 </head>
 
 <body class="widget-page theme-water">
 
-<div class="tracker-card">
+<div class="tracker-card water-card">
 
     <div class="tracker-header">
-        <h1>💧 Water</h1>
-        <p>Your hydration progress.</p>
-    </div>
-
-    <div class="tracker-stats">
-
-        <div class="tracker-stat">
-            <span class="tracker-label">Today's Water</span>
-            <span class="tracker-value" id="waterCurrent">-- oz</span>
-        </div>
-
-        <div class="tracker-stat">
-            <span class="tracker-label">7-Day Average</span>
-            <span class="tracker-value" id="waterAverage">-- oz</span>
-        </div>
-
-        <div class="tracker-stat">
-            <span class="tracker-label">Recognition</span>
-            <span class="tracker-value" id="waterRecognition">💧 Keep drinking!</span>
-        </div>
-
-    </div>
-
-    <div class="tracker-goal">
-
-        <div class="tracker-goal-header">
-            <span id="waterGoalLabel">Daily Goal</span>
-            <span id="waterGoalRemaining">0 / 72 oz</span>
+        <div>
+            <h1>💧 Water</h1>
+            <p>Today’s hydration progress.</p>
         </div>
 
         <div
-            class="tracker-progress-track"
-            role="progressbar"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="0">
+            class="water-recognition"
+            id="waterRecognition">
+            🥤 Time for some water!
+        </div>
+    </div>
+
+    <div class="water-today-section">
+
+        <div class="water-tank-wrapper">
 
             <div
-                id="waterProgressBar"
-                class="tracker-progress-fill">
+                class="water-tank"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                aria-label="Daily water progress">
+
+                <div
+                    class="water-tank-fill"
+                    id="waterTankFill">
+                </div>
+
+                <div class="water-tank-content">
+
+                    <span
+                        class="water-current"
+                        id="waterCurrent">
+                        0 oz
+                    </span>
+
+                    <span class="water-goal-text">
+                        of
+                        <span id="waterGoalAmount">
+                            72 oz
+                        </span>
+                    </span>
+
+                </div>
+
             </div>
 
         </div>
 
-        <div
-            class="tracker-goal-details"
-            id="waterGoalDetails">
-            0% complete
+        <div class="water-today-details">
+
+            <span class="tracker-label">
+                Today’s Progress
+            </span>
+
+            <span
+                class="water-percentage"
+                id="waterPercentage">
+                0%
+            </span>
+
+            <div
+                class="tracker-progress-track"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                aria-label="Progress toward daily water goal">
+
+                <div
+                    class="tracker-progress-fill"
+                    id="waterProgressBar">
+                </div>
+
+            </div>
+
+            <span
+                class="water-remaining"
+                id="waterRemaining">
+                72 oz remaining
+            </span>
+
         </div>
 
     </div>
 
-    <div class="tracker-chart-panel">
-        <canvas id="waterChart"></canvas>
+    <div class="water-history-section">
+
+        <div class="water-history-heading">
+            <h2>Goal History</h2>
+            <p>Days you reached your 72 oz goal.</p>
+        </div>
+
+        <div class="water-history-stats">
+
+            <div class="tracker-stat water-history-stat">
+                <span class="tracker-label">
+                    This Week
+                </span>
+
+                <span
+                    class="tracker-value"
+                    id="waterWeekGoalCount">
+                    0 / 7 days
+                </span>
+            </div>
+
+            <div class="tracker-stat water-history-stat">
+                <span class="tracker-label">
+                    This Month
+                </span>
+
+                <span
+                    class="tracker-value"
+                    id="waterMonthGoalCount">
+                    0 days
+                </span>
+            </div>
+
+            <div class="tracker-stat water-history-stat">
+                <span class="tracker-label">
+                    Current Streak
+                </span>
+
+                <span
+                    class="tracker-value"
+                    id="waterCurrentStreak">
+                    0 days
+                </span>
+            </div>
+
+        </div>
+
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../../js/water-chart.js"></script>
 
 </body>
