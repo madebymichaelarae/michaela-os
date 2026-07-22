@@ -364,17 +364,18 @@ body {
 }
 
 .tracker-chart-panel {
-    min-height: 300px;
+    height: 190px;
     margin-top: 8px;
-    padding: 14px;
+    padding: 12px 14px;
     border-radius: 18px;
     background: var(--widget-chart-surface);
+    box-sizing: border-box;
 }
 
 .tracker-chart-panel .chart-container {
     width: 100%;
     height: 100%;
-    min-height: 270px;
+    min-height: 0;
 }
 
 @media (max-width: 620px) {
