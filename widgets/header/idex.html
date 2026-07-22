@@ -1,1 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Michaela OS Welcome</title>
+
+    <link
+        rel="stylesheet"
+        href="../../css/header-widget.css"
+    >
+</head>
+
+<body>
+    <main class="welcome-widget" id="welcome-widget">
+        <div class="welcome-glow welcome-glow-one"></div>
+        <div class="welcome-glow welcome-glow-two"></div>
+
+        <section class="welcome-content">
+            <div class="welcome-main">
+                <div
+                    class="time-icon"
+                    id="time-icon"
+                    aria-hidden="true"
+                >
+                    ☀️
+                </div>
+
+                <div class="welcome-copy">
+                    <p class="welcome-label">
+                        Welcome back
+                    </p>
+
+                    <h1 id="greeting">
+                        Good afternoon, Michaela
+                    </h1>
+
+                    <div
+                        class="weather"
+                        id="weather"
+                        aria-live="polite"
+                    >
+                        <span
+                            class="weather-icon"
+                            id="weather-icon"
+                            aria-hidden="true"
+                        >
+                            🌤️
+                        </span>
+
+                        <span
+                            class="weather-temperature"
+                            id="weather-temperature"
+                        >
+                            --°
+                        </span>
+
+                        <span
+                            class="weather-divider"
+                            aria-hidden="true"
+                        ></span>
+
+                        <span
+                            class="weather-condition"
+                            id="weather-condition"
+                        >
+                            Loading weather…
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <aside
+                class="calendar-block"
+                aria-label="Current date and time"
+            >
+                <span
+                    class="calendar-month"
+                    id="calendar-month"
+                >
+                    JUL
+                </span>
+
+                <span
+                    class="calendar-day"
+                    id="calendar-day"
+                >
+                    22
+                </span>
+
+                <span
+                    class="calendar-weekday"
+                    id="calendar-weekday"
+                >
+                    Wednesday
+                </span>
+
+                <div class="calendar-line"></div>
+
+                <time
+                    class="calendar-time"
+                    id="calendar-time"
+                >
+                    7:42 PM
+                </time>
+            </aside>
+        </section>
+
+        <p
+            class="weather-status"
+            id="weather-status"
+            aria-live="polite"
+        ></p>
+    </main>
+
+    <script src="../../js/header-widget.js"></script>
+</body>
+</html>
