@@ -1,1 +1,498 @@
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    padding: 0;
+    background: transparent;
+    font-family: "Inter", Arial, sans-serif;
+    color: #fffaf3;
+}
+
+.welcome-widget {
+    --welcome-bg-start: #352419;
+    --welcome-bg-middle: #211a18;
+    --welcome-bg-end: #151519;
+
+    --welcome-accent: #ffcf82;
+    --welcome-accent-bright: #ffe3ad;
+    --welcome-glow: rgba(255, 176, 87, 0.28);
+    --welcome-glow-soft: rgba(255, 213, 149, 0.14);
+    --welcome-border: rgba(255, 215, 161, 0.42);
+
+    position: relative;
+    width: 100%;
+    min-height: 235px;
+    overflow: hidden;
+
+    padding: 30px 34px;
+
+    border: 1px solid var(--welcome-border);
+    border-radius: 28px;
+
+    background:
+        radial-gradient(
+            circle at 10% 15%,
+            var(--welcome-glow-soft) 0%,
+            transparent 38%
+        ),
+        linear-gradient(
+            125deg,
+            var(--welcome-bg-start) 0%,
+            var(--welcome-bg-middle) 48%,
+            var(--welcome-bg-end) 100%
+        );
+
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/*
+    These classes are assigned automatically
+    based on the current local time.
+*/
+
+.welcome-widget[data-period="morning"] {
+    --welcome-bg-start: #56351f;
+    --welcome-bg-middle: #2d231f;
+    --welcome-bg-end: #17191e;
+
+    --welcome-accent: #ffd18a;
+    --welcome-accent-bright: #ffe9bf;
+    --welcome-glow: rgba(255, 171, 82, 0.34);
+    --welcome-glow-soft: rgba(255, 222, 169, 0.18);
+    --welcome-border: rgba(255, 207, 133, 0.48);
+}
+
+.welcome-widget[data-period="afternoon"] {
+    --welcome-bg-start: #49311d;
+    --welcome-bg-middle: #28211c;
+    --welcome-bg-end: #17191d;
+
+    --welcome-accent: #ffc76d;
+    --welcome-accent-bright: #ffe1a4;
+    --welcome-glow: rgba(255, 174, 69, 0.31);
+    --welcome-glow-soft: rgba(255, 205, 125, 0.15);
+    --welcome-border: rgba(255, 194, 103, 0.44);
+}
+
+.welcome-widget[data-period="evening"] {
+    --welcome-bg-start: #4c2925;
+    --welcome-bg-middle: #292022;
+    --welcome-bg-end: #17171e;
+
+    --welcome-accent: #ffb57a;
+    --welcome-accent-bright: #ffd4aa;
+    --welcome-glow: rgba(255, 120, 84, 0.28);
+    --welcome-glow-soft: rgba(255, 172, 119, 0.14);
+    --welcome-border: rgba(255, 163, 113, 0.42);
+}
+
+.welcome-widget[data-period="night"] {
+    --welcome-bg-start: #262130;
+    --welcome-bg-middle: #1c1b25;
+    --welcome-bg-end: #12131a;
+
+    --welcome-accent: #e7c6a5;
+    --welcome-accent-bright: #f7e0c6;
+    --welcome-glow: rgba(208, 158, 121, 0.18);
+    --welcome-glow-soft: rgba(235, 199, 163, 0.1);
+    --welcome-border: rgba(231, 198, 165, 0.32);
+}
+
+.welcome-glow {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 999px;
+    filter: blur(10px);
+}
+
+.welcome-glow-one {
+    top: -100px;
+    left: -80px;
+
+    width: 330px;
+    height: 330px;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--welcome-glow) 0%,
+            transparent 68%
+        );
+}
+
+.welcome-glow-two {
+    right: 8%;
+    bottom: -190px;
+
+    width: 380px;
+    height: 380px;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--welcome-glow-soft) 0%,
+            transparent 70%
+        );
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 34px;
+
+    width: 100%;
+}
+
+.welcome-main {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    min-width: 0;
+    flex: 1;
+}
+
+.time-icon {
+    display: grid;
+    place-items: center;
+
+    width: 88px;
+    height: 88px;
+    flex: 0 0 88px;
+
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.13),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    box-shadow:
+        0 14px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.13);
+
+    font-size: 42px;
+    line-height: 1;
+
+    text-shadow:
+        0 0 24px var(--welcome-glow);
+}
+
+.welcome-copy {
+    min-width: 0;
+}
+
+.welcome-label {
+    margin: 0 0 6px;
+
+    color: var(--welcome-accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.welcome-copy h1 {
+    margin: 0;
+
+    color: #fffaf3;
+    font-size: clamp(28px, 4vw, 45px);
+    font-weight: 750;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
+}
+
+.weather {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    min-height: 34px;
+    margin-top: 18px;
+
+    color: rgba(255, 250, 243, 0.82);
+}
+
+.weather-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.weather-temperature {
+    color: var(--welcome-accent-bright);
+    font-size: 24px;
+    font-weight: 750;
+    letter-spacing: -0.03em;
+}
+
+.weather-divider {
+    width: 1px;
+    height: 20px;
+
+    margin: 0 3px;
+
+    background: rgba(255, 255, 255, 0.19);
+}
+
+.weather-condition {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.calendar-block {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 154px;
+    min-width: 154px;
+    min-height: 174px;
+    padding: 16px 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            155deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.045)
+        );
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    text-align: center;
+}
+
+.calendar-month {
+    color: var(--welcome-accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.19em;
+}
+
+.calendar-day {
+    margin-top: 2px;
+
+    color: #fffaf3;
+    font-size: 55px;
+    font-weight: 750;
+    letter-spacing: -0.06em;
+    line-height: 1;
+}
+
+.calendar-weekday {
+    margin-top: 5px;
+
+    color: rgba(255, 250, 243, 0.7);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.calendar-line {
+    width: 100%;
+    height: 1px;
+    margin: 13px 0 11px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.22),
+            transparent
+        );
+}
+
+.calendar-time {
+    color: var(--welcome-accent-bright);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.015em;
+}
+
+.weather-status {
+    position: relative;
+    z-index: 2;
+
+    min-height: 14px;
+    margin: 14px 0 0;
+
+    color: rgba(255, 250, 243, 0.46);
+    font-size: 11px;
+    text-align: right;
+}
+
+.weather-status:empty {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .welcome-widget {
+        min-height: 0;
+        padding: 24px;
+
+        border-radius: 24px;
+    }
+
+    .welcome-content {
+        align-items: center;
+        gap: 22px;
+    }
+
+    .welcome-main {
+        gap: 16px;
+    }
+
+    .time-icon {
+        width: 68px;
+        height: 68px;
+        flex-basis: 68px;
+
+        border-radius: 21px;
+
+        font-size: 32px;
+    }
+
+    .welcome-copy h1 {
+        font-size: clamp(25px, 7vw, 34px);
+    }
+
+    .calendar-block {
+        width: 126px;
+        min-width: 126px;
+        min-height: 154px;
+    }
+
+    .calendar-day {
+        font-size: 46px;
+    }
+}
+
+@media (max-width: 520px) {
+    .welcome-widget {
+        padding: 22px 20px;
+    }
+
+    .welcome-content {
+        display: grid;
+        grid-template-columns: 1fr 104px;
+        gap: 18px;
+    }
+
+    .welcome-main {
+        display: block;
+    }
+
+    .time-icon {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 16px;
+
+        border-radius: 18px;
+
+        font-size: 29px;
+    }
+
+    .welcome-label {
+        font-size: 10px;
+    }
+
+    .welcome-copy h1 {
+        font-size: 27px;
+        line-height: 1.12;
+    }
+
+    .weather {
+        align-items: flex-start;
+        gap: 7px;
+
+        margin-top: 14px;
+    }
+
+    .weather-temperature {
+        font-size: 21px;
+    }
+
+    .weather-condition {
+        width: 100%;
+        padding-left: 31px;
+
+        font-size: 13px;
+    }
+
+    .weather-divider {
+        display: none;
+    }
+
+    .calendar-block {
+        width: 104px;
+        min-width: 104px;
+        min-height: 150px;
+        padding: 14px 10px;
+
+        border-radius: 20px;
+    }
+
+    .calendar-day {
+        font-size: 43px;
+    }
+
+    .calendar-weekday {
+        max-width: 86px;
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .weather-status {
+        text-align: left;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .time-icon {
+        animation: welcome-breathe 5s ease-in-out infinite;
+    }
+
+    @keyframes welcome-breathe {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-3px);
+        }
+    }
+}
