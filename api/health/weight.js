@@ -1,5 +1,4 @@
-const HEALTH_DATA_SOURCE_ID =
-  "3a5dbd80-1b57-80a2-aff5-000b486606bb";
+import { queryHealthEntries } from "../../lib/notion-health.js";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -9,68 +8,50 @@ export default async function handler(req, res) {
     });
   }
 
-  const token = process.env.NOTION_TOKEN;
-
-  if (!token) {
-    return res.status(500).json({
-      success: false,
-      error: "NOTION_TOKEN not found"
-    });
-  }
-
   try {
-    const notionResponse = await fetch(
-      `https://api.notion.com/v1/data_sources/${HEALTH_DATA_SOURCE_ID}/query`,
-      {
-        method: "POST",
+    const pages = await queryHealthEntries({
+      filter: {
+        property: "Category",
+        select: {
+          equals: "⚖️ Weight"
+        }
+      },
+      sorts: [
+        {
+          property: "Date",
+          direction: "ascending"
+        }
+      ]
+    });
 
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Notion-Version": "2025-09-03",
-          "Content-Type": "application/json"
-        },
+    const weights = pages
+      .map((page) => {
+        const date = page.properties?.Date?.date?.start;
+        const weight = page.properties?.Amount?.number;
 
-        body: JSON.stringify({
-          filter: {
-            property: "Category",
-            select: {
-              equals: "⚖️ Weight"
-            }
-          },
+        if (!date || typeof weight !== "number") {
+          return null;
+        }
 
-          sorts: [
-            {
-              property: "Date",
-              direction: "ascending"
-            }
-          ],
+        return {
+          id: page.id,
+          date,
+          weight
+        };
+      })
+      .filter(Boolean);
 
-          page_size: 100
-        })
-      }
-    );
-
-    const notionData = await notionResponse.json();
-
-    if (!notionResponse.ok) {
-      console.error("Notion weight query failed:", notionData);
-
-      return res.status(notionResponse.status).json({
-        success: false,
-        error:
-          notionData.message ||
-          "Notion could not return the weight entries"
-      });
-    }
-
-  return res.status(200).json(notionData);
-
+    return res.status(200).json({
+      success: true,
+      count: weights.length,
+      weights
+    });
   } catch (error) {
     console.error("Weight endpoint error:", error);
 
     return res.status(500).json({
       success: false,
-      error: "The server could not retrieve weight data"
+      error: error.message || "Weight data could not be loaded"
     });
   }
 }
