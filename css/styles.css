@@ -1,0 +1,27 @@
+:root {
+    --page-background: #f7f6f2;
+    --text-primary: #222222;
+    --text-muted: #6b6b6b;
+    --content-width: 900px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--page-background);
+    color: var(--text-primary);
+    font-family: Arial, sans-serif;
+}
+
+.page-shell {
+    width: min(var(--content-width), calc(100% - 32px));
+    margin: 0 auto;
+    padding: 64px 0;
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+}
