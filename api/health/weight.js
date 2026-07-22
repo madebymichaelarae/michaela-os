@@ -63,22 +63,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const weights = notionData.results
-      .map((page) => {
-        const date = page.properties?.Date?.date?.start;
-        const weight = page.properties?.Amount?.number;
-
-        if (!date || typeof weight !== "number") {
-          return null;
-        }
-
-        return {
-          id: page.id,
-          date,
-          weight
-        };
-      })
-      .filter(Boolean);
+  return res.status(200).json(notionData);
 
     return res.status(200).json({
       success: true,
