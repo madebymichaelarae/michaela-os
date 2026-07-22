@@ -23,13 +23,29 @@
             </header>
 
           <section class="widget-content">
-    <div class="chart-container">
-        <canvas
-            id="weightChart"
-            role="img"
-           aria-label="Line chart showing weight measurements over time."
-        ></canvas>
+<div class="weight-summary">
+    <div>
+        <p class="weight-current-label">Current weight</p>
+
+        <p class="weight-current">
+            <span id="currentWeight">—</span>
+            <span class="weight-unit">lbs</span>
+        </p>
     </div>
+
+    <div class="weight-details">
+        <p id="weightChange">Calculating progress…</p>
+        <p id="weightUpdated">Loading latest entry…</p>
+    </div>
+</div>
+
+<div class="chart-container">
+    <canvas
+        id="weightChart"
+        role="img"
+        aria-label="Line chart showing weight measurements over time."
+    ></canvas>
+</div>
 </section>
         </article>
     </main>
