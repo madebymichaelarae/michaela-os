@@ -1,0 +1,522 @@
+:root {
+    --reading-bg: #11151d;
+    --reading-panel: #151a24;
+    --reading-panel-soft: #191f2b;
+    --reading-border: rgba(255, 255, 255, 0.11);
+
+    --reading-text: #f5f3f8;
+    --reading-muted: #9ca3b2;
+
+    --reading-accent: #b878f4;
+    --reading-accent-light: #ca95fb;
+    --reading-accent-soft: rgba(184, 120, 244, 0.13);
+
+    --reading-track: rgba(255, 255, 255, 0.1);
+
+    --reading-radius: 24px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    background: transparent;
+    color: var(--reading-text);
+
+    /*
+     * Keeps the reading tracker consistent with the
+     * font already assigned by the dashboard/widget.
+     */
+    font-family: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.reading-widget {
+    width: 100%;
+    padding: 12px;
+    font-family: inherit;
+}
+
+.reading-card {
+    width: 100%;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 78% 4%,
+            rgba(184, 120, 244, 0.07),
+            transparent 28%
+        ),
+        linear-gradient(
+            145deg,
+            var(--reading-panel),
+            var(--reading-bg)
+        );
+
+    border: 1px solid var(--reading-border);
+    border-radius: var(--reading-radius);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.reading-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 26px 28px 8px;
+}
+
+.reading-header h1 {
+    margin: 0;
+
+    color: var(--reading-accent-light);
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.reading-header-icon {
+    width: 25px;
+    height: 25px;
+
+    fill: none;
+    stroke: var(--reading-accent);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.reading-loading,
+.reading-error,
+.no-current-book {
+    padding: 40px 28px 48px;
+    color: var(--reading-muted);
+    text-align: center;
+}
+
+.reading-error {
+    color: #efb6c1;
+}
+
+.no-current-book p {
+    margin: 0;
+}
+
+.current-book {
+    display: grid;
+    grid-template-columns: minmax(120px, 180px) 1fr;
+    gap: clamp(24px, 5vw, 52px);
+
+    align-items: center;
+
+    min-height: 390px;
+    padding: 28px 40px 42px;
+}
+
+.book-cover-wrap {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 2 / 3;
+
+    overflow: hidden;
+
+    background: var(--reading-panel-soft);
+    border: 1px solid var(--reading-border);
+    border-radius: 13px;
+
+    box-shadow:
+        0 18px 34px rgba(0, 0, 0, 0.38),
+        0 2px 7px rgba(0, 0, 0, 0.35);
+}
+
+.book-cover {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.book-cover-placeholder {
+    display: grid;
+    place-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    color: var(--reading-accent);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(184, 120, 244, 0.16),
+            rgba(255, 255, 255, 0.02)
+        );
+}
+
+.book-cover-placeholder svg {
+    width: 42%;
+    max-width: 72px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.35;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.book-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 56px;
+
+    min-width: 0;
+}
+
+.book-heading h2 {
+    margin: 0;
+
+    color: var(--reading-text);
+
+    font-family: inherit;
+    font-size: clamp(1.65rem, 4vw, 2.7rem);
+    font-weight: 760;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+}
+
+.book-heading p {
+    margin: 14px 0 0;
+
+    color: var(--reading-muted);
+
+    font-family: inherit;
+    font-size: clamp(1rem, 2.2vw, 1.55rem);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.progress-area {
+    width: 100%;
+}
+
+.progress-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+
+    align-items: center;
+}
+
+.progress-track {
+    width: 100%;
+    height: 24px;
+
+    overflow: hidden;
+
+    background: var(--reading-track);
+    border-radius: 999px;
+
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--reading-accent),
+            var(--reading-accent-light)
+        );
+
+    border-radius: inherit;
+
+    box-shadow:
+        0 0 18px rgba(184, 120, 244, 0.25);
+
+    transition: width 550ms ease;
+}
+
+.progress-percent {
+    min-width: 88px;
+
+    color: var(--reading-accent-light);
+
+    font-family: inherit;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 780;
+    line-height: 1;
+    text-align: right;
+    letter-spacing: -0.04em;
+}
+
+.page-progress {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+
+    margin: 24px 0 0;
+
+    color: var(--reading-muted);
+
+    font-family: inherit;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-weight: 500;
+}
+
+.page-progress strong {
+    color: var(--reading-accent-light);
+    font-size: 1.18em;
+    font-weight: 760;
+}
+
+.reading-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    border-top: 1px solid var(--reading-border);
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    min-height: 150px;
+    padding: 28px 34px;
+
+    border-bottom: 1px solid var(--reading-border);
+}
+
+.stat-card:nth-child(odd) {
+    border-right: 1px solid var(--reading-border);
+}
+
+.stat-card:nth-last-child(-n + 2) {
+    border-bottom: 0;
+}
+
+.stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+
+    width: 64px;
+    height: 64px;
+
+    color: var(--reading-accent);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.07),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.035);
+    border-radius: 50%;
+}
+
+.stat-icon svg {
+    width: 31px;
+    height: 31px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.stat-copy {
+    min-width: 0;
+}
+
+.stat-label {
+    margin: 0 0 8px;
+
+    color: var(--reading-text);
+
+    font-family: inherit;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    font-weight: 560;
+    line-height: 1.3;
+}
+
+.stat-value {
+    margin: 0;
+
+    color: var(--reading-accent-light);
+
+    font-family: inherit;
+    font-size: clamp(1.75rem, 3vw, 2.35rem);
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: -0.025em;
+}
+
+.stat-unit {
+    margin-left: 3px;
+
+    color: var(--reading-muted);
+
+    font-size: 0.55em;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+@media (max-width: 720px) {
+    .reading-widget {
+        padding: 8px;
+    }
+
+    .reading-header {
+        padding: 22px 20px 4px;
+    }
+
+    .current-book {
+        grid-template-columns: 110px minmax(0, 1fr);
+        gap: 22px;
+
+        min-height: 0;
+        padding: 26px 20px 32px;
+    }
+
+    .book-details {
+        gap: 30px;
+    }
+
+    .progress-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .progress-track {
+        height: 17px;
+    }
+
+    .progress-percent {
+        min-width: 0;
+        text-align: left;
+    }
+
+    .page-progress {
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 13px;
+    }
+
+    .stat-card {
+        gap: 14px;
+
+        min-height: 125px;
+        padding: 21px 18px;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .stat-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 500px) {
+    .reading-header h1 {
+        font-size: 0.78rem;
+    }
+
+    .current-book {
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 16px;
+
+        align-items: start;
+    }
+
+    .book-heading h2 {
+        font-size: 1.35rem;
+    }
+
+    .book-heading p {
+        margin-top: 8px;
+        font-size: 0.95rem;
+    }
+
+    .book-details {
+        gap: 24px;
+    }
+
+    .progress-percent {
+        font-size: 1.85rem;
+    }
+
+    .reading-stats {
+        /*
+         * Still remains two columns and three rows,
+         * as requested.
+         */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stat-card {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+
+        min-height: 145px;
+        padding: 18px 16px;
+    }
+
+    .stat-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .stat-icon svg {
+        width: 21px;
+        height: 21px;
+    }
+
+    .stat-label {
+        min-height: 2.5em;
+        font-size: 0.8rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+    }
+}
