@@ -27,9 +27,43 @@ async function loadWeightChart() {
       formatDate(entry.date)
     );
 
-    const values = result.weights.map((entry) =>
-      entry.weight
-    );
+  const values = result.weights.map((entry) =>
+  entry.weight
+);
+
+updateWeightSummary(result.weights);
+
+function updateWeightSummary(weights) {
+  const firstEntry = weights[0];
+  const latestEntry = weights[weights.length - 1];
+
+  const currentWeight = document.getElementById("currentWeight");
+  const weightChange = document.getElementById("weightChange");
+  const weightUpdated = document.getElementById("weightUpdated");
+
+  if (!currentWeight || !weightChange || !weightUpdated) {
+    return;
+  }
+
+  const totalChange = latestEntry.weight - firstEntry.weight;
+  const absoluteChange = Math.abs(totalChange).toFixed(1);
+
+  currentWeight.textContent = latestEntry.weight.toFixed(1);
+
+  if (totalChange < 0) {
+    weightChange.textContent = `↓ ${absoluteChange} lbs overall`;
+  } else if (totalChange > 0) {
+    weightChange.textContent = `↑ ${absoluteChange} lbs overall`;
+  } else {
+    weightChange.textContent = "No overall change";
+  }
+
+  weightUpdated.textContent = `Last updated ${formatLongDate(
+    latestEntry.date
+  )}`;
+}
+    
+createWeightChart(labels, values);
 
     createWeightChart(labels, values);
   } catch (error) {
@@ -114,6 +148,14 @@ function formatDate(dateString) {
     day: "numeric"
   }).format(date);
 }
+
+function formatLongDate(dateString) {
+  const date = new Date(`${dateString}T12:00:00`);
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric"
+  }).format(date);
 
 function showChartMessage(message) {
   const container = chartCanvas.closest(".chart-container");
