@@ -411,13 +411,12 @@ body {
         gap: 3px;
     }
 
-    .tracker-chart-panel {
-        min-height: 260px;
-    }
+.tracker-chart-panel {
+    height: 180px;
+}
 
-    .tracker-chart-panel .chart-container {
-        min-height: 230px;
-    }
+.tracker-chart-panel .chart-container {
+    min-height: 0;
 }
 
 .theme-water .water-primary-goal {
