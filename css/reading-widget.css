@@ -4,7 +4,7 @@
     --reading-bg: #11151d;
     --reading-panel: #151a24;
     --reading-panel-soft: #191f2b;
-    --reading-border: #CA95FB;
+    --reading-border: rgba(255, 255, 255, 0.11);
 
     --reading-text: #f5f3f8;
     --reading-muted: #9ca3b2;
@@ -73,7 +73,7 @@ select {
             var(--reading-bg)
         );
 
-    border: 5px solid var(--reading-border);
+    border: 1px solid var(--reading-border);
     border-radius: var(--reading-radius);
 
     box-shadow:
