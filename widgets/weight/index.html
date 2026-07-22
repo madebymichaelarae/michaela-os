@@ -22,13 +22,19 @@
                 <span class="widget-icon" aria-hidden="true">⚖️</span>
             </header>
 
-            <section class="widget-content">
-                <p class="widget-placeholder">
-                    Your custom weight chart will live here.
-                </p>
-            </section>
+          <section class="widget-content">
+    <div class="chart-container">
+        <canvas
+            id="weightChart"
+            role="img"
+            aria-label="Line chart showing sample weight measurements over time."
+        ></canvas>
+    </div>
+</section>
         </article>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/weight-chart.js"></script>
 </body>
 
 </html>
