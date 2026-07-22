@@ -166,7 +166,7 @@ function updateWaterSummary(waterEntries) {
 
 function createWaterChart(labels, values) {
   new Chart(chartCanvas, {
-    type: "line",
+    type: "bar",
 
     data: {
       labels,
@@ -176,15 +176,10 @@ function createWaterChart(labels, values) {
           label: "Water",
           data: values,
 
+          backgroundColor: "#3b9fc4",
           borderColor: "#3b9fc4",
-          pointBackgroundColor: "#3b9fc4",
-          pointBorderColor: "#3b9fc4",
-
-          borderWidth: 3,
-          pointRadius: 4,
-          pointHoverRadius: 6,
-          tension: 0.35,
-          fill: false
+          borderWidth: 1,
+          borderRadius: 8
         }
       ]
     },
@@ -225,7 +220,23 @@ function createWaterChart(labels, values) {
 
         y: {
           beginAtZero: true,
-          grace: "10%",
+          suggestedMax: DAILY_WATER_GOAL,
+
+          grid: {
+            color(context) {
+              if (context.tick.value === DAILY_WATER_GOAL) {
+                return "#3b9fc4";
+              }
+
+              return "rgba(0, 0, 0, 0.08)";
+            },
+
+            lineWidth(context) {
+              return context.tick.value === DAILY_WATER_GOAL
+                ? 2
+                : 1;
+            }
+          },
 
           ticks: {
             callback(value) {
@@ -237,7 +248,6 @@ function createWaterChart(labels, values) {
     }
   });
 }
-
 function formatDate(dateString) {
   const date = new Date(`${dateString}T12:00:00`);
 
