@@ -18,39 +18,11 @@ export default async function handler(req, res) {
       ]
     });
 
-const weights = pages
-  .filter((page) =>
-    page.properties?.Category?.select?.name === "⚖️ Weight"
-  )
-  .map((page) => {
-    const date = page.properties?.Date?.date?.start;
-    const weight = page.properties?.Amount?.number;
-
-    if (!date || typeof weight !== "number") {
-      return null;
-    }
-
-    return {
-      id: page.id,
-      date,
-      weight
-    };
-  })
-  .filter(Boolean);
-
-return res.status(200).json({
-  success: true,
-  count: weights.length,
-  weights
-});
-
     const weights = pages
-      .filter((page) => {
-        const categoryName =
-          page.properties?.Category?.select?.name || "";
-
-        return categoryName.includes("Weight");
-      })
+      .filter(
+        (page) =>
+          page.properties?.Category?.select?.name === "⚖️ Weight"
+      )
       .map((page) => {
         const date = page.properties?.Date?.date?.start;
         const weight = page.properties?.Amount?.number;
