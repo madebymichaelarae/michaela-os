@@ -1,133 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Tracker</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Weight Tracker | Michaela OS</title>
-
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="../../css/styles.css">
 </head>
 
-<body class="widget-page theme-weight">
-    <main class="widget-shell">
-        <article class="tracker-card">
-            <header class="tracker-header">
-                <span
-                    class="tracker-icon"
-                    aria-hidden="true"
-                >
-                    ⚖️
-                </span>
+<body class="widget-page theme-water">
 
-                <div>
-                    <p class="tracker-eyebrow">Health</p>
+<div class="tracker-card">
 
-                    <h1 class="tracker-title">
-                        Weightloss Tracker
-                    </h1>
-                </div>
-            </header>
+    <div class="tracker-header">
+        <h1>💧 Water</h1>
+        <p>Your hydration progress.</p>
+    </div>
 
-            <section
-                class="tracker-stats"
-                aria-label="Weight summary"
-            >
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Current weight
-                    </p>
+    <div class="tracker-stats">
 
-                    <p class="tracker-stat-value">
-                        <span id="currentWeight">—</span>
-                    </p>
-                </article>
+        <div class="tracker-stat">
+            <span class="tracker-label">Today's Water</span>
+            <span class="tracker-value" id="waterCurrent">-- oz</span>
+        </div>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Overall change
-                    </p>
+        <div class="tracker-stat">
+            <span class="tracker-label">7-Day Average</span>
+            <span class="tracker-value" id="waterAverage">-- oz</span>
+        </div>
 
-                    <p
-                        id="weightChange"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Calculating…
-                    </p>
-                </article>
+        <div class="tracker-stat">
+            <span class="tracker-label">Recognition</span>
+            <span class="tracker-value" id="waterRecognition">💧 Keep drinking!</span>
+        </div>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Recognition
-                    </p>
+    </div>
 
-                    <p
-                        id="weightRecognition"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Checking progress…
-                    </p>
-                </article>
-            </section>
+    <div class="tracker-goal">
 
-            <section
-                class="tracker-goal"
-                aria-labelledby="weightGoalLabel"
-            >
-                <div class="tracker-goal-header">
-                    <p id="weightGoalLabel">
-                        Goal 1
-                    </p>
+        <div class="tracker-goal-header">
+            <span id="waterGoalLabel">Daily Goal</span>
+            <span id="waterGoalRemaining">0 / 72 oz</span>
+        </div>
 
-                    <p id="weightGoalRemaining">
-                        Calculating goal…
-                    </p>
-                </div>
+        <div
+            class="tracker-progress-track"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0">
 
-                <div
-                    class="tracker-progress-track"
-                    role="progressbar"
-                    aria-label="Progress toward 200 pound goal"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-valuenow="0"
-                >
-                    <div
-                        id="weightProgressBar"
-                        class="tracker-progress-bar"
-                    ></div>
-                </div>
+            <div
+                id="waterProgressBar"
+                class="tracker-progress-fill">
+            </div>
 
-                <div class="tracker-goal-footer">
-                    <p id="weightGoalDetails">
-                        Loading progress…
-                    </p>
+        </div>
 
-                    <p id="weightUpdated">
-                        Loading latest entry…
-                    </p>
-                </div>
-            </section>
+        <div
+            class="tracker-goal-details"
+            id="waterGoalDetails">
+            0% complete
+        </div>
 
-            <section class="tracker-chart-panel">
-                <div class="chart-container">
-                    <canvas
-                        id="weightChart"
-                        role="img"
-                        aria-label="Line chart showing weight measurements over time."
-                    ></canvas>
-                </div>
-            </section>
-        </article>
-    </main>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/weight-chart.js"></script>
+    <div class="tracker-chart-panel">
+        <canvas id="waterChart"></canvas>
+    </div>
+
+</div>
+
+<script src="../../js/water-chart.js"></script>
+
 </body>
-
 </html>
