@@ -19,13 +19,15 @@ export default async function handler(req, res) {
     });
 
 return res.status(200).json({
-  categories: pages.map((page) => ({
-    entry:
-      page.properties?.Entry?.title?.[0]?.plain_text || "No title",
-
-    category:
-      page.properties?.Category?.select?.name || "No category"
-  }))
+  weights: pages
+    .filter(page =>
+      page.properties?.Category?.select?.name === "⚖️ Weight"
+    )
+    .map(page => ({
+      category: page.properties?.Category?.select?.name,
+      amount: page.properties?.Amount?.number,
+      date: page.properties?.Date?.date?.start
+    }))
 });
 
     const weights = pages
