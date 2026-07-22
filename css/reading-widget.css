@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
 :root {
     --reading-bg: #11151d;
     --reading-panel: #151a24;
@@ -20,6 +22,11 @@
     box-sizing: border-box;
 }
 
+.reading-card,
+.reading-card * {
+    font-family: "Inter", Arial, sans-serif;
+}
+
 html,
 body {
     margin: 0;
@@ -30,11 +37,7 @@ body {
     background: transparent;
     color: var(--reading-text);
 
-    /*
-     * Keeps the reading tracker consistent with the
-     * font already assigned by the dashboard/widget.
-     */
-    font-family: inherit;
+    font-family: "Inter", Arial, sans-serif;
 }
 
 button,
@@ -51,7 +54,7 @@ select {
 .reading-widget {
     width: 100%;
     padding: 12px;
-    font-family: inherit;
+    font-family: "Inter", Arial, sans-serif;
 }
 
 .reading-card {
