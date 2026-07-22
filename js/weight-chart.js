@@ -15,7 +15,9 @@ async function loadWeightChart() {
     const result = await response.json();
 
     if (!result.success) {
-      throw new Error(result.error || "Weight data could not be loaded.");
+      throw new Error(
+        result.error || "Weight data could not be loaded."
+      );
     }
 
     if (!result.weights.length) {
@@ -45,25 +47,29 @@ function updateWeightSummary(weights) {
   const firstEntry = weights[0];
   const latestEntry = weights[weights.length - 1];
 
-  const currentWeight = document.getElementById("currentWeight");
-  const weightChange = document.getElementById("weightChange");
-  const weightUpdated = document.getElementById("weightUpdated");
+  const currentWeight =
+    document.getElementById("currentWeight");
 
-  const goalRemaining = document.getElementById(
-    "weightGoalRemaining"
-  );
+  const weightChange =
+    document.getElementById("weightChange");
 
-  const goalDetails = document.getElementById(
-    "weightGoalDetails"
-  );
+  const weightUpdated =
+    document.getElementById("weightUpdated");
 
-  const progressBar = document.getElementById(
-    "weightProgressBar"
-  );
+  const weightRecognition =
+    document.getElementById("weightRecognition");
 
-  const progressTrack = document.querySelector(
-    ".weight-progress-track"
-  );
+  const goalRemaining =
+    document.getElementById("weightGoalRemaining");
+
+  const goalDetails =
+    document.getElementById("weightGoalDetails");
+
+  const progressBar =
+    document.getElementById("weightProgressBar");
+
+  const progressTrack =
+    document.querySelector(".tracker-progress-track");
 
   if (
     !currentWeight ||
@@ -86,15 +92,29 @@ function updateWeightSummary(weights) {
   const absoluteChange = Math.abs(totalChange).toFixed(1);
 
   if (totalChange < 0) {
-    weightChange.textContent = `↓ ${absoluteChange} lbs overall`;
+    weightChange.textContent =
+      `↓ ${absoluteChange} lbs`;
   } else if (totalChange > 0) {
-    weightChange.textContent = `↑ ${absoluteChange} lbs overall`;
+    weightChange.textContent =
+      `↑ ${absoluteChange} lbs`;
   } else {
-    weightChange.textContent = "No overall change";
+    weightChange.textContent = "No change";
   }
 
   weightUpdated.textContent =
     `Last updated ${formatLongDate(latestEntry.date)}`;
+
+  if (weightRecognition) {
+    const lowestWeight = Math.min(
+      ...weights.map((entry) => entry.weight)
+    );
+
+    if (latestWeight === lowestWeight) {
+      weightRecognition.textContent = "🏆 Lowest weight";
+    } else {
+      weightRecognition.textContent = "✨ Keep going";
+    }
+  }
 
   const totalNeeded = startingWeight - GOAL_WEIGHT;
   const totalCompleted = startingWeight - latestWeight;
@@ -138,41 +158,22 @@ function createWeightChart(labels, values) {
     data: {
       labels,
 
-      const accent = getComputedStyle(document.body)
-  .getPropertyValue("--widget-accent")
-  .trim();
+      datasets: [
+        {
+          label: "Weight",
+          data: values,
 
-const soft = getComputedStyle(document.body)
-  .getPropertyValue("--widget-soft")
-  .trim();
+          borderColor: "#d94f9a",
+          pointBackgroundColor: "#d94f9a",
+          pointBorderColor: "#d94f9a",
 
-new Chart(chartCanvas, {
-  type: "line",
-
-  data: {
-    labels,
-
-    datasets: [
-      {
-        label: "Weight",
-        data: values,
-
-       borderColor: "#d94f9a",
-pointBackgroundColor: "#d94f9a",
-pointBorderColor: "#d94f9a",
-        
-        pointBackgroundColor: accent,
-        pointBorderColor: accent,
-
-        pointRadius: 5,
-        pointHoverRadius: 7,
-
-        borderWidth: 4,
-        tension: 0.35,
-        fill: false
-      }
-    ]
-  },
+          borderWidth: 3,
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          tension: 0.35,
+          fill: false
+        }
+      ]
     },
 
     options: {
@@ -200,9 +201,9 @@ pointBorderColor: "#d94f9a",
 
       scales: {
         x: {
-       grid: {
-    color: "rgba(217,79,154,0.12)"
-},
+          grid: {
+            display: false
+          },
 
           ticks: {
             maxRotation: 0
@@ -242,7 +243,8 @@ function formatLongDate(dateString) {
 }
 
 function showChartMessage(message) {
-  const container = chartCanvas.closest(".chart-container");
+  const container =
+    chartCanvas.closest(".chart-container");
 
   if (!container) {
     return;
