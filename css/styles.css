@@ -441,3 +441,36 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
+    /* ==========================================
+   Water Widget Responsive
+   ========================================== */
+
+@media (max-width: 620px) {
+
+    .theme-water .water-stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .theme-water .water-stat-grid .tracker-stat:nth-child(3),
+    .theme-water .water-stat-grid .tracker-stat:nth-child(6) {
+        grid-column: 1 / -1;
+    }
+
+    .theme-water .tracker-stat {
+        border-radius: 18px;
+    }
+
+    .theme-water .water-primary-goal {
+        padding: 14px;
+    }
+
+    .theme-water .tracker-goal-header,
+    .theme-water .tracker-goal-footer {
+        flex-direction: row;
+        align-items: center;
+    }
+
+}
