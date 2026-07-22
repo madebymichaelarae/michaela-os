@@ -57,45 +57,42 @@ function updateTodayProgress(dailyTotals) {
   const waterCurrent =
     document.getElementById("waterCurrent");
 
-  const waterGoalAmount =
-    document.getElementById("waterGoalAmount");
-
-  const waterPercentage =
-    document.getElementById("waterPercentage");
-
   const waterRemaining =
     document.getElementById("waterRemaining");
 
   const waterRecognition =
     document.getElementById("waterRecognition");
 
-  const waterTankFill =
-    document.getElementById("waterTankFill");
+  const waterGoalLabel =
+    document.getElementById("waterGoalLabel");
+
+  const waterGoalProgress =
+    document.getElementById("waterGoalProgress");
+
+  const waterPercentage =
+    document.getElementById("waterPercentage");
 
   const waterProgressBar =
     document.getElementById("waterProgressBar");
-
-  const waterTank =
-    document.querySelector(".water-tank");
 
   const progressTrack =
     document.querySelector(".tracker-progress-track");
 
   if (
     !waterCurrent ||
-    !waterGoalAmount ||
-    !waterPercentage ||
     !waterRemaining ||
     !waterRecognition ||
-    !waterTankFill ||
+    !waterGoalLabel ||
+    !waterGoalProgress ||
+    !waterPercentage ||
     !waterProgressBar ||
-    !waterTank ||
     !progressTrack
   ) {
     return;
   }
 
-  const today = getLocalDateString(new Date());
+  const today =
+    getLocalDateString(new Date());
 
   const todayWater =
     dailyTotals[today] || 0;
@@ -116,27 +113,27 @@ function updateTodayProgress(dailyTotals) {
   waterCurrent.textContent =
     `${todayWater.toFixed(0)} oz`;
 
-  waterGoalAmount.textContent =
-    `${DAILY_WATER_GOAL} oz`;
+  waterGoalLabel.textContent =
+    `Daily Goal: ${DAILY_WATER_GOAL} oz`;
+
+  waterGoalProgress.textContent =
+    `${todayWater.toFixed(0)} / ${DAILY_WATER_GOAL} oz`;
 
   waterPercentage.textContent =
-    `${percent.toFixed(0)}%`;
-
-  waterTankFill.style.height =
-    `${percent}%`;
+    `${percent.toFixed(0)}% complete`;
 
   waterProgressBar.style.width =
     `${percent}%`;
 
   if (todayWater >= DAILY_WATER_GOAL) {
     waterRemaining.textContent =
-      "Daily goal reached!";
+      "Goal reached!";
 
     waterRecognition.textContent =
       "💦 Hydration goal reached!";
   } else {
     waterRemaining.textContent =
-      `${ouncesRemaining.toFixed(0)} oz remaining`;
+      `${ouncesRemaining.toFixed(0)} oz`;
 
     if (todayWater >= 60) {
       waterRecognition.textContent =
@@ -155,11 +152,6 @@ function updateTodayProgress(dailyTotals) {
         "🥤 Time for some water!";
     }
   }
-
-  waterTank.setAttribute(
-    "aria-valuenow",
-    Math.round(percent)
-  );
 
   progressTrack.setAttribute(
     "aria-valuenow",
@@ -201,16 +193,10 @@ function updateGoalHistory(dailyTotals) {
     }).length;
 
   const monthGoalsHit =
-    countMonthGoalsHit(
-      dailyTotals,
-      today
-    );
+    countMonthGoalsHit(dailyTotals, today);
 
   const streak =
-    calculateCurrentStreak(
-      dailyTotals,
-      today
-    );
+    calculateCurrentStreak(dailyTotals, today);
 
   weekGoalCount.textContent =
     `${weekGoalsHit} / 7 days`;
@@ -235,6 +221,7 @@ function getCurrentWeekDates(today) {
       : 1 - dayOfWeek;
 
   const monday = new Date(today);
+
   monday.setDate(
     today.getDate() + mondayOffset
   );
@@ -254,10 +241,7 @@ function getCurrentWeekDates(today) {
   return dates;
 }
 
-function countMonthGoalsHit(
-  dailyTotals,
-  today
-) {
+function countMonthGoalsHit(dailyTotals, today) {
   const year = today.getFullYear();
   const month = today.getMonth();
 
@@ -280,10 +264,7 @@ function countMonthGoalsHit(
   return count;
 }
 
-function calculateCurrentStreak(
-  dailyTotals,
-  today
-) {
+function calculateCurrentStreak(dailyTotals, today) {
   let streak = 0;
 
   const date = new Date(today);
