@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-    color-scheme: dark;
+    color-scheme: light;
 }
 
 * {
@@ -20,19 +20,23 @@ body {
     padding: 0;
     background: transparent;
     font-family: "Inter", Arial, sans-serif;
-    color: #fffaf3;
+    color: #4a3528;
 }
 
 .welcome-widget {
-    --welcome-bg-start: #352419;
-    --welcome-bg-middle: #211a18;
-    --welcome-bg-end: #151519;
+--welcome-bg-start: #fff8ec;
+--welcome-bg-middle: #f8ead8;
+--welcome-bg-end: #f2dfca;
 
-    --welcome-accent: #ffcf82;
-    --welcome-accent-bright: #ffe3ad;
-    --welcome-glow: rgba(255, 176, 87, 0.28);
-    --welcome-glow-soft: rgba(255, 213, 149, 0.14);
-    --welcome-border: rgba(255, 215, 161, 0.42);
+--welcome-text: #493326;
+--welcome-muted: rgba(73,51,38,.68);
+
+--welcome-accent: #bb6f32;
+--welcome-accent-bright: #8f4f24;
+
+--welcome-glow: rgba(255,180,92,.34);
+--welcome-glow-soft: rgba(255,211,146,.30);
+--welcome-border: rgba(193,126,70,.32);
 
     position: relative;
     width: 100%;
@@ -58,61 +62,80 @@ body {
         );
 
     box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        0 18px 50px rgba(111, 72, 42, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-/*
-    These classes are assigned automatically
-    based on the current local time.
-*/
-
 .welcome-widget[data-period="morning"] {
-    --welcome-bg-start: #56351f;
-    --welcome-bg-middle: #2d231f;
-    --welcome-bg-end: #17191e;
+    --welcome-bg-start: #fff9ed;
+    --welcome-bg-middle: #f9e9d2;
+    --welcome-bg-end: #f4d9bc;
+    --welcome-text: ...;
+--welcome-muted: ...;
 
-    --welcome-accent: #ffd18a;
-    --welcome-accent-bright: #ffe9bf;
-    --welcome-glow: rgba(255, 171, 82, 0.34);
-    --welcome-glow-soft: rgba(255, 222, 169, 0.18);
-    --welcome-border: rgba(255, 207, 133, 0.48);
+    --welcome-text: #4b3323;
+    --welcome-muted: rgba(75, 51, 35, 0.68);
+
+    --welcome-accent: #c87831;
+    --welcome-accent-bright: #98531f;
+
+    --welcome-glow: rgba(255, 174, 73, 0.4);
+    --welcome-glow-soft: rgba(255, 219, 157, 0.34);
+    --welcome-border: rgba(208, 137, 72, 0.34);
 }
 
 .welcome-widget[data-period="afternoon"] {
-    --welcome-bg-start: #49311d;
-    --welcome-bg-middle: #28211c;
-    --welcome-bg-end: #17191d;
+    --welcome-bg-start: #fff9ef;
+    --welcome-bg-middle: #f8ebd8;
+    --welcome-bg-end: #f1ddc3;
+        --welcome-text: ...;
+--welcome-muted: ...;
 
-    --welcome-accent: #ffc76d;
-    --welcome-accent-bright: #ffe1a4;
-    --welcome-glow: rgba(255, 174, 69, 0.31);
-    --welcome-glow-soft: rgba(255, 205, 125, 0.15);
-    --welcome-border: rgba(255, 194, 103, 0.44);
+    --welcome-text: #493426;
+    --welcome-muted: rgba(73, 52, 38, 0.67);
+
+    --welcome-accent: #b96c2e;
+    --welcome-accent-bright: #8b4d22;
+
+    --welcome-glow: rgba(255, 185, 91, 0.34);
+    --welcome-glow-soft: rgba(255, 222, 170, 0.3);
+    --welcome-border: rgba(190, 122, 63, 0.3);
 }
 
 .welcome-widget[data-period="evening"] {
-    --welcome-bg-start: #4c2925;
-    --welcome-bg-middle: #292022;
-    --welcome-bg-end: #17171e;
+    --welcome-bg-start: #fff5ec;
+    --welcome-bg-middle: #f7e3d7;
+    --welcome-bg-end: #efcfbf;
+    --welcome-text: ...;
+--welcome-muted: ...;
 
-    --welcome-accent: #ffb57a;
-    --welcome-accent-bright: #ffd4aa;
-    --welcome-glow: rgba(255, 120, 84, 0.28);
-    --welcome-glow-soft: rgba(255, 172, 119, 0.14);
-    --welcome-border: rgba(255, 163, 113, 0.42);
+    --welcome-text: #513129;
+    --welcome-muted: rgba(81, 49, 41, 0.66);
+
+    --welcome-accent: #b75f43;
+    --welcome-accent-bright: #8f432f;
+
+    --welcome-glow: rgba(240, 132, 88, 0.31);
+    --welcome-glow-soft: rgba(255, 186, 148, 0.3);
+    --welcome-border: rgba(188, 103, 73, 0.3);
 }
 
 .welcome-widget[data-period="night"] {
-    --welcome-bg-start: #262130;
-    --welcome-bg-middle: #1c1b25;
-    --welcome-bg-end: #12131a;
+    --welcome-bg-start: #fffaf3;
+    --welcome-bg-middle: #f1e8df;
+    --welcome-bg-end: #e8ddd4;
+    --welcome-text: ...;
+--welcome-muted: ...;
 
-    --welcome-accent: #e7c6a5;
-    --welcome-accent-bright: #f7e0c6;
-    --welcome-glow: rgba(208, 158, 121, 0.18);
-    --welcome-glow-soft: rgba(235, 199, 163, 0.1);
-    --welcome-border: rgba(231, 198, 165, 0.32);
+    --welcome-text: #443630;
+    --welcome-muted: rgba(68, 54, 48, 0.65);
+
+    --welcome-accent: #9d7055;
+    --welcome-accent-bright: #76503d;
+
+    --welcome-glow: rgba(210, 164, 126, 0.22);
+    --welcome-glow-soft: rgba(235, 211, 190, 0.35);
+    --welcome-border: rgba(155, 113, 87, 0.26);
 }
 
 .welcome-glow {
@@ -184,16 +207,16 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.11);
     border-radius: 26px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.13),
-            rgba(255, 255, 255, 0.035)
-        );
+background:
+    linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.75),
+        rgba(255, 247, 235, 0.45)
+    );
 
-    box-shadow:
-        0 14px 32px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.13);
+box-shadow:
+    0 12px 28px rgba(135, 93, 55, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
     font-size: 42px;
     line-height: 1;
@@ -219,7 +242,7 @@ body {
 .welcome-copy h1 {
     margin: 0;
 
-    color: #fffaf3;
+color: var(--welcome-text);
     font-size: clamp(28px, 4vw, 45px);
     font-weight: 750;
     letter-spacing: -0.045em;
@@ -235,7 +258,7 @@ body {
     min-height: 34px;
     margin-top: 18px;
 
-    color: rgba(255, 250, 243, 0.82);
+  color: var(--welcome-muted);
 }
 
 .weather-icon {
@@ -280,16 +303,18 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.13);
     border-radius: 22px;
 
-    background:
-        linear-gradient(
-            155deg,
-            rgba(255, 255, 255, 0.12),
-            rgba(255, 255, 255, 0.045)
-        );
+border: 1px solid rgba(180, 138, 97, 0.25);
 
-    box-shadow:
-        0 18px 38px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+background:
+    linear-gradient(
+        155deg,
+        rgba(255, 255, 255, 0.78),
+        rgba(255, 247, 236, 0.52)
+    );
+
+box-shadow:
+    0 16px 34px rgba(135, 93, 55, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 
     text-align: center;
 }
@@ -304,7 +329,7 @@ body {
 .calendar-day {
     margin-top: 2px;
 
-    color: #fffaf3;
+color: var(--welcome-text);
     font-size: 55px;
     font-weight: 750;
     letter-spacing: -0.06em;
@@ -314,7 +339,7 @@ body {
 .calendar-weekday {
     margin-top: 5px;
 
-    color: rgba(255, 250, 243, 0.7);
+color: var(--welcome-muted);
     font-size: 12px;
     font-weight: 600;
 }
@@ -347,7 +372,7 @@ body {
     min-height: 14px;
     margin: 14px 0 0;
 
-    color: rgba(255, 250, 243, 0.46);
+color: rgba(73,51,38,.5);
     font-size: 11px;
     text-align: right;
 }
