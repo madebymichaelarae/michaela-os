@@ -1,1 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Reading Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="../../css/reading-widget.css"
+    >
+</head>
+
+<body>
+    <main class="reading-widget" id="reading-widget">
+
+        <section
+            class="reading-card"
+            aria-labelledby="reading-heading"
+        >
+            <header class="reading-header">
+                <svg
+                    class="reading-header-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M3 5.5C5.8 4.4 8.8 4.7 12 6.5V20c-3.2-1.8-6.2-2.1-9-.9V5.5Z"
+                    />
+                    <path
+                        d="M21 5.5c-2.8-1.1-5.8-.8-9 1V20c3.2-1.8 6.2-2.1 9-.9V5.5Z"
+                    />
+                </svg>
+
+                <h1 id="reading-heading">
+                    Currently Reading
+                </h1>
+            </header>
+
+            <div
+                class="reading-loading"
+                id="reading-loading"
+            >
+                Loading your reading progress…
+            </div>
+
+            <div
+                class="reading-error"
+                id="reading-error"
+                hidden
+            >
+                Reading data could not be loaded.
+            </div>
+
+            <div
+                class="reading-content"
+                id="reading-content"
+                hidden
+            >
+                <section class="current-book">
+                    <div class="book-cover-wrap">
+                        <img
+                            class="book-cover"
+                            id="book-cover"
+                            alt=""
+                        >
+
+                        <div
+                            class="book-cover-placeholder"
+                            id="book-cover-placeholder"
+                            aria-hidden="true"
+                        >
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M3 5.5C5.8 4.4 8.8 4.7 12 6.5V20c-3.2-1.8-6.2-2.1-9-.9V5.5Z"
+                                />
+                                <path
+                                    d="M21 5.5c-2.8-1.1-5.8-.8-9 1V20c3.2-1.8 6.2-2.1 9-.9V5.5Z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="book-details">
+                        <div class="book-heading">
+                            <h2 id="book-title">
+                                Current Book
+                            </h2>
+
+                            <p id="book-author">
+                                Author
+                            </p>
+                        </div>
+
+                        <div class="progress-area">
+                            <div class="progress-row">
+                                <div
+                                    class="progress-track"
+                                    role="progressbar"
+                                    id="progress-track"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                    aria-valuenow="0"
+                                >
+                                    <div
+                                        class="progress-fill"
+                                        id="progress-fill"
+                                    ></div>
+                                </div>
+
+                                <span
+                                    class="progress-percent"
+                                    id="progress-percent"
+                                >
+                                    0%
+                                </span>
+                            </div>
+
+                            <p class="page-progress">
+                                <strong id="current-page">0</strong>
+                                <span>/</span>
+                                <span id="total-pages">0</span>
+                                <span>pages</span>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section
+                    class="reading-stats"
+                    aria-label="Reading statistics"
+                >
+                    <article class="stat-card">
+                        <span class="stat-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M3 5.5C5.8 4.4 8.8 4.7 12 6.5V20c-3.2-1.8-6.2-2.1-9-.9V5.5Z"
+                                />
+                                <path
+                                    d="M21 5.5c-2.8-1.1-5.8-.8-9 1V20c3.2-1.8 6.2-2.1 9-.9V5.5Z"
+                                />
+                            </svg>
+                        </span>
+
+                        <div class="stat-copy">
+                            <p class="stat-label">
+                                Pages Today
+                            </p>
+
+                            <p
+                                class="stat-value"
+                                id="pages-today"
+                            >
+                                0
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="16"
+                                    rx="2"
+                                />
+                                <path d="M7 3v4M17 3v4M3 10h18" />
+                            </svg>
+                        </span>
+
+                        <div class="stat-copy">
+                            <p class="stat-label">
+                                Pages This Week
+                            </p>
+
+                            <p
+                                class="stat-value"
+                                id="pages-this-week"
+                            >
+                                0
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12.8 2.5c.7 3.2-.8 4.8-2.3 6.4-1.4 1.5-2.8 3-2.4 5.5.3 1.7 1.4 3 3 3.7-.4-2.4.6-3.8 2-5.3.4 2.2 2.7 3.4 2.7 6.2 2.2-1.4 3.7-3.9 3.7-6.7 0-4.3-2.8-7.9-6.7-9.8Z"
+                                />
+                                <path
+                                    d="M11.1 18.1c-1.6-.7-2.7-2-3-3.7-.4-2.5 1-4 2.4-5.5"
+                                />
+                            </svg>
+                        </span>
+
+                        <div class="stat-copy">
+                            <p class="stat-label">
+                                Reading Streak
+                            </p>
+
+                            <p class="stat-value">
+                                <span id="reading-streak">0</span>
+                                <span class="stat-unit">days</span>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="m4 8 8-4 8 4-8 4-8-4Z" />
+                                <path d="m4 12 8 4 8-4" />
+                                <path d="m4 16 8 4 8-4" />
+                            </svg>
+                        </span>
+
+                        <div class="stat-copy">
+                            <p class="stat-label">
+                                Books This Month
+                            </p>
+
+                            <p
+                                class="stat-value"
+                                id="books-this-month"
+                            >
+                                0
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M12 7v5l3 2" />
+                            </svg>
+                        </span>
+
+                        <div class="stat-copy">
+                            <p class="stat-label">
+                                Average Session
+                            </p>
+
+                            <p class="stat-value">
+                                <span id="average-session">0</span>
+                                <span class="stat-unit">min</span>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="13" r="8" />
+                                <path d="M12 9v4M9 2h6M12 2v3M18 6l1.5-1.5" />
+                            </svg>
+                        </span>
+
+                        <div class="stat-copy">
+                            <p class="stat-label">
+                                Minutes This Month
+                            </p>
+
+                            <p
+                                class="stat-value"
+                                id="minutes-this-month"
+                            >
+                                0
+                            </p>
+                        </div>
+                    </article>
+                </section>
+            </div>
+
+            <div
+                class="no-current-book"
+                id="no-current-book"
+                hidden
+            >
+                <p>No book is currently marked as reading.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/reading-widget.js"></script>
+</body>
+</html>
