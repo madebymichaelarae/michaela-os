@@ -1,5 +1,5 @@
-const WEIGHT_API_URL = "/api/weight";
-const WATER_API_URL = "/api/water";
+const WEIGHT_API_URL = "/api/health/weight";
+const WATER_API_URL = "/api/health/water";
 
 const WATER_GOAL = 72;
 const TIME_ZONE = "America/New_York";
