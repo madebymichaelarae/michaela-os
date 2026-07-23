@@ -10,57 +10,56 @@
 
     <title>Health Summary</title>
 
-<link
-  rel="stylesheet"
-  href="../../css/system/cozy-autumn.css"
-/>
+    <link
+      rel="stylesheet"
+      href="../../css/system/cozy-autumn.css"
+    />
 
-<link
-  rel="stylesheet"
-  href="../../css/system/base.css"
-/>
+    <link
+      rel="stylesheet"
+      href="../../css/system/base.css"
+    />
 
-<link
-  rel="stylesheet"
-  href="../../css/system/components.css"
-/>
+    <link
+      rel="stylesheet"
+      href="../../css/system/components.css"
+    />
 
-<link
-  rel="stylesheet"
-  href="../../css/widgets/health-summary.css"
-/>
+    <link
+      rel="stylesheet"
+      href="../../css/widgets/health-summary.css"
+    />
   </head>
 
   <body>
-    <main class="health-widget-shell">
+    <main class="widget-shell">
       <button
-        class="health-card"
+        class="widget-card health-card"
         id="health-card"
         type="button"
-        aria-label="Open Health dashboard"
       >
-        <header class="health-card__header">
-          <div class="health-card__heading">
+        <header class="widget-header">
+          <div class="widget-heading">
             <span
-              class="health-card__icon"
+              class="widget-icon"
               aria-hidden="true"
             >
               ♥
             </span>
 
             <div>
-              <p class="health-card__eyebrow">
+              <p class="widget-eyebrow">
                 Dashboard
               </p>
 
-              <h1 class="health-card__title">
+              <h1 class="widget-title">
                 Health
               </h1>
             </div>
           </div>
 
           <span
-            class="health-card__arrow"
+            class="widget-arrow"
             aria-hidden="true"
           >
             →
@@ -68,14 +67,14 @@
         </header>
 
         <div
-          class="health-card__loading"
+          class="widget-loading"
           id="health-loading"
         >
           Loading your health summary…
         </div>
 
         <div
-          class="health-card__error"
+          class="widget-error"
           id="health-error"
           hidden
         >
@@ -83,43 +82,42 @@
         </div>
 
         <div
-          class="health-card__content"
           id="health-content"
           hidden
         >
           <div class="health-metrics">
-            <section class="metric-panel">
-              <div class="metric-panel__heading">
+            <section class="widget-panel">
+              <div class="metric-heading">
                 <span
-                  class="metric-panel__icon metric-panel__icon--water"
+                  class="health-metric-icon"
                   aria-hidden="true"
                 >
                   💧
                 </span>
 
-                <p class="metric-panel__label">
+                <p class="metric-label">
                   Water
                 </p>
               </div>
 
-              <p class="metric-panel__value">
+              <p class="metric-value">
                 <span id="water-today">0</span>
 
-                <span class="metric-panel__goal">
+                <span class="metric-goal">
                   / <span id="water-goal">72</span> oz
                 </span>
               </p>
 
               <div class="progress">
-                <div class="progress__track">
+                <div class="progress-track">
                   <div
-                    class="progress__fill progress__fill--water"
+                    class="progress-fill health-progress--water"
                     id="water-progress"
                   ></div>
                 </div>
 
                 <span
-                  class="progress__percent"
+                  class="progress-percent"
                   id="water-percent"
                 >
                   0%
@@ -127,25 +125,25 @@
               </div>
             </section>
 
-            <section class="metric-panel">
-              <div class="metric-panel__heading">
+            <section class="widget-panel">
+              <div class="metric-heading">
                 <span
-                  class="metric-panel__icon metric-panel__icon--walking"
+                  class="health-metric-icon"
                   aria-hidden="true"
                 >
                   🚶
                 </span>
 
-                <p class="metric-panel__label">
+                <p class="metric-label">
                   Walking
                 </p>
               </div>
 
               <div class="walking-values">
-                <p class="metric-panel__value">
+                <p class="metric-value">
                   <span id="walking-today">0</span>
 
-                  <span class="metric-panel__goal">
+                  <span class="metric-goal">
                     / <span id="walking-goal">2</span> mi
                   </span>
                 </p>
@@ -165,15 +163,15 @@
               </div>
 
               <div class="progress">
-                <div class="progress__track">
+                <div class="progress-track">
                   <div
-                    class="progress__fill progress__fill--walking"
+                    class="progress-fill health-progress--walking"
                     id="walking-progress"
                   ></div>
                 </div>
 
                 <span
-                  class="progress__percent"
+                  class="progress-percent"
                   id="walking-percent"
                 >
                   0%
