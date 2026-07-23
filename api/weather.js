@@ -1,8 +1,8 @@
 
 const LOCATION = {
-    name: "Harrisburg, NC",
-    latitude: 35.3232,
-    longitude: -80.6598
+    name: "Concord, NC",
+    latitude: 35.4088,
+    longitude: -80.5795
 };
 
 export default async function handler(request, response) {
