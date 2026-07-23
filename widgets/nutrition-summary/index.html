@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Nutrition Summary</title>
+
+    <link
+      rel="stylesheet"
+      href="../../css/nutrition-summary-widget.css"
+    />
+  </head>
+
+  <body>
+    <main class="nutrition-widget-shell">
+      <button
+        class="nutrition-card"
+        id="nutrition-card"
+        type="button"
+        aria-label="Open Nutrition dashboard"
+      >
+        <header class="nutrition-card__header">
+          <div class="nutrition-card__heading">
+            <span
+              class="nutrition-card__icon"
+              aria-hidden="true"
+            >
+              ✦
+            </span>
+
+            <div>
+              <p class="nutrition-card__eyebrow">
+                Today
+              </p>
+
+              <h1 class="nutrition-card__title">
+                Nutrition
+              </h1>
+            </div>
+          </div>
+
+          <span
+            class="nutrition-card__arrow"
+            aria-hidden="true"
+          >
+            →
+          </span>
+        </header>
+
+        <div
+          class="nutrition-card__loading"
+          id="nutrition-loading"
+        >
+          Loading today’s nutrition…
+        </div>
+
+        <div
+          class="nutrition-card__error"
+          id="nutrition-error"
+          hidden
+        >
+          Nutrition data could not be loaded.
+        </div>
+
+        <div
+          class="nutrition-card__content"
+          id="nutrition-content"
+          hidden
+        >
+          <section class="calorie-panel">
+            <div class="calorie-panel__top">
+              <div>
+                <p class="metric-label">
+                  Calories
+                </p>
+
+                <p class="calorie-panel__value">
+                  <span id="calories-current">
+                    0
+                  </span>
+
+                  <span class="calorie-panel__goal">
+                    /
+                    <span id="calories-goal">
+                      1800
+                    </span>
+                  </span>
+                </p>
+              </div>
+
+              <span
+                class="calorie-panel__remaining"
+                id="calories-remaining"
+              >
+                1800 left
+              </span>
+            </div>
+
+            <div class="calorie-progress">
+              <div class="calorie-progress__track">
+                <div
+                  class="calorie-progress__fill"
+                  id="calories-progress"
+                ></div>
+              </div>
+
+              <span
+                class="calorie-progress__percent"
+                id="calories-percent"
+              >
+                0%
+              </span>
+            </div>
+          </section>
+
+          <div class="macro-grid">
+            <section class="macro-panel">
+              <div
+                class="progress-ring progress-ring--protein"
+                id="protein-ring"
+                aria-hidden="true"
+              >
+                <div class="progress-ring__center">
+                  <span
+                    class="progress-ring__value"
+                    id="protein-current"
+                  >
+                    0
+                  </span>
+
+                  <span class="progress-ring__unit">
+                    g
+                  </span>
+                </div>
+              </div>
+
+              <div class="macro-panel__copy">
+                <p class="metric-label">
+                  Protein
+                </p>
+
+                <p class="macro-panel__goal">
+                  of
+                  <span id="protein-goal">
+                    70
+                  </span>
+                  g
+                </p>
+
+                <p
+                  class="macro-panel__remaining"
+                  id="protein-remaining"
+                >
+                  70g left
+                </p>
+              </div>
+            </section>
+
+            <section class="macro-panel">
+              <div
+                class="progress-ring progress-ring--fiber"
+                id="fiber-ring"
+                aria-hidden="true"
+              >
+                <div class="progress-ring__center">
+                  <span
+                    class="progress-ring__value"
+                    id="fiber-current"
+                  >
+                    0
+                  </span>
+
+                  <span class="progress-ring__unit">
+                    g
+                  </span>
+                </div>
+              </div>
+
+              <div class="macro-panel__copy">
+                <p class="metric-label">
+                  Fiber
+                </p>
+
+                <p class="macro-panel__goal">
+                  of
+                  <span id="fiber-goal">
+                    25
+                  </span>
+                  g
+                </p>
+
+                <p
+                  class="macro-panel__remaining"
+                  id="fiber-remaining"
+                >
+                  25g left
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </button>
+    </main>
+
+    <script src="../../js/nutrition-summary-widget.js"></script>
+  </body>
+</html>
