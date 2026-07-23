@@ -72,138 +72,119 @@
           id="health-content"
           hidden
         >
-          <section class="metric-section">
-            <div class="metric-section__top">
-              <div>
-                <p class="metric-section__label">
-                  Water
-                </p>
-
-                <p class="metric-section__value">
-                  <span id="water-today">0</span>
-                  <span class="metric-section__goal">
-                    / <span id="water-goal">72</span> oz
-                  </span>
-                </p>
-              </div>
-
-              <div
-                class="water-chart"
-                id="water-chart"
-                role="img"
-                aria-label="Seven-day water history"
-              >
-                <svg
-                  id="water-chart-svg"
-                  viewBox="0 0 140 48"
-                  preserveAspectRatio="none"
+          <div class="health-metrics">
+            <section class="metric-panel">
+              <div class="metric-panel__heading">
+                <span
+                  class="metric-panel__icon metric-panel__icon--water"
                   aria-hidden="true"
                 >
-                  <line
-                    class="water-chart__goal-line"
-                    id="water-goal-line"
-                    x1="0"
-                    x2="140"
-                    y1="12"
-                    y2="12"
-                  ></line>
+                  💧
+                </span>
 
-                  <polyline
-                    class="water-chart__line"
-                    id="water-chart-line"
-                    points=""
-                  ></polyline>
-
-                  <g id="water-chart-dots"></g>
-                </svg>
-              </div>
-            </div>
-
-            <div class="progress">
-              <div class="progress__track">
-                <div
-                  class="progress__fill progress__fill--water"
-                  id="water-progress"
-                ></div>
+                <p class="metric-panel__label">
+                  Water
+                </p>
               </div>
 
-              <span
-                class="progress__percent"
-                id="water-percent"
-              >
-                0%
-              </span>
-            </div>
-          </section>
+              <p class="metric-panel__value">
+                <span id="water-today">0</span>
 
-          <div class="health-card__divider"></div>
+                <span class="metric-panel__goal">
+                  / <span id="water-goal">72</span> oz
+                </span>
+              </p>
 
-          <section class="metric-section">
-            <div class="metric-section__top">
-              <div>
-                <p class="metric-section__label">
+              <div class="progress">
+                <div class="progress__track">
+                  <div
+                    class="progress__fill progress__fill--water"
+                    id="water-progress"
+                  ></div>
+                </div>
+
+                <span
+                  class="progress__percent"
+                  id="water-percent"
+                >
+                  0%
+                </span>
+              </div>
+            </section>
+
+            <section class="metric-panel">
+              <div class="metric-panel__heading">
+                <span
+                  class="metric-panel__icon metric-panel__icon--walking"
+                  aria-hidden="true"
+                >
+                  🚶
+                </span>
+
+                <p class="metric-panel__label">
                   Walking
                 </p>
+              </div>
 
-                <p class="metric-section__value">
+              <div class="walking-values">
+                <p class="metric-panel__value">
                   <span id="walking-today">0</span>
-                  <span class="metric-section__goal">
+
+                  <span class="metric-panel__goal">
                     / <span id="walking-goal">2</span> mi
                   </span>
                 </p>
+
+                <div class="week-total">
+                  <span
+                    class="week-total__value"
+                    id="walking-week-total"
+                  >
+                    0
+                  </span>
+
+                  <span class="week-total__label">
+                    mi this week
+                  </span>
+                </div>
               </div>
 
-              <div class="week-total">
+              <div class="progress">
+                <div class="progress__track">
+                  <div
+                    class="progress__fill progress__fill--walking"
+                    id="walking-progress"
+                  ></div>
+                </div>
+
                 <span
-                  class="week-total__value"
-                  id="walking-week-total"
+                  class="progress__percent"
+                  id="walking-percent"
                 >
-                  0
-                </span>
-
-                <span class="week-total__label">
-                  miles this week
+                  0%
                 </span>
               </div>
-            </div>
-
-            <div class="progress">
-              <div class="progress__track">
-                <div
-                  class="progress__fill progress__fill--walking"
-                  id="walking-progress"
-                ></div>
-              </div>
-
-              <span
-                class="progress__percent"
-                id="walking-percent"
-              >
-                0%
-              </span>
-            </div>
-          </section>
+            </section>
+          </div>
 
           <footer class="progress-summary">
-            <div
+            <span
               class="progress-summary__badge"
               aria-hidden="true"
             >
               ↓
-            </div>
+            </span>
 
-            <div>
-              <span
-                class="progress-summary__value"
-                id="pounds-down"
-              >
-                0
-              </span>
+            <span
+              class="progress-summary__value"
+              id="pounds-down"
+            >
+              0
+            </span>
 
-              <span class="progress-summary__unit">
-                lb down overall
-              </span>
-            </div>
+            <span class="progress-summary__unit">
+              lb down overall
+            </span>
           </footer>
         </div>
       </button>
