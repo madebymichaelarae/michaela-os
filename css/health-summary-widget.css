@@ -4,8 +4,9 @@
 
 html,
 body {
-  margin: 0;
+  width: 100%;
   min-height: 100%;
+  margin: 0;
 }
 
 body {
@@ -21,6 +22,12 @@ select {
   font: inherit;
 }
 
+.health-widget-shell {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
 
 .health-card {
   background: var(--card-background);
@@ -28,6 +35,10 @@ select {
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   transition: var(--transition-widget);
+  display: block;
+  width: 100%;
+  min-width: 0;
+
 }
 
 .health-card:hover {
@@ -42,6 +53,8 @@ select {
     0 2px 4px rgba(77, 52, 38, 0.06),
     0 12px 28px rgba(77, 52, 38, 0.1);
 }
+
+
 
 .health-card:focus-visible {
   outline: 3px solid rgba(183, 110, 85, 0.24);
@@ -392,18 +405,14 @@ select {
 
 @media (max-width: 430px) {
   .health-metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .health-card__header {
-    margin-bottom: 12px;
+  .health-card {
+    padding: 12px;
   }
 
-  .health-card__title {
-    font-size: 1.2rem;
-  }
-
-  .metric-panel__value {
-    font-size: 1.65rem;
+  .metric-panel {
+    padding: 11px;
   }
 }
