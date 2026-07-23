@@ -1,0 +1,56 @@
+:root {
+  /* Surfaces */
+  --surface-page: transparent;
+  --surface-card: #fffaf1;
+  --surface-panel: rgba(255, 255, 255, 0.22);
+
+  /* Text */
+  --text-primary: #493b31;
+  --text-secondary: #847468;
+  --text-soft: #aa9b90;
+
+  /* Accent */
+  --accent-primary: #b4664d;
+  --accent-dark: #92503d;
+  --accent-soft: #f1ddd2;
+
+  /* Feature colors */
+  --color-water: #7f9ca6;
+  --color-walking: #b28a55;
+  --color-protein: #9b7b61;
+  --color-fiber: #7d9273;
+
+  /* Borders and tracks */
+  --border-card: rgba(91, 70, 54, 0.12);
+  --border-panel: rgba(91, 70, 54, 0.1);
+  --progress-track: rgba(91, 70, 54, 0.09);
+
+  /* Shadows */
+  --shadow-card:
+    0 10px 24px rgba(79, 57, 40, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  --shadow-card-hover:
+    0 14px 28px rgba(79, 57, 40, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  /* Shape */
+  --radius-card: 22px;
+  --radius-panel: 16px;
+  --radius-small: 12px;
+
+  /* Fonts */
+  --font-body:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --font-heading:
+    Georgia,
+    "Times New Roman",
+    serif;
+}
