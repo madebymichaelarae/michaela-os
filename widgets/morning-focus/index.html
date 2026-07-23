@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Morning Focus</title>
+
+    <link
+        rel="stylesheet"
+        href="../../css/morning-focus-widget.css"
+    >
+</head>
+
+<body>
+    <main
+        class="focus-card"
+        id="focusCard"
+    >
+        <header class="focus-header">
+            <div>
+                <p class="focus-eyebrow">Today</p>
+                <h1>Morning Focus</h1>
+            </div>
+
+            <a
+                class="focus-open-link"
+                id="openFocusLink"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden
+            >
+                Open
+            </a>
+        </header>
+
+        <section
+            class="focus-loading"
+            id="loadingState"
+        >
+            Loading today’s focus…
+        </section>
+
+        <section
+            class="focus-empty"
+            id="emptyState"
+            hidden
+        >
+            <p>No Morning Focus has been created for today.</p>
+
+            <button
+                class="focus-create-button"
+                id="createFocusButton"
+                type="button"
+            >
+                Start Today
+            </button>
+
+            <p
+                class="focus-message"
+                id="createMessage"
+                aria-live="polite"
+            ></p>
+        </section>
+
+        <section
+            class="focus-content"
+            id="focusContent"
+            hidden
+        >
+            <div class="priority-list">
+                <label class="priority-item">
+                    <input
+                        type="checkbox"
+                        id="priority1Done"
+                    >
+
+                    <span id="priority1Text"></span>
+                </label>
+
+                <label class="priority-item">
+                    <input
+                        type="checkbox"
+                        id="priority2Done"
+                    >
+
+                    <span id="priority2Text"></span>
+                </label>
+
+                <label class="priority-item">
+                    <input
+                        type="checkbox"
+                        id="priority3Done"
+                    >
+
+                    <span id="priority3Text"></span>
+                </label>
+            </div>
+
+            <div class="reflection-grid">
+                <article class="reflection-item">
+                    <p class="reflection-label">
+                        Looking forward to
+                    </p>
+
+                    <p
+                        class="reflection-value"
+                        id="lookingForwardTo"
+                    ></p>
+                </article>
+
+                <article class="reflection-item">
+                    <p class="reflection-label">
+                        Leaving in yesterday
+                    </p>
+
+                    <p
+                        class="reflection-value"
+                        id="leavingInYesterday"
+                    ></p>
+                </article>
+
+                <article class="reflection-item reflection-wide">
+                    <p class="reflection-label">
+                        Grateful for
+                    </p>
+
+                    <p
+                        class="reflection-value"
+                        id="gratefulFor"
+                    ></p>
+                </article>
+            </div>
+
+            <p
+                class="focus-message"
+                id="updateMessage"
+                aria-live="polite"
+            ></p>
+        </section>
+
+        <section
+            class="focus-error"
+            id="errorState"
+            hidden
+        >
+            Morning Focus could not be loaded.
+        </section>
+    </main>
+
+    <script src="../../js/morning-focus-widget.js"></script>
+</body>
+</html>
