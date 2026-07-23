@@ -17,49 +17,39 @@
 
     <link
       rel="stylesheet"
-      href="../../css/system/base.css"
-    />
-
-    <link
-      rel="stylesheet"
-      href="../../css/system/components.css"
-    />
-
-    <link
-      rel="stylesheet"
-      href="../../css/widgets/health-summary.css"
+      href="../../css/health-summary-widget.css"
     />
   </head>
 
   <body>
-    <main class="widget-shell">
+    <main class="health-widget-shell">
       <button
-        class="widget-card health-card"
+        class="health-card"
         id="health-card"
         type="button"
       >
-        <header class="widget-header">
-          <div class="widget-heading">
+        <header class="health-card__header">
+          <div class="health-card__heading">
             <span
-              class="widget-icon"
+              class="health-card__icon"
               aria-hidden="true"
             >
               ♥
             </span>
 
             <div>
-              <p class="widget-eyebrow">
+              <p class="health-card__eyebrow">
                 Dashboard
               </p>
 
-              <h1 class="widget-title">
+              <h1 class="health-card__title">
                 Health
               </h1>
             </div>
           </div>
 
           <span
-            class="widget-arrow"
+            class="health-card__arrow"
             aria-hidden="true"
           >
             →
@@ -67,14 +57,14 @@
         </header>
 
         <div
-          class="widget-loading"
+          class="health-card__loading"
           id="health-loading"
         >
           Loading your health summary…
         </div>
 
         <div
-          class="widget-error"
+          class="health-card__error"
           id="health-error"
           hidden
         >
@@ -82,42 +72,43 @@
         </div>
 
         <div
+          class="health-card__content"
           id="health-content"
           hidden
         >
           <div class="health-metrics">
-            <section class="widget-panel">
-              <div class="metric-heading">
+            <section class="metric-panel">
+              <div class="metric-panel__heading">
                 <span
-                  class="health-metric-icon"
+                  class="metric-panel__icon metric-panel__icon--water"
                   aria-hidden="true"
                 >
                   💧
                 </span>
 
-                <p class="metric-label">
+                <p class="metric-panel__label">
                   Water
                 </p>
               </div>
 
-              <p class="metric-value">
+              <p class="metric-panel__value">
                 <span id="water-today">0</span>
 
-                <span class="metric-goal">
+                <span class="metric-panel__goal">
                   / <span id="water-goal">72</span> oz
                 </span>
               </p>
 
               <div class="progress">
-                <div class="progress-track">
+                <div class="progress__track">
                   <div
-                    class="progress-fill health-progress--water"
+                    class="progress__fill progress__fill--water"
                     id="water-progress"
                   ></div>
                 </div>
 
                 <span
-                  class="progress-percent"
+                  class="progress__percent"
                   id="water-percent"
                 >
                   0%
@@ -125,25 +116,25 @@
               </div>
             </section>
 
-            <section class="widget-panel">
-              <div class="metric-heading">
+            <section class="metric-panel">
+              <div class="metric-panel__heading">
                 <span
-                  class="health-metric-icon"
+                  class="metric-panel__icon metric-panel__icon--walking"
                   aria-hidden="true"
                 >
                   🚶
                 </span>
 
-                <p class="metric-label">
+                <p class="metric-panel__label">
                   Walking
                 </p>
               </div>
 
               <div class="walking-values">
-                <p class="metric-value">
+                <p class="metric-panel__value">
                   <span id="walking-today">0</span>
 
-                  <span class="metric-goal">
+                  <span class="metric-panel__goal">
                     / <span id="walking-goal">2</span> mi
                   </span>
                 </p>
@@ -163,15 +154,15 @@
               </div>
 
               <div class="progress">
-                <div class="progress-track">
+                <div class="progress__track">
                   <div
-                    class="progress-fill health-progress--walking"
+                    class="progress__fill progress__fill--walking"
                     id="walking-progress"
                   ></div>
                 </div>
 
                 <span
-                  class="progress-percent"
+                  class="progress__percent"
                   id="walking-percent"
                 >
                   0%
