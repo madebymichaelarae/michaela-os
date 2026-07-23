@@ -1,248 +1,20 @@
-:root {
-  --background: transparent;
-
-  --card-background: #fffaf1;
-  --card-border: rgba(91, 70, 54, 0.12);
-  --card-shadow: rgba(79, 57, 40, 0.08);
-
-  --panel-background: rgba(255, 255, 255, 0.22);
-  --panel-border: rgba(91, 70, 54, 0.1);
-
-  --text-primary: #493b31;
-  --text-secondary: #847468;
-  --text-soft: #aa9b90;
-
-  --accent: #b4664d;
-  --accent-dark: #92503d;
-  --accent-soft: #f1ddd2;
-
-  --water: #7f9ca6;
-  --walking: #b28a55;
-
-  --track: rgba(91, 70, 54, 0.09);
-
-  --radius-large: 22px;
-  --radius-medium: 16px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-}
-
-body {
-  background: var(--background);
-  color: var(--text-primary);
-
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-}
-
-button {
-  font: inherit;
-}
-
-.health-widget-shell {
-  width: 100%;
-  padding: 4px;
-}
-
-.health-card {
-  width: 100%;
-  min-height: 0;
-  padding: 20px;
-
-  color: inherit;
-  text-align: left;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(180, 102, 77, 0.08),
-      transparent 34%
-    ),
-    var(--card-background);
-
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-large);
-
-  box-shadow:
-    0 10px 24px var(--card-shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-
-  cursor: pointer;
-
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    border-color 160ms ease;
-}
-
-.health-card:hover {
-  transform: translateY(-2px);
-
-  border-color: rgba(180, 102, 77, 0.22);
-
-  box-shadow:
-    0 14px 28px rgba(79, 57, 40, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
-}
-
-.health-card:focus-visible {
-  outline: 3px solid rgba(180, 102, 77, 0.3);
-  outline-offset: 3px;
-}
-
-.health-card__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-
-  margin-bottom: 16px;
-}
-
-.health-card__heading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.health-card__icon {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-
-  color: var(--accent-dark);
-  font-size: 17px;
-
-  background: var(--accent-soft);
-  border-radius: 12px;
-}
-
-.health-card__eyebrow {
-  margin: 0 0 1px;
-
-  color: var(--text-soft);
-  font-size: 0.62rem;
-  font-weight: 750;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.health-card__title {
-  margin: 0;
-
-  color: var(--text-primary);
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 1.35rem;
-  font-weight: 500;
-  line-height: 1;
-}
-
-.health-card__arrow {
-  color: var(--accent);
-  font-size: 1.3rem;
-
-  transition: transform 160ms ease;
-}
-
-.health-card:hover .health-card__arrow {
-  transform: translateX(3px);
-}
-
-.health-card__content{
-    display:none;
-}
-
-.health-card__content.is-visible{
-    display:block;
-}
-
-.health-card__loading,
-.health-card__error{
-    display:none;
-}
-
-.health-card__error {
-  color: var(--accent-dark);
-}
-
-.health-card__content {
-  display: block;
-}
-
 .health-metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
-.metric-panel {
-  min-width: 0;
-  padding: 15px;
-
-  background: var(--panel-background);
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius-medium);
-}
-
-.metric-panel__heading {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-
-  margin-bottom: 9px;
-}
-
-.metric-panel__icon {
+.health-metric-icon {
   font-size: 15px;
   line-height: 1;
 }
 
-.metric-panel__label {
-  margin: 0;
-
-  color: var(--text-secondary);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+.health-progress--water {
+  background: var(--color-water);
 }
 
-.metric-panel__value {
-  margin: 0 0 13px;
-
-  color: var(--text-primary);
-  font-size: 1.55rem;
-  font-weight: 780;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-
-.metric-panel__goal {
-  color: var(--text-secondary);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0;
+.health-progress--walking {
+  background: var(--color-walking);
 }
 
 .walking-values {
@@ -256,7 +28,6 @@ button {
   display: grid;
   flex: 0 0 auto;
   gap: 1px;
-
   text-align: right;
 }
 
@@ -273,47 +44,6 @@ button {
   line-height: 1.15;
 }
 
-.progress {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 8px;
-}
-
-.progress__track {
-  height: 8px;
-  overflow: hidden;
-
-  background: var(--track);
-  border-radius: 999px;
-}
-
-.progress__fill {
-  width: 0;
-  height: 100%;
-
-  border-radius: inherit;
-
-  transition: width 650ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.progress__fill--water {
-  background: var(--water);
-}
-
-.progress__fill--walking {
-  background: var(--walking);
-}
-
-.progress__percent {
-  min-width: 28px;
-
-  color: var(--text-secondary);
-  font-size: 0.66rem;
-  font-weight: 750;
-  text-align: right;
-}
-
 .progress-summary {
   display: flex;
   align-items: center;
@@ -324,7 +54,6 @@ button {
   padding: 10px 14px;
 
   color: var(--accent-dark);
-
   background: rgba(180, 102, 77, 0.08);
   border: 1px solid rgba(180, 102, 77, 0.1);
   border-radius: 14px;
@@ -355,24 +84,8 @@ button {
 }
 
 @media (max-width: 620px) {
-  .health-card {
-    padding: 17px;
-  }
-
   .health-metrics {
     gap: 9px;
-  }
-
-  .metric-panel {
-    padding: 13px;
-  }
-
-  .metric-panel__value {
-    font-size: 1.35rem;
-  }
-
-  .metric-panel__goal {
-    font-size: 0.75rem;
   }
 
   .walking-values {
@@ -397,15 +110,7 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .health-card__header {
+  .widget-header {
     margin-bottom: 12px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .health-card,
-  .health-card__arrow,
-  .progress__fill {
-    transition: none;
   }
 }
