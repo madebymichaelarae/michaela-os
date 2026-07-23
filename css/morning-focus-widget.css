@@ -227,6 +227,11 @@ input {
     overflow-wrap: anywhere;
 }
 
+.reflection-value.is-placeholder {
+    color: #a99b92;
+    font-style: italic;
+}
+
 .reflection-item.is-empty {
     display: none;
 }
