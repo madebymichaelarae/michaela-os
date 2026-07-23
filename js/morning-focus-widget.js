@@ -43,22 +43,30 @@ function renderPriority(number, priority) {
     const text = elements[`priority${number}Text`];
     const row = checkbox.closest(".priority-item");
 
-    const hasText = Boolean(priority?.text?.trim());
+    const priorityText = priority?.text?.trim() || "";
+    const hasText = Boolean(priorityText);
 
     row.classList.toggle("is-empty", !hasText);
 
     checkbox.checked = Boolean(priority?.done);
     checkbox.disabled = !hasText;
 
-    setText(text, priority?.text);
+    setText(text, priorityText);
 }
 
 function renderReflection(element, value) {
-    const container = element.closest(".reflection-item");
-    const hasValue = Boolean(value?.trim());
+    const responseText = value?.trim() || "";
 
-    container.classList.toggle("is-empty", !hasValue);
-    setText(element, value);
+    setText(
+        element,
+        responseText,
+        "Not filled in yet"
+    );
+
+    element.classList.toggle(
+        "is-placeholder",
+        !responseText
+    );
 }
 
 function renderFocus(focus) {
@@ -92,6 +100,8 @@ function renderFocus(focus) {
     if (focus.pageUrl) {
         elements.openFocusLink.href = focus.pageUrl;
         elements.openFocusLink.hidden = false;
+    } else {
+        elements.openFocusLink.hidden = true;
     }
 
     showState("content");
@@ -104,10 +114,13 @@ async function loadFocus() {
         const response = await fetch(API_URL);
 
         if (!response.ok) {
-            throw new Error(`Request failed with ${response.status}`);
+            throw new Error(
+                `Request failed with status ${response.status}`
+            );
         }
 
         const focus = await response.json();
+
         renderFocus(focus);
     } catch (error) {
         console.error("Morning Focus load error:", error);
@@ -153,13 +166,13 @@ async function updatePriority(number, checked) {
 
         window.setTimeout(() => {
             elements.updateMessage.textContent = "";
-        }, 1200);
+        }, 1000);
     } catch (error) {
         console.error("Priority update error:", error);
 
         checkbox.checked = !checked;
         elements.updateMessage.textContent =
-            "Could not save. Try again.";
+            "Could not save.";
     } finally {
         checkbox.disabled = false;
     }
@@ -169,14 +182,17 @@ async function updatePriority(number, checked) {
     elements[`priority${number}Done`].addEventListener(
         "change",
         (event) => {
-            updatePriority(number, event.target.checked);
+            updatePriority(
+                number,
+                event.target.checked
+            );
         }
     );
 });
 
 elements.createFocusButton.addEventListener("click", () => {
     elements.createMessage.textContent =
-        "The Start Today action is our next step.";
+        "Creating today’s page is the next step.";
 });
 
 loadFocus();
