@@ -159,12 +159,6 @@ async function getTodayFocus() {
 }
 
 export default async function handler(request, response) {
-    if (request.method !== "GET") {
-        return response.status(405).json({
-            error: "Method not allowed"
-        });
-    }
-
     if (!process.env.NOTION_TOKEN) {
         return response.status(500).json({
             error: "NOTION_TOKEN is not configured."
@@ -172,14 +166,63 @@ export default async function handler(request, response) {
     }
 
     try {
-        const focus = await getTodayFocus();
+        if (request.method === "GET") {
+            const focus = await getTodayFocus();
 
-        return response.status(200).json(focus);
+            return response.status(200).json(focus);
+        }
+
+        if (request.method === "PATCH") {
+            const {
+                pageId,
+                priority,
+                done
+            } = request.body || {};
+
+            const propertyNames = {
+                1: "Priority 1 Done",
+                2: "Priority 2 Done",
+                3: "Priority 3 Done"
+            };
+
+            const propertyName = propertyNames[priority];
+
+            if (
+                !pageId ||
+                !propertyName ||
+                typeof done !== "boolean"
+            ) {
+                return response.status(400).json({
+                    error: "Invalid priority update."
+                });
+            }
+
+            await notionRequest(`/pages/${pageId}`, {
+                method: "PATCH",
+                body: JSON.stringify({
+                    properties: {
+                        [propertyName]: {
+                            checkbox: done
+                        }
+                    }
+                })
+            });
+
+            return response.status(200).json({
+                success: true,
+                priority,
+                done
+            });
+        }
+
+        return response.status(405).json({
+            error: "Method not allowed"
+        });
     } catch (error) {
         console.error("Morning Focus API error:", error);
 
         return response.status(500).json({
-            error: "Unable to load Morning Focus.",
+            error: "Unable to process Morning Focus.",
             details: error.message
         });
     }
