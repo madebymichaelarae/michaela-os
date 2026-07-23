@@ -1,13 +1,5 @@
 const HEALTH_SUMMARY_ENDPOINT = "/api/health-summary";
 
-/*
-  Replace this with the URL for your full Health page.
-
-  It may be:
-  - a page inside Michaela OS
-  - a public Notion page
-  - another widget route
-*/
 const HEALTH_PAGE_URL = "/";
 
 const loadingElement =
@@ -59,138 +51,6 @@ function setProgressBar(elementId, percent) {
   });
 }
 
-function renderWaterChart(history, goal) {
-  const svg = document.getElementById(
-    "water-chart-svg"
-  );
-
-  const line = document.getElementById(
-    "water-chart-line"
-  );
-
-  const dotsGroup = document.getElementById(
-    "water-chart-dots"
-  );
-
-  const goalLine = document.getElementById(
-    "water-goal-line"
-  );
-
-  const chartElement = document.getElementById(
-    "water-chart"
-  );
-
-  if (
-    !svg ||
-    !line ||
-    !dotsGroup ||
-    !goalLine ||
-    !chartElement
-  ) {
-    return;
-  }
-
-  const entries = Array.isArray(history)
-    ? history.slice(-7)
-    : [];
-
-  while (entries.length < 7) {
-    entries.unshift({
-      date: "",
-      ounces: 0
-    });
-  }
-
-  const values = entries.map((entry) =>
-    Math.max(0, Number(entry.ounces) || 0)
-  );
-
-  const safeGoal = Math.max(
-    1,
-    Number(goal) || 72
-  );
-
-  const maximumValue = Math.max(
-    safeGoal,
-    ...values,
-    1
-  );
-
-  const width = 140;
-  const height = 48;
-  const topPadding = 5;
-  const bottomPadding = 5;
-
-  const usableHeight =
-    height - topPadding - bottomPadding;
-
-  const xStep = width / (values.length - 1);
-
-  const points = values.map((value, index) => {
-    const x = index * xStep;
-
-    const normalizedValue =
-      value / maximumValue;
-
-    const y =
-      height -
-      bottomPadding -
-      normalizedValue * usableHeight;
-
-    return {
-      x,
-      y,
-      value,
-      date: entries[index].date
-    };
-  });
-
-  line.setAttribute(
-    "points",
-    points
-      .map((point) => `${point.x},${point.y}`)
-      .join(" ")
-  );
-
-  const goalY =
-    height -
-    bottomPadding -
-    (safeGoal / maximumValue) * usableHeight;
-
-  goalLine.setAttribute("y1", goalY);
-  goalLine.setAttribute("y2", goalY);
-
-  dotsGroup.innerHTML = "";
-
-  for (const point of points) {
-    const circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
-
-    circle.setAttribute("class", "water-chart__dot");
-    circle.setAttribute("cx", point.x);
-    circle.setAttribute("cy", point.y);
-    circle.setAttribute("r", "2.7");
-
-    dotsGroup.appendChild(circle);
-  }
-
-  const description = entries
-    .map((entry) => {
-      const date = entry.date || "No date";
-      const ounces = Number(entry.ounces) || 0;
-
-      return `${date}: ${ounces} ounces`;
-    })
-    .join(", ");
-
-  chartElement.setAttribute(
-    "aria-label",
-    `Seven-day water history. ${description}`
-  );
-}
-
 function renderHealthSummary(data) {
   const water = data?.water || {};
   const walking = data?.walking || {};
@@ -198,25 +58,14 @@ function renderHealthSummary(data) {
 
   const waterToday = Number(water.today) || 0;
   const waterGoal = Number(water.goal) || 72;
-  const waterPercent = clampPercent(
-    water.percent
-  );
+  const waterPercent = clampPercent(water.percent);
 
-  const walkingToday =
-    Number(walking.today) || 0;
+  const walkingToday = Number(walking.today) || 0;
+  const walkingGoal = Number(walking.goal) || 2;
+  const walkingPercent = clampPercent(walking.percent);
 
-  const walkingGoal =
-    Number(walking.goal) || 2;
-
-  const walkingPercent = clampPercent(
-    walking.percent
-  );
-
-  const weekTotal =
-    Number(walking.weekTotal) || 0;
-
-  const poundsDown =
-    Number(weight.poundsDown) || 0;
+  const weekTotal = Number(walking.weekTotal) || 0;
+  const poundsDown = Number(weight.poundsDown) || 0;
 
   document.getElementById(
     "water-today"
@@ -274,11 +123,6 @@ function renderHealthSummary(data) {
   setProgressBar(
     "walking-progress",
     walkingPercent
-  );
-
-  renderWaterChart(
-    water.history,
-    waterGoal
   );
 
   loadingElement.hidden = true;
