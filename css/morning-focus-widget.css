@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+    color-scheme: light;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    padding: 0;
+    background: transparent;
+    font-family: "Inter", Arial, sans-serif;
+    color: #40332c;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.focus-card {
+    width: 100%;
+    min-height: 220px;
+    padding: 18px;
+
+    border: 1px solid rgba(119, 91, 72, 0.16);
+    border-radius: 20px;
+
+    background: #fffdf9;
+
+    box-shadow:
+        0 10px 30px rgba(91, 64, 47, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.focus-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 15px;
+}
+
+.focus-eyebrow {
+    margin: 0 0 3px;
+
+    color: #a3724e;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.focus-header h1 {
+    margin: 0;
+
+    color: #3f312a;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.focus-open-link {
+    color: #976640;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.focus-open-link:hover {
+    text-decoration: underline;
+}
+
+.focus-loading,
+.focus-empty,
+.focus-error {
+    display: grid;
+    min-height: 135px;
+    place-items: center;
+
+    color: #83746b;
+    font-size: 13px;
+    text-align: center;
+}
+
+.focus-empty {
+    align-content: center;
+    gap: 10px;
+}
+
+.focus-empty p {
+    margin: 0;
+}
+
+.focus-create-button {
+    padding: 9px 14px;
+
+    border: 1px solid rgba(153, 101, 64, 0.22);
+    border-radius: 11px;
+
+    background: #f5e8da;
+    color: #734b30;
+
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.focus-create-button:hover {
+    background: #efddcc;
+}
+
+.focus-create-button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.focus-content {
+    display: grid;
+    gap: 15px;
+}
+
+.priority-list {
+    display: grid;
+    gap: 8px;
+}
+
+.priority-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    min-width: 0;
+
+    color: #493a32;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.priority-item input {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    margin: 1px 0 0;
+
+    accent-color: #a46e49;
+    cursor: pointer;
+}
+
+.priority-item span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.priority-item input:checked + span {
+    color: #9b8e85;
+    text-decoration: line-through;
+}
+
+.priority-item.is-empty {
+    display: none;
+}
+
+.reflection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 16px;
+
+    padding-top: 13px;
+    border-top: 1px solid rgba(109, 82, 65, 0.11);
+}
+
+.reflection-item {
+    min-width: 0;
+}
+
+.reflection-wide {
+    grid-column: 1 / -1;
+}
+
+.reflection-label {
+    margin: 0 0 3px;
+
+    color: #9a704f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+}
+
+.reflection-value {
+    margin: 0;
+
+    color: #51433b;
+    font-size: 12px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.reflection-item.is-empty {
+    display: none;
+}
+
+.focus-message {
+    min-height: 14px;
+    margin: 0;
+
+    color: #8a7668;
+    font-size: 11px;
+}
+
+.focus-error {
+    color: #9b4f43;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 480px) {
+    .focus-card {
+        padding: 16px;
+    }
+
+    .reflection-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reflection-wide {
+        grid-column: auto;
+    }
+}
