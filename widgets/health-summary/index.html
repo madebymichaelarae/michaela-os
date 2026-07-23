@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Health Summary</title>
+
+    <link
+      rel="stylesheet"
+      href="../../css/health-summary-widget.css"
+    />
+  </head>
+
+  <body>
+    <main class="health-widget-shell">
+      <button
+        class="health-card"
+        id="health-card"
+        type="button"
+        aria-label="Open Health dashboard"
+      >
+        <header class="health-card__header">
+          <div class="health-card__heading">
+            <span
+              class="health-card__icon"
+              aria-hidden="true"
+            >
+              ♥
+            </span>
+
+            <div>
+              <p class="health-card__eyebrow">
+                Dashboard
+              </p>
+
+              <h1 class="health-card__title">
+                Health
+              </h1>
+            </div>
+          </div>
+
+          <span
+            class="health-card__arrow"
+            aria-hidden="true"
+          >
+            →
+          </span>
+        </header>
+
+        <div
+          class="health-card__loading"
+          id="health-loading"
+        >
+          Loading your health summary…
+        </div>
+
+        <div
+          class="health-card__error"
+          id="health-error"
+          hidden
+        >
+          Health data could not be loaded.
+        </div>
+
+        <div
+          class="health-card__content"
+          id="health-content"
+          hidden
+        >
+          <section class="metric-section">
+            <div class="metric-section__top">
+              <div>
+                <p class="metric-section__label">
+                  Water
+                </p>
+
+                <p class="metric-section__value">
+                  <span id="water-today">0</span>
+                  <span class="metric-section__goal">
+                    / <span id="water-goal">72</span> oz
+                  </span>
+                </p>
+              </div>
+
+              <div
+                class="water-chart"
+                id="water-chart"
+                role="img"
+                aria-label="Seven-day water history"
+              >
+                <svg
+                  id="water-chart-svg"
+                  viewBox="0 0 140 48"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <line
+                    class="water-chart__goal-line"
+                    id="water-goal-line"
+                    x1="0"
+                    x2="140"
+                    y1="12"
+                    y2="12"
+                  ></line>
+
+                  <polyline
+                    class="water-chart__line"
+                    id="water-chart-line"
+                    points=""
+                  ></polyline>
+
+                  <g id="water-chart-dots"></g>
+                </svg>
+              </div>
+            </div>
+
+            <div class="progress">
+              <div class="progress__track">
+                <div
+                  class="progress__fill progress__fill--water"
+                  id="water-progress"
+                ></div>
+              </div>
+
+              <span
+                class="progress__percent"
+                id="water-percent"
+              >
+                0%
+              </span>
+            </div>
+          </section>
+
+          <div class="health-card__divider"></div>
+
+          <section class="metric-section">
+            <div class="metric-section__top">
+              <div>
+                <p class="metric-section__label">
+                  Walking
+                </p>
+
+                <p class="metric-section__value">
+                  <span id="walking-today">0</span>
+                  <span class="metric-section__goal">
+                    / <span id="walking-goal">2</span> mi
+                  </span>
+                </p>
+              </div>
+
+              <div class="week-total">
+                <span
+                  class="week-total__value"
+                  id="walking-week-total"
+                >
+                  0
+                </span>
+
+                <span class="week-total__label">
+                  miles this week
+                </span>
+              </div>
+            </div>
+
+            <div class="progress">
+              <div class="progress__track">
+                <div
+                  class="progress__fill progress__fill--walking"
+                  id="walking-progress"
+                ></div>
+              </div>
+
+              <span
+                class="progress__percent"
+                id="walking-percent"
+              >
+                0%
+              </span>
+            </div>
+          </section>
+
+          <footer class="progress-summary">
+            <div
+              class="progress-summary__badge"
+              aria-hidden="true"
+            >
+              ↓
+            </div>
+
+            <div>
+              <span
+                class="progress-summary__value"
+                id="pounds-down"
+              >
+                0
+              </span>
+
+              <span class="progress-summary__unit">
+                lb down overall
+              </span>
+            </div>
+          </footer>
+        </div>
+      </button>
+    </main>
+
+    <script src="../../js/health-summary-widget.js"></script>
+  </body>
+</html>
