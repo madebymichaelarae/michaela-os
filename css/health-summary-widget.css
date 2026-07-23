@@ -1,8 +1,12 @@
 :root {
   --background: transparent;
+
   --card-background: #fffaf1;
   --card-border: rgba(91, 70, 54, 0.12);
   --card-shadow: rgba(79, 57, 40, 0.08);
+
+  --panel-background: rgba(255, 255, 255, 0.22);
+  --panel-border: rgba(91, 70, 54, 0.1);
 
   --text-primary: #493b31;
   --text-secondary: #847468;
@@ -13,16 +17,12 @@
   --accent-soft: #f1ddd2;
 
   --water: #7f9ca6;
-  --water-soft: #dce8eb;
+  --walking: #b28a55;
 
-  --walking: #9a8769;
-  --walking-soft: #e9e1d4;
-
-  --divider: rgba(91, 70, 54, 0.1);
   --track: rgba(91, 70, 54, 0.09);
 
-  --radius-large: 24px;
-  --radius-medium: 14px;
+  --radius-large: 22px;
+  --radius-medium: 16px;
 }
 
 * {
@@ -39,6 +39,7 @@ body {
 body {
   background: var(--background);
   color: var(--text-primary);
+
   font-family:
     Inter,
     ui-sans-serif,
@@ -49,10 +50,7 @@ body {
     sans-serif;
 }
 
-button,
-input,
-textarea,
-select {
+button {
   font: inherit;
 }
 
@@ -63,9 +61,8 @@ select {
 
 .health-card {
   width: 100%;
-  min-height: 390px;
-  padding: 24px;
-  overflow: hidden;
+  min-height: 0;
+  padding: 20px;
 
   color: inherit;
   text-align: left;
@@ -73,15 +70,16 @@ select {
   background:
     radial-gradient(
       circle at top right,
-      rgba(180, 102, 77, 0.1),
-      transparent 36%
+      rgba(180, 102, 77, 0.08),
+      transparent 34%
     ),
     var(--card-background);
 
   border: 1px solid var(--card-border);
   border-radius: var(--radius-large);
+
   box-shadow:
-    0 12px 30px var(--card-shadow),
+    0 10px 24px var(--card-shadow),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
   cursor: pointer;
@@ -98,12 +96,12 @@ select {
   border-color: rgba(180, 102, 77, 0.22);
 
   box-shadow:
-    0 16px 34px rgba(79, 57, 40, 0.11),
+    0 14px 28px rgba(79, 57, 40, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 .health-card:focus-visible {
-  outline: 3px solid rgba(180, 102, 77, 0.32);
+  outline: 3px solid rgba(180, 102, 77, 0.3);
   outline-offset: 3px;
 }
 
@@ -111,38 +109,37 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 14px;
 
-  margin-bottom: 28px;
+  margin-bottom: 16px;
 }
 
 .health-card__heading {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .health-card__icon {
   display: grid;
+  width: 36px;
+  height: 36px;
   place-items: center;
 
-  width: 42px;
-  height: 42px;
-
   color: var(--accent-dark);
-  font-size: 20px;
+  font-size: 17px;
 
   background: var(--accent-soft);
-  border-radius: 14px;
+  border-radius: 12px;
 }
 
 .health-card__eyebrow {
-  margin: 0 0 2px;
+  margin: 0 0 1px;
 
   color: var(--text-soft);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -150,34 +147,36 @@ select {
   margin: 0;
 
   color: var(--text-primary);
+
   font-family:
     Georgia,
     "Times New Roman",
     serif;
-  font-size: 1.6rem;
+
+  font-size: 1.35rem;
   font-weight: 500;
   line-height: 1;
 }
 
 .health-card__arrow {
   color: var(--accent);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 
   transition: transform 160ms ease;
 }
 
 .health-card:hover .health-card__arrow {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 .health-card__loading,
 .health-card__error {
   display: grid;
-  min-height: 275px;
+  min-height: 145px;
   place-items: center;
 
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   text-align: center;
 }
 
@@ -189,53 +188,98 @@ select {
   display: block;
 }
 
-.metric-section {
+.health-metrics {
   display: grid;
-  gap: 13px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.metric-section__top {
+.metric-panel {
+  min-width: 0;
+  padding: 15px;
+
+  background: var(--panel-background);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-medium);
+}
+
+.metric-panel__heading {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 9px;
 }
 
-.metric-section__label {
-  margin: 0 0 5px;
+.metric-panel__icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.metric-panel__label {
+  margin: 0;
 
   color: var(--text-secondary);
-  font-size: 0.76rem;
-  font-weight: 750;
+  font-size: 0.68rem;
+  font-weight: 800;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
-.metric-section__value {
-  margin: 0;
+.metric-panel__value {
+  margin: 0 0 13px;
 
   color: var(--text-primary);
   font-size: 1.55rem;
-  font-weight: 750;
-  letter-spacing: -0.035em;
+  font-weight: 780;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
-.metric-section__goal {
+.metric-panel__goal {
   color: var(--text-secondary);
-  font-size: 0.92rem;
-  font-weight: 550;
+  font-size: 0.82rem;
+  font-weight: 600;
   letter-spacing: 0;
+}
+
+.walking-values {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.week-total {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 1px;
+
+  text-align: right;
+}
+
+.week-total__value {
+  color: var(--accent-dark);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.week-total__label {
+  color: var(--text-secondary);
+  font-size: 0.62rem;
+  line-height: 1.15;
 }
 
 .progress {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .progress__track {
-  height: 10px;
+  height: 8px;
   overflow: hidden;
 
   background: var(--track);
@@ -260,99 +304,37 @@ select {
 }
 
 .progress__percent {
-  min-width: 34px;
+  min-width: 28px;
 
   color: var(--text-secondary);
-  font-size: 0.73rem;
-  font-weight: 700;
+  font-size: 0.66rem;
+  font-weight: 750;
   text-align: right;
-}
-
-.health-card__divider {
-  height: 1px;
-  margin: 22px 0;
-
-  background: var(--divider);
-}
-
-.water-chart {
-  width: 140px;
-  height: 48px;
-  flex: 0 0 140px;
-}
-
-.water-chart svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.water-chart__goal-line {
-  stroke: rgba(127, 156, 166, 0.22);
-  stroke-dasharray: 3 4;
-  stroke-width: 1.25;
-}
-
-.water-chart__line {
-  fill: none;
-  stroke: var(--water);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 3;
-}
-
-.water-chart__dot {
-  fill: var(--card-background);
-  stroke: var(--water);
-  stroke-width: 2;
-}
-
-.week-total {
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-
-  text-align: right;
-}
-
-.week-total__value {
-  color: var(--accent-dark);
-  font-size: 1.05rem;
-  font-weight: 800;
-}
-
-.week-total__label {
-  max-width: 74px;
-
-  color: var(--text-secondary);
-  font-size: 0.7rem;
-  line-height: 1.2;
 }
 
 .progress-summary {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 11px;
+  gap: 7px;
 
-  margin-top: 24px;
-  padding: 14px 16px;
+  margin-top: 12px;
+  padding: 10px 14px;
 
   color: var(--accent-dark);
 
-  background: rgba(180, 102, 77, 0.09);
+  background: rgba(180, 102, 77, 0.08);
   border: 1px solid rgba(180, 102, 77, 0.1);
-  border-radius: var(--radius-medium);
+  border-radius: 14px;
 }
 
 .progress-summary__badge {
   display: grid;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   place-items: center;
 
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 800;
 
   background: rgba(180, 102, 77, 0.12);
@@ -360,59 +342,61 @@ select {
 }
 
 .progress-summary__value {
-  font-size: 1.16rem;
+  font-size: 1rem;
   font-weight: 800;
 }
 
 .progress-summary__unit {
-  margin-left: 4px;
-
   color: var(--text-secondary);
-  font-size: 0.78rem;
-  font-weight: 650;
+  font-size: 0.7rem;
+  font-weight: 700;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 620px) {
   .health-card {
-    min-height: 380px;
-    padding: 21px;
+    padding: 17px;
   }
 
-  .water-chart {
-    width: 112px;
-    flex-basis: 112px;
+  .health-metrics {
+    gap: 9px;
   }
 
-  .metric-section__value {
+  .metric-panel {
+    padding: 13px;
+  }
+
+  .metric-panel__value {
     font-size: 1.35rem;
   }
 
-  .week-total {
-    display: grid;
-    gap: 1px;
+  .metric-panel__goal {
+    font-size: 0.75rem;
   }
 
-  .week-total__label {
-    max-width: none;
+  .walking-values {
+    display: block;
+  }
+
+  .week-total {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 4px;
+
+    margin-top: -6px;
+    margin-bottom: 10px;
+
+    text-align: left;
   }
 }
 
-@media (max-width: 390px) {
-  .health-card {
-    padding: 19px;
+@media (max-width: 430px) {
+  .health-metrics {
+    grid-template-columns: 1fr;
   }
 
-  .water-chart {
-    width: 95px;
-    flex-basis: 95px;
-  }
-
-  .health-card__title {
-    font-size: 1.4rem;
-  }
-
-  .metric-section__top {
-    gap: 12px;
+  .health-card__header {
+    margin-bottom: 12px;
   }
 }
 
