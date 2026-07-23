@@ -169,15 +169,17 @@ button {
   transform: translateX(3px);
 }
 
-.health-card__loading,
-.health-card__error {
-  display: grid;
-  min-height: 145px;
-  place-items: center;
+.health-card__content{
+    display:none;
+}
 
-  color: var(--text-secondary);
-  font-size: 0.82rem;
-  text-align: center;
+.health-card__content.is-visible{
+    display:block;
+}
+
+.health-card__loading,
+.health-card__error{
+    display:none;
 }
 
 .health-card__error {
