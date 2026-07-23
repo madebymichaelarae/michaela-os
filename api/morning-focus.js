@@ -1,5 +1,6 @@
-const NOTION_VERSION = "2025-09-03";
+const NOTION_VERSION = "2026-03-11";
 const DATABASE_ID = "3a6dbd801b578063b145f165330e4890";
+const TEMPLATE_NAME = "Morning Focus";
 const TIME_ZONE = "America/New_York";
 
 function getTodayDate() {
@@ -11,8 +12,19 @@ function getTodayDate() {
     }).format(new Date());
 }
 
+function getPageTitle() {
+    return new Intl.DateTimeFormat("en-US", {
+        timeZone: TIME_ZONE,
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+    }).format(new Date());
+}
+
 function getPlainText(property) {
-    if (!property) return "";
+    if (!property) {
+        return "";
+    }
 
     if (property.type === "rich_text") {
         return property.rich_text
@@ -40,25 +52,42 @@ function getCheckbox(property) {
 }
 
 async function notionRequest(path, options = {}) {
-    const response = await fetch(`https://api.notion.com/v1${path}`, {
-        ...options,
-        headers: {
-            Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
-            "Notion-Version": NOTION_VERSION,
-            "Content-Type": "application/json",
-            ...(options.headers || {})
+    const response = await fetch(
+        `https://api.notion.com/v1${path}`,
+        {
+            ...options,
+            headers: {
+                Authorization:
+                    `Bearer ${process.env.NOTION_TOKEN}`,
+                "Notion-Version": NOTION_VERSION,
+                "Content-Type": "application/json",
+                ...(options.headers || {})
+            }
         }
-    });
+    );
+
+    const responseText = await response.text();
+
+    let data = {};
+
+    if (responseText) {
+        try {
+            data = JSON.parse(responseText);
+        } catch {
+            data = {
+                message: responseText
+            };
+        }
+    }
 
     if (!response.ok) {
-        const errorText = await response.text();
-
         throw new Error(
-            `Notion request failed: ${response.status} ${errorText}`
+            data.message ||
+            `Notion request failed with ${response.status}`
         );
     }
 
-    return response.json();
+    return data;
 }
 
 async function getDataSourceId() {
@@ -70,16 +99,15 @@ async function getDataSourceId() {
 
     if (!dataSourceId) {
         throw new Error(
-            "No Notion data source was found for the Daily Focus database."
+            "No data source was found for Daily Focus."
         );
     }
 
     return dataSourceId;
 }
 
-async function getTodayFocus() {
+async function findTodayPage(dataSourceId) {
     const today = getTodayDate();
-    const dataSourceId = await getDataSourceId();
 
     const results = await notionRequest(
         `/data_sources/${dataSourceId}/query`,
@@ -97,24 +125,30 @@ async function getTodayFocus() {
         }
     );
 
-    const page = results.results?.[0];
+    return results.results?.[0] || null;
+}
 
+function formatFocusPage(page, today) {
     if (!page) {
         return {
             exists: false,
             date: today,
+
             priority1: {
                 text: "",
                 done: false
             },
+
             priority2: {
                 text: "",
                 done: false
             },
+
             priority3: {
                 text: "",
                 done: false
             },
+
             lookingForwardTo: "",
             leavingInYesterday: "",
             gratefulFor: ""
@@ -130,18 +164,30 @@ async function getTodayFocus() {
         pageUrl: page.url,
 
         priority1: {
-            text: getPlainText(properties["Priority 1"]),
-            done: getCheckbox(properties["Priority 1 Done"])
+            text: getPlainText(
+                properties["Priority 1"]
+            ),
+            done: getCheckbox(
+                properties["Priority 1 Done"]
+            )
         },
 
         priority2: {
-            text: getPlainText(properties["Priority 2"]),
-            done: getCheckbox(properties["Priority 2 Done"])
+            text: getPlainText(
+                properties["Priority 2"]
+            ),
+            done: getCheckbox(
+                properties["Priority 2 Done"]
+            )
         },
 
         priority3: {
-            text: getPlainText(properties["Priority 3"]),
-            done: getCheckbox(properties["Priority 3 Done"])
+            text: getPlainText(
+                properties["Priority 3"]
+            ),
+            done: getCheckbox(
+                properties["Priority 3 Done"]
+            )
         },
 
         lookingForwardTo: getPlainText(
@@ -158,10 +204,166 @@ async function getTodayFocus() {
     };
 }
 
-export default async function handler(request, response) {
+async function getTodayFocus() {
+    const today = getTodayDate();
+    const dataSourceId = await getDataSourceId();
+    const page = await findTodayPage(dataSourceId);
+
+    return formatFocusPage(page, today);
+}
+
+async function getMorningFocusTemplate(dataSourceId) {
+    const result = await notionRequest(
+        `/data_sources/${dataSourceId}/templates`
+    );
+
+    const templates = result.templates || [];
+
+    return (
+        templates.find(
+            (template) =>
+                template.name
+                    ?.trim()
+                    .toLowerCase() ===
+                TEMPLATE_NAME.toLowerCase()
+        ) ||
+        templates.find(
+            (template) => template.is_default
+        ) ||
+        null
+    );
+}
+
+async function createTodayFocus() {
+    const today = getTodayDate();
+    const dataSourceId = await getDataSourceId();
+
+    /*
+     * Check again before creating so repeated clicks
+     * do not intentionally create another entry.
+     */
+    const existingPage =
+        await findTodayPage(dataSourceId);
+
+    if (existingPage) {
+        return {
+            created: false,
+            ...formatFocusPage(
+                existingPage,
+                today
+            )
+        };
+    }
+
+    const template =
+        await getMorningFocusTemplate(dataSourceId);
+
+    const requestBody = {
+        parent: {
+            type: "data_source_id",
+            data_source_id: dataSourceId
+        },
+
+        properties: {
+            Name: {
+                type: "title",
+                title: [
+                    {
+                        type: "text",
+                        text: {
+                            content: getPageTitle()
+                        }
+                    }
+                ]
+            },
+
+            Date: {
+                type: "date",
+                date: {
+                    start: today
+                }
+            }
+        }
+    };
+
+    if (template?.id) {
+        requestBody.template = {
+            type: "template_id",
+            template_id: template.id,
+            timezone: TIME_ZONE
+        };
+    }
+
+    const page = await notionRequest(
+        "/pages",
+        {
+            method: "POST",
+            body: JSON.stringify(requestBody)
+        }
+    );
+
+    return {
+        created: true,
+        templateApplied: Boolean(template?.id),
+        ...formatFocusPage(page, today)
+    };
+}
+
+async function updatePriority(requestBody) {
+    const {
+        pageId,
+        priority,
+        done
+    } = requestBody || {};
+
+    const propertyNames = {
+        1: "Priority 1 Done",
+        2: "Priority 2 Done",
+        3: "Priority 3 Done"
+    };
+
+    const propertyName = propertyNames[priority];
+
+    if (
+        !pageId ||
+        !propertyName ||
+        typeof done !== "boolean"
+    ) {
+        throw new Error(
+            "Invalid priority update."
+        );
+    }
+
+    await notionRequest(
+        `/pages/${pageId}`,
+        {
+            method: "PATCH",
+            body: JSON.stringify({
+                properties: {
+                    [propertyName]: {
+                        type: "checkbox",
+                        checkbox: done
+                    }
+                }
+            })
+        }
+    );
+
+    return {
+        success: true,
+        priority,
+        done
+    };
+}
+
+export default async function handler(
+    request,
+    response
+) {
     if (!process.env.NOTION_TOKEN) {
         return response.status(500).json({
-            error: "NOTION_TOKEN is not configured."
+            error:
+                "NOTION_TOKEN is not configured."
         });
     }
 
@@ -172,57 +374,41 @@ export default async function handler(request, response) {
             return response.status(200).json(focus);
         }
 
-        if (request.method === "PATCH") {
-            const {
-                pageId,
-                priority,
-                done
-            } = request.body || {};
+        if (request.method === "POST") {
+            const focus =
+                await createTodayFocus();
 
-            const propertyNames = {
-                1: "Priority 1 Done",
-                2: "Priority 2 Done",
-                3: "Priority 3 Done"
-            };
-
-            const propertyName = propertyNames[priority];
-
-            if (
-                !pageId ||
-                !propertyName ||
-                typeof done !== "boolean"
-            ) {
-                return response.status(400).json({
-                    error: "Invalid priority update."
-                });
-            }
-
-            await notionRequest(`/pages/${pageId}`, {
-                method: "PATCH",
-                body: JSON.stringify({
-                    properties: {
-                        [propertyName]: {
-                            checkbox: done
-                        }
-                    }
-                })
-            });
-
-            return response.status(200).json({
-                success: true,
-                priority,
-                done
-            });
+            return response.status(201).json(focus);
         }
 
+        if (request.method === "PATCH") {
+            const result =
+                await updatePriority(
+                    request.body
+                );
+
+            return response.status(200).json(
+                result
+            );
+        }
+
+        response.setHeader(
+            "Allow",
+            "GET, POST, PATCH"
+        );
+
         return response.status(405).json({
-            error: "Method not allowed"
+            error: "Method not allowed."
         });
     } catch (error) {
-        console.error("Morning Focus API error:", error);
+        console.error(
+            "Morning Focus API error:",
+            error
+        );
 
         return response.status(500).json({
-            error: "Unable to process Morning Focus.",
+            error:
+                "Unable to process Morning Focus.",
             details: error.message
         });
     }
