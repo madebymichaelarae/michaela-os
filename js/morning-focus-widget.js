@@ -190,9 +190,93 @@ async function updatePriority(number, checked) {
     );
 });
 
-elements.createFocusButton.addEventListener("click", () => {
+async function createTodayFocus() {
+    const button = elements.createFocusButton;
+
+    /*
+     * Open a blank tab immediately during the click.
+     * Browsers may block a new tab if we wait until
+     * after the API request finishes.
+     */
+    const notionWindow = window.open(
+        "",
+        "_blank"
+    );
+
+    button.disabled = true;
+    button.textContent = "Creating…";
+
     elements.createMessage.textContent =
-        "Creating today’s page is the next step.";
-});
+        "Preparing today’s page…";
+
+    try {
+        const response = await fetch(
+            API_URL,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+                body: JSON.stringify({})
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.details ||
+                result.error ||
+                "Unable to create today’s page."
+            );
+        }
+
+        if (result.pageUrl) {
+            if (notionWindow) {
+                notionWindow.location.href =
+                    result.pageUrl;
+            } else {
+                window.open(
+                    result.pageUrl,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+            }
+        } else if (notionWindow) {
+            notionWindow.close();
+        }
+
+        elements.createMessage.textContent =
+            result.created
+                ? "Today is ready."
+                : "Today’s page was already created.";
+
+        await loadFocus();
+    } catch (error) {
+        console.error(
+            "Morning Focus creation error:",
+            error
+        );
+
+        if (notionWindow) {
+            notionWindow.close();
+        }
+
+        elements.createMessage.textContent =
+            "Could not create today’s page.";
+
+        button.disabled = false;
+        button.textContent = "Start Today";
+    }
+}
+
+elements.createFocusButton.addEventListener(
+    "click",
+    createTodayFocus
+);
+
+loadFocus();
+loadFocus();
 
 loadFocus();
