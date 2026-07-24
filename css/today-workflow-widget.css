@@ -70,7 +70,7 @@ a {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .workflow-heading {
@@ -179,16 +179,11 @@ a {
   background: var(--color-surface-inset, #f8efe5);
 }
 
-.workflow-section-header {
+.workflow-section-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.workflow-section-header h2 {
-  margin: 0;
+  gap: 7px;
+  margin: 0 0 8px;
   color: var(--color-text-muted, #876c5b);
   font-size: 0.66rem;
   font-weight: 800;
@@ -198,16 +193,16 @@ a {
 }
 
 .workflow-count {
-  display: inline-grid;
-  min-width: 23px;
-  height: 20px;
-  padding: 0 6px;
-  place-items: center;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.56);
+  color: var(--color-accent, #b9674f);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.workflow-count::before {
+  content: "·";
+  margin-right: 7px;
   color: var(--color-text-muted, #876c5b);
-  font-size: 0.67rem;
-  font-weight: 800;
 }
 
 .workflow-list {
@@ -217,9 +212,13 @@ a {
 
 .workflow-item {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-columns:
+    auto
+    auto
+    auto
+    minmax(0, 1fr);
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   min-height: 35px;
   padding: 6px 8px;
   border: 1px solid rgba(110, 78, 57, 0.07);
@@ -286,6 +285,11 @@ a.workflow-item:hover {
   white-space: nowrap;
 }
 
+.workflow-separator {
+  color: var(--color-text-muted, #aa9486);
+  font-size: 0.72rem;
+}
+
 .workflow-topic {
   min-width: 0;
   overflow: hidden;
@@ -295,14 +299,6 @@ a.workflow-item:hover {
   line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.workflow-section-empty {
-  margin: 1px 0 0;
-  padding: 6px 2px 2px;
-  color: var(--color-text-muted, #9b8475);
-  font-size: 0.73rem;
-  font-style: italic;
 }
 
 .workflow-loading {
@@ -406,11 +402,13 @@ a.workflow-item:hover {
   }
 
   .workflow-item {
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 7px;
+    grid-template-columns:
+      auto
+      auto
+      minmax(0, 1fr);
   }
 
-  .workflow-type {
+  .workflow-separator {
     display: none;
   }
 }
