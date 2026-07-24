@@ -6,7 +6,7 @@ export default async function handler(request, response) {
 
     return response.status(405).json({
       success: false,
-      error: "Method not allowed.",
+      error: "Method not allowed."
     });
   }
 
@@ -26,9 +26,9 @@ export default async function handler(request, response) {
       success: false,
       error: "Unable to load today's workflow.",
       details:
-        process.env.NODE_ENV === "development"
+        error instanceof Error
           ? error.message
-          : undefined,
+          : String(error)
     });
   }
 }
