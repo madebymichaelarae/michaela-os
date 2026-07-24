@@ -7,13 +7,15 @@ const elements = {
   sections: document.querySelector("#workflow-sections"),
   empty: document.querySelector("#workflow-empty"),
   error: document.querySelector("#workflow-error"),
-  errorMessage: document.querySelector("#workflow-error-message"),
+  errorMessage: document.querySelector(
+    "#workflow-error-message"
+  )
 };
 
 const sectionNames = [
   "toDraft",
   "readyToSchedule",
-  "scheduled",
+  "scheduled"
 ];
 
 function normalizeClient(client) {
@@ -32,6 +34,7 @@ function createItemElement(item) {
     row.href = item.notionUrl;
     row.target = "_blank";
     row.rel = "noopener noreferrer";
+
     row.setAttribute(
       "aria-label",
       `Open ${item.client} ${item.contentType}: ${item.topic}`
@@ -47,31 +50,26 @@ function createItemElement(item) {
   type.className = "workflow-type";
   type.textContent = item.contentType || "Content";
 
+  const separator = document.createElement("span");
+  separator.className = "workflow-separator";
+  separator.textContent = "·";
+  separator.setAttribute("aria-hidden", "true");
+
   const topic = document.createElement("span");
   topic.className = "workflow-topic";
   topic.textContent = item.topic || "Untitled";
   topic.title = item.topic || "Untitled";
 
-  row.append(client, type, topic);
+  row.append(client, type, separator, topic);
 
   return row;
 }
 
-function createEmptySectionMessage(sectionName) {
-  const messages = {
-    toDraft: "Nothing scheduled to draft today.",
-    readyToSchedule: "Nothing is waiting to be scheduled.",
-    scheduled: "Nothing is currently marked scheduled.",
-  };
-
-  const element = document.createElement("p");
-  element.className = "workflow-section-empty";
-  element.textContent = messages[sectionName];
-
-  return element;
-}
-
 function renderSection(sectionName, items = []) {
+  const section = document.querySelector(
+    `[data-section="${sectionName}"]`
+  );
+
   const list = document.querySelector(
     `[data-list="${sectionName}"]`
   );
@@ -80,7 +78,7 @@ function renderSection(sectionName, items = []) {
     `[data-count="${sectionName}"]`
   );
 
-  if (!list || !count) {
+  if (!section || !list || !count) {
     return;
   }
 
@@ -88,9 +86,11 @@ function renderSection(sectionName, items = []) {
   count.textContent = String(items.length);
 
   if (!items.length) {
-    list.append(createEmptySectionMessage(sectionName));
+    section.hidden = true;
     return;
   }
+
+  section.hidden = false;
 
   const fragment = document.createDocumentFragment();
 
@@ -104,7 +104,11 @@ function renderSection(sectionName, items = []) {
 function setLoading(isLoading) {
   elements.loading.hidden = !isLoading;
   elements.refresh.disabled = isLoading;
-  elements.refresh.classList.toggle("is-spinning", isLoading);
+
+  elements.refresh.classList.toggle(
+    "is-spinning",
+    isLoading
+  );
 }
 
 function hideAllStates() {
@@ -150,9 +154,9 @@ async function loadWorkflow() {
     const response = await fetch(API_URL, {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Accept: "application/json"
       },
-      cache: "no-store",
+      cache: "no-store"
     });
 
     const data = await response.json();
@@ -174,6 +178,9 @@ async function loadWorkflow() {
   }
 }
 
-elements.refresh.addEventListener("click", loadWorkflow);
+elements.refresh.addEventListener(
+  "click",
+  loadWorkflow
+);
 
 loadWorkflow();
