@@ -1,5 +1,9 @@
 @import url("/css/system/cozy-autumn.css");
 
+[hidden] {
+  display: none !important;
+}
+
 :root {
   --client-cw: #7d9d73;
   --client-cw-text: #263f25;
