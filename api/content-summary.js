@@ -9,61 +9,115 @@ const PROPERTY_NAMES = {
   status: "Status"
 };
 
-function getPlainText(parts = []) {
+const CONTENT_TYPES = {
+  email: "Email",
+  text: "Text"
+};
+
+const SENT_STATUS = "Sent";
+
+function normalize(value) {
+  return String(value || "")
+    .trim()
+    .toLocaleLowerCase("en-US");
+}
+
+function findProperty(properties, expectedName) {
+  if (!properties || !expectedName) {
+    return null;
+  }
+
+  if (properties[expectedName]) {
+    return properties[expectedName];
+  }
+
+  const normalizedExpected =
+    normalize(expectedName);
+
+  const matchingKey = Object.keys(
+    properties
+  ).find(
+    (propertyName) =>
+      normalize(propertyName) ===
+      normalizedExpected
+  );
+
+  return matchingKey
+    ? properties[matchingKey]
+    : null;
+}
+
+function joinPlainText(parts) {
+  if (!Array.isArray(parts)) {
+    return "";
+  }
+
   return parts
-    .map((part) => part?.plain_text || "")
+    .map((part) => {
+      return (
+        part?.plain_text ||
+        part?.text?.content ||
+        ""
+      );
+    })
     .join("")
     .trim();
 }
 
-function getTitleValue(property) {
+function getPropertyText(property) {
   if (!property) {
     return "";
   }
 
-  if (property.type === "title") {
-    return getPlainText(property.title);
+  switch (property.type) {
+    case "title":
+      return joinPlainText(
+        property.title
+      );
+
+    case "rich_text":
+      return joinPlainText(
+        property.rich_text
+      );
+
+    case "select":
+      return property.select?.name || "";
+
+    case "status":
+      return property.status?.name || "";
+
+    case "multi_select":
+      return (
+        property.multi_select
+          ?.map((option) => option.name)
+          .join(", ") || ""
+      );
+
+    case "formula":
+      if (
+        property.formula?.type ===
+        "string"
+      ) {
+        return (
+          property.formula.string || ""
+        );
+      }
+
+      return "";
+
+    default:
+      return (
+        property.title
+          ? joinPlainText(property.title)
+          : property.rich_text
+            ? joinPlainText(
+                property.rich_text
+              )
+            : property.select?.name ||
+              property.status?.name ||
+              ""
+      );
   }
-
-  if (Array.isArray(property.title)) {
-    return getPlainText(property.title);
-  }
-
-  return "";
-}
-
-function getNamedPropertyValue(property) {
-  if (!property) {
-    return "";
-  }
-
-  if (property.type === "select") {
-    return property.select?.name || "";
-  }
-
-  if (property.type === "status") {
-    return property.status?.name || "";
-  }
-
-  if (property.type === "multi_select") {
-    return property.multi_select
-      ?.map((item) => item.name)
-      .join(", ") || "";
-  }
-
-  if (property.type === "rich_text") {
-    return getPlainText(property.rich_text);
-  }
-
-  if (property.type === "title") {
-    return getPlainText(property.title);
-  }
-
-  return (
-    property.select?.name ||
-    property.status?.name ||
-    ""
-  );
 }
 
 function getDateStart(property) {
@@ -71,37 +125,44 @@ function getDateStart(property) {
     return "";
   }
 
-  return property.date?.start || "";
-}
+  if (property.type === "date") {
+    return property.date?.start || "";
+  }
 
-function normalize(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase();
+  if (
+    property.type === "formula" &&
+    property.formula?.type === "date"
+  ) {
+    return (
+      property.formula.date?.start || ""
+    );
+  }
+
+  return property.date?.start || "";
 }
 
 function getRequestedMonth(request) {
   const now = new Date();
 
-  const requestedYear = Number(
+  const queryYear = Number(
     request.query?.year
   );
 
-  const requestedMonth = Number(
+  const queryMonth = Number(
     request.query?.month
   );
 
   const year =
-    Number.isInteger(requestedYear) &&
-    requestedYear >= 2000
-      ? requestedYear
+    Number.isInteger(queryYear) &&
+    queryYear >= 2000
+      ? queryYear
       : now.getFullYear();
 
   const month =
-    Number.isInteger(requestedMonth) &&
-    requestedMonth >= 1 &&
-    requestedMonth <= 12
-      ? requestedMonth
+    Number.isInteger(queryMonth) &&
+    queryMonth >= 1 &&
+    queryMonth <= 12
+      ? queryMonth
       : now.getMonth() + 1;
 
   return {
@@ -119,10 +180,13 @@ function dateBelongsToMonth(
     return false;
   }
 
-  const expectedPrefix =
-    `${year}-${String(month).padStart(2, "0")}`;
+  const expectedMonth =
+    String(month).padStart(2, "0");
 
-  return dateString.startsWith(
+  const expectedPrefix =
+    `${year}-${expectedMonth}`;
+
+  return String(dateString).startsWith(
     expectedPrefix
   );
 }
@@ -141,11 +205,22 @@ function createClientSummary(clientName) {
   };
 }
 
+function isExactValue(
+  actualValue,
+  expectedValue
+) {
+  return (
+    normalize(actualValue) ===
+    normalize(expectedValue)
+  );
+}
+
 function sortClients(a, b) {
   return a.client.localeCompare(
     b.client,
     "en-US",
     {
+      numeric: true,
       sensitivity: "base"
     }
   );
@@ -187,28 +262,48 @@ export default async function handler(
       const properties =
         entry?.properties || {};
 
-      const clientName = getTitleValue(
-        properties[PROPERTY_NAMES.client]
-      );
+      const clientProperty =
+        findProperty(
+          properties,
+          PROPERTY_NAMES.client
+        );
 
-      const sendDate = getDateStart(
-        properties[
+      const sendDateProperty =
+        findProperty(
+          properties,
           PROPERTY_NAMES.sendDate
-        ]
-      );
+        );
+
+      const contentTypeProperty =
+        findProperty(
+          properties,
+          PROPERTY_NAMES.contentType
+        );
+
+      const statusProperty =
+        findProperty(
+          properties,
+          PROPERTY_NAMES.status
+        );
+
+      const clientName =
+        getPropertyText(
+          clientProperty
+        );
+
+      const sendDate =
+        getDateStart(
+          sendDateProperty
+        );
 
       const contentType =
-        getNamedPropertyValue(
-          properties[
-            PROPERTY_NAMES.contentType
-          ]
+        getPropertyText(
+          contentTypeProperty
         );
 
       const status =
-        getNamedPropertyValue(
-          properties[
-            PROPERTY_NAMES.status
-          ]
+        getPropertyText(
+          statusProperty
         );
 
       if (!clientName) {
@@ -225,17 +320,17 @@ export default async function handler(
         continue;
       }
 
-      const normalizedType =
-        normalize(contentType);
-
-      const normalizedStatus =
-        normalize(status);
-
       const isEmail =
-        normalizedType === "email";
+        isExactValue(
+          contentType,
+          CONTENT_TYPES.email
+        );
 
       const isText =
-        normalizedType === "text";
+        isExactValue(
+          contentType,
+          CONTENT_TYPES.text
+        );
 
       if (!isEmail && !isText) {
         continue;
@@ -248,17 +343,23 @@ export default async function handler(
         );
       }
 
-      const client =
+      const clientSummary =
         clientMap.get(clientName);
 
-      const category = isEmail
-        ? client.emails
-        : client.texts;
+      const deliverableSummary =
+        isEmail
+          ? clientSummary.emails
+          : clientSummary.texts;
 
-      category.owed += 1;
+      deliverableSummary.owed += 1;
 
-      if (normalizedStatus === "sent") {
-        category.sent += 1;
+      if (
+        isExactValue(
+          status,
+          SENT_STATUS
+        )
+      ) {
+        deliverableSummary.sent += 1;
       }
     }
 
