@@ -13,10 +13,18 @@ export default async function handler(request, response) {
   try {
     const workflow = await getTodayWorkflow();
 
+    /*
+     * Always fetch the latest Notion status.
+     * Important for a live workflow dashboard where items
+     * frequently move between sections.
+     */
     response.setHeader(
       "Cache-Control",
-      "s-maxage=60, stale-while-revalidate=300"
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
     );
+
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Expires", "0");
 
     return response.status(200).json(workflow);
   } catch (error) {
