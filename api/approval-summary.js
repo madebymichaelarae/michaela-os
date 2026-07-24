@@ -13,15 +13,10 @@ export default async function handler(request, response) {
   try {
     const approvalSummary = await getApprovalSummary();
 
-    /*
-     * Approval statuses can change frequently, so this
-     * endpoint should always request fresh Notion data.
-     */
     response.setHeader(
       "Cache-Control",
       "no-store, no-cache, must-revalidate, proxy-revalidate"
     );
-
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Expires", "0");
 
