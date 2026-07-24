@@ -2,7 +2,7 @@ const DAILY_WATER_GOAL = 72;
 
 async function loadWaterWidget() {
   try {
-    const response = await fetch("/api/health/water");
+    const response = await fetch("/api/health?view=water");
 
     if (!response.ok) {
       throw new Error(
