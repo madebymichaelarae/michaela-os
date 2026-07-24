@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <meta
+      name="theme-color"
+      content="#f7efe5"
+    />
+
+    <title>Today's Workflow</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/today-workflow-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="workflow-widget"
+      aria-labelledby="workflow-title"
+    >
+      <header class="workflow-header">
+        <div class="workflow-heading">
+          <div
+            class="workflow-icon"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              role="img"
+            >
+              <path
+                d="M9 11.5 11 13.5 15.5 9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <path
+                d="M6.5 4.75h11A1.75 1.75 0 0 1 19.25 6.5v11A1.75 1.75 0 0 1 17.5 19.25h-11A1.75 1.75 0 0 1 4.75 17.5v-11A1.75 1.75 0 0 1 6.5 4.75Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <p class="workflow-eyebrow">Today</p>
+
+            <h1 id="workflow-title">
+              Today's Workflow
+            </h1>
+
+            <p
+              class="workflow-date"
+              id="workflow-date"
+            >
+              Loading…
+            </p>
+          </div>
+        </div>
+
+        <button
+          class="workflow-refresh"
+          id="workflow-refresh"
+          type="button"
+          aria-label="Refresh today's workflow"
+          title="Refresh"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              d="M18.4 8.2A7 7 0 1 0 19 14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+
+            <path
+              d="M18.4 4.8v3.4H15"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </header>
+
+      <div
+        class="workflow-loading"
+        id="workflow-loading"
+        aria-live="polite"
+      >
+        <span class="workflow-loading-dot"></span>
+        <span class="workflow-loading-dot"></span>
+        <span class="workflow-loading-dot"></span>
+      </div>
+
+      <div
+        class="workflow-sections"
+        id="workflow-sections"
+        hidden
+      >
+        <section
+          class="workflow-section"
+          data-section="toDraft"
+        >
+          <div class="workflow-section-header">
+            <h2>To Draft</h2>
+
+            <span
+              class="workflow-count"
+              data-count="toDraft"
+            >
+              0
+            </span>
+          </div>
+
+          <div
+            class="workflow-list"
+            data-list="toDraft"
+          ></div>
+        </section>
+
+        <section
+          class="workflow-section"
+          data-section="readyToSchedule"
+        >
+          <div class="workflow-section-header">
+            <h2>Ready to Schedule</h2>
+
+            <span
+              class="workflow-count"
+              data-count="readyToSchedule"
+            >
+              0
+            </span>
+          </div>
+
+          <div
+            class="workflow-list"
+            data-list="readyToSchedule"
+          ></div>
+        </section>
+
+        <section
+          class="workflow-section"
+          data-section="scheduled"
+        >
+          <div class="workflow-section-header">
+            <h2>Scheduled</h2>
+
+            <span
+              class="workflow-count"
+              data-count="scheduled"
+            >
+              0
+            </span>
+          </div>
+
+          <div
+            class="workflow-list"
+            data-list="scheduled"
+          ></div>
+        </section>
+      </div>
+
+      <div
+        class="workflow-empty"
+        id="workflow-empty"
+        hidden
+      >
+        <span
+          class="workflow-empty-icon"
+          aria-hidden="true"
+        >
+          ✓
+        </span>
+
+        <p>Nothing needs your attention right now.</p>
+      </div>
+
+      <div
+        class="workflow-error"
+        id="workflow-error"
+        role="alert"
+        hidden
+      >
+        <strong>Workflow unavailable</strong>
+
+        <span id="workflow-error-message">
+          Please try refreshing.
+        </span>
+      </div>
+    </main>
+
+    <script
+      type="module"
+      src="/js/today-workflow-widget.js"
+    ></script>
+  </body>
+</html>
