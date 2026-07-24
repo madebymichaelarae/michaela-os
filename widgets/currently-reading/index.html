@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Currently Reading</title>
+
+    <link
+      rel="stylesheet"
+      href="../../css/system/cozy-autumn.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../css/currently-reading-widget.css"
+    />
+  </head>
+
+  <body>
+    <main class="currently-reading-widget-shell">
+      <article
+        class="currently-reading-card"
+        id="currently-reading-card"
+      >
+        <header class="currently-reading-card__header">
+          <div class="currently-reading-card__heading">
+            <span
+              class="currently-reading-card__icon"
+              aria-hidden="true"
+            >
+              📖
+            </span>
+
+            <div>
+              <p class="currently-reading-card__eyebrow">
+                Today
+              </p>
+
+              <h1 class="currently-reading-card__title">
+                Currently Reading
+              </h1>
+            </div>
+          </div>
+
+          <a
+            class="currently-reading-card__arrow"
+            href="../reading/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open full Reading dashboard"
+          >
+            <span aria-hidden="true">→</span>
+          </a>
+        </header>
+
+        <section
+          class="currently-reading-loading"
+          id="currently-reading-loading"
+        >
+          Loading your current book…
+        </section>
+
+        <section
+          class="currently-reading-error"
+          id="currently-reading-error"
+          hidden
+        >
+          Reading data could not be loaded.
+        </section>
+
+        <section
+          class="currently-reading-empty"
+          id="currently-reading-empty"
+          hidden
+        >
+          <span
+            class="currently-reading-empty__icon"
+            aria-hidden="true"
+          >
+            📚
+          </span>
+
+          <div>
+            <p class="currently-reading-empty__title">
+              No current book
+            </p>
+
+            <p class="currently-reading-empty__description">
+              Mark a book as currently reading to see it here.
+            </p>
+          </div>
+        </section>
+
+        <section
+          class="currently-reading-content"
+          id="currently-reading-content"
+          hidden
+        >
+          <div class="current-book-panel">
+            <div class="book-cover-wrap">
+              <img
+                class="book-cover"
+                id="book-cover"
+                alt=""
+                hidden
+              />
+
+              <div
+                class="book-cover-placeholder"
+                id="book-cover-placeholder"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 5.5C5.8 4.4 8.8 4.7 12 6.5V20c-3.2-1.8-6.2-2.1-9-.9V5.5Z"
+                  />
+
+                  <path
+                    d="M21 5.5c-2.8-1.1-5.8-.8-9 1V20c3.2-1.8 6.2-2.1 9-.9V5.5Z"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div class="book-details">
+              <div class="book-heading">
+                <h2 id="book-title">
+                  Current Book
+                </h2>
+
+                <p id="book-author">
+                  Author
+                </p>
+              </div>
+
+              <div class="book-progress">
+                <div class="book-progress__top">
+                  <p class="book-progress__label">
+                    Book progress
+                  </p>
+
+                  <span
+                    class="book-progress__percent"
+                    id="progress-percent"
+                  >
+                    0%
+                  </span>
+                </div>
+
+                <div
+                  class="book-progress__track"
+                  id="progress-track"
+                  role="progressbar"
+                  aria-label="Book progress"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                >
+                  <div
+                    class="book-progress__fill"
+                    id="progress-fill"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="pages-today-summary"
+            aria-label="Pages read today"
+          >
+            <span
+              class="pages-today-summary__icon"
+              aria-hidden="true"
+            >
+              📖
+            </span>
+
+            <p class="pages-today-summary__copy">
+              <strong id="pages-today">0</strong>
+
+              <span id="pages-today-label">
+                pages read today
+              </span>
+            </p>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <script src="../../js/currently-reading-widget.js"></script>
+  </body>
+</html>
