@@ -5,23 +5,23 @@
 }
 
 :root {
-  --client-cw: #7d9d73;
-  --client-cw-text: #263f25;
+  --client-cw: #dcebd8;
+  --client-cw-text: #37513a;
 
-  --client-pb: #a9cee0;
-  --client-pb-text: #274855;
+  --client-pb: #dcecf4;
+  --client-pb-text: #355766;
 
-  --client-tm: #c9796d;
-  --client-tm-text: #542a24;
+  --client-tm: #f3d9d4;
+  --client-tm-text: #704039;
 
-  --client-lr: #ae9acb;
-  --client-lr-text: #3f3157;
+  --client-lr: #e9e0f2;
+  --client-lr-text: #55456c;
 
-  --client-ea: #dfc76e;
-  --client-ea-text: #4f421a;
+  --client-ea: #f5eab9;
+  --client-ea-text: #625522;
 
-  --client-default: #c6ab94;
-  --client-default-text: #4e392d;
+  --client-default: #eadfd5;
+  --client-default-text: #59463a;
 }
 
 * {
