@@ -6,7 +6,7 @@ if (!chartCanvas) {
 
 async function loadWeightChart() {
   try {
-    const response = await fetch("/api/health?view=walking");
+    const response = await fetch("/api/health?view=weight");
 
     if (!response.ok) {
       throw new Error(`Weight request failed: ${response.status}`);
