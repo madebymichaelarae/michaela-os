@@ -1,5 +1,8 @@
 :root {
-  /* Typography */
+  /* ==================================================
+     TYPOGRAPHY
+     ================================================== */
+
   --font-body:
     Inter,
     ui-sans-serif,
@@ -14,67 +17,145 @@
     "Times New Roman",
     serif;
 
-  /* Surfaces */
+  /* ==================================================
+     PAGE
+     ================================================== */
+
   --page-background: transparent;
+
+  /* ==================================================
+     MAIN SURFACES
+     ================================================== */
 
   --card-background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.88),
-      rgba(255, 249, 242, 0.96)
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 250, 246, 0.96)
     );
 
-  --panel-background: rgba(255, 255, 255, 0.58);
-  --loading-background: rgba(255, 255, 255, 0.52);
+  --panel-background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.88),
+      rgba(255, 252, 249, 0.74)
+    );
 
-  /* Text */
-  --text-primary: #3f332c;
-  --text-secondary: #7c6b61;
-  --text-soft: #aa978b;
+  --panel-background-soft: rgba(255, 255, 255, 0.58);
+  --surface-muted: rgba(248, 239, 233, 0.62);
+  --surface-accent: rgba(183, 110, 85, 0.08);
+  --surface-accent-strong: rgba(183, 110, 85, 0.13);
 
-  /* Accent */
-  --accent: #b76e55;
-  --accent-dark: #92533f;
-  --accent-soft: #eed8cc;
-  --accent-faint: rgba(183, 110, 85, 0.08);
-  --accent-border: rgba(183, 110, 85, 0.1);
+  /* ==================================================
+     TEXT
+     ================================================== */
 
-  /* Feature colors */
-  --color-water: #78aab7;
-  --color-water-soft: #dcecf0;
+  --text-primary: #40342e;
+  --text-secondary: #806f65;
+  --text-soft: #ad9c92;
+  --text-on-accent: #ffffff;
 
-  --color-walking: #b59263;
-  --color-walking-soft: #eee2cf;
+  /* ==================================================
+     MAIN ACCENT
+     ================================================== */
 
-  --color-protein: #c78068;
-  --color-protein-soft: #efd8cf;
+  --accent: #b86f57;
+  --accent-dark: #94513e;
+  --accent-soft: #efd8cd;
+  --accent-pale: #f8ebe5;
 
-  --color-fiber: #8d9f78;
-  --color-fiber-soft: #e1e8d8;
+  /* ==================================================
+     SEMANTIC COLORS
+     ================================================== */
 
-  /* Borders */
+  --color-water: #78aeb9;
+  --color-water-dark: #538e9b;
+  --color-water-soft: #dceef1;
+
+  --color-walking: #c1a06e;
+  --color-walking-dark: #967642;
+  --color-walking-soft: #f0e5d2;
+
+  --color-calories: #d59170;
+  --color-calories-dark: #a86044;
+  --color-calories-soft: #f4dfd4;
+
+  --color-protein: #c97968;
+  --color-protein-dark: #9d5548;
+  --color-protein-soft: #f0d8d1;
+
+  --color-carbs: #d9a75f;
+  --color-carbs-dark: #aa7a34;
+  --color-carbs-soft: #f4e7ce;
+
+  --color-fat: #b790bd;
+  --color-fat-dark: #86628c;
+  --color-fat-soft: #eaddec;
+
+  --color-fiber: #92a77d;
+  --color-fiber-dark: #687b57;
+  --color-fiber-soft: #e2ead9;
+
+  --color-success: #7f9b75;
+  --color-danger: #b9655b;
+
+  /* ==================================================
+     BORDERS
+     ================================================== */
+
   --border-default: rgba(91, 65, 49, 0.12);
+  --border-soft: rgba(91, 65, 49, 0.08);
   --border-strong: rgba(91, 65, 49, 0.18);
+  --border-accent: rgba(183, 110, 85, 0.12);
 
-  /* Progress */
-  --progress-track: rgba(91, 65, 49, 0.09);
+  /* ==================================================
+     CORNERS
+     ================================================== */
 
-  /* Shape */
-  --radius-card: 18px;
-  --radius-panel: 13px;
-  --radius-small: 9px;
+  --radius-card: 20px;
+  --radius-panel: 14px;
+  --radius-small: 10px;
+  --radius-icon: 12px;
   --radius-pill: 999px;
 
-  /* Shadows */
+  /* ==================================================
+     SHADOWS
+     ================================================== */
+
   --shadow-card:
     0 1px 2px rgba(77, 52, 38, 0.05),
     0 8px 22px rgba(77, 52, 38, 0.08);
 
   --shadow-card-hover:
-    0 2px 4px rgba(77, 52, 38, 0.06),
-    0 12px 28px rgba(77, 52, 38, 0.1);
+    0 2px 5px rgba(77, 52, 38, 0.07),
+    0 13px 30px rgba(77, 52, 38, 0.11);
 
-  /* Motion */
+  --shadow-panel:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+
+  /* ==================================================
+     PROGRESS
+     ================================================== */
+
+  --progress-track: rgba(91, 65, 49, 0.09);
+
+  /* ==================================================
+     SPACING
+     ================================================== */
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+
+  /* ==================================================
+     MOTION
+     ================================================== */
+
+  --transition-fast: 150ms ease;
+
   --transition-widget:
     transform 160ms ease,
     box-shadow 160ms ease,
