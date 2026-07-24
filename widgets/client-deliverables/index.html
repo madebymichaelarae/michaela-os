@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Client Deliverables</title>
+
+    <link
+      rel="stylesheet"
+      href="../../css/client-deliverables-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="client-deliverables-card"
+      id="client-deliverables-card"
+    >
+      <header class="widget-header">
+        <div class="widget-heading-group">
+          <div class="widget-eyebrow">
+            <span
+              class="widget-icon"
+              aria-hidden="true"
+            >
+              ✦
+            </span>
+
+            <span id="month-label">
+              This month
+            </span>
+          </div>
+
+          <h1 class="widget-title">
+            Client Deliverables
+          </h1>
+        </div>
+
+        <button
+          class="widget-link"
+          id="client-deliverables-link"
+          type="button"
+          aria-label="Open Work dashboard"
+          title="Open Work dashboard"
+        >
+          <span aria-hidden="true">→</span>
+        </button>
+      </header>
+
+      <section
+        class="widget-state"
+        id="client-deliverables-loading"
+        aria-live="polite"
+      >
+        Loading client progress...
+      </section>
+
+      <section
+        class="widget-state widget-error"
+        id="client-deliverables-error"
+        hidden
+        aria-live="polite"
+      >
+        Client progress could not be loaded.
+      </section>
+
+      <section
+        class="client-deliverables-content"
+        id="client-deliverables-content"
+        hidden
+      >
+        <div
+          class="column-labels"
+          aria-hidden="true"
+        >
+          <span>Client</span>
+          <span>Email</span>
+          <span>Text</span>
+        </div>
+
+        <div
+          class="client-list"
+          id="client-list"
+        ></div>
+
+        <p
+          class="empty-message"
+          id="client-empty"
+          hidden
+        >
+          No email or text deliverables are
+          scheduled this month.
+        </p>
+      </section>
+    </main>
+
+    <script
+      type="module"
+      src="../../js/client-deliverables-widget.js"
+    ></script>
+  </body>
+</html>
