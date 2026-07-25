@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Finance Accounts</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/system/cozy-autumn.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/css/finance-accounts-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="finance-accounts widget-card"
+      aria-labelledby="accounts-title"
+    >
+      <header class="finance-accounts__header">
+        <div class="finance-accounts__heading">
+          <div
+            class="finance-accounts__icon widget-icon"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 24 24">
+              <rect
+                x="3.5"
+                y="6"
+                width="17"
+                height="12"
+                rx="2.2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+
+              <path
+                d="M3.8 9.5h16.4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+
+              <path
+                d="M7 14.2h3.2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <p class="finance-accounts__eyebrow widget-eyebrow">
+              Finance
+            </p>
+
+            <h1
+              class="finance-accounts__title widget-title"
+              id="accounts-title"
+            >
+              Accounts
+            </h1>
+          </div>
+        </div>
+
+        <p
+          class="finance-accounts__count widget-supporting-text"
+          id="account-count"
+          aria-live="polite"
+        >
+          Loading…
+        </p>
+      </header>
+
+      <section
+        class="finance-accounts__content"
+        aria-label="Active accounts"
+      >
+        <ul
+          class="finance-accounts__list"
+          id="accounts-list"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <li class="finance-accounts__loading">
+            Loading accounts…
+          </li>
+        </ul>
+
+        <div
+          class="finance-accounts__empty"
+          id="accounts-empty"
+          hidden
+        >
+          <p class="finance-accounts__empty-title">
+            No active accounts yet
+          </p>
+
+          <p class="widget-supporting-text">
+            Active accounts will appear here.
+          </p>
+        </div>
+      </section>
+
+      <footer class="finance-accounts__footer">
+        <span
+          class="finance-accounts__footer-label"
+          id="net-worth-label"
+        >
+          Net Worth
+        </span>
+
+        <span
+          class="finance-accounts__footer-value widget-secondary-value"
+          id="net-worth-value"
+          aria-live="polite"
+        >
+          —
+        </span>
+      </footer>
+
+      <div
+        class="finance-accounts__error"
+        id="finance-accounts-error"
+        role="alert"
+        hidden
+      >
+        Account data could not be loaded.
+      </div>
+    </main>
+
+    <script
+      type="module"
+      src="/js/finance-accounts-widget.js"
+    ></script>
+  </body>
+</html>
