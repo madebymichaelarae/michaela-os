@@ -5,6 +5,9 @@ import healthHandler from "../lib/api/health.js";
 import morningFocusHandler from "../lib/api/morning-focus.js";
 import readingHandler from "../lib/api/reading.js";
 import weatherHandler from "../lib/api/weather.js";
+import {
+  handleFinanceRequest
+} from "../lib/api/finance.js";
 
 const ROUTE_HANDLERS = {
   "content-summary": contentHandler,
@@ -22,6 +25,16 @@ const ROUTE_HANDLERS = {
 
   weather: weatherHandler
 };
+
+case "finance": {
+  const data =
+    await handleFinanceRequest(req);
+
+  const statusCode =
+    data.success === false ? 400 : 200;
+
+  return res.status(statusCode).json(data);
+}
 
 function getRequestedRoute(request) {
   const rawRoute = request.query?.route;
