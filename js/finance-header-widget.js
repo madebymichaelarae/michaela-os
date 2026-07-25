@@ -4,13 +4,23 @@ const elements = {
   available: document.querySelector(
     "#available-to-spend"
   ),
-  days: document.querySelector("#payday-days"),
+
+  days: document.querySelector(
+    "#payday-days"
+  ),
+
   daysLabel: document.querySelector(
     "#payday-days-label"
   ),
+
   paydayDate: document.querySelector(
     "#payday-date"
   ),
+
+  quote: document.querySelector(
+    "#finance-quote"
+  ),
+
   error: document.querySelector(
     "#finance-header-error"
   )
@@ -31,91 +41,79 @@ function formatCurrency(value) {
   }).format(amount);
 }
 
-function getNextPayday(now = new Date()) {
-  const year = now.getFullYear();
-  const month = now.getMonth();
-  const today = now.getDate();
-
-  if (today <= 15) {
-    return new Date(year, month, 15);
-  }
-
-  return new Date(year, month + 1, 15);
-}
-
-function getCalendarDayDifference(start, end) {
-  const startDate = new Date(
-    start.getFullYear(),
-    start.getMonth(),
-    start.getDate()
-  );
-
-  const endDate = new Date(
-    end.getFullYear(),
-    end.getMonth(),
-    end.getDate()
-  );
-
-  const millisecondsPerDay =
-    24 * 60 * 60 * 1000;
-
-  return Math.round(
-    (endDate.getTime() - startDate.getTime()) /
-      millisecondsPerDay
-  );
-}
-
-function renderPaydayCountdown() {
-  const today = new Date();
-  const payday = getNextPayday(today);
-  const daysUntilPayday =
-    getCalendarDayDifference(today, payday);
-
-  elements.days.textContent =
-    String(daysUntilPayday);
-
-  elements.daysLabel.textContent =
-    daysUntilPayday === 1 ? "day" : "days";
-
-  if (daysUntilPayday === 0) {
-    elements.days.textContent = "Today";
-    elements.daysLabel.textContent = "";
-    elements.paydayDate.textContent =
-      "It’s payday!";
-    return;
-  }
-
-  elements.paydayDate.textContent =
-    payday.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric"
-    });
-}
-
 function renderHeader(data) {
-  const header = data?.header || data;
+  const header = data?.header;
+
+  if (!header) {
+    throw new Error(
+      "Finance header data is missing."
+    );
+  }
+
+  const daysRemaining = Number(
+    header.payday?.daysRemaining
+  );
 
   elements.available.textContent =
     formatCurrency(header.availableToSpend);
+
+  if (Number.isFinite(daysRemaining)) {
+    elements.days.textContent =
+      daysRemaining === 0
+        ? "Today"
+        : String(daysRemaining);
+
+    elements.daysLabel.textContent =
+      daysRemaining === 0
+        ? ""
+        : daysRemaining === 1
+          ? "day"
+          : "days";
+  } else {
+    elements.days.textContent = "—";
+    elements.daysLabel.textContent = "days";
+  }
+
+  elements.paydayDate.textContent =
+    daysRemaining === 0
+      ? "It’s payday!"
+      : header.payday?.nextDate ||
+        "Next payday";
+
+  if (elements.quote) {
+    elements.quote.textContent =
+      header.quote ||
+      "Keep working, Michaela.";
+  }
 }
 
-function showError(message) {
-  console.error(message);
+function showError(error) {
+  console.error(error);
 
   elements.available.textContent = "—";
-  elements.error.hidden = false;
+  elements.days.textContent = "—";
+  elements.daysLabel.textContent = "days";
+  elements.paydayDate.textContent =
+    "Unable to load";
+
+  if (elements.error) {
+    elements.error.hidden = false;
+  }
 }
 
 async function loadFinanceHeader() {
-  elements.error.hidden = true;
-  renderPaydayCountdown();
+  if (elements.error) {
+    elements.error.hidden = true;
+  }
 
   try {
     const response = await fetch(API_URL, {
       method: "GET",
+
       headers: {
         Accept: "application/json"
       },
+
       cache: "no-store"
     });
 
