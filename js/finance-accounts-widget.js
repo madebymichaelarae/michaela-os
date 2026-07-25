@@ -54,8 +54,6 @@ function getAccountDescription(type) {
       return "Owed";
 
     case "Savings":
-      return "Saved";
-
     case "Cash Savings":
       return "Saved";
 
@@ -74,10 +72,10 @@ function createAccountItem(account) {
   item.className =
     "finance-accounts__item";
 
-  const identity =
+  const accountArea =
     document.createElement("div");
 
-  identity.className =
+  accountArea.className =
     "finance-accounts__account";
 
   const icon =
@@ -92,7 +90,7 @@ function createAccountItem(account) {
   );
 
   icon.textContent =
-    account.icon || "◉";
+    account?.icon || "◉";
 
   const copy =
     document.createElement("div");
@@ -107,22 +105,19 @@ function createAccountItem(account) {
     "finance-accounts__account-name";
 
   name.textContent =
-    account.name ||
+    account?.name ||
     "Untitled Account";
 
   const description =
     document.createElement("p");
 
   description.className =
-    "finance-accounts__account-description widget-supporting-text";
+    "finance-accounts__account-description";
 
   description.textContent =
     getAccountDescription(
-      account.type
+      account?.type
     );
-
-  copy.append(name, description);
-  identity.append(icon, copy);
 
   const balance =
     document.createElement("p");
@@ -130,50 +125,43 @@ function createAccountItem(account) {
   balance.className =
     "finance-accounts__balance";
 
+  const displayValue =
+    account?.displayBalance ??
+    account?.balance;
+
   balance.textContent =
-    formatCurrency(
-      account.displayBalance ??
-        account.balance
-    );
+    formatCurrency(displayValue);
 
-  const accessibleDescription =
-    getAccountDescription(
-      account.type
-    ).toLowerCase();
-
-  balance.setAttribute(
-    "aria-label",
-    `${formatCurrency(
-      account.displayBalance ??
-        account.balance
-    )} ${accessibleDescription}`
+  copy.append(
+    name,
+    description
   );
 
-  item.append(identity, balance);
+  accountArea.append(
+    icon,
+    copy
+  );
+
+  item.append(
+    accountArea,
+    balance
+  );
 
   return item;
 }
 
 function renderAccountCount(count) {
-  const total = Number(count);
-
-  if (!Number.isFinite(total)) {
-    elements.count.textContent = "";
-    return;
-  }
-
   elements.count.textContent =
-    total === 1
+    count === 1
       ? "1 active account"
-      : `${total} active accounts`;
+      : `${count} active accounts`;
 }
 
 function renderAccounts(data) {
-  const accounts = Array.isArray(
-    data?.accounts
-  )
-    ? data.accounts
-    : [];
+  const accounts =
+    Array.isArray(data?.accounts)
+      ? data.accounts
+      : [];
 
   elements.list.replaceChildren();
 
@@ -196,11 +184,11 @@ function renderAccounts(data) {
     const fragment =
       document.createDocumentFragment();
 
-    accounts.forEach((account) => {
+    for (const account of accounts) {
       fragment.append(
         createAccountItem(account)
       );
-    });
+    }
 
     elements.list.append(fragment);
   }
@@ -216,10 +204,12 @@ function renderAccounts(data) {
 }
 
 function showError(error) {
-  console.error(error);
+  console.error(
+    "Finance Accounts Error:",
+    error
+  );
 
   elements.list.replaceChildren();
-
   elements.list.hidden = true;
 
   elements.list.setAttribute(
@@ -228,7 +218,6 @@ function showError(error) {
   );
 
   elements.empty.hidden = true;
-
   elements.count.textContent =
     "Unable to load";
 
@@ -236,6 +225,10 @@ function showError(error) {
     "—";
 
   if (elements.error) {
+    elements.error.textContent =
+      error?.message ||
+      "Account data could not be loaded.";
+
     elements.error.hidden = false;
   }
 }
@@ -259,17 +252,20 @@ async function loadFinanceAccounts() {
       }
     );
 
+    if (!response.ok) {
+      throw new Error(
+        `Finance request failed with status ${response.status}.`
+      );
+    }
+
     const data =
       await response.json();
 
-    if (
-      !response.ok ||
-      !data.success
-    ) {
+    if (!data?.success) {
       throw new Error(
-        data.details ||
-          data.error ||
-          "Unable to load finance accounts."
+        data?.details ||
+        data?.error ||
+        "The finance API returned an error."
       );
     }
 
