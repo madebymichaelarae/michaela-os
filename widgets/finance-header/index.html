@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Finance Header</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/finance-header-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="finance-header"
+      aria-labelledby="finance-title"
+    >
+      <section class="finance-header__identity">
+        <div
+          class="finance-header__icon"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 24 24">
+            <circle
+              cx="12"
+              cy="12"
+              r="8.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            />
+
+            <path
+              d="M14.8 8.6c-.7-.7-1.6-1-2.8-1-1.7 0-2.8.8-2.8 2s1 1.7 2.9 2.1c1.9.4 2.9 1 2.9 2.3 0 1.4-1.2 2.4-3 2.4-1.3 0-2.4-.4-3.2-1.2M12 5.8v12.4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+
+        <div class="finance-header__copy">
+          <p class="finance-header__eyebrow">
+            Dashboard
+          </p>
+
+          <h1 id="finance-title">
+            Finance
+          </h1>
+
+          <p class="finance-header__quote">
+            Keep working, Michaela.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="finance-header__available"
+        aria-labelledby="available-label"
+      >
+        <p
+          class="finance-header__label"
+          id="available-label"
+        >
+          Available to Spend
+        </p>
+
+        <p
+          class="finance-header__amount"
+          id="available-to-spend"
+          aria-live="polite"
+        >
+          —
+        </p>
+      </section>
+
+      <section
+        class="finance-header__payday"
+        aria-labelledby="payday-label"
+      >
+        <p
+          class="finance-header__payday-label"
+          id="payday-label"
+        >
+          Payday
+        </p>
+
+        <div class="finance-header__countdown">
+          <span
+            class="finance-header__days"
+            id="payday-days"
+          >
+            —
+          </span>
+
+          <span
+            class="finance-header__days-label"
+            id="payday-days-label"
+          >
+            days
+          </span>
+        </div>
+
+        <p
+          class="finance-header__payday-date"
+          id="payday-date"
+        >
+          Next payday
+        </p>
+      </section>
+
+      <div
+        class="finance-header__error"
+        id="finance-header-error"
+        role="alert"
+        hidden
+      >
+        Finance data could not be loaded.
+      </div>
+    </main>
+
+    <script
+      type="module"
+      src="/js/finance-header-widget.js"
+    ></script>
+  </body>
+</html>
