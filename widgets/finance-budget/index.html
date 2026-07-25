@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Budget</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/themes.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/css/finance-budget-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="finance-budget"
+      data-theme="cozy-autumn"
+    >
+      <section
+        class="finance-budget__card"
+        aria-labelledby="finance-budget-title"
+      >
+        <header
+          class="finance-budget__header"
+        >
+          <div
+            class="finance-budget__header-copy"
+          >
+            <p
+              class="finance-budget__eyebrow"
+            >
+              Finance
+            </p>
+
+            <h1
+              class="finance-budget__title"
+              id="finance-budget-title"
+            >
+              Budget
+            </h1>
+
+            <p
+              class="finance-budget__summary"
+              id="budget-summary"
+              data-status="loading"
+              aria-live="polite"
+            >
+              Loading monthly budget…
+            </p>
+          </div>
+
+          <p
+            class="finance-budget__count"
+            id="budget-count"
+          >
+            —
+          </p>
+        </header>
+
+        <div
+          class="finance-budget__divider"
+          aria-hidden="true"
+        ></div>
+
+        <div
+          class="finance-budget__grid"
+          id="budget-grid"
+          aria-busy="true"
+        ></div>
+
+        <div
+          class="finance-budget__empty"
+          id="budget-empty"
+          hidden
+        >
+          <p
+            class="finance-budget__empty-title"
+          >
+            No active budget categories
+          </p>
+
+          <p
+            class="finance-budget__empty-copy"
+          >
+            Add a monthly budget to an
+            active category in Notion.
+          </p>
+        </div>
+
+        <p
+          class="finance-budget__error"
+          id="finance-budget-error"
+          role="alert"
+          hidden
+        ></p>
+
+        <footer
+          class="finance-budget__footer"
+        >
+          <div
+            class="finance-budget__footer-item"
+          >
+            <span
+              class="finance-budget__footer-label"
+            >
+              Budget
+            </span>
+
+            <strong
+              class="finance-budget__footer-value"
+              id="budget-total"
+            >
+              —
+            </strong>
+          </div>
+
+          <div
+            class="finance-budget__footer-item"
+          >
+            <span
+              class="finance-budget__footer-label"
+            >
+              Spent
+            </span>
+
+            <strong
+              class="finance-budget__footer-value"
+              id="budget-spent"
+            >
+              —
+            </strong>
+          </div>
+
+          <div
+            class="finance-budget__footer-item"
+          >
+            <span
+              class="finance-budget__footer-label"
+            >
+              Remaining
+            </span>
+
+            <strong
+              class="finance-budget__footer-value"
+              id="budget-remaining"
+            >
+              —
+            </strong>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <script
+      src="/js/finance-budget-widget.js"
+      defer
+    ></script>
+  </body>
+</html>
