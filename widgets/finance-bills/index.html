@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Bills</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/styles.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/css/finance-bills-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="bills-widget"
+      aria-labelledby="bills-title"
+    >
+      <header class="bills-header">
+        <div class="bills-heading">
+          <span
+            class="bills-heading-icon"
+            aria-hidden="true"
+          >
+            🧾
+          </span>
+
+          <h1
+            id="bills-title"
+            class="bills-title"
+          >
+            Bills
+          </h1>
+        </div>
+      </header>
+
+      <section
+        id="bills-content"
+        class="bills-content"
+        aria-live="polite"
+      >
+        <div class="bills-loading">
+          Loading bills…
+        </div>
+      </section>
+    </main>
+
+    <script
+      type="module"
+      src="/js/finance-bills-widget.js"
+    ></script>
+  </body>
+</html>
