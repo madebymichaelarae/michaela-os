@@ -1,0 +1,1034 @@
+:root {
+  --spending-surface:
+    var(
+      --cozy-surface,
+      #fffaf4
+    );
+
+  --spending-surface-raised:
+    var(
+      --cozy-surface-raised,
+      rgba(
+        255,
+        255,
+        255,
+        0.48
+      )
+    );
+
+  --spending-border:
+    var(
+      --cozy-border,
+      rgba(
+        102,
+        74,
+        55,
+        0.14
+      )
+    );
+
+  --spending-text:
+    var(
+      --cozy-text,
+      #40352e
+    );
+
+  --spending-muted:
+    var(
+      --cozy-text-muted,
+      #7e6c60
+    );
+
+  --spending-heading:
+    var(
+      --cozy-heading,
+      #40352e
+    );
+
+  --spending-accent:
+    var(
+      --cozy-accent,
+      #b96f55
+    );
+
+  --spending-accent-soft:
+    var(
+      --cozy-accent-soft,
+      #f3dfd5
+    );
+
+  --spending-success:
+    var(
+      --cozy-success,
+      #70835f
+    );
+
+  --spending-danger:
+    var(
+      --cozy-danger,
+      #b15f55
+    );
+
+  --spending-chart-1:
+    var(
+      --cozy-chart-1,
+      #b96f55
+    );
+
+  --spending-chart-2:
+    var(
+      --cozy-chart-2,
+      #d5a15d
+    );
+
+  --spending-chart-3:
+    var(
+      --cozy-chart-3,
+      #87966f
+    );
+
+  --spending-chart-4:
+    var(
+      --cozy-chart-4,
+      #9b786f
+    );
+
+  --spending-chart-5:
+    var(
+      --cozy-chart-5,
+      #c49a8c
+    );
+
+  --spending-shadow:
+    var(
+      --cozy-shadow,
+      0 10px 30px
+        rgba(
+          70,
+          45,
+          30,
+          0.08
+        )
+    );
+}
+
+* {
+  box-sizing:
+    border-box;
+}
+
+html,
+body {
+  margin:
+    0;
+
+  padding:
+    0;
+
+  min-height:
+    100%;
+
+  background:
+    transparent;
+}
+
+body {
+  color:
+    var(
+      --spending-text
+    );
+
+  font-family:
+    var(
+      --font-body,
+      Inter,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif
+    );
+}
+
+.spending-widget {
+  width:
+    100%;
+
+  min-height:
+    100%;
+
+  padding:
+    18px;
+
+  overflow:
+    hidden;
+
+  background:
+    var(
+      --spending-surface
+    );
+
+  border:
+    1px solid
+      var(
+        --spending-border
+      );
+
+  border-radius:
+    20px;
+
+  box-shadow:
+    var(
+      --spending-shadow
+    );
+}
+
+.spending-header {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  margin-bottom:
+    10px;
+}
+
+.spending-heading {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    9px;
+}
+
+.spending-heading-icon {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    30px;
+
+  height:
+    30px;
+
+  flex:
+    0 0 30px;
+
+  font-size:
+    16px;
+
+  line-height:
+    1;
+
+  background:
+    var(
+      --spending-accent-soft
+    );
+
+  border-radius:
+    10px;
+}
+
+.spending-title {
+  margin:
+    0;
+
+  color:
+    var(
+      --spending-heading
+    );
+
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+
+  font-size:
+    22px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.1;
+
+  letter-spacing:
+    -0.02em;
+}
+
+.spending-main {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(
+      0,
+      1.75fr
+    )
+    minmax(
+      145px,
+      0.85fr
+    );
+
+  align-items:
+    center;
+
+  gap:
+    18px;
+
+  min-height:
+    220px;
+}
+
+.spending-chart-area {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-width:
+    0;
+}
+
+.spending-chart-wrapper {
+  position:
+    relative;
+
+  width:
+    min(
+      100%,
+      270px
+    );
+
+  height:
+    220px;
+}
+
+.spending-chart-wrapper canvas {
+  width:
+    100% !important;
+
+  height:
+    100% !important;
+}
+
+.spending-chart-center {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    48px;
+
+  pointer-events:
+    none;
+
+  text-align:
+    center;
+}
+
+.spending-total {
+  max-width:
+    100%;
+
+  overflow:
+    hidden;
+
+  color:
+    var(
+      --spending-text
+    );
+
+  font-size:
+    clamp(
+      22px,
+      4vw,
+      31px
+    );
+
+  font-weight:
+    800;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    -0.04em;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+
+  font-variant-numeric:
+    tabular-nums;
+}
+
+.spending-month {
+  margin-top:
+    6px;
+
+  color:
+    var(
+      --spending-muted
+    );
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    0.08em;
+}
+
+.spending-legend-area {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  min-width:
+    0;
+}
+
+.spending-legend {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    13px;
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+  padding:
+    0;
+
+  list-style:
+    none;
+}
+
+.spending-legend-item {
+  display:
+    grid;
+
+  grid-template-columns:
+    10px
+    minmax(
+      0,
+      1fr
+    )
+    auto;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+}
+
+.spending-legend-dot {
+  display:
+    block;
+
+  width:
+    9px;
+
+  height:
+    9px;
+
+  border-radius:
+    50%;
+}
+
+.spending-legend-dot-1 {
+  background:
+    var(
+      --spending-chart-1
+    );
+}
+
+.spending-legend-dot-2 {
+  background:
+    var(
+      --spending-chart-2
+    );
+}
+
+.spending-legend-dot-3 {
+  background:
+    var(
+      --spending-chart-3
+    );
+}
+
+.spending-legend-dot-4 {
+  background:
+    var(
+      --spending-chart-4
+    );
+}
+
+.spending-legend-dot-5 {
+  background:
+    var(
+      --spending-chart-5
+    );
+}
+
+.spending-legend-name {
+  min-width:
+    0;
+
+  overflow:
+    hidden;
+
+  color:
+    var(
+      --spending-text
+    );
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.2;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.spending-legend-amount {
+  padding-left:
+    4px;
+
+  color:
+    var(
+      --spending-muted
+    );
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1;
+
+  text-align:
+    right;
+
+  white-space:
+    nowrap;
+
+  font-variant-numeric:
+    tabular-nums;
+}
+
+.spending-trends {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  margin-top:
+    10px;
+
+  padding-top:
+    13px;
+
+  border-top:
+    1px solid
+      var(
+        --spending-border
+      );
+}
+
+.spending-trend {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  min-width:
+    0;
+
+  padding:
+    0 10px;
+
+  text-align:
+    center;
+}
+
+.spending-trend +
+.spending-trend {
+  border-left:
+    1px solid
+      var(
+        --spending-border
+      );
+}
+
+.spending-trend-main {
+  display:
+    block;
+
+  max-width:
+    100%;
+
+  overflow:
+    hidden;
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+
+  line-height:
+    1.25;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.spending-trend-label {
+  display:
+    block;
+
+  max-width:
+    100%;
+
+  margin-top:
+    3px;
+
+  overflow:
+    hidden;
+
+  color:
+    var(
+      --spending-muted
+    );
+
+  font-size:
+    11px;
+
+  font-weight:
+    650;
+
+  line-height:
+    1.2;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.trend-good
+.spending-trend-main {
+  color:
+    var(
+      --spending-success
+    );
+}
+
+.trend-bad
+.spending-trend-main {
+  color:
+    var(
+      --spending-danger
+    );
+}
+
+.trend-neutral
+.spending-trend-main {
+  color:
+    var(
+      --spending-muted
+    );
+}
+
+.spending-loading {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-height:
+    260px;
+
+  color:
+    var(
+      --spending-muted
+    );
+
+  font-size:
+    13px;
+}
+
+.spending-empty {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-height:
+    240px;
+
+  padding:
+    18px;
+
+  text-align:
+    center;
+
+  background:
+    var(
+      --spending-surface-raised
+    );
+
+  border-radius:
+    15px;
+}
+
+.spending-empty-icon {
+  margin-bottom:
+    7px;
+
+  font-size:
+    22px;
+
+  line-height:
+    1;
+}
+
+.spending-empty-title {
+  margin:
+    0 0 4px;
+
+  color:
+    var(
+      --spending-text
+    );
+
+  font-size:
+    14px;
+
+  font-weight:
+    800;
+}
+
+.spending-empty-text {
+  margin:
+    0;
+
+  color:
+    var(
+      --spending-muted
+    );
+
+  font-size:
+    12px;
+
+  line-height:
+    1.4;
+}
+
+.spending-error {
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  gap:
+    10px;
+
+  min-height:
+    100px;
+
+  padding:
+    14px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(
+        --spending-danger
+      )
+      8%,
+      transparent
+    );
+
+  border:
+    1px solid
+      color-mix(
+        in srgb,
+        var(
+          --spending-danger
+        )
+        18%,
+        transparent
+      );
+
+  border-radius:
+    14px;
+}
+
+.spending-error-icon {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    24px;
+
+  height:
+    24px;
+
+  flex:
+    0 0 24px;
+
+  color:
+    var(
+      --spending-danger
+    );
+
+  background:
+    var(
+      --spending-accent-soft
+    );
+
+  border-radius:
+    50%;
+
+  font-size:
+    13px;
+
+  font-weight:
+    900;
+}
+
+.spending-error-title {
+  margin:
+    1px 0 3px;
+
+  color:
+    var(
+      --spending-text
+    );
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+}
+
+.spending-error-text {
+  margin:
+    0;
+
+  color:
+    var(
+      --spending-muted
+    );
+
+  font-size:
+    12px;
+
+  line-height:
+    1.4;
+}
+
+@media (
+  max-width: 520px
+) {
+  .spending-widget {
+    padding:
+      14px;
+  }
+
+  .spending-main {
+    grid-template-columns:
+      minmax(
+        0,
+        1.45fr
+      )
+      minmax(
+        105px,
+        0.8fr
+      );
+
+    gap:
+      10px;
+
+    min-height:
+      190px;
+  }
+
+  .spending-chart-wrapper {
+    height:
+      185px;
+  }
+
+  .spending-chart-center {
+    padding:
+      39px;
+  }
+
+  .spending-total {
+    font-size:
+      22px;
+  }
+
+  .spending-legend {
+    gap:
+      10px;
+  }
+
+  .spending-legend-name,
+  .spending-legend-amount {
+    font-size:
+      11px;
+  }
+
+  .spending-trend {
+    padding:
+      0 5px;
+  }
+
+  .spending-trend-main {
+    font-size:
+      11px;
+  }
+
+  .spending-trend-label {
+    font-size:
+      10px;
+  }
+}
+
+@media (
+  max-width: 370px
+) {
+  .spending-main {
+    grid-template-columns:
+      minmax(
+        0,
+        1fr
+      );
+
+    gap:
+      4px;
+  }
+
+  .spending-chart-wrapper {
+    height:
+      190px;
+  }
+
+  .spending-legend {
+    display:
+      grid;
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap:
+      8px 14px;
+  }
+}
