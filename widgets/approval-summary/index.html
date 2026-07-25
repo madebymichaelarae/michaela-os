@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <meta name="theme-color" content="#f7efe5" />
+
+    <title>Approval Summary</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/approval-summary-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="approval-widget"
+      aria-labelledby="approval-title"
+    >
+      <header class="approval-header">
+        <div class="approval-heading">
+          <div
+            class="approval-icon"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M8 7.25h8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M8 11.25h5.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="m8.25 15.3 1.35 1.35 2.7-2.9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <path
+                d="M6.5 4.75h11A1.75 1.75 0 0 1 19.25 6.5v11a1.75 1.75 0 0 1-1.75 1.75h-11a1.75 1.75 0 0 1-1.75-1.75v-11A1.75 1.75 0 0 1 6.5 4.75Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <p class="approval-eyebrow">
+              Work
+            </p>
+
+            <h1 id="approval-title">
+              Approval Summary
+            </h1>
+
+            <p
+              class="approval-date"
+              id="approval-date"
+            >
+              Loading…
+            </p>
+          </div>
+        </div>
+
+        <button
+          class="approval-refresh"
+          id="approval-refresh"
+          type="button"
+          aria-label="Refresh approval summary"
+          title="Refresh"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M18.4 8.2A7 7 0 1 0 19 14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+
+            <path
+              d="M18.4 4.8v3.4H15"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </header>
+
+      <div
+        class="approval-loading"
+        id="approval-loading"
+        aria-live="polite"
+      >
+        <span class="approval-loading-dot"></span>
+        <span class="approval-loading-dot"></span>
+        <span class="approval-loading-dot"></span>
+      </div>
+
+      <div
+        class="approval-sections"
+        id="approval-sections"
+        hidden
+      >
+        <section
+          class="approval-section"
+          data-section="waitingOnClient"
+          hidden
+        >
+          <h2 class="approval-section-title">
+            Waiting on Client
+
+            <span
+              class="approval-count"
+              data-count="waitingOnClient"
+            >
+              0
+            </span>
+          </h2>
+
+          <div
+            class="approval-list"
+            data-list="waitingOnClient"
+          ></div>
+        </section>
+
+        <section
+          class="approval-section"
+          data-section="internalReview"
+          hidden
+        >
+          <h2 class="approval-section-title">
+            Internal Review
+
+            <span
+              class="approval-count"
+              data-count="internalReview"
+            >
+              0
+            </span>
+          </h2>
+
+          <div
+            class="approval-list"
+            data-list="internalReview"
+          ></div>
+        </section>
+
+        <section
+          class="approval-section"
+          data-section="revisions"
+          hidden
+        >
+          <h2 class="approval-section-title">
+            Revisions
+
+            <span
+              class="approval-count"
+              data-count="revisions"
+            >
+              0
+            </span>
+          </h2>
+
+          <div
+            class="approval-list"
+            data-list="revisions"
+          ></div>
+        </section>
+      </div>
+
+      <div
+        class="approval-empty"
+        id="approval-empty"
+        hidden
+      >
+        <span
+          class="approval-empty-icon"
+          aria-hidden="true"
+        >
+          ✓
+        </span>
+
+        <p>Nothing is waiting for approval.</p>
+      </div>
+
+      <div
+        class="approval-error"
+        id="approval-error"
+        role="alert"
+        hidden
+      >
+        <strong>Approvals unavailable</strong>
+
+        <span id="approval-error-message">
+          Please try refreshing.
+        </span>
+      </div>
+    </main>
+
+    <script
+      type="module"
+      src="/js/approval-summary-widget.js"
+    ></script>
+  </body>
+</html>
