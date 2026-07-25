@@ -3,6 +3,78 @@
     --text-primary: #222222;
     --text-muted: #6b6b6b;
     --content-width: 900px;
+    --cozy-surface:
+  #fffaf4;
+
+--cozy-surface-raised:
+  rgba(
+    255,
+    255,
+    255,
+    0.48
+  );
+
+--cozy-border:
+  rgba(
+    102,
+    74,
+    55,
+    0.14
+  );
+
+--cozy-text:
+  #40352e;
+
+--cozy-text-muted:
+  #7e6c60;
+
+--cozy-heading:
+  #40352e;
+
+--cozy-accent:
+  #b96f55;
+
+--cozy-accent-soft:
+  #f3dfd5;
+
+--cozy-success:
+  #70835f;
+
+--cozy-warning:
+  #c38b46;
+
+--cozy-danger:
+  #b15f55;
+
+--cozy-info:
+  #7c8493;
+
+--cozy-chart-1:
+  #b96f55;
+
+--cozy-chart-2:
+  #d5a15d;
+
+--cozy-chart-3:
+  #87966f;
+
+--cozy-chart-4:
+  #9b786f;
+
+--cozy-chart-5:
+  #c49a8c;
+
+--cozy-chart-6:
+  #807b68;
+
+--cozy-shadow:
+  0 10px 30px
+    rgba(
+      70,
+      45,
+      30,
+      0.08
+    );
 }
 
 * {
