@@ -2,6 +2,63 @@
   display: none !important;
 }
 
+body {
+  background: var(--page-background);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+.finance-header {
+  background: var(--card-background);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.finance-header__icon {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  border-radius: var(--radius-icon);
+}
+
+.finance-header__available {
+  border-left: 1px solid var(--border-soft);
+  border-right: 1px solid var(--border-soft);
+}
+
+.finance-header__payday {
+  background: var(--surface-accent);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+}
+
+.finance-header__title {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+}
+
+.finance-header__amount {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+}
+
+.finance-header__days {
+  color: var(--accent-dark);
+  font-family: var(--font-heading);
+}
+
+.finance-header__eyebrow,
+.finance-header__label,
+.finance-header__payday-label {
+  color: var(--text-secondary);
+}
+
+.finance-header__quote,
+.finance-header__payday-date {
+  color: var(--text-secondary);
+}
+
 * {
   box-sizing: border-box;
 }
