@@ -1,4 +1,5 @@
-const API_URL = "/api/finance?view=header";
+const API_URL =
+  "/api/finance?view=header";
 
 const elements = {
   available: document.querySelector(
@@ -55,7 +56,9 @@ function renderHeader(data) {
   );
 
   elements.available.textContent =
-    formatCurrency(header.availableToSpend);
+    formatCurrency(
+      header.availableToSpend
+    );
 
   if (Number.isFinite(daysRemaining)) {
     elements.days.textContent =
@@ -71,7 +74,8 @@ function renderHeader(data) {
           : "days";
   } else {
     elements.days.textContent = "—";
-    elements.daysLabel.textContent = "days";
+    elements.daysLabel.textContent =
+      "days";
   }
 
   elements.paydayDate.textContent =
@@ -80,11 +84,9 @@ function renderHeader(data) {
       : header.payday?.nextDate ||
         "Next payday";
 
-  if (elements.quote) {
-    elements.quote.textContent =
-      header.quote ||
-      "Keep working, Michaela.";
-  }
+  elements.quote.textContent =
+    header.quote ||
+    "Keep working, Michaela.";
 }
 
 function showError(error) {
@@ -92,7 +94,8 @@ function showError(error) {
 
   elements.available.textContent = "—";
   elements.days.textContent = "—";
-  elements.daysLabel.textContent = "days";
+  elements.daysLabel.textContent =
+    "days";
   elements.paydayDate.textContent =
     "Unable to load";
 
@@ -107,15 +110,18 @@ async function loadFinanceHeader() {
   }
 
   try {
-    const response = await fetch(API_URL, {
-      method: "GET",
+    const response = await fetch(
+      API_URL,
+      {
+        method: "GET",
 
-      headers: {
-        Accept: "application/json"
-      },
+        headers: {
+          Accept: "application/json"
+        },
 
-      cache: "no-store"
-    });
+        cache: "no-store"
+      }
+    );
 
     const data = await response.json();
 
