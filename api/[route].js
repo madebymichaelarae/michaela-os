@@ -5,9 +5,29 @@ import healthHandler from "../lib/api/health.js";
 import morningFocusHandler from "../lib/api/morning-focus.js";
 import readingHandler from "../lib/api/reading.js";
 import weatherHandler from "../lib/api/weather.js";
+
 import {
   handleFinanceRequest
 } from "../lib/api/finance.js";
+
+/**
+ * Adapts the finance function to match the same
+ * request/response handler format as the other routes.
+ */
+async function financeHandler(
+  request,
+  response
+) {
+  const data =
+    await handleFinanceRequest(request);
+
+  const statusCode =
+    data.success === false ? 400 : 200;
+
+  return response
+    .status(statusCode)
+    .json(data);
+}
 
 const ROUTE_HANDLERS = {
   "content-summary": contentHandler,
@@ -23,18 +43,10 @@ const ROUTE_HANDLERS = {
 
   reading: readingHandler,
 
-  weather: weatherHandler
+  weather: weatherHandler,
+
+  finance: financeHandler
 };
-
-case "finance": {
-  const data =
-    await handleFinanceRequest(req);
-
-  const statusCode =
-    data.success === false ? 400 : 200;
-
-  return res.status(statusCode).json(data);
-}
 
 function getRequestedRoute(request) {
   const rawRoute = request.query?.route;
