@@ -12,18 +12,23 @@
 
     <link
       rel="stylesheet"
+      href="/css/system/cozy-autumn.css"
+    />
+
+    <link
+      rel="stylesheet"
       href="/css/finance-header-widget.css"
     />
   </head>
 
   <body>
     <main
-      class="finance-header"
+      class="finance-header widget-card"
       aria-labelledby="finance-title"
     >
-      <section class="finance-header__identity">
+      <section class="finance-header__section finance-header__identity">
         <div
-          class="finance-header__icon"
+          class="finance-header__icon widget-icon"
           aria-hidden="true"
         >
           <svg viewBox="0 0 24 24">
@@ -47,36 +52,39 @@
         </div>
 
         <div class="finance-header__copy">
-          <p class="finance-header__eyebrow">
+          <p class="finance-header__eyebrow widget-eyebrow">
             Dashboard
           </p>
 
-          <h1 id="finance-title">
+          <h1
+            class="finance-header__title widget-title"
+            id="finance-title"
+          >
             Finance
           </h1>
 
-    <p
-  class="finance-header__quote"
-  id="finance-quote"
->
-  Keep working, Michaela.
-</p>
+          <p
+            class="finance-header__quote widget-supporting-text"
+            id="finance-quote"
+          >
+            Keep working, Michaela.
+          </p>
         </div>
       </section>
 
       <section
-        class="finance-header__available"
+        class="finance-header__section finance-header__available"
         aria-labelledby="available-label"
       >
         <p
-          class="finance-header__label"
+          class="finance-header__label widget-eyebrow"
           id="available-label"
         >
           Available to Spend
         </p>
 
         <p
-          class="finance-header__amount"
+          class="finance-header__amount widget-primary-value"
           id="available-to-spend"
           aria-live="polite"
         >
@@ -84,39 +92,41 @@
         </p>
       </section>
 
-      <section
-        class="finance-header__payday"
-        aria-labelledby="payday-label"
-      >
-        <p
-          class="finance-header__payday-label"
-          id="payday-label"
+      <section class="finance-header__section finance-header__payday-wrap">
+        <div
+          class="finance-header__payday widget-accent-panel"
+          aria-labelledby="payday-label"
         >
-          Payday
-        </p>
-
-        <div class="finance-header__countdown">
-          <span
-            class="finance-header__days"
-            id="payday-days"
+          <p
+            class="finance-header__payday-label widget-eyebrow"
+            id="payday-label"
           >
-            —
-          </span>
+            Payday
+          </p>
 
-          <span
-            class="finance-header__days-label"
-            id="payday-days-label"
+          <div class="finance-header__countdown">
+            <span
+              class="finance-header__days widget-secondary-value"
+              id="payday-days"
+            >
+              —
+            </span>
+
+            <span
+              class="finance-header__days-label widget-supporting-text"
+              id="payday-days-label"
+            >
+              days
+            </span>
+          </div>
+
+          <p
+            class="finance-header__payday-date widget-supporting-text"
+            id="payday-date"
           >
-            days
-          </span>
+            Next payday
+          </p>
         </div>
-
-        <p
-          class="finance-header__payday-date"
-          id="payday-date"
-        >
-          Next payday
-        </p>
       </section>
 
       <div
