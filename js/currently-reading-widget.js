@@ -1,5 +1,8 @@
-const currentEndpoint = "/api/reading?view=current";
-const statsEndpoint = "/api/reading?view=stats"
+const currentEndpoint =
+  "/api/reading?view=current";
+
+const statsEndpoint =
+  "/api/reading?view=stats";
 
 const elements = {
   loading: document.getElementById(
