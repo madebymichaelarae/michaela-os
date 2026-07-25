@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Sinking Funds</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/themes.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/css/finance-budget-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="finance-budget"
+      data-theme="cozy-autumn"
+    >
+      <section
+        class="finance-budget__card"
+        aria-labelledby="finance-sinking-funds-title"
+      >
+        <header
+          class="finance-budget__header"
+        >
+          <div
+            class="finance-budget__header-copy"
+          >
+            <p
+              class="finance-budget__eyebrow"
+            >
+              Finance
+            </p>
+
+            <h1
+              class="finance-budget__title"
+              id="finance-sinking-funds-title"
+            >
+              Sinking Funds
+            </h1>
+
+            <p
+              class="finance-budget__summary"
+              id="sinking-funds-summary"
+              data-status="loading"
+              aria-live="polite"
+            >
+              Loading sinking funds…
+            </p>
+          </div>
+
+          <p
+            class="finance-budget__count"
+            id="sinking-funds-count"
+          >
+            —
+          </p>
+        </header>
+
+        <div
+          class="finance-budget__divider"
+          aria-hidden="true"
+        ></div>
+
+        <div
+          class="finance-budget__grid"
+          id="sinking-funds-grid"
+          aria-busy="true"
+        ></div>
+
+        <div
+          class="finance-budget__empty"
+          id="sinking-funds-empty"
+          hidden
+        >
+          <p
+            class="finance-budget__empty-title"
+          >
+            No active sinking funds
+          </p>
+
+          <p
+            class="finance-budget__empty-copy"
+          >
+            Add a goal amount to an
+            active savings bucket in
+            Notion.
+          </p>
+        </div>
+
+        <p
+          class="finance-budget__error"
+          id="finance-sinking-funds-error"
+          role="alert"
+          hidden
+        ></p>
+
+        <footer
+          class="finance-budget__footer"
+        >
+          <div
+            class="finance-budget__footer-item"
+          >
+            <span
+              class="finance-budget__footer-label"
+            >
+              Goal
+            </span>
+
+            <strong
+              class="finance-budget__footer-value"
+              id="sinking-funds-total-goal"
+            >
+              —
+            </strong>
+          </div>
+
+          <div
+            class="finance-budget__footer-item"
+          >
+            <span
+              class="finance-budget__footer-label"
+            >
+              Saved
+            </span>
+
+            <strong
+              class="finance-budget__footer-value"
+              id="sinking-funds-total-saved"
+            >
+              —
+            </strong>
+          </div>
+
+          <div
+            class="finance-budget__footer-item"
+          >
+            <span
+              class="finance-budget__footer-label"
+            >
+              Remaining
+            </span>
+
+            <strong
+              class="finance-budget__footer-value"
+              id="sinking-funds-total-remaining"
+            >
+              —
+            </strong>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <script
+      src="/js/finance-sinking-funds-widget.js"
+      defer
+    ></script>
+  </body>
+</html>
