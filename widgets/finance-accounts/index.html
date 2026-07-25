@@ -23,13 +23,13 @@
 
   <body>
     <main
-      class="finance-accounts widget-card"
+      class="finance-accounts"
       aria-labelledby="accounts-title"
     >
       <header class="finance-accounts__header">
         <div class="finance-accounts__heading">
           <div
-            class="finance-accounts__icon widget-icon"
+            class="finance-accounts__header-icon"
             aria-hidden="true"
           >
             <svg viewBox="0 0 24 24">
@@ -61,13 +61,13 @@
             </svg>
           </div>
 
-          <div>
-            <p class="finance-accounts__eyebrow widget-eyebrow">
+          <div class="finance-accounts__heading-copy">
+            <p class="finance-accounts__eyebrow">
               Finance
             </p>
 
             <h1
-              class="finance-accounts__title widget-title"
+              class="finance-accounts__title"
               id="accounts-title"
             >
               Accounts
@@ -76,7 +76,7 @@
         </div>
 
         <p
-          class="finance-accounts__count widget-supporting-text"
+          class="finance-accounts__count"
           id="account-count"
           aria-live="polite"
         >
@@ -108,7 +108,7 @@
             No active accounts yet
           </p>
 
-          <p class="widget-supporting-text">
+          <p class="finance-accounts__empty-copy">
             Active accounts will appear here.
           </p>
         </div>
@@ -123,7 +123,7 @@
         </span>
 
         <span
-          class="finance-accounts__footer-value widget-secondary-value"
+          class="finance-accounts__footer-value"
           id="net-worth-value"
           aria-live="polite"
         >
