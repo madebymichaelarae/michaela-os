@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Spending Report</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/styles.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/css/spending-report-widget.css"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <main
+      class="spending-widget"
+      aria-labelledby="spending-title"
+    >
+      <header class="spending-header">
+        <div class="spending-heading">
+          <span
+            class="spending-heading-icon"
+            aria-hidden="true"
+          >
+            📊
+          </span>
+
+          <h1
+            id="spending-title"
+            class="spending-title"
+          >
+            Spending
+          </h1>
+        </div>
+      </header>
+
+      <section
+        id="spending-content"
+        class="spending-content"
+        aria-live="polite"
+      >
+        <div class="spending-loading">
+          Loading spending…
+        </div>
+      </section>
+    </main>
+
+    <script
+      type="module"
+      src="/js/spending-report-widget.js"
+    ></script>
+  </body>
+</html>
