@@ -1,0 +1,235 @@
+@import url("/css/system/cozy-autumn.css");
+
+[hidden] {
+  display: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  padding: var(--space-sm);
+  background: var(--page-background);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+.finance-header {
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-template-columns:
+    minmax(210px, 1fr)
+    minmax(230px, 1.2fr)
+    minmax(180px, 0.72fr);
+  align-items: stretch;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  background: var(--card-background);
+  box-shadow: var(--shadow-card);
+}
+
+.finance-header__identity,
+.finance-header__available,
+.finance-header__payday {
+  min-width: 0;
+}
+
+.finance-header__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding-right: var(--space-lg);
+}
+
+.finance-header__icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: var(--radius-icon);
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+.finance-header__icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.finance-header__copy {
+  min-width: 0;
+}
+
+.finance-header__eyebrow,
+.finance-header__label,
+.finance-header__payday-label {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.finance-header h1 {
+  margin: var(--space-xs) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.finance-header__quote {
+  margin: 6px 0 0;
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.finance-header__available {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  padding: 0 var(--space-xl);
+  border-right: 1px solid var(--border-soft);
+  border-left: 1px solid var(--border-soft);
+  text-align: center;
+}
+
+.finance-header__amount {
+  margin: var(--space-sm) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: clamp(1.85rem, 5vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.finance-header__payday {
+  display: grid;
+  min-height: 92px;
+  place-items: center;
+  align-content: center;
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-panel);
+  background: var(--surface-accent);
+  box-shadow: var(--shadow-panel);
+  text-align: center;
+}
+
+.finance-header__countdown {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.finance-header__days {
+  color: var(--accent-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(1.7rem, 4vw, 2.35rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.finance-header__days-label {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.finance-header__payday-date {
+  margin: 5px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.finance-header__error {
+  position: absolute;
+  inset: auto var(--space-lg) 5px auto;
+  color: var(--color-danger);
+  font-size: 0.68rem;
+}
+
+@media (max-width: 680px) {
+  .finance-header {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .finance-header__identity {
+    grid-column: 1 / -1;
+    padding-right: 0;
+  }
+
+  .finance-header__available {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 440px) {
+  body {
+    padding: var(--space-xs);
+  }
+
+  .finance-header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-sm);
+    padding: var(--space-md);
+  }
+
+  .finance-header__identity {
+    padding-bottom: var(--space-sm);
+  }
+
+  .finance-header__available {
+    min-height: 82px;
+    padding: var(--space-md);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-panel);
+    background: var(--panel-background-soft);
+  }
+
+  .finance-header__payday {
+    min-height: 78px;
+  }
+
+  .finance-header__quote {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
