@@ -17,40 +17,39 @@
 
     <link
       rel="stylesheet"
-      href="/css/styles.css"
+      href="/css/health-weight-widget.css"
     />
   </head>
 
   <body>
     <main
-      class="health-widget health-weight"
+      class="health-weight"
       data-theme="cozy-autumn"
     >
       <section
-        class="health-widget__card"
+        class="health-weight__card"
         aria-labelledby="weight-widget-title"
       >
-        <header class="health-widget__header">
-          <div class="health-widget__header-copy">
-            <p class="health-widget__eyebrow">
+        <header class="health-weight__header">
+          <div class="health-weight__header-copy">
+            <p class="health-weight__eyebrow">
               Health
             </p>
 
             <h1
-              class="health-widget__title"
+              class="health-weight__title"
               id="weight-widget-title"
             >
               Weight
             </h1>
 
-            <p class="health-widget__summary">
-              Tracking steady progress toward
-              your next goal.
+            <p class="health-weight__summary">
+              Tracking steady progress toward your next goal.
             </p>
           </div>
 
           <div
-            class="health-widget__icon"
+            class="health-weight__icon"
             aria-hidden="true"
           >
             ⚖️
@@ -58,7 +57,7 @@
         </header>
 
         <div
-          class="health-widget__divider"
+          class="health-weight__divider"
           aria-hidden="true"
         ></div>
 
@@ -66,8 +65,8 @@
           class="health-weight__overview"
           aria-label="Current weight summary"
         >
-          <div class="health-weight__primary">
-            <p class="health-widget__section-label">
+          <div class="health-weight__current-block">
+            <p class="health-weight__label">
               Current weight
             </p>
 
@@ -80,13 +79,13 @@
             </p>
           </div>
 
-          <div class="health-weight__change">
-            <p class="health-widget__section-label">
+          <div class="health-weight__change-block">
+            <p class="health-weight__label">
               Overall change
             </p>
 
             <p
-              class="health-weight__change-value"
+              class="health-weight__change"
               id="weightChange"
             >
               Calculating…
@@ -95,20 +94,20 @@
         </section>
 
         <section
-          class="health-widget__goal"
+          class="health-weight__goal"
           aria-labelledby="weightGoalLabel"
         >
-          <div class="health-widget__goal-header">
+          <div class="health-weight__goal-header">
             <div>
               <p
-                class="health-widget__goal-title"
+                class="health-weight__goal-title"
                 id="weightGoalLabel"
               >
                 Goal 1
               </p>
 
               <p
-                class="health-widget__goal-copy"
+                class="health-weight__goal-copy"
                 id="weightGoalRemaining"
               >
                 Calculating goal…
@@ -116,7 +115,7 @@
             </div>
 
             <p
-              class="health-widget__goal-status"
+              class="health-weight__recognition"
               id="weightRecognition"
             >
               Checking progress…
@@ -124,7 +123,7 @@
           </div>
 
           <div
-            class="health-widget__progress-track"
+            class="health-weight__progress-track"
             role="progressbar"
             aria-label="Progress toward 200 pound goal"
             aria-valuemin="0"
@@ -132,12 +131,12 @@
             aria-valuenow="0"
           >
             <div
-              class="health-widget__progress-bar"
+              class="health-weight__progress-bar"
               id="weightProgressBar"
             ></div>
           </div>
 
-          <div class="health-widget__goal-footer">
+          <div class="health-weight__goal-footer">
             <p id="weightGoalDetails">
               Loading progress…
             </p>
@@ -150,15 +149,18 @@
 
         <section
           class="health-weight__chart-panel"
-          aria-label="Weight history"
+          aria-labelledby="weight-chart-title"
         >
-          <div class="health-widget__panel-header">
+          <div class="health-weight__chart-heading">
             <div>
-              <p class="health-widget__section-label">
+              <p class="health-weight__label">
                 Trend
               </p>
 
-              <h2 class="health-widget__panel-title">
+              <h2
+                class="health-weight__chart-title"
+                id="weight-chart-title"
+              >
                 Weight history
               </h2>
             </div>
@@ -173,37 +175,34 @@
           </div>
         </section>
 
-        <footer class="health-widget__footer">
-          <div class="health-widget__footer-item">
-            <span class="health-widget__footer-label">
+        <footer class="health-weight__footer">
+          <div class="health-weight__footer-item">
+            <span class="health-weight__footer-label">
               Current
             </span>
 
-            <strong
-              class="health-widget__footer-value"
-              id="weightFooterCurrent"
-            >
+            <strong class="health-weight__footer-value">
               Latest entry
             </strong>
           </div>
 
-          <div class="health-widget__footer-item">
-            <span class="health-widget__footer-label">
-              Progress
+          <div class="health-weight__footer-item">
+            <span class="health-weight__footer-label">
+              Goal
             </span>
 
-            <strong class="health-widget__footer-value">
-              Goal 200 lb
+            <strong class="health-weight__footer-value">
+              200 lb
             </strong>
           </div>
 
-          <div class="health-widget__footer-item">
-            <span class="health-widget__footer-label">
-              Recognition
+          <div class="health-weight__footer-item">
+            <span class="health-weight__footer-label">
+              Focus
             </span>
 
-            <strong class="health-widget__footer-value">
-              Keep going
+            <strong class="health-weight__footer-value">
+              Steady progress
             </strong>
           </div>
         </footer>
