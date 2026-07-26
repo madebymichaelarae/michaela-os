@@ -1,133 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
 
     <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
 
     <title>Weight Tracker | Michaela OS</title>
 
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="/css/themes.css"
+    />
 
-<body class="widget-page theme-weight">
-    <main class="widget-shell">
-        <article class="tracker-card">
-            <header class="tracker-header">
-                <span
-                    class="tracker-icon"
-                    aria-hidden="true"
-                >
-                    ⚖️
-                </span>
+    <link
+      rel="stylesheet"
+      href="/css/styles.css"
+    />
+  </head>
 
-                <div>
-                    <p class="tracker-eyebrow">Health</p>
+  <body>
+    <main
+      class="health-widget health-weight"
+      data-theme="cozy-autumn"
+    >
+      <section
+        class="health-widget__card"
+        aria-labelledby="weight-widget-title"
+      >
+        <header class="health-widget__header">
+          <div class="health-widget__header-copy">
+            <p class="health-widget__eyebrow">
+              Health
+            </p>
 
-                    <h1 class="tracker-title">
-                        Weightloss Tracker
-                    </h1>
-                </div>
-            </header>
-
-            <section
-                class="tracker-stats"
-                aria-label="Weight summary"
+            <h1
+              class="health-widget__title"
+              id="weight-widget-title"
             >
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Current weight
-                    </p>
+              Weight
+            </h1>
 
-                    <p class="tracker-stat-value">
-                        <span id="currentWeight">—</span>
-                    </p>
-                </article>
+            <p class="health-widget__summary">
+              Tracking steady progress toward
+              your next goal.
+            </p>
+          </div>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Overall change
-                    </p>
+          <div
+            class="health-widget__icon"
+            aria-hidden="true"
+          >
+            ⚖️
+          </div>
+        </header>
 
-                    <p
-                        id="weightChange"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Calculating…
-                    </p>
-                </article>
+        <div
+          class="health-widget__divider"
+          aria-hidden="true"
+        ></div>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Recognition
-                    </p>
+        <section
+          class="health-weight__overview"
+          aria-label="Current weight summary"
+        >
+          <div class="health-weight__primary">
+            <p class="health-widget__section-label">
+              Current weight
+            </p>
 
-                    <p
-                        id="weightRecognition"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Checking progress…
-                    </p>
-                </article>
-            </section>
+            <p class="health-weight__current">
+              <span id="currentWeight">—</span>
 
-            <section
-                class="tracker-goal"
-                aria-labelledby="weightGoalLabel"
+              <span class="health-weight__unit">
+                lb
+              </span>
+            </p>
+          </div>
+
+          <div class="health-weight__change">
+            <p class="health-widget__section-label">
+              Overall change
+            </p>
+
+            <p
+              class="health-weight__change-value"
+              id="weightChange"
             >
-                <div class="tracker-goal-header">
-                    <p id="weightGoalLabel">
-                        Goal 1
-                    </p>
+              Calculating…
+            </p>
+          </div>
+        </section>
 
-                    <p id="weightGoalRemaining">
-                        Calculating goal…
-                    </p>
-                </div>
+        <section
+          class="health-widget__goal"
+          aria-labelledby="weightGoalLabel"
+        >
+          <div class="health-widget__goal-header">
+            <div>
+              <p
+                class="health-widget__goal-title"
+                id="weightGoalLabel"
+              >
+                Goal 1
+              </p>
 
-                <div
-                    class="tracker-progress-track"
-                    role="progressbar"
-                    aria-label="Progress toward 200 pound goal"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-valuenow="0"
-                >
-                    <div
-                        id="weightProgressBar"
-                        class="tracker-progress-bar"
-                    ></div>
-                </div>
+              <p
+                class="health-widget__goal-copy"
+                id="weightGoalRemaining"
+              >
+                Calculating goal…
+              </p>
+            </div>
 
-                <div class="tracker-goal-footer">
-                    <p id="weightGoalDetails">
-                        Loading progress…
-                    </p>
+            <p
+              class="health-widget__goal-status"
+              id="weightRecognition"
+            >
+              Checking progress…
+            </p>
+          </div>
 
-                    <p id="weightUpdated">
-                        Loading latest entry…
-                    </p>
-                </div>
-            </section>
+          <div
+            class="health-widget__progress-track"
+            role="progressbar"
+            aria-label="Progress toward 200 pound goal"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div
+              class="health-widget__progress-bar"
+              id="weightProgressBar"
+            ></div>
+          </div>
 
-            <section class="tracker-chart-panel">
-                <div class="chart-container">
-                    <canvas
-                        id="weightChart"
-                        role="img"
-                        aria-label="Line chart showing weight measurements over time."
-                    ></canvas>
-                </div>
-            </section>
-        </article>
+          <div class="health-widget__goal-footer">
+            <p id="weightGoalDetails">
+              Loading progress…
+            </p>
+
+            <p id="weightUpdated">
+              Loading latest entry…
+            </p>
+          </div>
+        </section>
+
+        <section
+          class="health-weight__chart-panel"
+          aria-label="Weight history"
+        >
+          <div class="health-widget__panel-header">
+            <div>
+              <p class="health-widget__section-label">
+                Trend
+              </p>
+
+              <h2 class="health-widget__panel-title">
+                Weight history
+              </h2>
+            </div>
+          </div>
+
+          <div class="health-weight__chart-container">
+            <canvas
+              id="weightChart"
+              role="img"
+              aria-label="Line chart showing weight measurements over time."
+            ></canvas>
+          </div>
+        </section>
+
+        <footer class="health-widget__footer">
+          <div class="health-widget__footer-item">
+            <span class="health-widget__footer-label">
+              Current
+            </span>
+
+            <strong
+              class="health-widget__footer-value"
+              id="weightFooterCurrent"
+            >
+              Latest entry
+            </strong>
+          </div>
+
+          <div class="health-widget__footer-item">
+            <span class="health-widget__footer-label">
+              Progress
+            </span>
+
+            <strong class="health-widget__footer-value">
+              Goal 200 lb
+            </strong>
+          </div>
+
+          <div class="health-widget__footer-item">
+            <span class="health-widget__footer-label">
+              Recognition
+            </span>
+
+            <strong class="health-widget__footer-value">
+              Keep going
+            </strong>
+          </div>
+        </footer>
+      </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/weight-chart.js"></script>
-</body>
 
+    <script
+      src="/js/weight-chart.js"
+      defer
+    ></script>
+  </body>
 </html>
