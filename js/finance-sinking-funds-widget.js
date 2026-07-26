@@ -74,15 +74,19 @@ function formatRemaining(
     Number(value);
 
   if (
-    Number(percent) >= 100
-  ) {
-    return "Goal reached";
-  }
-
-  if (
     !Number.isFinite(amount)
   ) {
     return "—";
+  }
+
+  if (amount < 0) {
+    return `${formatCurrency(
+      Math.abs(amount)
+    )} over goal`;
+  }
+
+  if (amount === 0) {
+    return "Goal reached";
   }
 
   return `${formatCurrency(
@@ -379,11 +383,10 @@ function createFund(fund) {
   remaining.className =
     "finance-budget__category-remaining";
 
-  remaining.textContent =
-    formatRemaining(
-      fund.remaining,
-      fund.percent
-    );
+remaining.textContent =
+  formatRemaining(
+    fund.remaining
+  );
 
   nameRow.append(
     icon,
