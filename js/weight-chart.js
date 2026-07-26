@@ -9,35 +9,47 @@ async function loadWeightChart() {
     const response = await fetch("/api/health?view=weight");
 
     if (!response.ok) {
-      throw new Error(`Weight request failed: ${response.status}`);
+      throw new Error(
+        `Weight request failed: ${response.status}`
+      );
     }
 
     const result = await response.json();
 
     if (!result.success) {
       throw new Error(
-        result.error || "Weight data could not be loaded."
+        result.error ||
+          "Weight data could not be loaded."
       );
     }
 
     if (!result.weights.length) {
-      showChartMessage("No weight entries found.");
+      showChartMessage(
+        "No weight entries found."
+      );
+
       return;
     }
 
-    const labels = result.weights.map((entry) =>
-      formatDate(entry.date)
+    const labels = result.weights.map(
+      (entry) => formatDate(entry.date)
     );
 
-    const values = result.weights.map((entry) =>
-      entry.weight
+    const values = result.weights.map(
+      (entry) => entry.weight
     );
 
     updateWeightSummary(result.weights);
     createWeightChart(labels, values);
   } catch (error) {
-    console.error("Weight chart error:", error);
-    showChartMessage("Weight data could not be loaded.");
+    console.error(
+      "Weight chart error:",
+      error
+    );
+
+    showChartMessage(
+      "Weight data could not be loaded."
+    );
   }
 }
 
@@ -46,34 +58,54 @@ function updateWeightSummary(weights) {
   const GOAL_TWO_WEIGHT = 150;
 
   const firstEntry = weights[0];
-  const latestEntry = weights[weights.length - 1];
+
+  const latestEntry =
+    weights[weights.length - 1];
 
   const currentWeight =
-    document.getElementById("currentWeight");
+    document.getElementById(
+      "currentWeight"
+    );
 
   const weightChange =
-    document.getElementById("weightChange");
+    document.getElementById(
+      "weightChange"
+    );
 
   const weightUpdated =
-    document.getElementById("weightUpdated");
+    document.getElementById(
+      "weightUpdated"
+    );
 
   const weightRecognition =
-    document.getElementById("weightRecognition");
+    document.getElementById(
+      "weightRecognition"
+    );
 
   const goalLabel =
-    document.getElementById("weightGoalLabel");
+    document.getElementById(
+      "weightGoalLabel"
+    );
 
   const goalRemaining =
-    document.getElementById("weightGoalRemaining");
+    document.getElementById(
+      "weightGoalRemaining"
+    );
 
   const goalDetails =
-    document.getElementById("weightGoalDetails");
+    document.getElementById(
+      "weightGoalDetails"
+    );
 
   const progressBar =
-    document.getElementById("weightProgressBar");
+    document.getElementById(
+      "weightProgressBar"
+    );
 
   const progressTrack =
-    document.querySelector(".tracker-progress-track");
+    document.querySelector(
+      ".health-weight__progress-track"
+    );
 
   if (
     !currentWeight ||
@@ -86,13 +118,21 @@ function updateWeightSummary(weights) {
     !progressBar ||
     !progressTrack
   ) {
+    console.error(
+      "One or more Weight widget elements were not found."
+    );
+
     return;
   }
 
-  const startingWeight = firstEntry.weight;
-  const latestWeight = latestEntry.weight;
+  const startingWeight =
+    firstEntry.weight;
 
-  const totalChange = latestWeight - startingWeight;
+  const latestWeight =
+    latestEntry.weight;
+
+  const totalChange =
+    latestWeight - startingWeight;
 
   const poundsLost = Math.max(
     0,
@@ -100,29 +140,45 @@ function updateWeightSummary(weights) {
   );
 
   const lowestWeight = Math.min(
-    ...weights.map((entry) => entry.weight)
+    ...weights.map(
+      (entry) => entry.weight
+    )
   );
 
+  /*
+   * The HTML displays the "lb" unit
+   * separately, so this element only
+   * receives the numeric value.
+   */
   currentWeight.textContent =
-    `${latestWeight.toFixed(1)} lbs`;
+    latestWeight.toFixed(1);
 
   if (totalChange < 0) {
     weightChange.textContent =
-      `↓ ${Math.abs(totalChange).toFixed(1)} lbs`;
+      `↓ ${Math.abs(totalChange).toFixed(
+        1
+      )} lbs`;
   } else if (totalChange > 0) {
     weightChange.textContent =
       `↑ ${totalChange.toFixed(1)} lbs`;
   } else {
-    weightChange.textContent = "No change";
+    weightChange.textContent =
+      "No change";
   }
 
   weightUpdated.textContent =
-    `Last updated ${formatLongDate(latestEntry.date)}`;
+    `Last updated ${formatLongDate(
+      latestEntry.date
+    )}`;
 
-  if (latestWeight <= GOAL_TWO_WEIGHT) {
+  if (
+    latestWeight <= GOAL_TWO_WEIGHT
+  ) {
     weightRecognition.textContent =
       "🎉 Final goal reached!";
-  } else if (latestWeight <= GOAL_ONE_WEIGHT) {
+  } else if (
+    latestWeight <= GOAL_ONE_WEIGHT
+  ) {
     weightRecognition.textContent =
       "🏆 Goal 1 complete!";
   } else if (poundsLost >= 20) {
@@ -152,21 +208,29 @@ function updateWeightSummary(weights) {
   let activeGoalWeight;
   let goalStartWeight;
 
-  if (latestWeight > GOAL_ONE_WEIGHT) {
+  if (
+    latestWeight > GOAL_ONE_WEIGHT
+  ) {
     activeGoalLabel = "Goal 1";
-    activeGoalWeight = GOAL_ONE_WEIGHT;
-    goalStartWeight = startingWeight;
+    activeGoalWeight =
+      GOAL_ONE_WEIGHT;
+    goalStartWeight =
+      startingWeight;
   } else {
     activeGoalLabel = "Goal 2";
-    activeGoalWeight = GOAL_TWO_WEIGHT;
-    goalStartWeight = GOAL_ONE_WEIGHT;
+    activeGoalWeight =
+      GOAL_TWO_WEIGHT;
+    goalStartWeight =
+      GOAL_ONE_WEIGHT;
   }
 
   const totalNeeded =
-    goalStartWeight - activeGoalWeight;
+    goalStartWeight -
+    activeGoalWeight;
 
   const totalCompleted =
-    goalStartWeight - latestWeight;
+    goalStartWeight -
+    latestWeight;
 
   const percent =
     totalNeeded > 0
@@ -174,20 +238,27 @@ function updateWeightSummary(weights) {
           0,
           Math.min(
             100,
-            (totalCompleted / totalNeeded) * 100
+            (
+              totalCompleted /
+              totalNeeded
+            ) * 100
           )
         )
       : 100;
 
-  const poundsRemaining = Math.max(
-    0,
-    latestWeight - activeGoalWeight
-  );
+  const poundsRemaining =
+    Math.max(
+      0,
+      latestWeight -
+        activeGoalWeight
+    );
 
   goalLabel.textContent =
-    `${activeGoalLabel}: ${activeGoalWeight} lbs`;
+    `${activeGoalLabel}: ` +
+    `${activeGoalWeight} lbs`;
 
-  progressBar.style.width = `${percent}%`;
+  progressBar.style.width =
+    `${percent}%`;
 
   progressTrack.setAttribute(
     "aria-valuenow",
@@ -196,18 +267,27 @@ function updateWeightSummary(weights) {
 
   progressTrack.setAttribute(
     "aria-label",
-    `Progress toward ${activeGoalWeight} pound goal`
+    `Progress toward ` +
+      `${activeGoalWeight} pound goal`
   );
 
   goalRemaining.textContent =
     poundsRemaining > 0
-      ? `${poundsRemaining.toFixed(1)} lbs remaining`
+      ? `${poundsRemaining.toFixed(
+          1
+        )} lbs remaining`
       : "Goal reached!";
 
   goalDetails.textContent =
-    `${percent.toFixed(0)}% complete`;
+    `${percent.toFixed(
+      0
+    )}% complete`;
 }
-function createWeightChart(labels, values) {
+
+function createWeightChart(
+  labels,
+  values
+) {
   new Chart(chartCanvas, {
     type: "line",
 
@@ -220,8 +300,10 @@ function createWeightChart(labels, values) {
           data: values,
 
           borderColor: "#d94f9a",
-          pointBackgroundColor: "#d94f9a",
-          pointBorderColor: "#d94f9a",
+          pointBackgroundColor:
+            "#d94f9a",
+          pointBorderColor:
+            "#d94f9a",
 
           borderWidth: 3,
           pointRadius: 4,
@@ -249,7 +331,9 @@ function createWeightChart(labels, values) {
         tooltip: {
           callbacks: {
             label(context) {
-              return `${context.parsed.y} lb`;
+              return (
+                `${context.parsed.y} lb`
+              );
             }
           }
         }
@@ -281,33 +365,49 @@ function createWeightChart(labels, values) {
 }
 
 function formatDate(dateString) {
-  const date = new Date(`${dateString}T12:00:00`);
+  const date = new Date(
+    `${dateString}T12:00:00`
+  );
 
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric"
-  }).format(date);
+  return new Intl.DateTimeFormat(
+    "en-US",
+    {
+      month: "short",
+      day: "numeric"
+    }
+  ).format(date);
 }
 
-function formatLongDate(dateString) {
-  const date = new Date(`${dateString}T12:00:00`);
+function formatLongDate(
+  dateString
+) {
+  const date = new Date(
+    `${dateString}T12:00:00`
+  );
 
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric"
-  }).format(date);
+  return new Intl.DateTimeFormat(
+    "en-US",
+    {
+      month: "long",
+      day: "numeric"
+    }
+  ).format(date);
 }
 
 function showChartMessage(message) {
   const container =
-    chartCanvas.closest(".chart-container");
+    chartCanvas.closest(
+      ".health-weight__chart-container"
+    );
 
   if (!container) {
     return;
   }
 
   container.innerHTML = `
-    <p class="chart-message">${message}</p>
+    <p class="health-weight__chart-message">
+      ${message}
+    </p>
   `;
 }
 
