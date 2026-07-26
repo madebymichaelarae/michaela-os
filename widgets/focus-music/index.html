@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Focus Music</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/themes.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/focus-music-widget.css"
+  >
+</head>
+
+<body>
+
+  <main class="music-widget">
+
+    <section
+      id="musicCard"
+      class="music-card"
+      data-theme="lofi"
+    >
+
+      <header class="music-header">
+
+        <div>
+          <p class="music-eyebrow">
+            Productivity
+          </p>
+
+          <h1>
+            Focus Music
+          </h1>
+        </div>
+
+        <div
+          id="headerIcon"
+          class="music-header-icon"
+          aria-hidden="true"
+        >
+          🎧
+        </div>
+
+      </header>
+
+      <div class="music-divider"></div>
+
+      <section class="daily-pick">
+
+        <div class="daily-pick__label">
+          <span>✨</span>
+          Today’s Focus
+        </div>
+
+        <button
+          id="dailyPickButton"
+          class="daily-pick__button"
+          type="button"
+        >
+          <span
+            id="dailyPickIcon"
+            class="daily-pick__icon"
+          >
+            🌧️
+          </span>
+
+          <span class="daily-pick__copy">
+            <strong id="dailyPickName">
+              Rainy Focus
+            </strong>
+
+            <small id="dailyPickDescription">
+              Today’s recommended station
+            </small>
+          </span>
+
+          <span
+            class="daily-pick__action"
+            aria-hidden="true"
+          >
+            Play
+          </span>
+        </button>
+
+      </section>
+
+      <div class="music-divider"></div>
+
+      <section class="station-section">
+
+        <h2>
+          Choose Your Sound
+        </h2>
+
+        <div
+          id="stationButtons"
+          class="station-buttons"
+          role="list"
+          aria-label="Focus music stations"
+        ></div>
+
+      </section>
+
+      <div class="music-divider"></div>
+
+      <section
+        id="nowPlaying"
+        class="now-playing"
+      >
+
+        <div
+          id="stationArtwork"
+          class="station-artwork"
+          aria-hidden="true"
+        >
+          🎧
+        </div>
+
+        <div class="station-information">
+
+          <p class="station-information__label">
+            Selected Station
+          </p>
+
+          <h2 id="stationName">
+            Lo-fi
+          </h2>
+
+          <p id="stationDescription">
+            Warm instrumental beats for steady focus.
+          </p>
+
+          <div class="player-controls">
+
+            <button
+              id="playButton"
+              class="play-button"
+              type="button"
+            >
+              <span aria-hidden="true">
+                ▶
+              </span>
+
+              <span id="playButtonText">
+                Play Station
+              </span>
+            </button>
+
+            <button
+              id="stopButton"
+              class="stop-button"
+              type="button"
+              disabled
+            >
+              ■ Stop
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section
+        id="playerSection"
+        class="player-section"
+        hidden
+      >
+
+        <div class="player-frame">
+
+          <iframe
+            id="musicPlayer"
+            title="Focus music player"
+            src=""
+            allow="autoplay; encrypted-media; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+
+        </div>
+
+        <div class="player-footer">
+
+          <p>
+            Playing through YouTube
+          </p>
+
+          <a
+            id="youtubeLink"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open separately ↗
+          </a>
+
+        </div>
+
+      </section>
+
+      <p
+        id="musicStatus"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+    </section>
+
+  </main>
+
+  <script
+    src="../../js/focus-music-widget.js"
+  ></script>
+
+</body>
+</html>
