@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Reading Stats | Michaela OS</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/themes.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/css/health-reading-stats-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="health-reading-stats"
+      data-theme="cozy-autumn"
+    >
+      <section
+        class="health-reading-stats__card"
+        aria-labelledby="reading-stats-title"
+      >
+        <header class="health-reading-stats__header">
+          <div>
+            <p class="health-reading-stats__eyebrow">
+              Health
+            </p>
+
+            <h1
+              class="health-reading-stats__title"
+              id="reading-stats-title"
+            >
+              Reading
+            </h1>
+          </div>
+
+          <div
+            class="health-reading-stats__icon"
+            aria-hidden="true"
+          >
+            📚
+          </div>
+        </header>
+
+        <div
+          class="health-reading-stats__divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="
+            health-reading-stats__stat
+            health-reading-stats__stat--primary
+          "
+          aria-label="Books read this month"
+        >
+          <p class="health-reading-stats__value">
+            <span id="booksThisMonth">—</span>
+          </p>
+
+          <p class="health-reading-stats__label">
+            Books this month
+          </p>
+        </section>
+
+        <div
+          class="health-reading-stats__stat-divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="health-reading-stats__stat"
+          aria-label="Books read this year"
+        >
+          <p class="health-reading-stats__value">
+            <span id="booksThisYear">—</span>
+          </p>
+
+          <p class="health-reading-stats__label">
+            Books this year
+          </p>
+        </section>
+
+        <div
+          class="health-reading-stats__stat-divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="health-reading-stats__stat"
+          aria-label="Pages read this month"
+        >
+          <p class="health-reading-stats__value">
+            <span id="pagesThisMonth">—</span>
+          </p>
+
+          <p class="health-reading-stats__label">
+            Pages this month
+          </p>
+        </section>
+
+        <div
+          class="health-reading-stats__stat-divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="
+            health-reading-stats__stat
+            health-reading-stats__stat--last
+          "
+          aria-label="Pages read this year"
+        >
+          <p class="health-reading-stats__value">
+            <span id="pagesThisYear">—</span>
+          </p>
+
+          <p class="health-reading-stats__label">
+            Pages this year
+          </p>
+        </section>
+
+        <p
+          class="health-reading-stats__error"
+          id="readingStatsError"
+          hidden
+        ></p>
+      </section>
+    </main>
+
+    <script
+      src="/js/reading-stats-widget.js"
+      defer
+    ></script>
+  </body>
+</html>
