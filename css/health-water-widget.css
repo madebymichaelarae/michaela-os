@@ -1,0 +1,540 @@
+/* =========================================================
+   Michaela OS
+   Health — Compact Water Widget
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: transparent;
+  color: var(
+    --text-primary,
+    #3f352f
+  );
+  font-family: var(
+    --font-body,
+    system-ui,
+    sans-serif
+  );
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================================
+   Widget shell
+   ========================================================= */
+
+.health-water {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.health-water__card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid
+    var(
+      --border-default,
+      #d8cbc0
+    );
+  border-radius: 22px;
+  background:
+    var(
+      --card-background,
+      #fffaf5
+    );
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.health-water__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 15px;
+}
+
+.health-water__eyebrow {
+  margin: 0 0 3px;
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.health-water__title {
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    1.35rem,
+    3.5cqi,
+    1.75rem
+  );
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.health-water__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 13px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.health-water__divider {
+  height: 1px;
+  margin: 0 20px;
+  background:
+    var(
+      --border-soft,
+      #eadfd6
+    );
+}
+
+/* =========================================================
+   Today overview
+   ========================================================= */
+
+.health-water__overview {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.health-water__current {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    2rem,
+    6cqi,
+    2.75rem
+  );
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.health-water__unit {
+  color:
+    var(
+      --text-secondary,
+      #6f5f55
+    );
+  font-family:
+    var(
+      --font-body,
+      system-ui,
+      sans-serif
+    );
+  font-size: 0.83rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.health-water__percentage-badge {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 48px;
+  padding: 8px 13px;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 15px;
+  background:
+    var(
+      --accent-pale,
+      #f1dfd7
+    );
+}
+
+.health-water__percentage {
+  color:
+    var(
+      --accent-dark,
+      #7e4e40
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.health-water__percentage-label {
+  margin-top: 3px;
+  color:
+    var(
+      --text-secondary,
+      #6f5f55
+    );
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: lowercase;
+}
+
+/* =========================================================
+   Goal panel
+   ========================================================= */
+
+.health-water__goal {
+  margin: 0 20px 14px;
+  padding: 14px 16px;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 16px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+}
+
+.health-water__goal-copy {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+}
+
+.health-water__goal-label {
+  flex: 0 0 auto;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: 0.93rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.health-water__goal-separator {
+  width: 1px;
+  height: 18px;
+  flex: 0 0 1px;
+  background:
+    var(
+      --border-default,
+      #d8cbc0
+    );
+}
+
+.health-water__remaining {
+  min-width: 0;
+  overflow: hidden;
+  color:
+    var(
+      --text-secondary,
+      #6f5f55
+    );
+  font-size: 0.79rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.health-water__progress-track {
+  width: 100%;
+  height: 9px;
+  margin-top: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background:
+    var(
+      --accent-pale,
+      #f1dfd7
+    );
+}
+
+.health-water__progress-bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    var(
+      --accent,
+      #aa6b58
+    );
+  transition:
+    width 650ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+}
+
+.health-water__recognition {
+  margin: 8px 0 0;
+  color:
+    var(
+      --accent-dark,
+      #7e4e40
+    );
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.health-water__recognition:empty {
+  display: none;
+}
+
+/* =========================================================
+   Goal history
+   ========================================================= */
+
+.health-water__history {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    1px
+    minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  margin: 0 20px 20px;
+  padding: 13px 16px;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 16px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+}
+
+.health-water__history-item {
+  min-width: 0;
+}
+
+.health-water__history-item:last-child {
+  text-align: right;
+}
+
+.health-water__history-divider {
+  width: 1px;
+  height: 28px;
+  background:
+    var(
+      --border-default,
+      #d8cbc0
+    );
+}
+
+.health-water__history-label {
+  display: block;
+  margin-bottom: 3px;
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.health-water__history-value {
+  display: block;
+  overflow: hidden;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Error message
+   ========================================================= */
+
+.health-water__error {
+  margin: 0 20px 20px;
+  padding: 11px 13px;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 13px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+  color:
+    var(
+      --accent-dark,
+      #7e4e40
+    );
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@container (max-width: 520px) {
+  .health-water__header {
+    padding: 16px 16px 13px;
+  }
+
+  .health-water__divider {
+    margin: 0 16px;
+  }
+
+  .health-water__overview {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .health-water__percentage-badge {
+    min-height: 44px;
+    padding: 7px 10px;
+  }
+
+  .health-water__goal,
+  .health-water__history,
+  .health-water__error {
+    margin-right: 16px;
+    margin-left: 16px;
+  }
+
+  .health-water__goal-copy {
+    gap: 8px;
+  }
+}
+
+@container (max-width: 380px) {
+  .health-water__goal-copy {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .health-water__goal-separator {
+    display: none;
+  }
+
+  .health-water__remaining {
+    white-space: normal;
+  }
+
+  .health-water__history {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .health-water__history-divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .health-water__history-item:last-child {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .health-water__progress-bar {
+    transition: none;
+  }
+}
