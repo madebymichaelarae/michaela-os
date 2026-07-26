@@ -39,7 +39,7 @@
           </p>
 
           <h1>
-            Focus Music
+            Focus Radio
           </h1>
         </div>
 
@@ -57,39 +57,44 @@
 
       <section class="daily-pick">
 
-        <div class="daily-pick__label">
-          <span>✨</span>
+        <p class="section-label">
+          <span aria-hidden="true">✨</span>
           Today’s Focus
-        </div>
+        </p>
 
         <button
           id="dailyPickButton"
-          class="daily-pick__button"
+          class="daily-pick-button"
           type="button"
         >
+
           <span
             id="dailyPickIcon"
-            class="daily-pick__icon"
+            class="daily-pick-icon"
+            aria-hidden="true"
           >
-            🌧️
+            🎧
           </span>
 
-          <span class="daily-pick__copy">
+          <span class="daily-pick-copy">
+
             <strong id="dailyPickName">
-              Rainy Focus
+              Lo-fi Focus
             </strong>
 
             <small id="dailyPickDescription">
               Today’s recommended station
             </small>
+
           </span>
 
           <span
-            class="daily-pick__action"
+            class="daily-pick-action"
             aria-hidden="true"
           >
             Play
           </span>
+
         </button>
 
       </section>
@@ -98,25 +103,22 @@
 
       <section class="station-section">
 
-        <h2>
-          Choose Your Sound
-        </h2>
+        <p class="section-label">
+          Choose a Station
+        </p>
 
         <div
           id="stationButtons"
           class="station-buttons"
           role="list"
-          aria-label="Focus music stations"
+          aria-label="Focus radio stations"
         ></div>
 
       </section>
 
       <div class="music-divider"></div>
 
-      <section
-        id="nowPlaying"
-        class="now-playing"
-      >
+      <section class="now-playing">
 
         <div
           id="stationArtwork"
@@ -128,93 +130,144 @@
 
         <div class="station-information">
 
-          <p class="station-information__label">
+          <p
+            id="stationStatusLabel"
+            class="station-status-label"
+          >
             Selected Station
           </p>
 
           <h2 id="stationName">
-            Lo-fi
+            Lo-fi Focus
           </h2>
 
           <p id="stationDescription">
-            Warm instrumental beats for steady focus.
+            Warm downtempo music for steady focus.
           </p>
 
-          <div class="player-controls">
+        </div>
 
-            <button
-              id="playButton"
-              class="play-button"
-              type="button"
+      </section>
+
+      <section class="radio-controls">
+
+        <button
+          id="playButton"
+          class="primary-control"
+          type="button"
+        >
+          <span
+            id="playButtonIcon"
+            aria-hidden="true"
+          >
+            ▶
+          </span>
+
+          <span id="playButtonText">
+            Play Station
+          </span>
+        </button>
+
+        <button
+          id="stopButton"
+          class="secondary-control"
+          type="button"
+          disabled
+        >
+          <span aria-hidden="true">
+            ■
+          </span>
+
+          Stop
+        </button>
+
+      </section>
+
+      <section class="volume-section">
+
+        <div class="volume-heading">
+
+          <label for="volumeSlider">
+            Volume
+          </label>
+
+          <span id="volumeValue">
+            65%
+          </span>
+
+        </div>
+
+        <div class="volume-control">
+
+          <button
+            id="muteButton"
+            class="mute-button"
+            type="button"
+            aria-label="Mute focus radio"
+          >
+            <span
+              id="muteIcon"
+              aria-hidden="true"
             >
-              <span aria-hidden="true">
-                ▶
-              </span>
+              🔊
+            </span>
+          </button>
 
-              <span id="playButtonText">
-                Play Station
-              </span>
-            </button>
-
-            <button
-              id="stopButton"
-              class="stop-button"
-              type="button"
-              disabled
-            >
-              ■ Stop
-            </button>
-
-          </div>
+          <input
+            id="volumeSlider"
+            type="range"
+            min="0"
+            max="100"
+            value="65"
+            step="1"
+            aria-label="Focus radio volume"
+          >
 
         </div>
 
       </section>
 
       <section
-        id="playerSection"
-        class="player-section"
-        hidden
+        id="radioMessage"
+        class="radio-message"
+        role="status"
+        aria-live="polite"
       >
 
-        <div class="player-frame">
+        <span
+          id="radioMessageIcon"
+          aria-hidden="true"
+        >
+          🌿
+        </span>
 
-          <iframe
-            id="musicPlayer"
-            title="Focus music player"
-            src=""
-            allow="autoplay; encrypted-media; picture-in-picture"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-
-        </div>
-
-        <div class="player-footer">
-
-          <p>
-            Playing through YouTube
-          </p>
-
-          <a
-            id="youtubeLink"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open separately ↗
-          </a>
-
-        </div>
+        <p id="radioMessageText">
+          Choose a station whenever you’re ready to focus.
+        </p>
 
       </section>
 
-      <p
-        id="musicStatus"
-        class="visually-hidden"
-        role="status"
-        aria-live="polite"
-      ></p>
+      <footer class="music-footer">
+
+        <span>
+          Listener-supported radio
+        </span>
+
+        <a
+          id="stationLink"
+          href="https://somafm.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Visit station ↗
+        </a>
+
+      </footer>
+
+      <audio
+        id="radioPlayer"
+        preload="none"
+      ></audio>
 
     </section>
 
