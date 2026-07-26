@@ -1,161 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
 
     <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
 
     <title>Water Tracker | Michaela OS</title>
 
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="/css/themes.css"
+    />
 
-<body class="widget-page theme-water">
-    <main class="widget-shell">
-        <article class="tracker-card">
-            <header class="tracker-header">
-                <span
-                    class="tracker-icon"
-                    aria-hidden="true"
-                >
-                    💧
+    <link
+      rel="stylesheet"
+      href="/css/styles.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="health-widget health-water"
+      data-theme="cozy-autumn"
+    >
+      <section
+        class="health-widget__card"
+        aria-labelledby="water-widget-title"
+      >
+        <header class="health-widget__header">
+          <div class="health-widget__header-copy">
+            <p class="health-widget__eyebrow">
+              Health
+            </p>
+
+            <h1
+              class="health-widget__title"
+              id="water-widget-title"
+            >
+              Water
+            </h1>
+
+            <p class="health-widget__summary">
+              Today’s hydration progress.
+            </p>
+          </div>
+
+          <div
+            class="health-widget__icon"
+            aria-hidden="true"
+          >
+            💧
+          </div>
+        </header>
+
+        <div
+          class="health-widget__divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="health-water__hero"
+          aria-labelledby="waterGoalLabel"
+        >
+          <div class="health-water__amount-row">
+            <div>
+              <p
+                class="health-widget__section-label"
+                id="waterGoalLabel"
+              >
+                Today’s water
+              </p>
+
+              <p class="health-water__amount">
+                <span id="waterCurrent">—</span>
+
+                <span class="health-water__unit">
+                  oz
                 </span>
+              </p>
+            </div>
 
-                <div>
-                    <p class="tracker-eyebrow">Health</p>
+            <div class="health-water__percentage-block">
+              <p class="health-widget__section-label">
+                Goal progress
+              </p>
 
-                    <h1 class="tracker-title">
-                        Water Tracker
-                    </h1>
-                </div>
-            </header>
+              <p
+                class="health-water__percentage-value"
+                id="waterPercentage"
+              >
+                Loading…
+              </p>
+            </div>
+          </div>
 
-            <section
-                class="tracker-goal water-primary-goal"
-                aria-labelledby="waterGoalLabel"
+          <div
+            class="health-widget__progress-track health-water__progress-track"
+            role="progressbar"
+            aria-label="Progress toward 72 ounce water goal"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div
+              class="health-widget__progress-bar"
+              id="waterProgressBar"
+            ></div>
+          </div>
+
+          <div class="health-water__progress-footer">
+            <p id="waterGoalProgress">
+              Calculating…
+            </p>
+
+            <p>
+              Daily goal: 72 oz
+            </p>
+          </div>
+        </section>
+
+        <section
+          class="health-water__stats"
+          aria-label="Water summary"
+        >
+          <article class="health-water__stat">
+            <p class="health-widget__section-label">
+              Remaining
+            </p>
+
+            <p
+              class="health-water__stat-value"
+              id="waterRemaining"
             >
-                <div class="tracker-goal-header">
-                    <p id="waterGoalLabel">
-                        Today’s Progress
-                    </p>
+              Calculating…
+            </p>
+          </article>
 
-                    <p id="waterGoalProgress">
-                        Calculating…
-                    </p>
-                </div>
+          <article class="health-water__stat">
+            <p class="health-widget__section-label">
+              Recognition
+            </p>
 
-                <div
-                    class="tracker-progress-track"
-                    role="progressbar"
-                    aria-label="Progress toward 72 ounce water goal"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-valuenow="0"
-                >
-                    <div
-                        id="waterProgressBar"
-                        class="tracker-progress-bar"
-                    ></div>
-                </div>
-
-                <div class="tracker-goal-footer">
-                    <p id="waterPercentage">
-                        Loading progress…
-                    </p>
-
-                    <p>
-                        Daily goal: 72 oz
-                    </p>
-                </div>
-            </section>
-
-            <section
-                class="tracker-stats water-stat-grid"
-                aria-label="Water summary and goal history"
+            <p
+              class="health-water__stat-value"
+              id="waterRecognition"
             >
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Today’s water
-                    </p>
+              Checking…
+            </p>
+          </article>
 
-                    <p class="tracker-stat-value">
-                        <span id="waterCurrent">—</span>
-                    </p>
-                </article>
+          <article class="health-water__stat">
+            <p class="health-widget__section-label">
+              Current streak
+            </p>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Remaining
-                    </p>
+            <p
+              class="health-water__stat-value"
+              id="waterCurrentStreak"
+            >
+              Calculating…
+            </p>
+          </article>
+        </section>
 
-                    <p
-                        id="waterRemaining"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Calculating…
-                    </p>
-                </article>
+        <footer class="health-widget__footer">
+          <div class="health-widget__footer-item">
+            <span class="health-widget__footer-label">
+              This week
+            </span>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Recognition
-                    </p>
+            <strong
+              class="health-widget__footer-value"
+              id="waterWeekGoalCount"
+            >
+              Calculating…
+            </strong>
+          </div>
 
-                    <p
-                        id="waterRecognition"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Checking progress…
-                    </p>
-                </article>
+          <div class="health-widget__footer-item">
+            <span class="health-widget__footer-label">
+              This month
+            </span>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        This week
-                    </p>
+            <strong
+              class="health-widget__footer-value"
+              id="waterMonthGoalCount"
+            >
+              Calculating…
+            </strong>
+          </div>
 
-                    <p
-                        id="waterWeekGoalCount"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Calculating…
-                    </p>
-                </article>
+          <div class="health-widget__footer-item">
+            <span class="health-widget__footer-label">
+              Daily goal
+            </span>
 
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        This month
-                    </p>
-
-                    <p
-                        id="waterMonthGoalCount"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Calculating…
-                    </p>
-                </article>
-
-                <article class="tracker-stat">
-                    <p class="tracker-stat-label">
-                        Current streak
-                    </p>
-
-                    <p
-                        id="waterCurrentStreak"
-                        class="tracker-stat-value tracker-stat-value-small"
-                    >
-                        Calculating…
-                    </p>
-                </article>
-            </section>
-        </article>
+            <strong class="health-widget__footer-value">
+              72 oz
+            </strong>
+          </div>
+        </footer>
+      </section>
     </main>
 
-    <script src="/js/water-chart.js"></script>
-</body>
-
+    <script
+      src="/js/water-chart.js"
+      defer
+    ></script>
+  </body>
 </html>
