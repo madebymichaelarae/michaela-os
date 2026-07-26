@@ -31,7 +31,7 @@
         aria-labelledby="weight-widget-title"
       >
         <header class="health-weight__header">
-          <div class="health-weight__header-copy">
+          <div>
             <p class="health-weight__eyebrow">
               Health
             </p>
@@ -42,10 +42,6 @@
             >
               Weight
             </h1>
-
-            <p class="health-weight__summary">
-              Tracking steady progress toward your next goal.
-            </p>
           </div>
 
           <div
@@ -65,85 +61,76 @@
           class="health-weight__overview"
           aria-label="Current weight summary"
         >
-          <div class="health-weight__current-block">
-            <p class="health-weight__label">
-              Current weight
-            </p>
+          <p class="health-weight__current">
+            <span id="currentWeight">—</span>
 
-            <p class="health-weight__current">
-              <span id="currentWeight">—</span>
+            <span class="health-weight__unit">
+              lb
+            </span>
+          </p>
 
-              <span class="health-weight__unit">
-                lb
-              </span>
-            </p>
-          </div>
-
-          <div class="health-weight__change-block">
-            <p class="health-weight__label">
-              Overall change
-            </p>
-
-            <p
+          <div class="health-weight__change-badge">
+            <span
               class="health-weight__change"
               id="weightChange"
             >
               Calculating…
-            </p>
+            </span>
+
+            <span class="health-weight__change-label">
+              Overall change
+            </span>
           </div>
         </section>
 
         <section
           class="health-weight__goal"
-          aria-labelledby="weightGoalLabel"
+          aria-label="Current weight goal"
         >
-          <div class="health-weight__goal-header">
-            <div>
-              <p
-                class="health-weight__goal-title"
+          <div class="health-weight__goal-line">
+            <div class="health-weight__goal-copy">
+              <span
+                class="health-weight__goal-label"
                 id="weightGoalLabel"
               >
-                Goal 1
-              </p>
+                Goal 1: 200 lbs
+              </span>
 
-              <p
-                class="health-weight__goal-copy"
+              <span
+                class="health-weight__goal-separator"
+                aria-hidden="true"
+              ></span>
+
+              <span
+                class="health-weight__goal-remaining"
                 id="weightGoalRemaining"
               >
-                Calculating goal…
-              </p>
+                Calculating…
+              </span>
+            </div>
+          </div>
+
+          <div class="health-weight__progress-row">
+            <div
+              class="health-weight__progress-track"
+              role="progressbar"
+              aria-label="Progress toward 200 pound goal"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div
+                class="health-weight__progress-bar"
+                id="weightProgressBar"
+              ></div>
             </div>
 
-            <p
-              class="health-weight__recognition"
-              id="weightRecognition"
+            <span
+              class="health-weight__progress-value"
+              id="weightGoalDetails"
             >
-              Checking progress…
-            </p>
-          </div>
-
-          <div
-            class="health-weight__progress-track"
-            role="progressbar"
-            aria-label="Progress toward 200 pound goal"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="0"
-          >
-            <div
-              class="health-weight__progress-bar"
-              id="weightProgressBar"
-            ></div>
-          </div>
-
-          <div class="health-weight__goal-footer">
-            <p id="weightGoalDetails">
-              Loading progress…
-            </p>
-
-            <p id="weightUpdated">
-              Loading latest entry…
-            </p>
+              0%
+            </span>
           </div>
         </section>
 
@@ -151,20 +138,12 @@
           class="health-weight__chart-panel"
           aria-labelledby="weight-chart-title"
         >
-          <div class="health-weight__chart-heading">
-            <div>
-              <p class="health-weight__label">
-                Trend
-              </p>
-
-              <h2
-                class="health-weight__chart-title"
-                id="weight-chart-title"
-              >
-                Weight history
-              </h2>
-            </div>
-          </div>
+          <h2
+            class="health-weight__chart-title"
+            id="weight-chart-title"
+          >
+            Weight trend
+          </h2>
 
           <div class="health-weight__chart-container">
             <canvas
@@ -174,38 +153,6 @@
             ></canvas>
           </div>
         </section>
-
-        <footer class="health-weight__footer">
-          <div class="health-weight__footer-item">
-            <span class="health-weight__footer-label">
-              Current
-            </span>
-
-            <strong class="health-weight__footer-value">
-              Latest entry
-            </strong>
-          </div>
-
-          <div class="health-weight__footer-item">
-            <span class="health-weight__footer-label">
-              Goal
-            </span>
-
-            <strong class="health-weight__footer-value">
-              200 lb
-            </strong>
-          </div>
-
-          <div class="health-weight__footer-item">
-            <span class="health-weight__footer-label">
-              Focus
-            </span>
-
-            <strong class="health-weight__footer-value">
-              Steady progress
-            </strong>
-          </div>
-        </footer>
       </section>
     </main>
 
