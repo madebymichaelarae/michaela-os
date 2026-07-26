@@ -1,174 +1,251 @@
 /* =========================================================
    Michaela OS
-   Productivity — Focus Music
+   Productivity — Focus Radio
    ========================================================= */
 
 const MUSIC_STORAGE_KEY =
-  "michaela-os-focus-music";
+  "michaela-os-focus-radio";
 
 /*
-  Each station needs a YouTube video ID.
+  The stream URLs below are direct MP3 radio streams.
 
-  For a URL like:
-  https://www.youtube.com/watch?v=jfKfPfyJRdk
-
-  The video ID is:
-  jfKfPfyJRdk
-
-  You can replace any station's videoId later without
-  changing the rest of the widget.
+  The backupStream property gives each station a second
+  server to try automatically if its main server fails.
 */
 
 const stations = [
   {
     id: "lofi",
-    name: "Lo-fi",
+    name: "Lo-fi Focus",
     shortName: "Lo-fi",
     icon: "🎧",
     theme: "lofi",
+
+    providerName:
+      "Groove Salad Classic",
+
     description:
-      "Warm instrumental beats for steady focus.",
+      "Warm downtempo beats and grooves for steady focus.",
+
     dailyDescription:
-      "A gentle soundtrack for easing into work.",
-    videoId: "jfKfPfyJRdk"
+      "Easy background music for getting into work mode.",
+
+    stream:
+      "https://ice5.somafm.com/gsclassic-128-mp3",
+
+    backupStream:
+      "https://ice2.somafm.com/gsclassic-128-mp3",
+
+    website:
+      "https://somafm.com/gsclassic/"
   },
+
   {
-    id: "rain",
-    name: "Rain",
-    shortName: "Rain",
-    icon: "🌧️",
-    theme: "rain",
+    id: "chill",
+    name: "Chill Focus",
+    shortName: "Chill",
+    icon: "🌿",
+    theme: "chill",
+
+    providerName:
+      "Groove Salad",
+
     description:
-      "Steady rain sounds with no conversation or lyrics.",
+      "Chilled ambient and downtempo music with a gentle rhythm.",
+
     dailyDescription:
-      "A quiet rainy atmosphere for deep concentration.",
-    videoId: "mPZkdNFkNps"
+      "A calm soundtrack for a lighter work block.",
+
+    stream:
+      "https://ice5.somafm.com/groovesalad-128-mp3",
+
+    backupStream:
+      "https://ice6.somafm.com/groovesalad-128-mp3",
+
+    website:
+      "https://somafm.com/groovesalad/"
   },
+
   {
-    id: "brown-noise",
-    name: "Brown Noise",
-    shortName: "Brown Noise",
-    icon: "🟤",
-    theme: "brown-noise",
+    id: "deep",
+    name: "Deep Focus",
+    shortName: "Deep Focus",
+    icon: "🌙",
+    theme: "deep",
+
+    providerName:
+      "Drone Zone",
+
     description:
-      "A low, even sound designed to soften distractions.",
+      "Slow atmospheric textures with few beats and minimal distraction.",
+
     dailyDescription:
-      "A simple sound blanket for a busy-brain day.",
-    videoId: "RqzGzwTY-6w"
+      "Spacious background sound for concentration-heavy work.",
+
+    stream:
+      "https://ice5.somafm.com/dronezone-128-mp3",
+
+    backupStream:
+      "https://ice6.somafm.com/dronezone-128-mp3",
+
+    website:
+      "https://somafm.com/dronezone/"
   },
+
   {
     id: "coffee",
-    name: "Coffee Shop",
-    shortName: "Coffee",
+    name: "Coffeehouse",
+    shortName: "Coffeehouse",
     icon: "☕",
     theme: "coffee",
+
+    providerName:
+      "Illinois Street Lounge",
+
     description:
-      "Cozy café ambience for an easy workday rhythm.",
+      "Retro lounge, jazz, and stylish instrumentals for café energy.",
+
     dailyDescription:
       "A little background energy without leaving home.",
-    videoId: "gaGrHUekGrc"
+
+    stream:
+      "https://ice5.somafm.com/illstreet-128-mp3",
+
+    backupStream:
+      "https://ice2.somafm.com/illstreet-128-mp3",
+
+    website:
+      "https://somafm.com/illstreet/"
   },
+
   {
-    id: "piano",
-    name: "Soft Piano",
-    shortName: "Piano",
-    icon: "🎹",
-    theme: "piano",
+    id: "jazz",
+    name: "Instrumental Jazz",
+    shortName: "Jazz",
+    icon: "🎷",
+    theme: "jazz",
+
+    providerName:
+      "Sonic Universe",
+
     description:
-      "Calm instrumental piano for reading and writing.",
+      "Eclectic modern jazz for creative and design-focused work.",
+
     dailyDescription:
-      "Soft instrumentals for slower, thoughtful work.",
-    videoId: "lTRiuFIWV54"
+      "Interesting instrumentals for a creative workday.",
+
+    stream:
+      "https://ice5.somafm.com/sonicuniverse-128-mp3",
+
+    backupStream:
+      "https://ice6.somafm.com/sonicuniverse-128-mp3",
+
+    website:
+      "https://somafm.com/sonicuniverse/"
   },
+
   {
-    id: "nature",
-    name: "Forest Nature",
-    shortName: "Nature",
-    icon: "🌿",
-    theme: "nature",
+    id: "ambient",
+    name: "Ambient",
+    shortName: "Ambient",
+    icon: "☁️",
+    theme: "ambient",
+
+    providerName:
+      "Deep Space One",
+
     description:
-      "Birdsong and woodland ambience for grounded focus.",
+      "Deep ambient electronic music for quiet, uninterrupted work.",
+
     dailyDescription:
-      "Bring a little outdoor calm into your workspace.",
-    videoId: "xNN7iTA57jM"
-  },
-  {
-    id: "fireplace",
-    name: "Fireplace",
-    shortName: "Fireplace",
-    icon: "🔥",
-    theme: "fireplace",
-    description:
-      "Warm crackling fire sounds for a cozy work session.",
-    dailyDescription:
-      "Cozy background sound for a quieter work block.",
-    videoId: "L_LUpnjgPso"
-  },
-  {
-    id: "ocean",
-    name: "Ocean Waves",
-    shortName: "Ocean",
-    icon: "🌊",
-    theme: "ocean",
-    description:
-      "Rolling waves for calm, spacious concentration.",
-    dailyDescription:
-      "A peaceful reset when your brain feels crowded.",
-    videoId: "bn9F19Hi1Lk"
+      "A soft atmospheric layer for a crowded-brain day.",
+
+    stream:
+      "https://ice5.somafm.com/deepspaceone-128-mp3",
+
+    backupStream:
+      "https://ice2.somafm.com/deepspaceone-128-mp3",
+
+    website:
+      "https://somafm.com/deepspaceone/"
   }
 ];
 
 const elements = {
-  card: document.getElementById(
-    "musicCard"
-  ),
+  card:
+    document.getElementById(
+      "musicCard"
+    ),
 
-  headerIcon: document.getElementById(
-    "headerIcon"
-  ),
+  headerIcon:
+    document.getElementById(
+      "headerIcon"
+    ),
 
-  stationButtons: document.getElementById(
-    "stationButtons"
-  ),
+  stationButtons:
+    document.getElementById(
+      "stationButtons"
+    ),
 
-  stationArtwork: document.getElementById(
-    "stationArtwork"
-  ),
+  stationArtwork:
+    document.getElementById(
+      "stationArtwork"
+    ),
 
-  stationName: document.getElementById(
-    "stationName"
-  ),
+  stationStatusLabel:
+    document.getElementById(
+      "stationStatusLabel"
+    ),
+
+  stationName:
+    document.getElementById(
+      "stationName"
+    ),
 
   stationDescription:
     document.getElementById(
       "stationDescription"
     ),
 
-  playButton: document.getElementById(
-    "playButton"
-  ),
+  playButton:
+    document.getElementById(
+      "playButton"
+    ),
+
+  playButtonIcon:
+    document.getElementById(
+      "playButtonIcon"
+    ),
 
   playButtonText:
     document.getElementById(
       "playButtonText"
     ),
 
-  stopButton: document.getElementById(
-    "stopButton"
-  ),
-
-  playerSection:
+  stopButton:
     document.getElementById(
-      "playerSection"
+      "stopButton"
     ),
 
-  musicPlayer: document.getElementById(
-    "musicPlayer"
-  ),
+  volumeSlider:
+    document.getElementById(
+      "volumeSlider"
+    ),
 
-  youtubeLink: document.getElementById(
-    "youtubeLink"
-  ),
+  volumeValue:
+    document.getElementById(
+      "volumeValue"
+    ),
+
+  muteButton:
+    document.getElementById(
+      "muteButton"
+    ),
+
+  muteIcon:
+    document.getElementById(
+      "muteIcon"
+    ),
 
   dailyPickButton:
     document.getElementById(
@@ -190,9 +267,30 @@ const elements = {
       "dailyPickDescription"
     ),
 
-  musicStatus: document.getElementById(
-    "musicStatus"
-  )
+  radioMessage:
+    document.getElementById(
+      "radioMessage"
+    ),
+
+  radioMessageIcon:
+    document.getElementById(
+      "radioMessageIcon"
+    ),
+
+  radioMessageText:
+    document.getElementById(
+      "radioMessageText"
+    ),
+
+  stationLink:
+    document.getElementById(
+      "stationLink"
+    ),
+
+  player:
+    document.getElementById(
+      "radioPlayer"
+    )
 };
 
 let selectedStation =
@@ -202,12 +300,35 @@ let dailyStation =
   stations[0];
 
 let isPlaying = false;
+let isLoading = false;
+let isMuted = false;
+let currentStreamAttempt = 0;
+
+let savedVolume = 0.65;
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function findStationById(stationId) {
+  return stations.find(
+    (station) =>
+      station.id === stationId
+  );
+}
+
+function clamp(value, min, max) {
+  return Math.min(
+    Math.max(value, min),
+    max
+  );
+}
 
 /* =========================================================
    STORAGE
    ========================================================= */
 
-function loadSavedMusicState() {
+function loadSavedState() {
   try {
     const savedState =
       JSON.parse(
@@ -229,18 +350,34 @@ function loadSavedMusicState() {
       selectedStation =
         savedStation;
     }
+
+    const volume =
+      Number(savedState.volume);
+
+    if (Number.isFinite(volume)) {
+      savedVolume =
+        clamp(volume, 0, 1);
+    }
+
+    isMuted =
+      Boolean(savedState.isMuted);
   } catch (error) {
     console.warn(
-      "Focus music settings could not be restored:",
+      "Focus radio settings could not be restored:",
       error
     );
   }
 }
 
-function saveMusicState() {
+function saveState() {
   const state = {
     selectedStationId:
-      selectedStation.id
+      selectedStation.id,
+
+    volume:
+      savedVolume,
+
+    isMuted
   };
 
   localStorage.setItem(
@@ -250,21 +387,20 @@ function saveMusicState() {
 }
 
 /* =========================================================
-   DAILY RECOMMENDATION
+   DAILY PICK
    ========================================================= */
 
 function getDailyStation() {
   const today = new Date();
 
-  const dateSeed =
+  const seed =
     today.getFullYear() * 10000 +
     (today.getMonth() + 1) * 100 +
     today.getDate();
 
-  const index =
-    dateSeed % stations.length;
-
-  return stations[index];
+  return stations[
+    seed % stations.length
+  ];
 }
 
 function renderDailyStation() {
@@ -308,13 +444,20 @@ function buildStationButtons() {
       "listitem"
     );
 
+    button.setAttribute(
+      "aria-pressed",
+      "false"
+    );
+
     button.textContent =
       `${station.icon} ${station.shortName}`;
 
     button.addEventListener(
       "click",
       () => {
-        selectStation(station.id);
+        selectStation(
+          station.id
+        );
       }
     );
 
@@ -327,13 +470,6 @@ function buildStationButtons() {
 /* =========================================================
    STATION SELECTION
    ========================================================= */
-
-function findStationById(stationId) {
-  return stations.find(
-    (station) =>
-      station.id === stationId
-  );
-}
 
 function selectStation(
   stationId,
@@ -350,31 +486,36 @@ function selectStation(
     playImmediately = false
   } = options;
 
-  const wasPlaying =
-    isPlaying;
+  const shouldContinuePlaying =
+    isPlaying ||
+    isLoading ||
+    playImmediately;
+
+  stopAudio({
+    announce: false
+  });
 
   selectedStation =
     station;
 
-  saveMusicState();
-  renderSelectedStation();
+  currentStreamAttempt = 0;
 
-  if (
-    playImmediately ||
-    wasPlaying
-  ) {
+  renderSelectedStation();
+  saveState();
+
+  if (shouldContinuePlaying) {
     playSelectedStation();
   } else {
-    stopPlayer();
+    showMessage(
+      "🌿",
+      `${station.name} is ready whenever you are.`
+    );
   }
 }
 
 function renderSelectedStation() {
   elements.card.dataset.theme =
     selectedStation.theme;
-
-  elements.headerIcon.textContent =
-    "🎧";
 
   elements.stationArtwork.textContent =
     selectedStation.icon;
@@ -385,10 +526,8 @@ function renderSelectedStation() {
   elements.stationDescription.textContent =
     selectedStation.description;
 
-  elements.youtubeLink.href =
-    createYouTubeWatchUrl(
-      selectedStation.videoId
-    );
+  elements.stationLink.href =
+    selectedStation.website;
 
   document
     .querySelectorAll(
@@ -415,93 +554,494 @@ function renderSelectedStation() {
    PLAYER
    ========================================================= */
 
-function createEmbedUrl(videoId) {
-  const parameters =
-    new URLSearchParams({
-      autoplay: "1",
-      controls: "1",
-      modestbranding: "1",
-      rel: "0",
-      playsinline: "1"
-    });
+async function playSelectedStation() {
+  if (isPlaying) {
+    pauseAudio();
+    return;
+  }
 
-  return (
-    "https://www.youtube-nocookie.com/embed/" +
-    encodeURIComponent(videoId) +
-    "?" +
-    parameters.toString()
-  );
+  if (
+    elements.player.src &&
+    elements.player.paused &&
+    elements.player.currentSrc
+  ) {
+    await resumeAudio();
+    return;
+  }
+
+  currentStreamAttempt = 0;
+
+  await loadCurrentStream();
 }
 
-function createYouTubeWatchUrl(
-  videoId
+async function loadCurrentStream() {
+  setLoadingState(true);
+  clearErrorState();
+
+  const streamUrl =
+    currentStreamAttempt === 0
+      ? selectedStation.stream
+      : selectedStation.backupStream;
+
+  elements.player.src =
+    streamUrl;
+
+  elements.player.volume =
+    savedVolume;
+
+  elements.player.muted =
+    isMuted;
+
+  elements.player.load();
+
+  showMessage(
+    "⏳",
+    `Connecting to ${selectedStation.name}…`
+  );
+
+  try {
+    await elements.player.play();
+  } catch (error) {
+    /*
+      Browser autoplay protection should not normally trigger
+      because this function begins with a button click.
+    */
+
+    if (
+      error.name ===
+      "NotAllowedError"
+    ) {
+      setLoadingState(false);
+
+      showError(
+        "Your browser blocked playback. Press Play Station again."
+      );
+
+      return;
+    }
+
+    handleStreamFailure();
+  }
+}
+
+async function resumeAudio() {
+  setLoadingState(true);
+  clearErrorState();
+
+  try {
+    await elements.player.play();
+  } catch (error) {
+    setLoadingState(false);
+
+    showError(
+      "The station could not resume. Try stopping and starting it again."
+    );
+  }
+}
+
+function pauseAudio() {
+  elements.player.pause();
+
+  isPlaying = false;
+  isLoading = false;
+
+  elements.card.classList.remove(
+    "is-playing",
+    "is-loading"
+  );
+
+  updatePlaybackButtons();
+
+  elements.stationStatusLabel.textContent =
+    "Paused";
+
+  showMessage(
+    "⏸️",
+    `${selectedStation.name} is paused.`
+  );
+
+  document.title =
+    "Focus Radio";
+}
+
+function stopAudio(
+  options = {}
 ) {
-  return (
-    "https://www.youtube.com/watch?v=" +
-    encodeURIComponent(videoId)
+  const {
+    announce = true
+  } = options;
+
+  elements.player.pause();
+
+  elements.player.removeAttribute(
+    "src"
+  );
+
+  elements.player.load();
+
+  isPlaying = false;
+  isLoading = false;
+
+  currentStreamAttempt = 0;
+
+  elements.card.classList.remove(
+    "is-playing",
+    "is-loading"
+  );
+
+  updatePlaybackButtons();
+
+  elements.stationStatusLabel.textContent =
+    "Selected Station";
+
+  document.title =
+    "Focus Radio";
+
+  if (announce) {
+    showMessage(
+      "🌿",
+      "Focus radio stopped."
+    );
+  }
+}
+
+function handleStreamFailure() {
+  if (
+    currentStreamAttempt === 0 &&
+    selectedStation.backupStream
+  ) {
+    currentStreamAttempt = 1;
+
+    showMessage(
+      "🔄",
+      "Trying the station’s backup stream…"
+    );
+
+    window.setTimeout(
+      loadCurrentStream,
+      500
+    );
+
+    return;
+  }
+
+  setLoadingState(false);
+
+  showError(
+    "This station is temporarily unavailable. Try another station or visit its website."
   );
 }
 
-function playSelectedStation() {
-  const embedUrl =
-    createEmbedUrl(
-      selectedStation.videoId
-    );
+/* =========================================================
+   AUDIO EVENTS
+   ========================================================= */
 
-  elements.musicPlayer.src =
-    embedUrl;
-
-  elements.playerSection.hidden =
-    false;
-
-  elements.stopButton.disabled =
-    false;
-
-  elements.playButtonText.textContent =
-    "Restart Station";
-
-  elements.youtubeLink.href =
-    createYouTubeWatchUrl(
-      selectedStation.videoId
-    );
+function handlePlaying() {
+  isPlaying = true;
+  isLoading = false;
 
   elements.card.classList.add(
     "is-playing"
   );
 
-  isPlaying = true;
+  elements.card.classList.remove(
+    "is-loading"
+  );
 
-  announceStatus(
-    `Playing ${selectedStation.name}.`
+  elements.stationStatusLabel.textContent =
+    `Playing · ${selectedStation.providerName}`;
+
+  updatePlaybackButtons();
+
+  showMessage(
+    "🎶",
+    `${selectedStation.name} is playing.`
+  );
+
+  document.title =
+    `Playing · ${selectedStation.name}`;
+}
+
+function handleWaiting() {
+  if (!isPlaying) {
+    setLoadingState(true);
+  }
+
+  showMessage(
+    "⏳",
+    `Connecting to ${selectedStation.name}…`
   );
 }
 
-function stopPlayer() {
-  elements.musicPlayer.src = "";
+function handlePaused() {
+  if (
+    elements.player.ended ||
+    !elements.player.src
+  ) {
+    return;
+  }
 
-  elements.playerSection.hidden =
-    true;
+  isPlaying = false;
+  isLoading = false;
+
+  elements.card.classList.remove(
+    "is-playing",
+    "is-loading"
+  );
+
+  updatePlaybackButtons();
+}
+
+function handleAudioError() {
+  /*
+    Ignore errors caused by intentionally clearing src
+    when the Stop button is used.
+  */
+
+  if (!elements.player.src) {
+    return;
+  }
+
+  handleStreamFailure();
+}
+
+/* =========================================================
+   PLAYBACK UI
+   ========================================================= */
+
+function setLoadingState(loading) {
+  isLoading = loading;
+
+  elements.card.classList.toggle(
+    "is-loading",
+    loading
+  );
+
+  elements.playButton.disabled =
+    loading;
+
+  elements.playButtonIcon.textContent =
+    loading
+      ? "…"
+      : "▶";
+
+  elements.playButtonText.textContent =
+    loading
+      ? "Connecting"
+      : "Play Station";
+}
+
+function updatePlaybackButtons() {
+  elements.playButton.disabled =
+    isLoading;
 
   elements.stopButton.disabled =
-    true;
+    !isPlaying &&
+    !isLoading &&
+    !elements.player.src;
+
+  if (isLoading) {
+    elements.playButtonIcon.textContent =
+      "…";
+
+    elements.playButtonText.textContent =
+      "Connecting";
+
+    return;
+  }
+
+  if (isPlaying) {
+    elements.playButtonIcon.textContent =
+      "⏸";
+
+    elements.playButtonText.textContent =
+      "Pause";
+
+    return;
+  }
+
+  if (
+    elements.player.src &&
+    elements.player.paused
+  ) {
+    elements.playButtonIcon.textContent =
+      "▶";
+
+    elements.playButtonText.textContent =
+      "Resume";
+
+    return;
+  }
+
+  elements.playButtonIcon.textContent =
+    "▶";
 
   elements.playButtonText.textContent =
     "Play Station";
+}
 
-  elements.card.classList.remove(
-    "is-playing"
+/* =========================================================
+   VOLUME
+   ========================================================= */
+
+function initializeVolume() {
+  const volumePercent =
+    Math.round(
+      savedVolume * 100
+    );
+
+  elements.player.volume =
+    savedVolume;
+
+  elements.player.muted =
+    isMuted;
+
+  elements.volumeSlider.value =
+    String(volumePercent);
+
+  updateVolumeDisplay();
+}
+
+function handleVolumeChange(event) {
+  const volumePercent =
+    clamp(
+      Number(event.target.value),
+      0,
+      100
+    );
+
+  savedVolume =
+    volumePercent / 100;
+
+  elements.player.volume =
+    savedVolume;
+
+  if (
+    savedVolume > 0 &&
+    isMuted
+  ) {
+    isMuted = false;
+    elements.player.muted = false;
+  }
+
+  updateVolumeDisplay();
+  saveState();
+}
+
+function toggleMute() {
+  isMuted =
+    !isMuted;
+
+  elements.player.muted =
+    isMuted;
+
+  updateVolumeDisplay();
+  saveState();
+}
+
+function updateVolumeDisplay() {
+  const volumePercent =
+    Math.round(
+      savedVolume * 100
+    );
+
+  elements.volumeValue.textContent =
+    isMuted
+      ? "Muted"
+      : `${volumePercent}%`;
+
+  elements.muteIcon.textContent =
+    getVolumeIcon(
+      volumePercent,
+      isMuted
+    );
+
+  elements.muteButton.setAttribute(
+    "aria-label",
+    isMuted
+      ? "Unmute focus radio"
+      : "Mute focus radio"
   );
 
-  isPlaying = false;
-
-  announceStatus(
-    "Focus music stopped."
+  elements.volumeSlider.style.setProperty(
+    "--volume-progress",
+    `${volumePercent}%`
   );
 }
 
-function announceStatus(message) {
-  elements.musicStatus.textContent =
+function getVolumeIcon(
+  volumePercent,
+  muted
+) {
+  if (
+    muted ||
+    volumePercent === 0
+  ) {
+    return "🔇";
+  }
+
+  if (volumePercent < 45) {
+    return "🔈";
+  }
+
+  if (volumePercent < 75) {
+    return "🔉";
+  }
+
+  return "🔊";
+}
+
+/* =========================================================
+   STATUS MESSAGES
+   ========================================================= */
+
+function showMessage(
+  icon,
+  message
+) {
+  elements.card.classList.remove(
+    "has-error"
+  );
+
+  elements.radioMessageIcon.textContent =
+    icon;
+
+  elements.radioMessageText.textContent =
     message;
+}
+
+function showError(message) {
+  isPlaying = false;
+  isLoading = false;
+
+  elements.card.classList.remove(
+    "is-playing",
+    "is-loading"
+  );
+
+  elements.card.classList.add(
+    "has-error"
+  );
+
+  elements.stationStatusLabel.textContent =
+    "Station unavailable";
+
+  updatePlaybackButtons();
+
+  elements.radioMessageIcon.textContent =
+    "⚠️";
+
+  elements.radioMessageText.textContent =
+    message;
+
+  document.title =
+    "Focus Radio";
+}
+
+function clearErrorState() {
+  elements.card.classList.remove(
+    "has-error"
+  );
 }
 
 /* =========================================================
@@ -516,7 +1056,9 @@ function attachEventListeners() {
 
   elements.stopButton.addEventListener(
     "click",
-    stopPlayer
+    () => {
+      stopAudio();
+    }
   );
 
   elements.dailyPickButton.addEventListener(
@@ -531,9 +1073,39 @@ function attachEventListeners() {
     }
   );
 
+  elements.volumeSlider.addEventListener(
+    "input",
+    handleVolumeChange
+  );
+
+  elements.muteButton.addEventListener(
+    "click",
+    toggleMute
+  );
+
+  elements.player.addEventListener(
+    "playing",
+    handlePlaying
+  );
+
+  elements.player.addEventListener(
+    "waiting",
+    handleWaiting
+  );
+
+  elements.player.addEventListener(
+    "pause",
+    handlePaused
+  );
+
+  elements.player.addEventListener(
+    "error",
+    handleAudioError
+  );
+
   window.addEventListener(
     "beforeunload",
-    saveMusicState
+    saveState
   );
 }
 
@@ -541,13 +1113,15 @@ function attachEventListeners() {
    INITIALIZATION
    ========================================================= */
 
-function initializeFocusMusic() {
-  loadSavedMusicState();
+function initializeFocusRadio() {
+  loadSavedState();
 
   buildStationButtons();
   renderDailyStation();
   renderSelectedStation();
+  initializeVolume();
   attachEventListeners();
+  updatePlaybackButtons();
 }
 
-initializeFocusMusic();
+initializeFocusRadio();
