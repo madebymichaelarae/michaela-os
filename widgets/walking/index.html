@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Walking Stats | Michaela OS</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/themes.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/css/health-walking-widget.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="health-walking"
+      data-theme="cozy-autumn"
+    >
+      <section
+        class="health-walking__card"
+        aria-labelledby="walking-widget-title"
+      >
+        <header class="health-walking__header">
+          <div>
+            <p class="health-walking__eyebrow">
+              Health
+            </p>
+
+            <h1
+              class="health-walking__title"
+              id="walking-widget-title"
+            >
+              Walking
+            </h1>
+          </div>
+
+          <div
+            class="health-walking__icon"
+            aria-hidden="true"
+          >
+            🚶
+          </div>
+        </header>
+
+        <div
+          class="health-walking__divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="
+            health-walking__stat
+            health-walking__stat--primary
+          "
+          aria-label="Miles walked today"
+        >
+          <p class="health-walking__value">
+            <span id="walkingToday">—</span>
+
+            <span class="health-walking__unit">
+              mi
+            </span>
+          </p>
+
+          <p class="health-walking__label">
+            Miles today
+          </p>
+        </section>
+
+        <div
+          class="health-walking__stat-divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="health-walking__stat"
+          aria-label="Miles walked this week"
+        >
+          <p class="health-walking__value">
+            <span id="walkingWeek">—</span>
+
+            <span class="health-walking__unit">
+              mi
+            </span>
+          </p>
+
+          <p class="health-walking__label">
+            This week
+          </p>
+        </section>
+
+        <div
+          class="health-walking__stat-divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="health-walking__stat"
+          aria-label="Miles walked this month"
+        >
+          <p class="health-walking__value">
+            <span id="walkingMonth">—</span>
+
+            <span class="health-walking__unit">
+              mi
+            </span>
+          </p>
+
+          <p class="health-walking__label">
+            This month
+          </p>
+        </section>
+
+        <div
+          class="health-walking__stat-divider"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          class="
+            health-walking__stat
+            health-walking__stat--last
+          "
+          aria-label="Miles walked this year"
+        >
+          <p class="health-walking__value">
+            <span id="walkingYear">—</span>
+
+            <span class="health-walking__unit">
+              mi
+            </span>
+          </p>
+
+          <p class="health-walking__label">
+            This year
+          </p>
+        </section>
+
+        <p
+          class="health-walking__error"
+          id="walkingError"
+          hidden
+        ></p>
+      </section>
+    </main>
+
+    <script
+      src="/js/walking-widget.js"
+      defer
+    ></script>
+  </body>
+</html>
