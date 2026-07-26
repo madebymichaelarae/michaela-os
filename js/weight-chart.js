@@ -1,12 +1,17 @@
-const chartCanvas = document.getElementById("weightChart");
+const chartCanvas =
+  document.getElementById("weightChart");
 
 if (!chartCanvas) {
-  throw new Error("Weight chart canvas was not found.");
+  throw new Error(
+    "Weight chart canvas was not found."
+  );
 }
 
 async function loadWeightChart() {
   try {
-    const response = await fetch("/api/health?view=weight");
+    const response = await fetch(
+      "/api/health?view=weight"
+    );
 
     if (!response.ok) {
       throw new Error(
@@ -40,7 +45,11 @@ async function loadWeightChart() {
     );
 
     updateWeightSummary(result.weights);
-    createWeightChart(labels, values);
+
+    createWeightChart(
+      labels,
+      values
+    );
   } catch (error) {
     console.error(
       "Weight chart error:",
@@ -72,16 +81,6 @@ function updateWeightSummary(weights) {
       "weightChange"
     );
 
-  const weightUpdated =
-    document.getElementById(
-      "weightUpdated"
-    );
-
-  const weightRecognition =
-    document.getElementById(
-      "weightRecognition"
-    );
-
   const goalLabel =
     document.getElementById(
       "weightGoalLabel"
@@ -110,8 +109,6 @@ function updateWeightSummary(weights) {
   if (
     !currentWeight ||
     !weightChange ||
-    !weightUpdated ||
-    !weightRecognition ||
     !goalLabel ||
     !goalRemaining ||
     !goalDetails ||
@@ -134,74 +131,22 @@ function updateWeightSummary(weights) {
   const totalChange =
     latestWeight - startingWeight;
 
-  const poundsLost = Math.max(
-    0,
-    startingWeight - latestWeight
-  );
-
-  const lowestWeight = Math.min(
-    ...weights.map(
-      (entry) => entry.weight
-    )
-  );
-
-  /*
-   * The HTML displays the "lb" unit
-   * separately, so this element only
-   * receives the numeric value.
-   */
   currentWeight.textContent =
     latestWeight.toFixed(1);
 
   if (totalChange < 0) {
     weightChange.textContent =
-      `↓ ${Math.abs(totalChange).toFixed(
-        1
-      )} lbs`;
+      `↓ ${Math.abs(
+        totalChange
+      ).toFixed(1)} lbs`;
   } else if (totalChange > 0) {
     weightChange.textContent =
-      `↑ ${totalChange.toFixed(1)} lbs`;
+      `↑ ${totalChange.toFixed(
+        1
+      )} lbs`;
   } else {
     weightChange.textContent =
       "No change";
-  }
-
-  weightUpdated.textContent =
-    `Last updated ${formatLongDate(
-      latestEntry.date
-    )}`;
-
-  if (
-    latestWeight <= GOAL_TWO_WEIGHT
-  ) {
-    weightRecognition.textContent =
-      "🎉 Final goal reached!";
-  } else if (
-    latestWeight <= GOAL_ONE_WEIGHT
-  ) {
-    weightRecognition.textContent =
-      "🏆 Goal 1 complete!";
-  } else if (poundsLost >= 20) {
-    weightRecognition.textContent =
-      "🏆 20 lbs down!";
-  } else if (poundsLost >= 15) {
-    weightRecognition.textContent =
-      "🏆 15 lbs down!";
-  } else if (poundsLost >= 10) {
-    weightRecognition.textContent =
-      "🎉 10 lbs down!";
-  } else if (poundsLost >= 5) {
-    weightRecognition.textContent =
-      "✨ 5 lbs down!";
-  } else if (
-    latestWeight === lowestWeight &&
-    weights.length > 1
-  ) {
-    weightRecognition.textContent =
-      "🏆 New low!";
-  } else {
-    weightRecognition.textContent =
-      "✨ Keep going!";
   }
 
   let activeGoalLabel;
@@ -209,7 +154,8 @@ function updateWeightSummary(weights) {
   let goalStartWeight;
 
   if (
-    latestWeight > GOAL_ONE_WEIGHT
+    latestWeight >
+    GOAL_ONE_WEIGHT
   ) {
     activeGoalLabel = "Goal 1";
     activeGoalWeight =
@@ -257,6 +203,16 @@ function updateWeightSummary(weights) {
     `${activeGoalLabel}: ` +
     `${activeGoalWeight} lbs`;
 
+  goalRemaining.textContent =
+    poundsRemaining > 0
+      ? `${poundsRemaining.toFixed(
+          1
+        )} lbs remaining`
+      : "Goal reached!";
+
+  goalDetails.textContent =
+    `${percent.toFixed(0)}%`;
+
   progressBar.style.width =
     `${percent}%`;
 
@@ -270,24 +226,36 @@ function updateWeightSummary(weights) {
     `Progress toward ` +
       `${activeGoalWeight} pound goal`
   );
-
-  goalRemaining.textContent =
-    poundsRemaining > 0
-      ? `${poundsRemaining.toFixed(
-          1
-        )} lbs remaining`
-      : "Goal reached!";
-
-  goalDetails.textContent =
-    `${percent.toFixed(
-      0
-    )}% complete`;
 }
 
 function createWeightChart(
   labels,
   values
 ) {
+  const rootStyles =
+    getComputedStyle(
+      document.documentElement
+    );
+
+  const accentColor =
+    rootStyles
+      .getPropertyValue("--accent")
+      .trim() || "#d94f9a";
+
+  const textColor =
+    rootStyles
+      .getPropertyValue(
+        "--text-secondary"
+      )
+      .trim() || "#6f5f55";
+
+  const gridColor =
+    rootStyles
+      .getPropertyValue(
+        "--border-soft"
+      )
+      .trim() || "#eadfd6";
+
   new Chart(chartCanvas, {
     type: "line",
 
@@ -299,15 +267,18 @@ function createWeightChart(
           label: "Weight",
           data: values,
 
-          borderColor: "#d94f9a",
-          pointBackgroundColor:
-            "#d94f9a",
-          pointBorderColor:
-            "#d94f9a",
+          borderColor:
+            accentColor,
 
-          borderWidth: 3,
-          pointRadius: 4,
-          pointHoverRadius: 6,
+          pointBackgroundColor:
+            accentColor,
+
+          pointBorderColor:
+            accentColor,
+
+          borderWidth: 2.25,
+          pointRadius: 2.75,
+          pointHoverRadius: 5,
           tension: 0.35,
           fill: false
         }
@@ -321,6 +292,15 @@ function createWeightChart(
       interaction: {
         mode: "index",
         intersect: false
+      },
+
+      layout: {
+        padding: {
+          top: 2,
+          right: 2,
+          bottom: 0,
+          left: 0
+        }
       },
 
       plugins: {
@@ -341,19 +321,46 @@ function createWeightChart(
 
       scales: {
         x: {
+          border: {
+            display: false
+          },
+
           grid: {
             display: false
           },
 
           ticks: {
-            maxRotation: 0
+            color: textColor,
+            font: {
+              size: 9
+            },
+            maxRotation: 0,
+            autoSkip: true,
+            maxTicksLimit: 7,
+            padding: 4
           }
         },
 
         y: {
-          grace: "10%",
+          grace: "8%",
+
+          border: {
+            display: false
+          },
+
+          grid: {
+            color: gridColor,
+            lineWidth: 1
+          },
 
           ticks: {
+            color: textColor,
+            font: {
+              size: 9
+            },
+            maxTicksLimit: 4,
+            padding: 5,
+
             callback(value) {
               return `${value} lb`;
             }
@@ -373,22 +380,6 @@ function formatDate(dateString) {
     "en-US",
     {
       month: "short",
-      day: "numeric"
-    }
-  ).format(date);
-}
-
-function formatLongDate(
-  dateString
-) {
-  const date = new Date(
-    `${dateString}T12:00:00`
-  );
-
-  return new Intl.DateTimeFormat(
-    "en-US",
-    {
-      month: "long",
       day: "numeric"
     }
   ).format(date);
