@@ -1,0 +1,648 @@
+/* =========================================================
+   Michaela OS
+   Health — Weight Widget
+   Cozy Autumn
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: transparent;
+  color: var(
+    --text-primary,
+    #3f352f
+  );
+  font-family: var(
+    --font-body,
+    system-ui,
+    sans-serif
+  );
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================================
+   Widget shell
+   ========================================================= */
+
+.health-weight {
+  container-type: inline-size;
+  width: 100%;
+  padding: 0;
+}
+
+.health-weight__card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid
+    var(
+      --border-default,
+      #d8cbc0
+    );
+  border-radius: 24px;
+  background:
+    var(
+      --card-background,
+      #fffaf5
+    );
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.health-weight__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content:
+    space-between;
+  gap: 20px;
+  padding: 24px 24px 20px;
+}
+
+.health-weight__header-copy {
+  min-width: 0;
+}
+
+.health-weight__eyebrow {
+  margin: 0 0 5px;
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.health-weight__title {
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    1.45rem,
+    4cqi,
+    1.85rem
+  );
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.health-weight__summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 9px 0 0;
+  color:
+    var(
+      --text-secondary,
+      #6f5f55
+    );
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.health-weight__summary::before {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background:
+    var(
+      --accent,
+      #aa6b58
+    );
+  content: "";
+}
+
+.health-weight__icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 15px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.health-weight__divider {
+  height: 1px;
+  margin: 0 24px;
+  background:
+    var(
+      --border-soft,
+      #eadfd6
+    );
+}
+
+/* =========================================================
+   Shared text styles
+   ========================================================= */
+
+.health-weight__label {
+  margin: 0 0 5px;
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   Current weight overview
+   ========================================================= */
+
+.health-weight__overview {
+  display: flex;
+  align-items: flex-end;
+  justify-content:
+    space-between;
+  gap: 24px;
+  padding: 24px;
+}
+
+.health-weight__current-block {
+  min-width: 0;
+}
+
+.health-weight__current {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    2.45rem,
+    10cqi,
+    4rem
+  );
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+}
+
+.health-weight__unit {
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-family:
+    var(
+      --font-body,
+      system-ui,
+      sans-serif
+    );
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.health-weight__change-block {
+  min-width: 0;
+  text-align: right;
+}
+
+.health-weight__change {
+  margin: 0;
+  color:
+    var(
+      --accent-dark,
+      #7e4e40
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    1rem,
+    4cqi,
+    1.3rem
+  );
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* =========================================================
+   Goal panel
+   ========================================================= */
+
+.health-weight__goal {
+  margin: 0 24px 24px;
+  padding: 18px;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 18px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+}
+
+.health-weight__goal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content:
+    space-between;
+  gap: 16px;
+}
+
+.health-weight__goal-title {
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.health-weight__goal-copy {
+  margin: 5px 0 0;
+  color:
+    var(
+      --text-secondary,
+      #6f5f55
+    );
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.health-weight__recognition {
+  max-width: 48%;
+  margin: 1px 0 0;
+  color:
+    var(
+      --accent-dark,
+      #7e4e40
+    );
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.health-weight__progress-track {
+  width: 100%;
+  height: 10px;
+  margin: 17px 0 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background:
+    var(
+      --accent-pale,
+      #f1dfd7
+    );
+}
+
+.health-weight__progress-bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    var(
+      --accent,
+      #aa6b58
+    );
+  transition:
+    width 650ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+}
+
+.health-weight__goal-footer {
+  display: flex;
+  align-items: center;
+  justify-content:
+    space-between;
+  gap: 14px;
+}
+
+.health-weight__goal-footer p {
+  margin: 0;
+  color:
+    var(
+      --text-secondary,
+      #6f5f55
+    );
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.health-weight__goal-footer p:last-child {
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  text-align: right;
+}
+
+/* =========================================================
+   Chart panel
+   ========================================================= */
+
+.health-weight__chart-panel {
+  margin: 0 24px 24px;
+  padding: 18px;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 18px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+}
+
+.health-weight__chart-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content:
+    space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.health-weight__chart-title {
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.health-weight__chart-container {
+  position: relative;
+  width: 100%;
+  height: 230px;
+}
+
+.health-weight__chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+.health-weight__footer {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+  border-top: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+}
+
+.health-weight__footer-item {
+  min-width: 0;
+  padding: 15px 12px 17px;
+  text-align: center;
+}
+
+.health-weight__footer-item
+  + .health-weight__footer-item {
+  border-left: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+}
+
+.health-weight__footer-label {
+  display: block;
+  margin-bottom: 4px;
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.health-weight__footer-value {
+  display: block;
+  overflow: hidden;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    0.78rem,
+    3.1cqi,
+    1rem
+  );
+  font-weight: 700;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@container (
+  max-width: 520px
+) {
+  .health-weight__header {
+    padding:
+      20px 18px 17px;
+  }
+
+  .health-weight__divider {
+    margin:
+      0 18px;
+  }
+
+  .health-weight__icon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    border-radius: 13px;
+    font-size: 1.2rem;
+  }
+
+  .health-weight__overview {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+    padding:
+      20px 18px;
+  }
+
+  .health-weight__change-block {
+    text-align: left;
+  }
+
+  .health-weight__goal,
+  .health-weight__chart-panel {
+    margin-right: 18px;
+    margin-left: 18px;
+  }
+
+  .health-weight__goal-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .health-weight__recognition {
+    max-width: none;
+    text-align: left;
+  }
+
+  .health-weight__goal-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .health-weight__goal-footer p:last-child {
+    text-align: left;
+  }
+
+  .health-weight__chart-container {
+    height: 200px;
+  }
+
+  .health-weight__footer-item {
+    padding:
+      13px 6px 15px;
+  }
+}
+
+@container (
+  max-width: 360px
+) {
+  .health-weight__footer-value {
+    font-size: 0.72rem;
+  }
+
+  .health-weight__footer-item {
+    padding:
+      12px 4px 14px;
+  }
+}
+
+@media (
+  prefers-reduced-motion:
+    reduce
+) {
+  .health-weight__progress-bar {
+    transition: none;
+  }
+}
