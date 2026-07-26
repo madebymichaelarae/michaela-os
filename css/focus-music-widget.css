@@ -1,6 +1,6 @@
 /* =========================================================
    Michaela OS
-   Productivity — Focus Music
+   Productivity — Focus Radio
    Cozy Autumn Theme
    ========================================================= */
 
@@ -32,6 +32,7 @@ body {
 }
 
 button,
+input,
 a {
   font: inherit;
 }
@@ -42,21 +43,6 @@ button {
 
 [hidden] {
   display: none !important;
-}
-
-.visually-hidden {
-  position: absolute;
-
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-
-  border: 0;
 }
 
 /* =========================================================
@@ -72,13 +58,13 @@ button {
   --station-accent: #b76e55;
   --station-accent-dark: #94513e;
   --station-accent-soft: #efd8cd;
-  --station-surface: #fff8f3;
+  --station-surface: rgba(255, 248, 243, 0.97);
 
   position: relative;
 
   width: 100%;
   min-width: 0;
-  padding: 18px 20px 21px;
+  padding: 18px 20px 20px;
 
   overflow: hidden;
 
@@ -126,9 +112,9 @@ button {
 
   background:
     radial-gradient(
-      circle at 95% 0%,
+      circle at 96% 0%,
       var(--station-accent-soft),
-      transparent 33%
+      transparent 35%
     );
 
   transition:
@@ -168,18 +154,18 @@ button {
   --station-surface: rgba(255, 248, 243, 0.97);
 }
 
-.music-card[data-theme="rain"] {
-  --station-accent: #798d88;
-  --station-accent-dark: #5e716c;
-  --station-accent-soft: #dce7e4;
-  --station-surface: rgba(246, 250, 249, 0.97);
+.music-card[data-theme="chill"] {
+  --station-accent: #9b806b;
+  --station-accent-dark: #745d4d;
+  --station-accent-soft: #e7dcd3;
+  --station-surface: rgba(251, 248, 245, 0.97);
 }
 
-.music-card[data-theme="brown-noise"] {
-  --station-accent: #8a6e5a;
-  --station-accent-dark: #6a5141;
-  --station-accent-soft: #e6d9cf;
-  --station-surface: rgba(250, 247, 244, 0.97);
+.music-card[data-theme="deep"] {
+  --station-accent: #7d858f;
+  --station-accent-dark: #59616c;
+  --station-accent-soft: #dde1e6;
+  --station-surface: rgba(247, 248, 250, 0.97);
 }
 
 .music-card[data-theme="coffee"] {
@@ -189,32 +175,18 @@ button {
   --station-surface: rgba(253, 248, 243, 0.97);
 }
 
-.music-card[data-theme="piano"] {
-  --station-accent: #a28173;
-  --station-accent-dark: #795f54;
-  --station-accent-soft: #eadfda;
-  --station-surface: rgba(253, 250, 248, 0.97);
+.music-card[data-theme="jazz"] {
+  --station-accent: #9d765d;
+  --station-accent-dark: #74533f;
+  --station-accent-soft: #eadbd1;
+  --station-surface: rgba(252, 248, 246, 0.97);
 }
 
-.music-card[data-theme="nature"] {
+.music-card[data-theme="ambient"] {
   --station-accent: #84966e;
   --station-accent-dark: #667653;
   --station-accent-soft: #dfe8d7;
   --station-surface: rgba(248, 251, 245, 0.97);
-}
-
-.music-card[data-theme="fireplace"] {
-  --station-accent: #bd7551;
-  --station-accent-dark: #914f34;
-  --station-accent-soft: #f0d8ca;
-  --station-surface: rgba(255, 248, 243, 0.97);
-}
-
-.music-card[data-theme="ocean"] {
-  --station-accent: #6f8f99;
-  --station-accent-dark: #526f78;
-  --station-accent-soft: #d8e6e9;
-  --station-surface: rgba(246, 250, 251, 0.97);
 }
 
 /* =========================================================
@@ -231,11 +203,7 @@ button {
 .music-eyebrow {
   margin: 0 0 3px;
 
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
+  color: var(--text-secondary, #806f65);
 
   font-size: 0.64rem;
   font-weight: 800;
@@ -247,19 +215,14 @@ button {
 .music-header h1 {
   margin: 0;
 
-  color:
-    var(
-      --text-primary,
-      #40342e
-    );
+  color: var(--text-primary, #40342e);
 
-  font-family:
-    var(
-      --font-heading,
-      Georgia,
-      "Times New Roman",
-      serif
-    );
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
 
   font-size: 1.45rem;
   font-weight: 700;
@@ -277,8 +240,7 @@ button {
   font-size: 1.1rem;
   line-height: 1;
 
-  background:
-    var(--station-accent-soft);
+  background: var(--station-accent-soft);
 
   border: 1px solid
     color-mix(
@@ -287,11 +249,7 @@ button {
       transparent
     );
 
-  border-radius:
-    var(
-      --radius-icon,
-      12px
-    );
+  border-radius: var(--radius-icon, 12px);
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.64),
@@ -307,7 +265,7 @@ button {
 }
 
 /* =========================================================
-   DIVIDERS
+   DIVIDERS AND LABELS
    ========================================================= */
 
 .music-divider {
@@ -322,19 +280,14 @@ button {
     );
 }
 
-/* =========================================================
-   TODAY'S FOCUS
-   ========================================================= */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 
-.daily-pick__label,
-.station-section > h2 {
   margin: 0 0 12px;
 
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
+  color: var(--text-secondary, #806f65);
 
   font-size: 0.65rem;
   font-weight: 850;
@@ -343,33 +296,29 @@ button {
   text-transform: uppercase;
 }
 
-.daily-pick__label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+/* =========================================================
+   DAILY PICK
+   ========================================================= */
 
-.daily-pick__button {
+.daily-pick-button {
   display: grid;
   width: 100%;
   min-width: 0;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+
+  grid-template-columns:
+    auto minmax(0, 1fr) auto;
+
   align-items: center;
   gap: 12px;
 
   padding: 12px;
 
-  color:
-    var(
-      --text-primary,
-      #40342e
-    );
+  color: var(--text-primary, #40342e);
 
   text-align: left;
   cursor: pointer;
 
-  background:
-    rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.58);
 
   border: 1px solid
     color-mix(
@@ -390,7 +339,7 @@ button {
     box-shadow 150ms ease;
 }
 
-.daily-pick__button:hover {
+.daily-pick-button:hover {
   transform: translateY(-1px);
 
   border-color:
@@ -405,69 +354,57 @@ button {
     0 8px 16px rgba(77, 52, 38, 0.08);
 }
 
-.daily-pick__icon {
+.daily-pick-icon {
   display: grid;
   width: 38px;
   height: 38px;
   place-items: center;
 
-  background:
-    var(--station-accent-soft);
-
+  background: var(--station-accent-soft);
   border-radius: 12px;
 
   font-size: 1.05rem;
 }
 
-.daily-pick__copy {
+.daily-pick-copy {
   min-width: 0;
 }
 
-.daily-pick__copy strong {
+.daily-pick-copy strong,
+.daily-pick-copy small {
   display: block;
-  margin-bottom: 3px;
 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
 
-  font-family:
-    var(
-      --font-heading,
-      Georgia,
-      "Times New Roman",
-      serif
-    );
+.daily-pick-copy strong {
+  margin-bottom: 3px;
+
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
 
   font-size: 0.92rem;
   line-height: 1.15;
 }
 
-.daily-pick__copy small {
-  display: block;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
+.daily-pick-copy small {
+  color: var(--text-secondary, #806f65);
 
   font-size: 0.68rem;
   font-weight: 650;
 }
 
-.daily-pick__action {
+.daily-pick-action {
   padding: 7px 10px;
 
-  color:
-    var(--station-accent-dark);
-
-  background:
-    var(--station-accent-soft);
+  color: var(--station-accent-dark);
+  background: var(--station-accent-soft);
 
   border-radius: 999px;
 
@@ -476,7 +413,7 @@ button {
 }
 
 /* =========================================================
-   STATION PILLS
+   STATION BUTTONS
    ========================================================= */
 
 .station-buttons {
@@ -489,16 +426,11 @@ button {
   min-height: 36px;
   padding: 8px 12px;
 
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
+  color: var(--text-secondary, #806f65);
 
   cursor: pointer;
 
-  background:
-    rgba(255, 255, 255, 0.53);
+  background: rgba(255, 255, 255, 0.53);
 
   border: 1px solid
     var(
@@ -523,8 +455,7 @@ button {
 .station-button:hover {
   transform: translateY(-1px);
 
-  color:
-    var(--station-accent-dark);
+  color: var(--station-accent-dark);
 
   border-color:
     color-mix(
@@ -535,11 +466,8 @@ button {
 }
 
 .station-button.active {
-  color:
-    var(--station-accent-dark);
-
-  background:
-    var(--station-accent-soft);
+  color: var(--station-accent-dark);
+  background: var(--station-accent-soft);
 
   border-color:
     color-mix(
@@ -554,12 +482,15 @@ button {
 }
 
 /* =========================================================
-   NOW PLAYING CARD
+   NOW PLAYING
    ========================================================= */
 
 .now-playing {
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
+
+  grid-template-columns:
+    84px minmax(0, 1fr);
+
   align-items: center;
   gap: 16px;
 }
@@ -606,6 +537,11 @@ button {
     artwork-breathe 3.2s ease-in-out infinite;
 }
 
+.music-card.is-loading .station-artwork {
+  animation:
+    artwork-loading 1.4s ease-in-out infinite;
+}
+
 @keyframes artwork-breathe {
   0%,
   100% {
@@ -617,18 +553,25 @@ button {
   }
 }
 
+@keyframes artwork-loading {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
 .station-information {
   min-width: 0;
 }
 
-.station-information__label {
+.station-status-label {
   margin: 0 0 3px;
 
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
+  color: var(--text-secondary, #806f65);
 
   font-size: 0.59rem;
   font-weight: 850;
@@ -640,19 +583,14 @@ button {
 .station-information h2 {
   margin: 0 0 5px;
 
-  color:
-    var(
-      --text-primary,
-      #40342e
-    );
+  color: var(--text-primary, #40342e);
 
-  font-family:
-    var(
-      --font-heading,
-      Georgia,
-      "Times New Roman",
-      serif
-    );
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
 
   font-size: 1.18rem;
   font-weight: 700;
@@ -660,40 +598,44 @@ button {
   line-height: 1.1;
 }
 
-.station-information > p:not(
-  .station-information__label
-) {
+.station-information > p:last-child {
   margin: 0;
 
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
+  color: var(--text-secondary, #806f65);
 
   font-size: 0.72rem;
   font-weight: 620;
   line-height: 1.4;
 }
 
-.player-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+/* =========================================================
+   PLAYBACK CONTROLS
+   ========================================================= */
 
-  margin-top: 12px;
+.radio-controls {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 9px;
+
+  margin-top: 17px;
 }
 
-.play-button,
-.stop-button {
-  min-height: 38px;
-  padding: 9px 13px;
+.primary-control,
+.secondary-control {
+  display: flex;
+  min-height: 42px;
+
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 10px 13px;
 
   cursor: pointer;
 
-  border-radius: 11px;
+  border-radius: 12px;
 
-  font-size: 0.69rem;
+  font-size: 0.72rem;
   font-weight: 850;
   line-height: 1;
 
@@ -705,14 +647,11 @@ button {
     box-shadow 150ms ease;
 }
 
-.play-button {
+.primary-control {
   color: #fffaf7;
 
-  background:
-    var(--station-accent);
-
-  border: 1px solid
-    var(--station-accent);
+  background: var(--station-accent);
+  border: 1px solid var(--station-accent);
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.17),
@@ -724,25 +663,17 @@ button {
       );
 }
 
-.play-button:hover {
+.primary-control:hover {
   transform: translateY(-1px);
 
-  background:
-    var(--station-accent-dark);
-
-  border-color:
-    var(--station-accent-dark);
+  background: var(--station-accent-dark);
+  border-color: var(--station-accent-dark);
 }
 
-.stop-button {
-  color:
-    var(
-      --text-primary,
-      #40342e
-    );
+.secondary-control {
+  color: var(--text-primary, #40342e);
 
-  background:
-    rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.58);
 
   border: 1px solid
     var(
@@ -751,7 +682,7 @@ button {
     );
 }
 
-.stop-button:hover:not(:disabled) {
+.secondary-control:hover:not(:disabled) {
   transform: translateY(-1px);
 
   border-color:
@@ -768,8 +699,197 @@ button:disabled {
   box-shadow: none;
 }
 
+/* =========================================================
+   VOLUME
+   ========================================================= */
+
+.volume-section {
+  margin-top: 17px;
+  padding: 13px 14px;
+
+  background: rgba(255, 255, 255, 0.46);
+
+  border: 1px solid
+    var(
+      --border-default,
+      rgba(91, 65, 49, 0.1)
+    );
+
+  border-radius: 14px;
+}
+
+.volume-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 9px;
+}
+
+.volume-heading label,
+.volume-heading span {
+  color: var(--text-secondary, #806f65);
+
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+
+.volume-control {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.mute-button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  place-items: center;
+
+  cursor: pointer;
+
+  color: var(--text-primary, #40342e);
+  background: var(--station-accent-soft);
+
+  border: 0;
+  border-radius: 10px;
+}
+
+.volume-control input[type="range"] {
+  width: 100%;
+  height: 5px;
+
+  cursor: pointer;
+
+  appearance: none;
+
+  background:
+    linear-gradient(
+      to right,
+      var(--station-accent) 0%,
+      var(--station-accent) var(--volume-progress, 65%),
+      rgba(91, 65, 49, 0.11)
+        var(--volume-progress, 65%),
+      rgba(91, 65, 49, 0.11) 100%
+    );
+
+  border-radius: 999px;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+
+  appearance: none;
+
+  background: #fffaf7;
+
+  border: 2px solid var(--station-accent);
+  border-radius: 50%;
+
+  box-shadow:
+    0 2px 6px rgba(77, 52, 38, 0.16);
+}
+
+.volume-control input[type="range"]::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+
+  background: #fffaf7;
+
+  border: 2px solid var(--station-accent);
+  border-radius: 50%;
+
+  box-shadow:
+    0 2px 6px rgba(77, 52, 38, 0.16);
+}
+
+/* =========================================================
+   RADIO MESSAGE
+   ========================================================= */
+
+.radio-message {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 14px;
+  padding: 10px 12px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--station-accent-soft) 45%,
+      rgba(255, 255, 255, 0.58)
+    );
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--station-accent) 15%,
+      transparent
+    );
+
+  border-radius: 12px;
+}
+
+.radio-message p {
+  margin: 0;
+
+  color: var(--text-secondary, #806f65);
+
+  font-size: 0.67rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.music-card.has-error .radio-message {
+  background: rgba(247, 228, 221, 0.65);
+  border-color: rgba(170, 89, 65, 0.18);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.music-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 14px;
+  padding: 0 2px;
+}
+
+.music-footer span,
+.music-footer a {
+  font-size: 0.61rem;
+  font-weight: 700;
+}
+
+.music-footer span {
+  color: var(--text-secondary, #806f65);
+}
+
+.music-footer a {
+  color: var(--station-accent-dark);
+  text-decoration: none;
+}
+
+.music-footer a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   FOCUS STATES
+   ========================================================= */
+
 button:focus-visible,
-a:focus-visible {
+a:focus-visible,
+input:focus-visible {
   outline: 3px solid
     color-mix(
       in srgb,
@@ -778,81 +898,6 @@ a:focus-visible {
     );
 
   outline-offset: 2px;
-}
-
-/* =========================================================
-   EMBEDDED PLAYER
-   ========================================================= */
-
-.player-section {
-  margin-top: 18px;
-}
-
-.player-frame {
-  position: relative;
-
-  width: 100%;
-  aspect-ratio: 16 / 9;
-
-  overflow: hidden;
-
-  background: #2e2926;
-
-  border: 1px solid
-    color-mix(
-      in srgb,
-      var(--station-accent) 25%,
-      rgba(91, 65, 49, 0.12)
-    );
-
-  border-radius: 15px;
-
-  box-shadow:
-    0 9px 22px rgba(52, 38, 30, 0.13);
-}
-
-.player-frame iframe {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-}
-
-.player-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-
-  padding: 9px 2px 0;
-}
-
-.player-footer p {
-  margin: 0;
-
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
-
-  font-size: 0.62rem;
-  font-weight: 650;
-}
-
-.player-footer a {
-  color:
-    var(--station-accent-dark);
-
-  font-size: 0.62rem;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.player-footer a:hover {
-  text-decoration: underline;
 }
 
 /* =========================================================
@@ -869,7 +914,9 @@ a:focus-visible {
   }
 
   .now-playing {
-    grid-template-columns: 68px minmax(0, 1fr);
+    grid-template-columns:
+      68px minmax(0, 1fr);
+
     gap: 13px;
   }
 
@@ -884,11 +931,12 @@ a:focus-visible {
 }
 
 @media (max-width: 360px) {
-  .daily-pick__button {
-    grid-template-columns: auto minmax(0, 1fr);
+  .daily-pick-button {
+    grid-template-columns:
+      auto minmax(0, 1fr);
   }
 
-  .daily-pick__action {
+  .daily-pick-action {
     display: none;
   }
 
@@ -900,11 +948,6 @@ a:focus-visible {
     width: 100%;
     height: 82px;
   }
-
-  .player-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 /* =========================================================
@@ -914,11 +957,11 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .music-card,
   .music-header-icon,
-  .daily-pick__button,
+  .daily-pick-button,
   .station-button,
   .station-artwork,
-  .play-button,
-  .stop-button {
+  .primary-control,
+  .secondary-control {
     animation: none !important;
     transition: none !important;
   }
