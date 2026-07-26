@@ -17,39 +17,35 @@
 
     <link
       rel="stylesheet"
-      href="/css/styles.css"
+      href="/css/health-water-widget.css"
     />
   </head>
 
   <body>
     <main
-      class="health-widget health-water"
+      class="health-water"
       data-theme="cozy-autumn"
     >
       <section
-        class="health-widget__card"
+        class="health-water__card"
         aria-labelledby="water-widget-title"
       >
-        <header class="health-widget__header">
-          <div class="health-widget__header-copy">
-            <p class="health-widget__eyebrow">
+        <header class="health-water__header">
+          <div>
+            <p class="health-water__eyebrow">
               Health
             </p>
 
             <h1
-              class="health-widget__title"
+              class="health-water__title"
               id="water-widget-title"
             >
               Water
             </h1>
-
-            <p class="health-widget__summary">
-              Today’s hydration progress.
-            </p>
           </div>
 
           <div
-            class="health-widget__icon"
+            class="health-water__icon"
             aria-hidden="true"
           >
             💧
@@ -57,152 +53,122 @@
         </header>
 
         <div
-          class="health-widget__divider"
+          class="health-water__divider"
           aria-hidden="true"
         ></div>
 
         <section
-          class="health-water__hero"
-          aria-labelledby="waterGoalLabel"
+          class="health-water__overview"
+          aria-label="Today's water summary"
         >
-          <div class="health-water__amount-row">
-            <div>
-              <p
-                class="health-widget__section-label"
-                id="waterGoalLabel"
-              >
-                Today’s water
-              </p>
+          <p class="health-water__current">
+            <span id="waterCurrent">—</span>
 
-              <p class="health-water__amount">
-                <span id="waterCurrent">—</span>
+            <span class="health-water__unit">
+              oz
+            </span>
+          </p>
 
-                <span class="health-water__unit">
-                  oz
-                </span>
-              </p>
-            </div>
+          <div class="health-water__percentage-badge">
+            <span
+              class="health-water__percentage"
+              id="waterPercentage"
+            >
+              0%
+            </span>
 
-            <div class="health-water__percentage-block">
-              <p class="health-widget__section-label">
-                Goal progress
-              </p>
+            <span class="health-water__percentage-label">
+              Daily goal
+            </span>
+          </div>
+        </section>
 
-              <p
-                class="health-water__percentage-value"
-                id="waterPercentage"
-              >
-                Loading…
-              </p>
-            </div>
+        <section
+          class="health-water__goal"
+          aria-label="Daily water goal"
+        >
+          <div class="health-water__goal-copy">
+            <span
+              class="health-water__goal-label"
+              id="waterGoalLabel"
+            >
+              Daily Goal: 72 oz
+            </span>
+
+            <span
+              class="health-water__goal-separator"
+              aria-hidden="true"
+            ></span>
+
+            <span
+              class="health-water__remaining"
+              id="waterRemaining"
+            >
+              Calculating…
+            </span>
           </div>
 
           <div
-            class="health-widget__progress-track health-water__progress-track"
+            class="health-water__progress-track"
             role="progressbar"
-            aria-label="Progress toward 72 ounce water goal"
+            aria-label="Progress toward daily water goal"
             aria-valuemin="0"
             aria-valuemax="100"
             aria-valuenow="0"
           >
             <div
-              class="health-widget__progress-bar"
+              class="health-water__progress-bar"
               id="waterProgressBar"
             ></div>
           </div>
 
-          <div class="health-water__progress-footer">
-            <p id="waterGoalProgress">
-              Calculating…
-            </p>
-
-            <p>
-              Daily goal: 72 oz
-            </p>
-          </div>
+          <p
+            class="health-water__recognition"
+            id="waterRecognition"
+          ></p>
         </section>
 
         <section
-          class="health-water__stats"
-          aria-label="Water summary"
+          class="health-water__history"
+          aria-label="Water goal history"
         >
-          <article class="health-water__stat">
-            <p class="health-widget__section-label">
-              Remaining
-            </p>
-
-            <p
-              class="health-water__stat-value"
-              id="waterRemaining"
-            >
-              Calculating…
-            </p>
-          </article>
-
-          <article class="health-water__stat">
-            <p class="health-widget__section-label">
-              Recognition
-            </p>
-
-            <p
-              class="health-water__stat-value"
-              id="waterRecognition"
-            >
-              Checking…
-            </p>
-          </article>
-
-          <article class="health-water__stat">
-            <p class="health-widget__section-label">
-              Current streak
-            </p>
-
-            <p
-              class="health-water__stat-value"
-              id="waterCurrentStreak"
-            >
-              Calculating…
-            </p>
-          </article>
-        </section>
-
-        <footer class="health-widget__footer">
-          <div class="health-widget__footer-item">
-            <span class="health-widget__footer-label">
+          <div class="health-water__history-item">
+            <span class="health-water__history-label">
               This week
             </span>
 
             <strong
-              class="health-widget__footer-value"
+              class="health-water__history-value"
               id="waterWeekGoalCount"
             >
               Calculating…
             </strong>
           </div>
 
-          <div class="health-widget__footer-item">
-            <span class="health-widget__footer-label">
-              This month
+          <div
+            class="health-water__history-divider"
+            aria-hidden="true"
+          ></div>
+
+          <div class="health-water__history-item">
+            <span class="health-water__history-label">
+              Current streak
             </span>
 
             <strong
-              class="health-widget__footer-value"
-              id="waterMonthGoalCount"
+              class="health-water__history-value"
+              id="waterCurrentStreak"
             >
               Calculating…
             </strong>
           </div>
+        </section>
 
-          <div class="health-widget__footer-item">
-            <span class="health-widget__footer-label">
-              Daily goal
-            </span>
-
-            <strong class="health-widget__footer-value">
-              72 oz
-            </strong>
-          </div>
-        </footer>
+        <p
+          class="health-water__error"
+          id="waterError"
+          hidden
+        ></p>
       </section>
     </main>
 
