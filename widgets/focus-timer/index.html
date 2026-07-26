@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Focus Timer</title>
+
+<link
+    rel="stylesheet"
+    href="../../css/themes.css"
+>
+
+<link
+    rel="stylesheet"
+    href="../../css/focus-timer-widget.css"
+>
+</head>
+
+<body>
+
+<main class="focus-widget">
+
+<section class="focus-card">
+
+<header class="focus-header">
+
+<div>
+
+<p class="focus-eyebrow">
+Productivity
+</p>
+
+<h1>
+Focus Timer
+</h1>
+
+</div>
+
+<div class="focus-icon">
+🍅
+</div>
+
+</header>
+
+<div class="focus-divider"></div>
+
+<div class="timer-display">
+
+<div
+    id="timer"
+    class="timer-time"
+>
+30:00
+</div>
+
+<p
+    id="timer-state"
+    class="timer-state"
+>
+Ready to Focus
+</p>
+
+</div>
+
+<div class="timer-buttons">
+
+<button id="startBtn">
+▶ Start
+</button>
+
+<button id="pauseBtn">
+⏸ Pause
+</button>
+
+<button id="resetBtn">
+↺ Reset
+</button>
+
+</div>
+
+<div class="focus-divider"></div>
+
+<section class="preset-section">
+
+<h2>
+Focus Mode
+</h2>
+
+<div class="preset-buttons">
+
+<button
+class="preset active"
+data-focus="30"
+data-break="5"
+>
+30 / 5
+</button>
+
+<button
+class="preset"
+data-focus="45"
+data-break="10"
+>
+45 / 10
+</button>
+
+<button
+class="preset"
+data-focus="90"
+data-break="25"
+>
+90 / 25
+</button>
+
+</div>
+
+</section>
+
+<div class="focus-divider"></div>
+
+<section class="today-stats">
+
+<h2>
+Today's Focus
+</h2>
+
+<div class="stat">
+
+<span>🍅 Sessions</span>
+
+<strong id="sessions">
+0
+</strong>
+
+</div>
+
+<div class="stat">
+
+<span>⏱ Focus Time</span>
+
+<strong id="focusTime">
+0h 0m
+</strong>
+
+</div>
+
+<div class="stat">
+
+<span>☕ Breaks</span>
+
+<strong id="breaks">
+0
+</strong>
+
+</div>
+
+<div class="stat">
+
+<span>🏆 Longest Session</span>
+
+<strong id="longest">
+0 min
+</strong>
+
+</div>
+
+</section>
+
+</section>
+
+</main>
+
+<script
+src="../../js/focus-timer-widget.js"
+></script>
+
+</body>
+</html>
