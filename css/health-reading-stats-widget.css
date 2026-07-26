@@ -1,0 +1,265 @@
+/* =========================================================
+   Michaela OS
+   Health — Compact Reading Stats Widget
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: transparent;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-body,
+      system-ui,
+      sans-serif
+    );
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================================
+   Widget shell
+   ========================================================= */
+
+.health-reading-stats {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.health-reading-stats__card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid
+    var(
+      --border-default,
+      #d8cbc0
+    );
+  border-radius: 22px;
+  background:
+    var(
+      --card-background,
+      #fffaf5
+    );
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.health-reading-stats__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 15px;
+}
+
+.health-reading-stats__eyebrow {
+  margin: 0 0 3px;
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.health-reading-stats__title {
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    1.35rem,
+    3.5cqi,
+    1.75rem
+  );
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.health-reading-stats__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 13px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.health-reading-stats__divider {
+  height: 1px;
+  margin: 0 20px;
+  background:
+    var(
+      --border-soft,
+      #eadfd6
+    );
+}
+
+/* =========================================================
+   Reading statistics
+   ========================================================= */
+
+.health-reading-stats__stat {
+  padding: 17px 20px;
+}
+
+.health-reading-stats__stat--primary {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.health-reading-stats__stat--last {
+  padding-bottom: 21px;
+}
+
+.health-reading-stats__value {
+  margin: 0;
+  color:
+    var(
+      --text-primary,
+      #3f352f
+    );
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+  font-size: clamp(
+    1.65rem,
+    5cqi,
+    2.2rem
+  );
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.health-reading-stats__stat--primary
+  .health-reading-stats__value {
+  font-size: clamp(
+    2rem,
+    6cqi,
+    2.75rem
+  );
+}
+
+.health-reading-stats__label {
+  margin: 6px 0 0;
+  color:
+    var(
+      --text-soft,
+      #89766a
+    );
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.health-reading-stats__stat-divider {
+  height: 1px;
+  margin: 0 20px;
+  background:
+    var(
+      --border-soft,
+      #eadfd6
+    );
+}
+
+/* =========================================================
+   Error message
+   ========================================================= */
+
+.health-reading-stats__error {
+  margin: 0 20px 20px;
+  padding: 11px 13px;
+  border: 1px solid
+    var(
+      --border-soft,
+      #eadfd6
+    );
+  border-radius: 13px;
+  background:
+    var(
+      --panel-background,
+      #fff6ee
+    );
+  color:
+    var(
+      --accent-dark,
+      #7e4e40
+    );
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@container (max-width: 520px) {
+  .health-reading-stats__header {
+    padding: 16px 16px 13px;
+  }
+
+  .health-reading-stats__divider,
+  .health-reading-stats__stat-divider {
+    margin-right: 16px;
+    margin-left: 16px;
+  }
+
+  .health-reading-stats__stat {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .health-reading-stats__error {
+    margin-right: 16px;
+    margin-left: 16px;
+  }
+}
