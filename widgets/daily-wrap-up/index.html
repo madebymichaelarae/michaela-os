@@ -1,273 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
 
-<meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-/>
+    <title>Daily Wrap-Up</title>
 
-<title>Daily Wrap-Up</title>
+    <link
+        rel="stylesheet"
+        href="../../css/themes.css"
+    />
 
-<link
-    rel="stylesheet"
-    href="../../css/themes.css"
-/>
-
-<link
-    rel="stylesheet"
-    href="../../css/daily-wrap-up-widget.css"
-/>
-
+    <link
+        rel="stylesheet"
+        href="../../css/daily-wrap-up-widget.css"
+    />
 </head>
 
 <body>
+    <main class="wrap-up-widget">
+        <!-- =========================================
+             Header
+        ========================================== -->
 
-<div class="widget-shell">
+        <header class="widget-header">
+            <div class="header-copy">
+                <p class="widget-eyebrow">
+                    Productivity
+                </p>
 
-    <!-- ========================================= -->
-    <!-- Header -->
-    <!-- ========================================= -->
+                <div class="title-row">
+                    <h1
+                        id="wrapUpTitle"
+                        class="widget-title"
+                    >
+                        <span
+                            id="titleIcon"
+                            class="title-icon"
+                            aria-hidden="true"
+                        >
+                            🌙
+                        </span>
 
-    <header class="widget-header">
+                        <span id="titleText">
+                            Daily Wrap-Up
+                        </span>
+                    </h1>
 
-        <div>
+                    <div
+                        id="saveIndicator"
+                        class="save-indicator is-saved"
+                        role="status"
+                        aria-live="polite"
+                    >
+                        <span
+                            id="saveIndicatorIcon"
+                            class="save-indicator-icon"
+                            aria-hidden="true"
+                        >
+                            ✓
+                        </span>
 
-            <p class="widget-eyebrow">
-                Productivity
-            </p>
+                        <span id="saveIndicatorText">
+                            Saved
+                        </span>
+                    </div>
+                </div>
 
-            <h1
-                id="wrapUpTitle"
-                class="widget-title"
+                <p
+                    id="wrapUpSubtitle"
+                    class="widget-subtitle"
+                >
+                    Close the loop on your workday.
+                </p>
+            </div>
+        </header>
+
+        <!-- =========================================
+             Checklist Area
+        ========================================== -->
+
+        <section class="checklist-grid">
+            <!-- Daily Close -->
+
+            <article class="widget-card checklist-card">
+                <div class="card-heading">
+                    <div>
+                        <p class="card-eyebrow">
+                            Checklist
+                        </p>
+
+                        <h2 class="card-title">
+                            Daily Close
+                        </h2>
+                    </div>
+                </div>
+
+                <div
+                    id="fixedChecklist"
+                    class="checklist-list fixed-checklist"
+                >
+                    <!-- Rendered by JavaScript -->
+                </div>
+            </article>
+
+            <!-- Other Reminders -->
+
+            <article class="widget-card checklist-card">
+                <div class="card-heading card-heading-between">
+                    <div>
+                        <p class="card-eyebrow">
+                            Flexible
+                        </p>
+
+                        <h2 class="card-title">
+                            Other Reminders
+                        </h2>
+                    </div>
+
+                    <button
+                        id="addReminderButton"
+                        class="add-reminder-button"
+                        type="button"
+                        aria-label="Add another reminder"
+                    >
+                        <span aria-hidden="true">
+                            +
+                        </span>
+
+                        <span>
+                            Add
+                        </span>
+                    </button>
+                </div>
+
+                <div
+                    id="extraReminderList"
+                    class="checklist-list extra-reminder-list"
+                >
+                    <!-- Rendered by JavaScript -->
+                </div>
+
+                <p
+                    id="emptyReminderMessage"
+                    class="empty-reminder-message"
+                >
+                    Add anything else you want to close out today.
+                </p>
+            </article>
+        </section>
+
+        <!-- =========================================
+             Progress
+        ========================================== -->
+
+        <section
+            class="progress-section"
+            aria-label="Daily wrap-up progress"
+        >
+            <div
+                id="progressTrack"
+                class="progress-track"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                aria-label="Wrap-up completion"
             >
-                🌙 Daily Wrap-Up
-            </h1>
+                <div
+                    id="progressFill"
+                    class="progress-fill"
+                ></div>
+            </div>
+        </section>
 
-            <p
-                id="wrapUpSubtitle"
-                class="widget-subtitle"
-            >
-                Close the loop on your workday.
-            </p>
+        <!-- =========================================
+             Reflection Cards
+        ========================================== -->
 
+        <section class="reflection-grid">
+            <article class="widget-card reflection-card">
+                <label
+                    class="reflection-label"
+                    for="gladI"
+                >
+                    I’m glad I...
+                </label>
+
+                <textarea
+                    id="gladI"
+                    class="reflection-input"
+                    maxlength="5000"
+                    rows="3"
+                    placeholder="Something that went well..."
+                ></textarea>
+            </article>
+
+            <article class="widget-card reflection-card">
+                <label
+                    class="reflection-label"
+                    for="proudOf"
+                >
+                    I’m proud of...
+                </label>
+
+                <textarea
+                    id="proudOf"
+                    class="reflection-input"
+                    maxlength="5000"
+                    rows="3"
+                    placeholder="Something you accomplished..."
+                ></textarea>
+            </article>
+
+            <article class="widget-card reflection-card">
+                <label
+                    class="reflection-label"
+                    for="favoriteToday"
+                >
+                    My favorite today was...
+                </label>
+
+                <textarea
+                    id="favoriteToday"
+                    class="reflection-input"
+                    maxlength="5000"
+                    rows="3"
+                    placeholder="A moment worth remembering..."
+                ></textarea>
+            </article>
+        </section>
+
+        <!-- =========================================
+             Tomorrow Note
+        ========================================== -->
+
+        <section class="widget-card tomorrow-card">
+            <div class="tomorrow-heading">
+                <div>
+                    <p class="card-eyebrow">
+                        Tomorrow
+                    </p>
+
+                    <label
+                        class="card-title tomorrow-title"
+                        for="rememberTomorrow"
+                    >
+                        Remember for Tomorrow
+                    </label>
+                </div>
+            </div>
+
+            <textarea
+                id="rememberTomorrow"
+                class="tomorrow-input"
+                maxlength="5000"
+                rows="3"
+                placeholder="Anything Future Michaela should know..."
+            ></textarea>
+        </section>
+
+        <!-- =========================================
+             Loading and Error Layers
+        ========================================== -->
+
+        <div
+            id="loadingState"
+            class="widget-message-layer"
+            aria-live="polite"
+        >
+            <div class="message-card">
+                <span
+                    class="loading-spinner"
+                    aria-hidden="true"
+                ></span>
+
+                <p>
+                    Loading your wrap-up...
+                </p>
+            </div>
         </div>
 
-        <div class="header-status">
-
-            <div
-                id="saveIndicator"
-                class="save-indicator"
-            >
-                Saved
-            </div>
-
-        </div>
-
-    </header>
-
-    <!-- ========================================= -->
-    <!-- Main Grid -->
-    <!-- ========================================= -->
-
-    <section class="main-grid">
-
-        <!-- ========================================= -->
-        <!-- Fixed Checklist -->
-        <!-- ========================================= -->
-
-        <article class="card">
-
-            <div class="card-header">
-
-                <h2>
-                    Daily Close
-                </h2>
-
-            </div>
-
-            <div
-                id="fixedChecklist"
-                class="checklist"
-            >
-
-                <!-- JS -->
-
-            </div>
-
-        </article>
-
-        <!-- ========================================= -->
-        <!-- Extra Reminders -->
-        <!-- ========================================= -->
-
-        <article class="card">
-
-            <div class="card-header between">
-
-                <h2>
-
-                    Other Reminders
-
-                </h2>
+        <div
+            id="errorState"
+            class="widget-message-layer is-hidden"
+            aria-live="assertive"
+        >
+            <div class="message-card error-message-card">
+                <p
+                    id="errorMessage"
+                    class="error-message"
+                >
+                    Your Daily Wrap-Up could not be loaded.
+                </p>
 
                 <button
-                    id="addReminderButton"
-                    class="ghost-button"
+                    id="retryButton"
+                    class="retry-button"
+                    type="button"
                 >
-                    + Add
+                    Try Again
                 </button>
-
             </div>
-
-            <div
-                id="extraReminderList"
-                class="checklist"
-            >
-
-            </div>
-
-        </article>
-
-    </section>
-
-    <!-- ========================================= -->
-    <!-- Progress -->
-    <!-- ========================================= -->
-
-    <section
-        class="progress-card"
-    >
-
-        <div class="progress-track">
-
-            <div
-                id="progressFill"
-                class="progress-fill"
-            >
-
-            </div>
-
         </div>
+    </main>
 
-    </section>
-
-    <!-- ========================================= -->
-    <!-- Reflection -->
-    <!-- ========================================= -->
-
-    <section class="reflection-grid">
-
-        <!-- Glad -->
-
-        <article class="reflection-card">
-
-            <label
-                for="gladI"
-            >
-
-                I'm glad I...
-
-            </label>
-
-            <textarea
-
-                id="gladI"
-
-                maxlength="5000"
-
-                placeholder="Something that went well today..."
-
-            ></textarea>
-
-        </article>
-
-        <!-- Proud -->
-
-        <article class="reflection-card">
-
-            <label
-                for="proudOf"
-            >
-
-                I'm proud of...
-
-            </label>
-
-            <textarea
-
-                id="proudOf"
-
-                maxlength="5000"
-
-                placeholder="Something you accomplished..."
-
-            ></textarea>
-
-        </article>
-
-        <!-- Favorite -->
-
-        <article class="reflection-card">
-
-            <label
-                for="favoriteToday"
-            >
-
-                My favorite today was...
-
-            </label>
-
-            <textarea
-
-                id="favoriteToday"
-
-                maxlength="5000"
-
-                placeholder="A moment worth remembering..."
-
-            ></textarea>
-
-        </article>
-
-    </section>
-
-    <!-- ========================================= -->
-    <!-- Tomorrow -->
-    <!-- ========================================= -->
-
-    <section class="card remember-card">
-
-        <div class="card-header">
-
-            <h2>
-
-                Remember for Tomorrow
-
-            </h2>
-
-        </div>
-
-        <textarea
-
-            id="rememberTomorrow"
-
-            maxlength="5000"
-
-            placeholder="Anything Future Michaela should know..."
-
-        ></textarea>
-
-    </section>
-
-</div>
-
-<script
-    src="../../js/daily-wrap-up-widget.js"
-    defer
-></script>
-
+    <script
+        src="../../js/daily-wrap-up-widget.js"
+        defer
+    ></script>
 </body>
 </html>
