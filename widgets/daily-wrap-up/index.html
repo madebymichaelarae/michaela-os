@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8" />
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+/>
+
+<title>Daily Wrap-Up</title>
+
+<link
+    rel="stylesheet"
+    href="../../css/themes.css"
+/>
+
+<link
+    rel="stylesheet"
+    href="../../css/daily-wrap-up-widget.css"
+/>
+
+</head>
+
+<body>
+
+<div class="widget-shell">
+
+    <!-- ========================================= -->
+    <!-- Header -->
+    <!-- ========================================= -->
+
+    <header class="widget-header">
+
+        <div>
+
+            <p class="widget-eyebrow">
+                Productivity
+            </p>
+
+            <h1
+                id="wrapUpTitle"
+                class="widget-title"
+            >
+                🌙 Daily Wrap-Up
+            </h1>
+
+            <p
+                id="wrapUpSubtitle"
+                class="widget-subtitle"
+            >
+                Close the loop on your workday.
+            </p>
+
+        </div>
+
+        <div class="header-status">
+
+            <div
+                id="saveIndicator"
+                class="save-indicator"
+            >
+                Saved
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- ========================================= -->
+    <!-- Main Grid -->
+    <!-- ========================================= -->
+
+    <section class="main-grid">
+
+        <!-- ========================================= -->
+        <!-- Fixed Checklist -->
+        <!-- ========================================= -->
+
+        <article class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    Daily Close
+                </h2>
+
+            </div>
+
+            <div
+                id="fixedChecklist"
+                class="checklist"
+            >
+
+                <!-- JS -->
+
+            </div>
+
+        </article>
+
+        <!-- ========================================= -->
+        <!-- Extra Reminders -->
+        <!-- ========================================= -->
+
+        <article class="card">
+
+            <div class="card-header between">
+
+                <h2>
+
+                    Other Reminders
+
+                </h2>
+
+                <button
+                    id="addReminderButton"
+                    class="ghost-button"
+                >
+                    + Add
+                </button>
+
+            </div>
+
+            <div
+                id="extraReminderList"
+                class="checklist"
+            >
+
+            </div>
+
+        </article>
+
+    </section>
+
+    <!-- ========================================= -->
+    <!-- Progress -->
+    <!-- ========================================= -->
+
+    <section
+        class="progress-card"
+    >
+
+        <div class="progress-track">
+
+            <div
+                id="progressFill"
+                class="progress-fill"
+            >
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================= -->
+    <!-- Reflection -->
+    <!-- ========================================= -->
+
+    <section class="reflection-grid">
+
+        <!-- Glad -->
+
+        <article class="reflection-card">
+
+            <label
+                for="gladI"
+            >
+
+                I'm glad I...
+
+            </label>
+
+            <textarea
+
+                id="gladI"
+
+                maxlength="5000"
+
+                placeholder="Something that went well today..."
+
+            ></textarea>
+
+        </article>
+
+        <!-- Proud -->
+
+        <article class="reflection-card">
+
+            <label
+                for="proudOf"
+            >
+
+                I'm proud of...
+
+            </label>
+
+            <textarea
+
+                id="proudOf"
+
+                maxlength="5000"
+
+                placeholder="Something you accomplished..."
+
+            ></textarea>
+
+        </article>
+
+        <!-- Favorite -->
+
+        <article class="reflection-card">
+
+            <label
+                for="favoriteToday"
+            >
+
+                My favorite today was...
+
+            </label>
+
+            <textarea
+
+                id="favoriteToday"
+
+                maxlength="5000"
+
+                placeholder="A moment worth remembering..."
+
+            ></textarea>
+
+        </article>
+
+    </section>
+
+    <!-- ========================================= -->
+    <!-- Tomorrow -->
+    <!-- ========================================= -->
+
+    <section class="card remember-card">
+
+        <div class="card-header">
+
+            <h2>
+
+                Remember for Tomorrow
+
+            </h2>
+
+        </div>
+
+        <textarea
+
+            id="rememberTomorrow"
+
+            maxlength="5000"
+
+            placeholder="Anything Future Michaela should know..."
+
+        ></textarea>
+
+    </section>
+
+</div>
+
+<script
+    src="../../js/daily-wrap-up-widget.js"
+    defer
+></script>
+
+</body>
+</html>
