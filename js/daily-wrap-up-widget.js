@@ -1,37 +1,23 @@
 /* ==================================================
-   DAILY WRAP-UP WIDGET
-   Loads, renders, and autosaves the active wrap-up
+   MICHAELA OS — DAILY WRAP-UP WIDGET
+   Working-first version
    ================================================== */
 
 const API_URL = "/api/daily-wrap-up";
-
-const AUTOSAVE_DELAY = 750;
-
-const DEFAULT_FIXED_TASKS = [
-  {
-    id: "check-calendar",
-    label: "Check tomorrow’s calendar",
-    complete: false
-  },
-  {
-    id: "review-tasks",
-    label: "Review unfinished tasks",
-    complete: false
-  },
-  {
-    id: "clear-workspace",
-    label: "Reset workspace",
-    complete: false
-  }
-];
+const SAVE_DELAY = 700;
 
 const app = {
-  data: null,
-  elements: {},
+  page: null,
+  period: null,
+  state: null,
+  metrics: null,
+  display: null,
+
   saveTimer: null,
-  saving: false,
-  hasLoaded: false,
-  reminderCounter: 0
+  isSaving: false,
+  needsAnotherSave: false,
+
+  elements: {}
 };
 
 /* ==================================================
@@ -40,15 +26,20 @@ const app = {
 
 function cacheElements() {
   app.elements = {
-    widget: document.querySelector(
-      ".wrap-up-widget"
-    ),
+    widget:
+      document.querySelector(
+        ".wrap-up-widget"
+      ),
 
     titleIcon:
-      document.getElementById("titleIcon"),
+      document.getElementById(
+        "titleIcon"
+      ),
 
     titleText:
-      document.getElementById("titleText"),
+      document.getElementById(
+        "titleText"
+      ),
 
     subtitle:
       document.getElementById(
@@ -101,10 +92,14 @@ function cacheElements() {
       ),
 
     gladI:
-      document.getElementById("gladI"),
+      document.getElementById(
+        "gladI"
+      ),
 
     proudOf:
-      document.getElementById("proudOf"),
+      document.getElementById(
+        "proudOf"
+      ),
 
     favoriteToday:
       document.getElementById(
@@ -139,229 +134,55 @@ function cacheElements() {
 }
 
 /* ==================================================
-   NORMALIZATION HELPERS
+   BASIC HELPERS
    ================================================== */
 
-function safeString(value) {
-  if (value === null || value === undefined) {
-    return "";
-  }
-
-  return String(value);
-}
-
-function createTaskId(prefix = "task") {
-  app.reminderCounter += 1;
-
+function createReminderId() {
   return [
-    prefix,
-    Date.now(),
-    app.reminderCounter
+    "reminder",
+    Date.now().toString(36),
+    Math.random()
+      .toString(36)
+      .slice(2, 8)
   ].join("-");
 }
 
-function normalizeTask(
-  task,
-  index,
-  prefix
-) {
-  if (typeof task === "string") {
-    return {
-      id: `${prefix}-${index}`,
-      label: task,
-      complete: false
+function hasText(value) {
+  return Boolean(
+    String(value || "").trim()
+  );
+}
+
+function getFixedTasks() {
+  return Array.isArray(
+    app.state?.fixedTasks
+  )
+    ? app.state.fixedTasks
+    : [];
+}
+
+function getExtraReminders() {
+  return Array.isArray(
+    app.state?.extraReminders
+  )
+    ? app.state.extraReminders
+    : [];
+}
+
+function getReflections() {
+  if (
+    !app.state.reflections ||
+    typeof app.state.reflections !==
+      "object"
+  ) {
+    app.state.reflections = {
+      gladI: "",
+      proudOf: "",
+      favoriteToday: ""
     };
   }
 
-  const source =
-    task && typeof task === "object"
-      ? task
-      : {};
-
-  return {
-    id: safeString(
-      source.id ||
-      source.key ||
-      source.taskId ||
-      `${prefix}-${index}`
-    ),
-
-    label: safeString(
-      source.label ||
-      source.name ||
-      source.title ||
-      source.text ||
-      source.task ||
-      ""
-    ),
-
-    complete: Boolean(
-      source.complete ??
-      source.completed ??
-      source.checked ??
-      source.done ??
-      false
-    )
-  };
-}
-
-function normalizeTaskList(
-  tasks,
-  prefix
-) {
-  if (!Array.isArray(tasks)) {
-    return [];
-  }
-
-  return tasks
-    .map((task, index) =>
-      normalizeTask(
-        task,
-        index,
-        prefix
-      )
-    )
-    .filter((task) => task.label.trim());
-}
-
-function getResponseState(responseData) {
-  if (
-    responseData?.state &&
-    typeof responseData.state === "object"
-  ) {
-    return responseData.state;
-  }
-
-  if (
-    responseData?.wrapUp &&
-    typeof responseData.wrapUp === "object"
-  ) {
-    return responseData.wrapUp;
-  }
-
-  if (
-    responseData?.data &&
-    typeof responseData.data === "object"
-  ) {
-    return responseData.data;
-  }
-
-  return responseData || {};
-}
-
-function normalizeResponse(responseData) {
-  const source =
-    getResponseState(responseData);
-
-  const fixedTaskSource =
-    responseData?.fixedTasks ??
-    source.fixedTasks ??
-    source.fixed_tasks ??
-    source.tasks ??
-    source["Fixed Tasks"];
-
-  const extraTaskSource =
-    responseData?.extraReminders ??
-    responseData?.extraTasks ??
-    source.extraReminders ??
-    source.extraTasks ??
-    source.extra_tasks ??
-    source.reminders ??
-    source["Extra Tasks"];
-
-  const fixedTasks =
-    normalizeTaskList(
-      fixedTaskSource,
-      "fixed"
-    );
-
-  const extraReminders =
-    normalizeTaskList(
-      extraTaskSource,
-      "extra"
-    );
-
-  return {
-    page:
-      responseData?.page ||
-      source.page ||
-      null,
-
-    wrapUpId:
-      safeString(
-        responseData?.wrapUpId ||
-        responseData?.id ||
-        source.wrapUpId ||
-        source.id ||
-        ""
-      ),
-
-    wrapUpDate:
-      safeString(
-        responseData?.wrapUpDate ||
-        responseData?.date ||
-        source.wrapUpDate ||
-        source.date ||
-        ""
-      ),
-
-    fixedTasks:
-      fixedTasks.length
-        ? fixedTasks
-        : DEFAULT_FIXED_TASKS.map(
-            (task) => ({ ...task })
-          ),
-
-    extraReminders,
-
-    gladI: safeString(
-      source.gladI ??
-      source.glad_i ??
-      source["Glad I..."] ??
-      ""
-    ),
-
-    proudOf: safeString(
-      source.proudOf ??
-      source.proud_of ??
-      source["Proud Of..."] ??
-      ""
-    ),
-
-    favoriteToday: safeString(
-      source.favoriteToday ??
-      source.favorite_today ??
-      source["Favorite Today"] ??
-      ""
-    ),
-
-    rememberTomorrow: safeString(
-      source.rememberTomorrow ??
-      source.remember_tomorrow ??
-      source["Remember Tomorrow"] ??
-      ""
-    ),
-
-    complete: Boolean(
-      source.complete ??
-      responseData?.complete ??
-      false
-    ),
-
-    completion:
-      Number(
-        responseData?.metrics?.completion ??
-        responseData?.completion ??
-        source.completion ??
-        0
-      ) || 0,
-
-    state: safeString(
-      source.state ||
-      responseData?.display?.state ||
-      ""
-    )
-  };
+  return app.state.reflections;
 }
 
 /* ==================================================
@@ -372,33 +193,42 @@ async function requestJson(
   url,
   options = {}
 ) {
-  const response = await fetch(
-    url,
-    {
+  const response =
+    await fetch(url, {
       ...options,
 
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type":
+          "application/json",
+
         ...(options.headers || {})
       }
-    }
-  );
+    });
 
   let data = null;
 
   try {
-    data = await response.json();
+    data =
+      await response.json();
   } catch {
     data = null;
   }
 
   if (!response.ok) {
-    const message =
-      data?.details ||
-      data?.error ||
-      `Request failed with status ${response.status}.`;
+    const error =
+      new Error(
+        data?.details ||
+        data?.error ||
+        `Request failed: ${response.status}`
+      );
 
-    throw new Error(message);
+    error.status =
+      response.status;
+
+    error.code =
+      data?.code || "";
+
+    throw error;
   }
 
   if (data?.success === false) {
@@ -412,290 +242,289 @@ async function requestJson(
   return data;
 }
 
+function applyResponse(data) {
+  app.page =
+    data.page || null;
+
+  app.period =
+    data.period || null;
+
+  app.state =
+    data.state || {
+      version: 1,
+      fixedTasks: [],
+      extraReminders: [],
+      reflections: {
+        gladI: "",
+        proudOf: "",
+        favoriteToday: ""
+      },
+      rememberTomorrow: ""
+    };
+
+  app.metrics =
+    data.metrics || null;
+
+  app.display =
+    data.display || null;
+
+  getReflections();
+}
+
+/* ==================================================
+   LOAD
+   ================================================== */
+
 async function loadWrapUp() {
   showLoading();
+  setSaveStatus("loading");
 
   try {
-    const responseData =
+    const data =
       await requestJson(API_URL);
 
-    app.data =
-      normalizeResponse(responseData);
-
-    app.hasLoaded = true;
+    applyResponse(data);
 
     render();
-    hideMessages();
+    hideMessageLayers();
     setSaveStatus("saved");
   } catch (error) {
     console.error(
-      "Unable to load Daily Wrap-Up:",
+      "Daily Wrap-Up load failed:",
       error
     );
 
     showError(
       error instanceof Error
         ? error.message
-        : "Your Daily Wrap-Up could not be loaded."
+        : "The Daily Wrap-Up could not be loaded."
     );
   }
 }
 
-function buildSavePayload() {
-  const state = {
-    fixedTasks:
-      app.data.fixedTasks,
+/* ==================================================
+   LOCAL METRICS
+   Used for immediate visual updates
+   ================================================== */
 
-    extraTasks:
-      app.data.extraReminders,
+function calculateLocalMetrics() {
+  const fixedTasks =
+    getFixedTasks();
 
-    extraReminders:
-      app.data.extraReminders,
-
-    gladI:
-      app.data.gladI,
-
-    proudOf:
-      app.data.proudOf,
-
-    favoriteToday:
-      app.data.favoriteToday,
-
-    rememberTomorrow:
-      app.data.rememberTomorrow,
-
-    completion:
-      calculateCompletion(),
-
-    complete:
-      isWrapUpComplete()
-  };
-
-  return {
-    state,
-
-    ...state,
-
-    wrapUpId:
-      app.data.wrapUpId,
-
-    wrapUpDate:
-      app.data.wrapUpDate
-  };
-}
-
-async function saveWrapUp() {
-  if (
-    !app.data ||
-    app.saving
-  ) {
-    return;
-  }
-
-  app.saving = true;
-  setSaveStatus("saving");
-
-  try {
-    const responseData =
-      await requestJson(
-        API_URL,
-        {
-          method: "POST",
-          body: JSON.stringify(
-            buildSavePayload()
-          )
-        }
+  const extraReminders =
+    getExtraReminders()
+      .filter((reminder) =>
+        hasText(reminder.text)
       );
 
-    const savedData =
-      normalizeResponse(responseData);
+  const fixedComplete =
+    fixedTasks.filter(
+      (task) => task.complete
+    ).length;
 
-    /*
-     * Preserve local data when the API only
-     * returns a small success response.
-     */
-    if (
-      responseData?.state ||
-      responseData?.data ||
-      responseData?.wrapUp
-    ) {
-      app.data = {
-        ...app.data,
-        ...savedData
-      };
+  const extraComplete =
+    extraReminders.filter(
+      (reminder) =>
+        reminder.complete
+    ).length;
 
-      render();
-    }
+  const totalTasks =
+    fixedTasks.length +
+    extraReminders.length;
 
-    setSaveStatus("saved");
-  } catch (error) {
-    console.error(
-      "Unable to save Daily Wrap-Up:",
-      error
-    );
+  const completedTasks =
+    fixedComplete +
+    extraComplete;
 
-    setSaveStatus("error");
-  } finally {
-    app.saving = false;
-  }
+  const completion =
+    totalTasks > 0
+      ? Math.round(
+          completedTasks /
+          totalTasks *
+          100
+        )
+      : 0;
+
+  return {
+    fixedTasksComplete:
+      fixedComplete,
+
+    fixedTasksTotal:
+      fixedTasks.length,
+
+    extraTasksComplete:
+      extraComplete,
+
+    extraTasksTotal:
+      extraReminders.length,
+
+    completedTasks,
+
+    totalTasks,
+
+    completion,
+
+    complete:
+      totalTasks > 0 &&
+      completedTasks ===
+        totalTasks
+  };
 }
 
-function scheduleSave() {
-  if (!app.hasLoaded) {
-    return;
-  }
+function refreshLocalMetrics() {
+  app.metrics =
+    calculateLocalMetrics();
+}
 
+/* ==================================================
+   SAVE
+   ================================================== */
+
+function scheduleSave() {
   window.clearTimeout(
     app.saveTimer
   );
 
-  setSaveStatus("waiting");
+  setSaveStatus("unsaved");
 
   app.saveTimer =
     window.setTimeout(
       saveWrapUp,
-      AUTOSAVE_DELAY
+      SAVE_DELAY
     );
 }
 
-/* ==================================================
-   COMPLETION
-   ================================================== */
+async function saveWrapUp() {
+  if (
+    !app.state ||
+    !app.period?.wrapUpId
+  ) {
+    return;
+  }
 
-function hasText(value) {
-  return Boolean(
-    safeString(value).trim()
-  );
-}
+  if (app.isSaving) {
+    app.needsAnotherSave = true;
+    return;
+  }
 
-function getCompletionItems() {
-  const fixedTasks =
-    app.data.fixedTasks.map(
-      (task) => Boolean(task.complete)
-    );
+  app.isSaving = true;
+  app.needsAnotherSave = false;
 
-  const extraTasks =
-    app.data.extraReminders
-      .filter((task) =>
-        hasText(task.label)
-      )
-      .map((task) =>
-        Boolean(task.complete)
+  setSaveStatus("saving");
+
+  try {
+    const data =
+      await requestJson(
+        API_URL,
+        {
+          method: "POST",
+
+          body:
+            JSON.stringify({
+              wrapUpId:
+                app.period.wrapUpId,
+
+              state:
+                app.state
+            })
+        }
       );
 
-  return [
-    ...fixedTasks,
-    ...extraTasks,
-    hasText(app.data.gladI),
-    hasText(app.data.proudOf),
-    hasText(app.data.favoriteToday),
-    hasText(
-      app.data.rememberTomorrow
-    )
-  ];
-}
+    applyResponse(data);
+    render();
+    setSaveStatus("saved");
+  } catch (error) {
+    console.error(
+      "Daily Wrap-Up save failed:",
+      error
+    );
 
-function calculateCompletion() {
-  if (!app.data) {
-    return 0;
+    if (
+      error.status === 409 ||
+      error.code ===
+        "WRAP_UP_PERIOD_CHANGED"
+    ) {
+      await loadWrapUp();
+      return;
+    }
+
+    setSaveStatus("error");
+  } finally {
+    app.isSaving = false;
+
+    if (app.needsAnotherSave) {
+      app.needsAnotherSave = false;
+      scheduleSave();
+    }
   }
-
-  const items =
-    getCompletionItems();
-
-  if (!items.length) {
-    return 0;
-  }
-
-  const completed =
-    items.filter(Boolean).length;
-
-  return Math.round(
-    completed /
-    items.length *
-    100
-  );
-}
-
-function isWrapUpComplete() {
-  return calculateCompletion() >= 100;
 }
 
 /* ==================================================
-   RENDERING
+   MAIN RENDER
    ================================================== */
 
 function render() {
-  if (!app.data) {
+  if (!app.state) {
     return;
   }
 
   renderHeader();
-  renderFixedChecklist();
+  renderFixedTasks();
   renderExtraReminders();
-  renderReflectionFields();
+  renderReflectionValues();
   renderProgress();
 }
 
+/* ==================================================
+   HEADER
+   ================================================== */
+
 function renderHeader() {
   const complete =
-    isWrapUpComplete();
+    Boolean(
+      app.metrics?.complete
+    );
 
-  app.elements.widget?.classList.toggle(
-    "is-complete",
-    complete
-  );
+  app.elements.widget
+    ?.classList.toggle(
+      "is-complete",
+      complete
+    );
 
   if (app.elements.titleIcon) {
-    app.elements.titleIcon.textContent =
-      complete ? "✨" : "🌙";
+    app.elements.titleIcon
+      .textContent =
+        complete ? "✨" : "🌙";
   }
 
   if (app.elements.titleText) {
-    app.elements.titleText.textContent =
-      complete
-        ? "Wrapped Up"
-        : "Daily Wrap-Up";
+    app.elements.titleText
+      .textContent =
+        complete
+          ? "Wrapped Up"
+          : "Daily Wrap-Up";
   }
 
   if (app.elements.subtitle) {
-    app.elements.subtitle.textContent =
-      complete
-        ? "Your workday is officially closed."
-        : "Close the loop on your workday.";
+    app.elements.subtitle
+      .textContent =
+        complete
+          ? (
+              app.display?.subtitle ||
+              "See you tomorrow."
+            )
+          : (
+              app.display?.subtitle ||
+              "Close the loop on your workday."
+            );
   }
 }
 
-function createCheckbox(
-  task,
-  onChange
-) {
-  const checkbox =
-    document.createElement("input");
+/* ==================================================
+   FIXED TASKS
+   ================================================== */
 
-  checkbox.type = "checkbox";
-  checkbox.className =
-    "checklist-checkbox";
-
-  checkbox.checked =
-    Boolean(task.complete);
-
-  checkbox.setAttribute(
-    "aria-label",
-    `Mark ${task.label} complete`
-  );
-
-  checkbox.addEventListener(
-    "change",
-    () => {
-      onChange(checkbox.checked);
-    }
-  );
-
-  return checkbox;
-}
-
-function renderFixedChecklist() {
+function renderFixedTasks() {
   const container =
     app.elements.fixedChecklist;
 
@@ -705,50 +534,81 @@ function renderFixedChecklist() {
 
   container.replaceChildren();
 
-  app.data.fixedTasks.forEach(
-    (task, index) => {
-      const item =
-        document.createElement("label");
+  const tasks =
+    getFixedTasks();
 
-      item.className =
+  tasks.forEach(
+    (task, index) => {
+      const label =
+        document.createElement(
+          "label"
+        );
+
+      label.className =
         "checklist-item";
 
       const checkbox =
-        createCheckbox(
-          task,
-          (checked) => {
-            app.data.fixedTasks[
-              index
-            ].complete = checked;
-
-            renderHeader();
-            renderProgress();
-            scheduleSave();
-          }
+        document.createElement(
+          "input"
         );
 
-      const label =
-        document.createElement("span");
+      checkbox.type =
+        "checkbox";
 
-      label.className =
-        "checklist-label";
+      checkbox.className =
+        "checklist-checkbox";
 
-      label.textContent =
-        task.label;
+      checkbox.checked =
+        Boolean(task.complete);
 
-      item.append(
-        checkbox,
-        label
+      checkbox.setAttribute(
+        "aria-label",
+        `Mark ${task.label} complete`
       );
 
-      container.appendChild(item);
+      checkbox.addEventListener(
+        "change",
+        () => {
+          app.state.fixedTasks[
+            index
+          ].complete =
+            checkbox.checked;
+
+          updateAfterChange();
+        }
+      );
+
+      const text =
+        document.createElement(
+          "span"
+        );
+
+      text.className =
+        "checklist-label";
+
+      text.textContent =
+        task.label;
+
+      label.append(
+        checkbox,
+        text
+      );
+
+      container.appendChild(
+        label
+      );
     }
   );
 }
 
+/* ==================================================
+   EXTRA REMINDERS
+   ================================================== */
+
 function renderExtraReminders() {
   const container =
-    app.elements.extraReminderList;
+    app.elements
+      .extraReminderList;
 
   if (!container) {
     return;
@@ -756,30 +616,60 @@ function renderExtraReminders() {
 
   container.replaceChildren();
 
-  app.data.extraReminders.forEach(
-    (task, index) => {
-      const item =
-        document.createElement("div");
+  const reminders =
+    getExtraReminders();
 
-      item.className =
+  reminders.forEach(
+    (reminder, index) => {
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
         "checklist-item has-delete";
 
       const checkbox =
-        createCheckbox(
-          task,
-          (checked) => {
-            app.data.extraReminders[
-              index
-            ].complete = checked;
-
-            renderHeader();
-            renderProgress();
-            scheduleSave();
-          }
+        document.createElement(
+          "input"
         );
 
+      checkbox.type =
+        "checkbox";
+
+      checkbox.className =
+        "checklist-checkbox";
+
+      checkbox.checked =
+        Boolean(
+          reminder.complete
+        );
+
+      checkbox.setAttribute(
+        "aria-label",
+        `Mark ${
+          reminder.text ||
+          "reminder"
+        } complete`
+      );
+
+      checkbox.addEventListener(
+        "change",
+        () => {
+          app.state
+            .extraReminders[
+              index
+            ].complete =
+              checkbox.checked;
+
+          updateAfterChange();
+        }
+      );
+
       const input =
-        document.createElement("input");
+        document.createElement(
+          "input"
+        );
 
       input.type = "text";
 
@@ -787,23 +677,28 @@ function renderExtraReminders() {
         "reminder-text-input";
 
       input.value =
-        task.label;
+        reminder.text || "";
 
       input.placeholder =
         "Add a reminder...";
 
+      input.maxLength = 500;
+
       input.setAttribute(
         "aria-label",
-        "Reminder"
+        "Reminder text"
       );
 
       input.addEventListener(
         "input",
         () => {
-          app.data.extraReminders[
-            index
-          ].label = input.value;
+          app.state
+            .extraReminders[
+              index
+            ].text =
+              input.value;
 
+          refreshLocalMetrics();
           renderProgress();
           scheduleSave();
         }
@@ -812,162 +707,257 @@ function renderExtraReminders() {
       input.addEventListener(
         "blur",
         () => {
-          /*
-           * Remove fully blank reminder rows
-           * after the user leaves the field.
-           */
-          if (!input.value.trim()) {
-            app.data.extraReminders.splice(
-              index,
-              1
-            );
+          if (
+            !input.value.trim()
+          ) {
+            app.state
+              .extraReminders
+              .splice(index, 1);
 
-            renderExtraReminders();
-            renderProgress();
-            scheduleSave();
+            updateAfterChange(
+              true
+            );
           }
         }
       );
 
       const deleteButton =
-        document.createElement("button");
+        document.createElement(
+          "button"
+        );
 
-      deleteButton.type = "button";
+      deleteButton.type =
+        "button";
 
       deleteButton.className =
         "delete-reminder-button";
 
-      deleteButton.textContent = "×";
+      deleteButton.textContent =
+        "×";
 
       deleteButton.setAttribute(
         "aria-label",
         `Delete ${
-          task.label || "reminder"
+          reminder.text ||
+          "reminder"
         }`
       );
 
       deleteButton.addEventListener(
         "click",
         () => {
-          app.data.extraReminders.splice(
-            index,
-            1
-          );
+          app.state
+            .extraReminders
+            .splice(index, 1);
 
-          renderExtraReminders();
-          renderHeader();
-          renderProgress();
-          scheduleSave();
+          updateAfterChange(
+            true
+          );
         }
       );
 
-      item.append(
+      row.append(
         checkbox,
         input,
         deleteButton
       );
 
-      container.appendChild(item);
+      container.appendChild(
+        row
+      );
     }
   );
 
-  if (
-    app.elements.emptyReminderMessage
-  ) {
-    app.elements
-      .emptyReminderMessage
-      .classList.toggle(
-        "is-hidden",
-        app.data.extraReminders.length > 0
-      );
+  app.elements
+    .emptyReminderMessage
+    ?.classList.toggle(
+      "is-hidden",
+      reminders.length > 0
+    );
+}
+
+function addReminder() {
+  if (!app.state) {
+    return;
   }
+
+  app.state
+    .extraReminders
+    .push({
+      id:
+        createReminderId(),
+
+      text: "",
+
+      complete: false
+    });
+
+  renderExtraReminders();
+
+  const inputs =
+    app.elements
+      .extraReminderList
+      ?.querySelectorAll(
+        ".reminder-text-input"
+      );
+
+  inputs?.[
+    inputs.length - 1
+  ]?.focus();
 }
 
-function renderReflectionFields() {
-  setInputValue(
-    app.elements.gladI,
-    app.data.gladI
-  );
+/* ==================================================
+   REFLECTIONS
+   ================================================== */
 
-  setInputValue(
-    app.elements.proudOf,
-    app.data.proudOf
-  );
-
-  setInputValue(
-    app.elements.favoriteToday,
-    app.data.favoriteToday
-  );
-
-  setInputValue(
-    app.elements.rememberTomorrow,
-    app.data.rememberTomorrow
-  );
-}
-
-function setInputValue(
+function setValueUnlessFocused(
   element,
   value
+) {
+  if (
+    !element ||
+    document.activeElement ===
+      element
+  ) {
+    return;
+  }
+
+  element.value =
+    value || "";
+}
+
+function renderReflectionValues() {
+  const reflections =
+    getReflections();
+
+  setValueUnlessFocused(
+    app.elements.gladI,
+    reflections.gladI
+  );
+
+  setValueUnlessFocused(
+    app.elements.proudOf,
+    reflections.proudOf
+  );
+
+  setValueUnlessFocused(
+    app.elements.favoriteToday,
+    reflections.favoriteToday
+  );
+
+  setValueUnlessFocused(
+    app.elements.rememberTomorrow,
+    app.state
+      .rememberTomorrow
+  );
+}
+
+function bindReflectionField(
+  element,
+  property
 ) {
   if (!element) {
     return;
   }
 
-  /*
-   * Do not replace the value while the user
-   * is actively typing in that field.
-   */
-  if (
-    document.activeElement !== element
-  ) {
-    element.value =
-      safeString(value);
-  }
+  element.addEventListener(
+    "input",
+    () => {
+      getReflections()[
+        property
+      ] = element.value;
+
+      scheduleSave();
+    }
+  );
 }
+
+function bindTomorrowField() {
+  const element =
+    app.elements
+      .rememberTomorrow;
+
+  if (!element) {
+    return;
+  }
+
+  element.addEventListener(
+    "input",
+    () => {
+      app.state
+        .rememberTomorrow =
+          element.value;
+
+      scheduleSave();
+    }
+  );
+}
+
+/* ==================================================
+   PROGRESS
+   ================================================== */
 
 function renderProgress() {
   const completion =
-    calculateCompletion();
-
-  app.data.completion =
-    completion;
-
-  app.data.complete =
-    completion >= 100;
+    Number(
+      app.metrics?.completion || 0
+    );
 
   if (app.elements.progressFill) {
-    app.elements.progressFill.style.width =
-      `${completion}%`;
+    app.elements
+      .progressFill
+      .style.width =
+        `${completion}%`;
   }
 
   if (app.elements.progressTrack) {
-    app.elements.progressTrack.setAttribute(
-      "aria-valuenow",
-      String(completion)
-    );
+    app.elements
+      .progressTrack
+      .setAttribute(
+        "aria-valuenow",
+        String(completion)
+      );
 
-    app.elements.progressTrack.setAttribute(
-      "aria-valuetext",
-      `${completion}% complete`
-    );
+    app.elements
+      .progressTrack
+      .setAttribute(
+        "aria-valuetext",
+        `${completion}% complete`
+      );
   }
 
   renderHeader();
 }
 
+function updateAfterChange(
+  rerenderReminders = false
+) {
+  refreshLocalMetrics();
+
+  if (rerenderReminders) {
+    renderExtraReminders();
+  }
+
+  renderProgress();
+  scheduleSave();
+}
+
 /* ==================================================
-   SAVE INDICATOR
+   SAVE STATUS
    ================================================== */
 
 function setSaveStatus(status) {
   const indicator =
-    app.elements.saveIndicator;
+    app.elements
+      .saveIndicator;
 
   const icon =
-    app.elements.saveIndicatorIcon;
+    app.elements
+      .saveIndicatorIcon;
 
   const text =
-    app.elements.saveIndicatorText;
+    app.elements
+      .saveIndicatorText;
 
   if (
     !indicator ||
@@ -983,24 +973,38 @@ function setSaveStatus(status) {
     "is-error"
   );
 
+  if (status === "loading") {
+    indicator.classList.add(
+      "is-saving"
+    );
+
+    icon.textContent = "…";
+    text.textContent =
+      "Loading";
+
+    return;
+  }
+
+  if (status === "unsaved") {
+    indicator.classList.add(
+      "is-saving"
+    );
+
+    icon.textContent = "•";
+    text.textContent =
+      "Unsaved";
+
+    return;
+  }
+
   if (status === "saving") {
     indicator.classList.add(
       "is-saving"
     );
 
     icon.textContent = "…";
-    text.textContent = "Saving";
-
-    return;
-  }
-
-  if (status === "waiting") {
-    indicator.classList.add(
-      "is-saving"
-    );
-
-    icon.textContent = "•";
-    text.textContent = "Unsaved";
+    text.textContent =
+      "Saving";
 
     return;
   }
@@ -1011,7 +1015,8 @@ function setSaveStatus(status) {
     );
 
     icon.textContent = "!";
-    text.textContent = "Save failed";
+    text.textContent =
+      "Save failed";
 
     return;
   }
@@ -1025,67 +1030,71 @@ function setSaveStatus(status) {
 }
 
 /* ==================================================
-   EVENT HANDLERS
+   LOADING AND ERROR STATES
    ================================================== */
 
-function handleAddReminder() {
-  if (!app.data) {
-    return;
-  }
+function showLoading() {
+  app.elements
+    .loadingState
+    ?.classList.remove(
+      "is-hidden"
+    );
 
-  app.data.extraReminders.push({
-    id: createTaskId("extra"),
-    label: "",
-    complete: false
-  });
-
-  renderExtraReminders();
-  renderProgress();
-
-  const inputs =
-    app.elements.extraReminderList
-      ?.querySelectorAll(
-        ".reminder-text-input"
-      );
-
-  const newestInput =
-    inputs?.[
-      inputs.length - 1
-    ];
-
-  newestInput?.focus();
+  app.elements
+    .errorState
+    ?.classList.add(
+      "is-hidden"
+    );
 }
 
-function connectTextField(
-  element,
-  property
-) {
-  if (!element) {
-    return;
+function showError(message) {
+  app.elements
+    .loadingState
+    ?.classList.add(
+      "is-hidden"
+    );
+
+  app.elements
+    .errorState
+    ?.classList.remove(
+      "is-hidden"
+    );
+
+  if (
+    app.elements.errorMessage
+  ) {
+    app.elements
+      .errorMessage
+      .textContent =
+        message ||
+        "The Daily Wrap-Up could not be loaded.";
   }
-
-  element.addEventListener(
-    "input",
-    () => {
-      if (!app.data) {
-        return;
-      }
-
-      app.data[property] =
-        element.value;
-
-      renderProgress();
-      scheduleSave();
-    }
-  );
 }
+
+function hideMessageLayers() {
+  app.elements
+    .loadingState
+    ?.classList.add(
+      "is-hidden"
+    );
+
+  app.elements
+    .errorState
+    ?.classList.add(
+      "is-hidden"
+    );
+}
+
+/* ==================================================
+   EVENTS
+   ================================================== */
 
 function bindEvents() {
   app.elements
     .addReminderButton
     ?.addEventListener(
       "click",
-      handleAddReminder
+      addReminder
     );
 
   app.elements
@@ -1095,103 +1104,22 @@ function bindEvents() {
       loadWrapUp
     );
 
-  connectTextField(
+  bindReflectionField(
     app.elements.gladI,
     "gladI"
   );
 
-  connectTextField(
+  bindReflectionField(
     app.elements.proudOf,
     "proudOf"
   );
 
-  connectTextField(
+  bindReflectionField(
     app.elements.favoriteToday,
     "favoriteToday"
   );
 
-  connectTextField(
-    app.elements.rememberTomorrow,
-    "rememberTomorrow"
-  );
-
-  /*
-   * Attempt to save any pending edits before
-   * the widget is closed or refreshed.
-   */
-  window.addEventListener(
-    "beforeunload",
-    () => {
-      if (!app.data) {
-        return;
-      }
-
-      window.clearTimeout(
-        app.saveTimer
-      );
-
-      const payload =
-        JSON.stringify(
-          buildSavePayload()
-        );
-
-      navigator.sendBeacon?.(
-        API_URL,
-        new Blob(
-          [payload],
-          {
-            type: "application/json"
-          }
-        )
-      );
-    }
-  );
-}
-
-/* ==================================================
-   MESSAGE STATES
-   ================================================== */
-
-function showLoading() {
-  app.elements.loadingState
-    ?.classList.remove(
-      "is-hidden"
-    );
-
-  app.elements.errorState
-    ?.classList.add(
-      "is-hidden"
-    );
-}
-
-function showError(message) {
-  app.elements.loadingState
-    ?.classList.add(
-      "is-hidden"
-    );
-
-  app.elements.errorState
-    ?.classList.remove(
-      "is-hidden"
-    );
-
-  if (app.elements.errorMessage) {
-    app.elements.errorMessage.textContent =
-      message ||
-      "Your Daily Wrap-Up could not be loaded.";
-  }
-}
-
-function hideMessages() {
-  app.elements.loadingState
-    ?.classList.add(
-      "is-hidden"
-    );
-
-  app.elements.errorState
-    ?.classList.add(
-      "is-hidden"
-    );
+  bindTomorrowField();
 }
 
 /* ==================================================
