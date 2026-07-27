@@ -46,8 +46,9 @@ const ROUTE_HANDLERS = {
 
   weather: weatherHandler,
 
-  finance: financeHandler
-  "daily-wrap-up": dailyWrapUpHandler,
+  finance: financeHandler,
+
+  "daily-wrap-up": dailyWrapUpHandler
 };
 
 function getRequestedRoute(request) {
