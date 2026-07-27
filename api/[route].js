@@ -10,6 +10,8 @@ import {
   handleFinanceRequest
 } from "../lib/api/finance.js";
 
+import dailyWrapUpHandler from "../lib/api/daily-wrap-up.js";
+
 /**
  * Adapts the finance function to match the same
  * request/response handler format as the other routes.
@@ -45,7 +47,9 @@ const ROUTE_HANDLERS = {
 
   weather: weatherHandler,
 
-  finance: financeHandler
+  finance: financeHandler,
+
+  "daily-wrap-up": dailyWrapUpHandler
 };
 
 function getRequestedRoute(request) {
