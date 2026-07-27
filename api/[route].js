@@ -5,7 +5,6 @@ import healthHandler from "../lib/api/health.js";
 import morningFocusHandler from "../lib/api/morning-focus.js";
 import readingHandler from "../lib/api/reading.js";
 import weatherHandler from "../lib/api/weather.js";
-import dailyWrapUpHandler from "../lib/api/daily-wrap-up.js";
 
 import {
   handleFinanceRequest
@@ -46,9 +45,7 @@ const ROUTE_HANDLERS = {
 
   weather: weatherHandler,
 
-  finance: financeHandler,
-
-  "daily-wrap-up": dailyWrapUpHandler
+  finance: financeHandler
 };
 
 function getRequestedRoute(request) {
