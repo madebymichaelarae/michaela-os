@@ -8,7 +8,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Focus Music</title>
+  <title>Focus Soundtrack</title>
 
   <link
     rel="stylesheet"
@@ -28,7 +28,7 @@
     <section
       id="musicCard"
       class="music-card"
-      data-theme="lofi"
+      data-theme="late-night"
     >
 
       <header class="music-header">
@@ -39,8 +39,12 @@
           </p>
 
           <h1>
-            Focus Radio
+            Focus Soundtrack
           </h1>
+
+          <p class="music-subtitle">
+            Pick the atmosphere that matches your brain today.
+          </p>
         </div>
 
         <div
@@ -55,63 +59,16 @@
 
       <div class="music-divider"></div>
 
-      <section class="daily-pick">
+      <section class="soundtrack-library">
 
         <p class="section-label">
-          <span aria-hidden="true">✨</span>
-          Today’s Focus
-        </p>
-
-        <button
-          id="dailyPickButton"
-          class="daily-pick-button"
-          type="button"
-        >
-
-          <span
-            id="dailyPickIcon"
-            class="daily-pick-icon"
-            aria-hidden="true"
-          >
-            🎧
-          </span>
-
-          <span class="daily-pick-copy">
-
-            <strong id="dailyPickName">
-              Lo-fi Focus
-            </strong>
-
-            <small id="dailyPickDescription">
-              Today’s recommended station
-            </small>
-
-          </span>
-
-          <span
-            class="daily-pick-action"
-            aria-hidden="true"
-          >
-            Play
-          </span>
-
-        </button>
-
-      </section>
-
-      <div class="music-divider"></div>
-
-      <section class="station-section">
-
-        <p class="section-label">
-          Choose a Station
+          Choose Your Vibe
         </p>
 
         <div
-          id="stationButtons"
-          class="station-buttons"
-          role="list"
-          aria-label="Focus radio stations"
+          id="soundtrackGroups"
+          class="soundtrack-groups"
+          aria-label="Focus soundtrack choices"
         ></div>
 
       </section>
@@ -120,129 +77,111 @@
 
       <section class="now-playing">
 
-        <div
-          id="stationArtwork"
-          class="station-artwork"
-          aria-hidden="true"
-        >
-          🎧
-        </div>
+        <div class="now-playing-heading">
 
-        <div class="station-information">
-
-          <p
-            id="stationStatusLabel"
-            class="station-status-label"
-          >
-            Selected Station
-          </p>
-
-          <h2 id="stationName">
-            Lo-fi Focus
-          </h2>
-
-          <p id="stationDescription">
-            Warm downtempo music for steady focus.
-          </p>
-
-        </div>
-
-      </section>
-
-      <section class="radio-controls">
-
-        <button
-          id="playButton"
-          class="primary-control"
-          type="button"
-        >
-          <span
-            id="playButtonIcon"
+          <div
+            id="stationArtwork"
+            class="station-artwork"
             aria-hidden="true"
           >
-            ▶
-          </span>
+            🌙
+          </div>
 
-          <span id="playButtonText">
-            Play Station
-          </span>
-        </button>
+          <div class="station-information">
 
-        <button
-          id="stopButton"
-          class="secondary-control"
-          type="button"
-          disabled
-        >
-          <span aria-hidden="true">
-            ■
-          </span>
+            <p
+              id="stationStatusLabel"
+              class="station-status-label"
+            >
+              Selected Soundtrack
+            </p>
 
-          Stop
-        </button>
+            <h2 id="stationName">
+              Late Night Lofi
+            </h2>
 
-      </section>
+            <p id="stationDescription">
+              Quiet late-night beats for settling into focused work.
+            </p>
 
-      <section class="volume-section">
-
-        <div class="volume-heading">
-
-          <label for="volumeSlider">
-            Volume
-          </label>
-
-          <span id="volumeValue">
-            65%
-          </span>
+          </div>
 
         </div>
 
-        <div class="volume-control">
+        <div class="video-shell">
 
-          <button
-            id="muteButton"
-            class="mute-button"
-            type="button"
-            aria-label="Mute focus radio"
+          <div
+            id="videoPlaceholder"
+            class="video-placeholder"
           >
             <span
-              id="muteIcon"
+              id="placeholderIcon"
+              class="placeholder-icon"
               aria-hidden="true"
             >
-              🔊
+              🌙
             </span>
-          </button>
 
-          <input
-            id="volumeSlider"
-            type="range"
-            min="0"
-            max="100"
-            value="65"
-            step="1"
-            aria-label="Focus radio volume"
-          >
+            <strong id="placeholderTitle">
+              Late Night Lofi
+            </strong>
+
+            <p>
+              Press play when you are ready to begin.
+            </p>
+
+            <button
+              id="playButton"
+              class="primary-control"
+              type="button"
+            >
+              <span aria-hidden="true">
+                ▶
+              </span>
+
+              Play Soundtrack
+            </button>
+          </div>
+
+          <iframe
+            id="youtubePlayer"
+            class="youtube-player"
+            title="Focus soundtrack video player"
+            src=""
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share
+            "
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            hidden
+          ></iframe>
 
         </div>
 
       </section>
 
       <section
-        id="radioMessage"
-        class="radio-message"
+        id="soundtrackMessage"
+        class="soundtrack-message"
         role="status"
         aria-live="polite"
       >
 
         <span
-          id="radioMessageIcon"
+          id="soundtrackMessageIcon"
           aria-hidden="true"
         >
           🌿
         </span>
 
-        <p id="radioMessageText">
-          Choose a station whenever you’re ready to focus.
+        <p id="soundtrackMessageText">
+          Choose a soundtrack whenever you are ready to focus.
         </p>
 
       </section>
@@ -250,24 +189,19 @@
       <footer class="music-footer">
 
         <span>
-          Listener-supported radio
+          Curated for Michaela OS
         </span>
 
         <a
-          id="stationLink"
-          href="https://somafm.com/"
+          id="youtubeLink"
+          href="https://www.youtube.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Visit station ↗
+          Open on YouTube ↗
         </a>
 
       </footer>
-
-      <audio
-        id="radioPlayer"
-        preload="none"
-      ></audio>
 
     </section>
 
