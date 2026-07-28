@@ -1,5 +1,5 @@
 const TIMER_STORAGE_KEY = "michaela-os-quick-timer";
-const ADJUSTMENT_SECONDS = 5 * 60;
+const ADJUSTMENT_SECONDS = 60;
 const DEFAULT_SECONDS = 30 * 60;
 const MINIMUM_SECONDS = 60;
 const MAXIMUM_SECONDS = 24 * 60 * 60;
