@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Quick Timer</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/themes.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/quick-timer-widget.css"
+  >
+</head>
+
+<body>
+
+  <main class="timer-widget">
+
+    <section
+      id="timerCard"
+      class="timer-card"
+      aria-labelledby="timerHeading"
+    >
+
+      <header class="timer-header">
+
+        <div>
+
+          <p class="timer-eyebrow">
+            Productivity
+          </p>
+
+          <h1 id="timerHeading">
+            Quick Timer
+          </h1>
+
+        </div>
+
+        <div
+          class="timer-header-icon"
+          aria-hidden="true"
+        >
+          ⏱️
+        </div>
+
+      </header>
+
+      <label
+        class="sr-only"
+        for="timerName"
+      >
+        Timer Name
+      </label>
+
+      <input
+        id="timerName"
+        class="timer-name"
+        type="text"
+        maxlength="48"
+        placeholder="Walking Pad..."
+        autocomplete="off"
+      >
+
+      <div class="timer-row">
+
+        <button
+          id="decreaseButton"
+          class="time-adjust-button"
+          type="button"
+          aria-label="Subtract five minutes"
+        >
+          −
+        </button>
+
+        <div
+          class="timer-display"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+
+          <span id="timerValue">
+            30:00
+          </span>
+
+          <small id="timerUnit">
+            minutes
+          </small>
+
+        </div>
+
+        <button
+          id="increaseButton"
+          class="time-adjust-button"
+          type="button"
+          aria-label="Add five minutes"
+        >
+          +
+        </button>
+
+      </div>
+
+      <div class="timer-controls">
+
+        <button
+          id="primaryButton"
+          class="primary-control"
+          type="button"
+        >
+
+          <span
+            id="primaryButtonIcon"
+            aria-hidden="true"
+          >
+            ▶
+          </span>
+
+          <span id="primaryButtonText">
+            Start
+          </span>
+
+        </button>
+
+        <button
+          id="resetButton"
+          class="secondary-control"
+          type="button"
+          disabled
+        >
+          Reset
+        </button>
+
+      </div>
+
+      <p
+        id="timerMessage"
+        class="timer-message"
+        role="status"
+        aria-live="polite"
+      >
+        Adjust in 5 minute increments.
+      </p>
+
+    </section>
+
+  </main>
+
+  <script
+    src="../../js/quick-timer-widget.js"
+  ></script>
+
+</body>
+</html>
