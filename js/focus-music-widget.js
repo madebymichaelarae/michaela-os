@@ -1,175 +1,211 @@
 /* =========================================================
    Michaela OS
-   Productivity — Focus Radio
+   Productivity — Focus Soundtrack
    ========================================================= */
 
 const MUSIC_STORAGE_KEY =
-  "michaela-os-focus-radio";
+  "michaela-os-focus-soundtrack";
 
 /*
-  The stream URLs below are direct MP3 radio streams.
+  Add future soundtracks to this array.
 
-  The backupStream property gives each station a second
-  server to try automatically if its main server fails.
+  Each soundtrack needs:
+  - id
+  - name
+  - shortName
+  - icon
+  - theme
+  - category
+  - description
+  - youtubeId
+  - youtubeUrl
 */
 
-const stations = [
+const soundtracks = [
   {
-    id: "lofi",
-    name: "Lo-fi Focus",
-    shortName: "Lo-fi",
-    icon: "🎧",
-    theme: "lofi",
-
-    providerName:
-      "Groove Salad Classic",
-
-    description:
-      "Warm downtempo beats and grooves for steady focus.",
-
-    dailyDescription:
-      "Easy background music for getting into work mode.",
-
-    stream:
-      "https://ice5.somafm.com/gsclassic-128-mp3",
-
-    backupStream:
-      "https://ice2.somafm.com/gsclassic-128-mp3",
-
-    website:
-      "https://somafm.com/gsclassic/"
-  },
-
-  {
-    id: "chill",
-    name: "Chill Focus",
-    shortName: "Chill",
-    icon: "🌿",
-    theme: "chill",
-
-    providerName:
-      "Groove Salad",
-
-    description:
-      "Chilled ambient and downtempo music with a gentle rhythm.",
-
-    dailyDescription:
-      "A calm soundtrack for a lighter work block.",
-
-    stream:
-      "https://ice5.somafm.com/groovesalad-128-mp3",
-
-    backupStream:
-      "https://ice6.somafm.com/groovesalad-128-mp3",
-
-    website:
-      "https://somafm.com/groovesalad/"
-  },
-
-  {
-    id: "deep",
-    name: "Deep Focus",
-    shortName: "Deep Focus",
+    id: "late-night-lofi",
+    name: "Late Night Lofi",
+    shortName: "Late Night",
     icon: "🌙",
-    theme: "deep",
-
-    providerName:
-      "Drone Zone",
+    theme: "late-night",
+    category: "Cozy",
 
     description:
-      "Slow atmospheric textures with few beats and minimal distraction.",
+      "Quiet late-night beats for settling into focused work.",
 
-    dailyDescription:
-      "Spacious background sound for concentration-heavy work.",
+    youtubeId:
+      "b6ZQNlQJ284",
 
-    stream:
-      "https://ice5.somafm.com/dronezone-128-mp3",
-
-    backupStream:
-      "https://ice6.somafm.com/dronezone-128-mp3",
-
-    website:
-      "https://somafm.com/dronezone/"
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=b6ZQNlQJ284"
   },
 
   {
-    id: "coffee",
-    name: "Coffeehouse",
-    shortName: "Coffeehouse",
+    id: "beachside-lofi",
+    name: "Beachside Lofi",
+    shortName: "Beachside",
+    icon: "🌊",
+    theme: "beach",
+
+    category: "Cozy",
+
+    description:
+      "Soft coastal energy for calm, easygoing focus sessions.",
+
+    youtubeId:
+      "5Jc34fYRrtg",
+
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=5Jc34fYRrtg"
+  },
+
+  {
+    id: "cafe-lofi",
+    name: "Cafe Lofi",
+    shortName: "Cafe",
     icon: "☕",
-    theme: "coffee",
+    theme: "cafe",
 
-    providerName:
-      "Illinois Street Lounge",
+    category: "Cozy",
 
     description:
-      "Retro lounge, jazz, and stylish instrumentals for café energy.",
+      "Warm café ambience for writing, planning, and creative work.",
 
-    dailyDescription:
-      "A little background energy without leaving home.",
+    youtubeId:
+      "c18WZZa4KIA",
 
-    stream:
-      "https://ice5.somafm.com/illstreet-128-mp3",
-
-    backupStream:
-      "https://ice2.somafm.com/illstreet-128-mp3",
-
-    website:
-      "https://somafm.com/illstreet/"
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=c18WZZa4KIA"
   },
 
   {
-    id: "jazz",
-    name: "Instrumental Jazz",
-    shortName: "Jazz",
-    icon: "🎷",
-    theme: "jazz",
+    id: "nighttime-storms",
+    name: "Nighttime Storms",
+    shortName: "Storms",
+    icon: "⛈️",
+    theme: "storm",
 
-    providerName:
-      "Sonic Universe",
+    category: "Ambient",
 
     description:
-      "Eclectic modern jazz for creative and design-focused work.",
+      "Dark nighttime rain and thunder for blocking out distractions.",
 
-    dailyDescription:
-      "Interesting instrumentals for a creative workday.",
+    youtubeId:
+      "mPZkdNFkNps",
 
-    stream:
-      "https://ice5.somafm.com/sonicuniverse-128-mp3",
-
-    backupStream:
-      "https://ice6.somafm.com/sonicuniverse-128-mp3",
-
-    website:
-      "https://somafm.com/sonicuniverse/"
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=mPZkdNFkNps"
   },
 
   {
-    id: "ambient",
-    name: "Ambient",
-    shortName: "Ambient",
-    icon: "☁️",
-    theme: "ambient",
+    id: "fireplace",
+    name: "Fireplace",
+    shortName: "Fireplace",
+    icon: "🔥",
+    theme: "fireplace",
 
-    providerName:
-      "Deep Space One",
+    category: "Ambient",
 
     description:
-      "Deep ambient electronic music for quiet, uninterrupted work.",
+      "A warm crackling fireplace for cozy and low-pressure work.",
 
-    dailyDescription:
-      "A soft atmospheric layer for a crowded-brain day.",
+    youtubeId:
+      "vuyH4T2SjaU",
 
-    stream:
-      "https://ice5.somafm.com/deepspaceone-128-mp3",
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=vuyH4T2SjaU"
+  },
 
-    backupStream:
-      "https://ice2.somafm.com/deepspaceone-128-mp3",
+  {
+    id: "cartoon-office-space",
+    name: "Cartoon Office Space",
+    shortName: "Office",
+    icon: "🖥️",
+    theme: "office",
 
-    website:
-      "https://somafm.com/deepspaceone/"
+    category: "Spaces",
+
+    description:
+      "A playful office atmosphere for making work feel more inviting.",
+
+    youtubeId:
+      "ZFjhlnDyf74",
+
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=ZFjhlnDyf74"
+  },
+
+  {
+    id: "car-ride",
+    name: "Car Ride",
+    shortName: "Car Ride",
+    icon: "🚗",
+    theme: "car",
+
+    category: "Spaces",
+
+    description:
+      "A nighttime drive atmosphere for steady, immersive focus.",
+
+    youtubeId:
+      "_2b9qMYml6I",
+
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=_2b9qMYml6I"
+  },
+
+  {
+    id: "good-vibes",
+    name: "Good Vibes",
+    shortName: "Good Vibes",
+    icon: "✨",
+    theme: "good-vibes",
+
+    category: "Energy",
+
+    description:
+      "Bright, upbeat energy for task sprints and productive momentum.",
+
+    youtubeId:
+      "FcYp2AZUl1Q",
+
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=FcYp2AZUl1Q"
+  },
+
+  {
+    id: "emo-kid-cd",
+    name: "Emo Kid CD",
+    shortName: "Emo Kid",
+    icon: "🖤",
+    theme: "emo",
+
+    category: "Energy",
+
+    description:
+      "Nostalgic emo energy for powering through a louder work block.",
+
+    youtubeId:
+      "Pye5o3YyWLA",
+
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=Pye5o3YyWLA"
   }
 ];
+
+const categoryOrder = [
+  "Cozy",
+  "Ambient",
+  "Spaces",
+  "Energy"
+];
+
+const categoryIcons = {
+  Cozy: "🌙",
+  Ambient: "🌧️",
+  Spaces: "🚗",
+  Energy: "⚡"
+};
 
 const elements = {
   card:
@@ -182,9 +218,9 @@ const elements = {
       "headerIcon"
     ),
 
-  stationButtons:
+  soundtrackGroups:
     document.getElementById(
-      "stationButtons"
+      "soundtrackGroups"
     ),
 
   stationArtwork:
@@ -207,120 +243,93 @@ const elements = {
       "stationDescription"
     ),
 
+  videoPlaceholder:
+    document.getElementById(
+      "videoPlaceholder"
+    ),
+
+  placeholderIcon:
+    document.getElementById(
+      "placeholderIcon"
+    ),
+
+  placeholderTitle:
+    document.getElementById(
+      "placeholderTitle"
+    ),
+
   playButton:
     document.getElementById(
       "playButton"
     ),
 
-  playButtonIcon:
+  youtubePlayer:
     document.getElementById(
-      "playButtonIcon"
+      "youtubePlayer"
     ),
 
-  playButtonText:
+  soundtrackMessage:
     document.getElementById(
-      "playButtonText"
+      "soundtrackMessage"
     ),
 
-  stopButton:
+  soundtrackMessageIcon:
     document.getElementById(
-      "stopButton"
+      "soundtrackMessageIcon"
     ),
 
-  volumeSlider:
+  soundtrackMessageText:
     document.getElementById(
-      "volumeSlider"
+      "soundtrackMessageText"
     ),
 
-  volumeValue:
+  youtubeLink:
     document.getElementById(
-      "volumeValue"
-    ),
-
-  muteButton:
-    document.getElementById(
-      "muteButton"
-    ),
-
-  muteIcon:
-    document.getElementById(
-      "muteIcon"
-    ),
-
-  dailyPickButton:
-    document.getElementById(
-      "dailyPickButton"
-    ),
-
-  dailyPickIcon:
-    document.getElementById(
-      "dailyPickIcon"
-    ),
-
-  dailyPickName:
-    document.getElementById(
-      "dailyPickName"
-    ),
-
-  dailyPickDescription:
-    document.getElementById(
-      "dailyPickDescription"
-    ),
-
-  radioMessage:
-    document.getElementById(
-      "radioMessage"
-    ),
-
-  radioMessageIcon:
-    document.getElementById(
-      "radioMessageIcon"
-    ),
-
-  radioMessageText:
-    document.getElementById(
-      "radioMessageText"
-    ),
-
-  stationLink:
-    document.getElementById(
-      "stationLink"
-    ),
-
-  player:
-    document.getElementById(
-      "radioPlayer"
+      "youtubeLink"
     )
 };
 
-let selectedStation =
-  stations[0];
+let selectedSoundtrack =
+  soundtracks[0];
 
-let dailyStation =
-  stations[0];
-
-let isPlaying = false;
-let isLoading = false;
-let isMuted = false;
-let currentStreamAttempt = 0;
-
-let savedVolume = 0.65;
+let isVideoLoaded = false;
 
 /* =========================================================
    HELPERS
    ========================================================= */
 
-function findStationById(stationId) {
-  return stations.find(
-    (station) =>
-      station.id === stationId
+function findSoundtrackById(
+  soundtrackId
+) {
+  return soundtracks.find(
+    (soundtrack) =>
+      soundtrack.id === soundtrackId
   );
 }
 
-function clamp(value, min, max) {
-  return Math.min(
-    Math.max(value, min),
-    max
+function buildEmbedUrl(
+  soundtrack,
+  autoplay = false
+) {
+  const parameters =
+    new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1"
+    });
+
+  if (autoplay) {
+    parameters.set(
+      "autoplay",
+      "1"
+    );
+  }
+
+  return (
+    "https://www.youtube.com/embed/" +
+    soundtrack.youtubeId +
+    "?" +
+    parameters.toString()
   );
 }
 
@@ -341,29 +350,18 @@ function loadSavedState() {
       return;
     }
 
-    const savedStation =
-      findStationById(
-        savedState.selectedStationId
+    const savedSoundtrack =
+      findSoundtrackById(
+        savedState.selectedSoundtrackId
       );
 
-    if (savedStation) {
-      selectedStation =
-        savedStation;
+    if (savedSoundtrack) {
+      selectedSoundtrack =
+        savedSoundtrack;
     }
-
-    const volume =
-      Number(savedState.volume);
-
-    if (Number.isFinite(volume)) {
-      savedVolume =
-        clamp(volume, 0, 1);
-    }
-
-    isMuted =
-      Boolean(savedState.isMuted);
   } catch (error) {
     console.warn(
-      "Focus radio settings could not be restored:",
+      "Focus soundtrack settings could not be restored:",
       error
     );
   }
@@ -371,13 +369,8 @@ function loadSavedState() {
 
 function saveState() {
   const state = {
-    selectedStationId:
-      selectedStation.id,
-
-    volume:
-      savedVolume,
-
-    isMuted
+    selectedSoundtrackId:
+      selectedSoundtrack.id
   };
 
   localStorage.setItem(
@@ -387,156 +380,207 @@ function saveState() {
 }
 
 /* =========================================================
-   DAILY PICK
+   SOUNDTRACK LIBRARY
    ========================================================= */
 
-function getDailyStation() {
-  const today = new Date();
-
-  const seed =
-    today.getFullYear() * 10000 +
-    (today.getMonth() + 1) * 100 +
-    today.getDate();
-
-  return stations[
-    seed % stations.length
-  ];
-}
-
-function renderDailyStation() {
-  dailyStation =
-    getDailyStation();
-
-  elements.dailyPickIcon.textContent =
-    dailyStation.icon;
-
-  elements.dailyPickName.textContent =
-    dailyStation.name;
-
-  elements.dailyPickDescription.textContent =
-    dailyStation.dailyDescription;
-}
-
-/* =========================================================
-   STATION BUTTONS
-   ========================================================= */
-
-function buildStationButtons() {
-  elements.stationButtons.innerHTML =
+function buildSoundtrackGroups() {
+  elements.soundtrackGroups.innerHTML =
     "";
 
-  stations.forEach((station) => {
-    const button =
-      document.createElement(
-        "button"
+  categoryOrder.forEach(
+    (category) => {
+      const categorySoundtracks =
+        soundtracks.filter(
+          (soundtrack) =>
+            soundtrack.category ===
+            category
+        );
+
+      if (
+        categorySoundtracks.length === 0
+      ) {
+        return;
+      }
+
+      const group =
+        document.createElement(
+          "section"
+        );
+
+      group.className =
+        "soundtrack-group";
+
+      const heading =
+        document.createElement(
+          "h2"
+        );
+
+      heading.className =
+        "soundtrack-group-heading";
+
+      heading.innerHTML =
+        `
+          <span aria-hidden="true">
+            ${categoryIcons[category] || "🎧"}
+          </span>
+          ${category}
+        `;
+
+      const buttonContainer =
+        document.createElement(
+          "div"
+        );
+
+      buttonContainer.className =
+        "soundtrack-buttons";
+
+      buttonContainer.setAttribute(
+        "role",
+        "list"
       );
 
-    button.type = "button";
+      categorySoundtracks.forEach(
+        (soundtrack) => {
+          const button =
+            document.createElement(
+              "button"
+            );
 
-    button.className =
-      "station-button";
+          button.type =
+            "button";
 
-    button.dataset.stationId =
-      station.id;
+          button.className =
+            "soundtrack-button";
 
-    button.setAttribute(
-      "role",
-      "listitem"
-    );
+          button.dataset.soundtrackId =
+            soundtrack.id;
 
-    button.setAttribute(
-      "aria-pressed",
-      "false"
-    );
+          button.setAttribute(
+            "role",
+            "listitem"
+          );
 
-    button.textContent =
-      `${station.icon} ${station.shortName}`;
+          button.setAttribute(
+            "aria-pressed",
+            "false"
+          );
 
-    button.addEventListener(
-      "click",
-      () => {
-        selectStation(
-          station.id
-        );
-      }
-    );
+          button.innerHTML =
+            `
+              <span
+                class="soundtrack-button-icon"
+                aria-hidden="true"
+              >
+                ${soundtrack.icon}
+              </span>
 
-    elements.stationButtons.appendChild(
-      button
-    );
-  });
+              <span class="soundtrack-button-name">
+                ${soundtrack.shortName}
+              </span>
+            `;
+
+          button.addEventListener(
+            "click",
+            () => {
+              selectSoundtrack(
+                soundtrack.id,
+                {
+                  autoplay: true
+                }
+              );
+            }
+          );
+
+          buttonContainer.appendChild(
+            button
+          );
+        }
+      );
+
+      group.appendChild(
+        heading
+      );
+
+      group.appendChild(
+        buttonContainer
+      );
+
+      elements.soundtrackGroups.appendChild(
+        group
+      );
+    }
+  );
 }
 
 /* =========================================================
-   STATION SELECTION
+   SOUNDTRACK SELECTION
    ========================================================= */
 
-function selectStation(
-  stationId,
+function selectSoundtrack(
+  soundtrackId,
   options = {}
 ) {
-  const station =
-    findStationById(stationId);
+  const soundtrack =
+    findSoundtrackById(
+      soundtrackId
+    );
 
-  if (!station) {
+  if (!soundtrack) {
     return;
   }
 
   const {
-    playImmediately = false
+    autoplay = false
   } = options;
 
-  const shouldContinuePlaying =
-    isPlaying ||
-    isLoading ||
-    playImmediately;
+  selectedSoundtrack =
+    soundtrack;
 
-  stopAudio({
-    announce: false
-  });
-
-  selectedStation =
-    station;
-
-  currentStreamAttempt = 0;
-
-  renderSelectedStation();
+  renderSelectedSoundtrack();
   saveState();
 
-  if (shouldContinuePlaying) {
-    playSelectedStation();
+  if (autoplay) {
+    loadSelectedVideo({
+      autoplay: true
+    });
   } else {
-    showMessage(
-      "🌿",
-      `${station.name} is ready whenever you are.`
-    );
+    showVideoPlaceholder();
   }
 }
 
-function renderSelectedStation() {
+function renderSelectedSoundtrack() {
   elements.card.dataset.theme =
-    selectedStation.theme;
+    selectedSoundtrack.theme;
+
+  elements.headerIcon.textContent =
+    selectedSoundtrack.icon;
 
   elements.stationArtwork.textContent =
-    selectedStation.icon;
+    selectedSoundtrack.icon;
 
   elements.stationName.textContent =
-    selectedStation.name;
+    selectedSoundtrack.name;
 
   elements.stationDescription.textContent =
-    selectedStation.description;
+    selectedSoundtrack.description;
 
-  elements.stationLink.href =
-    selectedStation.website;
+  elements.placeholderIcon.textContent =
+    selectedSoundtrack.icon;
+
+  elements.placeholderTitle.textContent =
+    selectedSoundtrack.name;
+
+  elements.youtubeLink.href =
+    selectedSoundtrack.youtubeUrl;
 
   document
     .querySelectorAll(
-      ".station-button"
+      ".soundtrack-button"
     )
     .forEach((button) => {
       const isSelected =
-        button.dataset.stationId ===
-        selectedStation.id;
+        button.dataset.soundtrackId ===
+        selectedSoundtrack.id;
 
       button.classList.toggle(
         "active",
@@ -551,497 +595,87 @@ function renderSelectedStation() {
 }
 
 /* =========================================================
-   PLAYER
+   VIDEO PLAYER
    ========================================================= */
 
-async function playSelectedStation() {
-  if (isPlaying) {
-    pauseAudio();
-    return;
-  }
-
-  if (
-    elements.player.src &&
-    elements.player.paused &&
-    elements.player.currentSrc
-  ) {
-    await resumeAudio();
-    return;
-  }
-
-  currentStreamAttempt = 0;
-
-  await loadCurrentStream();
-}
-
-async function loadCurrentStream() {
-  setLoadingState(true);
-  clearErrorState();
-
-  const streamUrl =
-    currentStreamAttempt === 0
-      ? selectedStation.stream
-      : selectedStation.backupStream;
-
-  elements.player.src =
-    streamUrl;
-
-  elements.player.volume =
-    savedVolume;
-
-  elements.player.muted =
-    isMuted;
-
-  elements.player.load();
-
-  showMessage(
-    "⏳",
-    `Connecting to ${selectedStation.name}…`
-  );
-
-  try {
-    await elements.player.play();
-  } catch (error) {
-    /*
-      Browser autoplay protection should not normally trigger
-      because this function begins with a button click.
-    */
-
-    if (
-      error.name ===
-      "NotAllowedError"
-    ) {
-      setLoadingState(false);
-
-      showError(
-        "Your browser blocked playback. Press Play Station again."
-      );
-
-      return;
-    }
-
-    handleStreamFailure();
-  }
-}
-
-async function resumeAudio() {
-  setLoadingState(true);
-  clearErrorState();
-
-  try {
-    await elements.player.play();
-  } catch (error) {
-    setLoadingState(false);
-
-    showError(
-      "The station could not resume. Try stopping and starting it again."
-    );
-  }
-}
-
-function pauseAudio() {
-  elements.player.pause();
-
-  isPlaying = false;
-  isLoading = false;
-
-  elements.card.classList.remove(
-    "is-playing",
-    "is-loading"
-  );
-
-  updatePlaybackButtons();
-
-  elements.stationStatusLabel.textContent =
-    "Paused";
-
-  showMessage(
-    "⏸️",
-    `${selectedStation.name} is paused.`
-  );
-
-  document.title =
-    "Focus Radio";
-}
-
-function stopAudio(
+function loadSelectedVideo(
   options = {}
 ) {
   const {
-    announce = true
+    autoplay = true
   } = options;
 
-  elements.player.pause();
+  isVideoLoaded = true;
 
-  elements.player.removeAttribute(
-    "src"
-  );
-
-  elements.player.load();
-
-  isPlaying = false;
-  isLoading = false;
-
-  currentStreamAttempt = 0;
-
-  elements.card.classList.remove(
-    "is-playing",
-    "is-loading"
-  );
-
-  updatePlaybackButtons();
-
-  elements.stationStatusLabel.textContent =
-    "Selected Station";
-
-  document.title =
-    "Focus Radio";
-
-  if (announce) {
-    showMessage(
-      "🌿",
-      "Focus radio stopped."
-    );
-  }
-}
-
-function handleStreamFailure() {
-  if (
-    currentStreamAttempt === 0 &&
-    selectedStation.backupStream
-  ) {
-    currentStreamAttempt = 1;
-
-    showMessage(
-      "🔄",
-      "Trying the station’s backup stream…"
+  elements.youtubePlayer.src =
+    buildEmbedUrl(
+      selectedSoundtrack,
+      autoplay
     );
 
-    window.setTimeout(
-      loadCurrentStream,
-      500
-    );
+  elements.youtubePlayer.hidden =
+    false;
 
-    return;
-  }
-
-  setLoadingState(false);
-
-  showError(
-    "This station is temporarily unavailable. Try another station or visit its website."
-  );
-}
-
-/* =========================================================
-   AUDIO EVENTS
-   ========================================================= */
-
-function handlePlaying() {
-  isPlaying = true;
-  isLoading = false;
+  elements.videoPlaceholder.hidden =
+    true;
 
   elements.card.classList.add(
     "is-playing"
   );
 
-  elements.card.classList.remove(
-    "is-loading"
-  );
-
   elements.stationStatusLabel.textContent =
-    `Playing · ${selectedStation.providerName}`;
-
-  updatePlaybackButtons();
+    "Now Playing";
 
   showMessage(
     "🎶",
-    `${selectedStation.name} is playing.`
+    `${selectedSoundtrack.name} is ready.`
   );
 
   document.title =
-    `Playing · ${selectedStation.name}`;
+    `Playing · ${selectedSoundtrack.name}`;
 }
 
-function handleWaiting() {
-  if (!isPlaying) {
-    setLoadingState(true);
-  }
+function showVideoPlaceholder() {
+  isVideoLoaded = false;
 
-  showMessage(
-    "⏳",
-    `Connecting to ${selectedStation.name}…`
-  );
-}
+  elements.youtubePlayer.src =
+    "";
 
-function handlePaused() {
-  if (
-    elements.player.ended ||
-    !elements.player.src
-  ) {
-    return;
-  }
+  elements.youtubePlayer.hidden =
+    true;
 
-  isPlaying = false;
-  isLoading = false;
+  elements.videoPlaceholder.hidden =
+    false;
 
   elements.card.classList.remove(
-    "is-playing",
-    "is-loading"
+    "is-playing"
   );
 
-  updatePlaybackButtons();
-}
+  elements.stationStatusLabel.textContent =
+    "Selected Soundtrack";
 
-function handleAudioError() {
-  /*
-    Ignore errors caused by intentionally clearing src
-    when the Stop button is used.
-  */
+  showMessage(
+    "🌿",
+    `${selectedSoundtrack.name} is selected. Press play when you are ready.`
+  );
 
-  if (!elements.player.src) {
-    return;
-  }
-
-  handleStreamFailure();
+  document.title =
+    "Focus Soundtrack";
 }
 
 /* =========================================================
-   PLAYBACK UI
-   ========================================================= */
-
-function setLoadingState(loading) {
-  isLoading = loading;
-
-  elements.card.classList.toggle(
-    "is-loading",
-    loading
-  );
-
-  elements.playButton.disabled =
-    loading;
-
-  elements.playButtonIcon.textContent =
-    loading
-      ? "…"
-      : "▶";
-
-  elements.playButtonText.textContent =
-    loading
-      ? "Connecting"
-      : "Play Station";
-}
-
-function updatePlaybackButtons() {
-  elements.playButton.disabled =
-    isLoading;
-
-  elements.stopButton.disabled =
-    !isPlaying &&
-    !isLoading &&
-    !elements.player.src;
-
-  if (isLoading) {
-    elements.playButtonIcon.textContent =
-      "…";
-
-    elements.playButtonText.textContent =
-      "Connecting";
-
-    return;
-  }
-
-  if (isPlaying) {
-    elements.playButtonIcon.textContent =
-      "⏸";
-
-    elements.playButtonText.textContent =
-      "Pause";
-
-    return;
-  }
-
-  if (
-    elements.player.src &&
-    elements.player.paused
-  ) {
-    elements.playButtonIcon.textContent =
-      "▶";
-
-    elements.playButtonText.textContent =
-      "Resume";
-
-    return;
-  }
-
-  elements.playButtonIcon.textContent =
-    "▶";
-
-  elements.playButtonText.textContent =
-    "Play Station";
-}
-
-/* =========================================================
-   VOLUME
-   ========================================================= */
-
-function initializeVolume() {
-  const volumePercent =
-    Math.round(
-      savedVolume * 100
-    );
-
-  elements.player.volume =
-    savedVolume;
-
-  elements.player.muted =
-    isMuted;
-
-  elements.volumeSlider.value =
-    String(volumePercent);
-
-  updateVolumeDisplay();
-}
-
-function handleVolumeChange(event) {
-  const volumePercent =
-    clamp(
-      Number(event.target.value),
-      0,
-      100
-    );
-
-  savedVolume =
-    volumePercent / 100;
-
-  elements.player.volume =
-    savedVolume;
-
-  if (
-    savedVolume > 0 &&
-    isMuted
-  ) {
-    isMuted = false;
-    elements.player.muted = false;
-  }
-
-  updateVolumeDisplay();
-  saveState();
-}
-
-function toggleMute() {
-  isMuted =
-    !isMuted;
-
-  elements.player.muted =
-    isMuted;
-
-  updateVolumeDisplay();
-  saveState();
-}
-
-function updateVolumeDisplay() {
-  const volumePercent =
-    Math.round(
-      savedVolume * 100
-    );
-
-  elements.volumeValue.textContent =
-    isMuted
-      ? "Muted"
-      : `${volumePercent}%`;
-
-  elements.muteIcon.textContent =
-    getVolumeIcon(
-      volumePercent,
-      isMuted
-    );
-
-  elements.muteButton.setAttribute(
-    "aria-label",
-    isMuted
-      ? "Unmute focus radio"
-      : "Mute focus radio"
-  );
-
-  elements.volumeSlider.style.setProperty(
-    "--volume-progress",
-    `${volumePercent}%`
-  );
-}
-
-function getVolumeIcon(
-  volumePercent,
-  muted
-) {
-  if (
-    muted ||
-    volumePercent === 0
-  ) {
-    return "🔇";
-  }
-
-  if (volumePercent < 45) {
-    return "🔈";
-  }
-
-  if (volumePercent < 75) {
-    return "🔉";
-  }
-
-  return "🔊";
-}
-
-/* =========================================================
-   STATUS MESSAGES
+   STATUS MESSAGE
    ========================================================= */
 
 function showMessage(
   icon,
   message
 ) {
-  elements.card.classList.remove(
-    "has-error"
-  );
-
-  elements.radioMessageIcon.textContent =
+  elements.soundtrackMessageIcon.textContent =
     icon;
 
-  elements.radioMessageText.textContent =
+  elements.soundtrackMessageText.textContent =
     message;
-}
-
-function showError(message) {
-  isPlaying = false;
-  isLoading = false;
-
-  elements.card.classList.remove(
-    "is-playing",
-    "is-loading"
-  );
-
-  elements.card.classList.add(
-    "has-error"
-  );
-
-  elements.stationStatusLabel.textContent =
-    "Station unavailable";
-
-  updatePlaybackButtons();
-
-  elements.radioMessageIcon.textContent =
-    "⚠️";
-
-  elements.radioMessageText.textContent =
-    message;
-
-  document.title =
-    "Focus Radio";
-}
-
-function clearErrorState() {
-  elements.card.classList.remove(
-    "has-error"
-  );
 }
 
 /* =========================================================
@@ -1051,56 +685,11 @@ function clearErrorState() {
 function attachEventListeners() {
   elements.playButton.addEventListener(
     "click",
-    playSelectedStation
-  );
-
-  elements.stopButton.addEventListener(
-    "click",
     () => {
-      stopAudio();
+      loadSelectedVideo({
+        autoplay: true
+      });
     }
-  );
-
-  elements.dailyPickButton.addEventListener(
-    "click",
-    () => {
-      selectStation(
-        dailyStation.id,
-        {
-          playImmediately: true
-        }
-      );
-    }
-  );
-
-  elements.volumeSlider.addEventListener(
-    "input",
-    handleVolumeChange
-  );
-
-  elements.muteButton.addEventListener(
-    "click",
-    toggleMute
-  );
-
-  elements.player.addEventListener(
-    "playing",
-    handlePlaying
-  );
-
-  elements.player.addEventListener(
-    "waiting",
-    handleWaiting
-  );
-
-  elements.player.addEventListener(
-    "pause",
-    handlePaused
-  );
-
-  elements.player.addEventListener(
-    "error",
-    handleAudioError
   );
 
   window.addEventListener(
@@ -1113,15 +702,13 @@ function attachEventListeners() {
    INITIALIZATION
    ========================================================= */
 
-function initializeFocusRadio() {
+function initializeFocusSoundtrack() {
   loadSavedState();
 
-  buildStationButtons();
-  renderDailyStation();
-  renderSelectedStation();
-  initializeVolume();
+  buildSoundtrackGroups();
+  renderSelectedSoundtrack();
+  showVideoPlaceholder();
   attachEventListeners();
-  updatePlaybackButtons();
 }
 
-initializeFocusRadio();
+initializeFocusSoundtrack();
