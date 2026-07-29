@@ -126,28 +126,28 @@ function getThemeValue(
 function getChartColors() {
   return [
     getThemeValue(
-      "--cozy-chart-1",
-      "#a995f4", // lavender
+      "--spending-chart-1",
+      "#a995f4"
     ),
 
     getThemeValue(
-      "--cozy-chart-2",
-     "#8fcff4", // aqua blue
+      "--spending-chart-2",
+      "#8fcff4"
     ),
 
     getThemeValue(
-      "--cozy-chart-3",
-      "#a7eee0", // mint
+      "--spending-chart-3",
+      "#a7eee0"
     ),
 
     getThemeValue(
-      "--cozy-chart-4",
-      "#efa6dc", // blush pink
+      "--spending-chart-4",
+      "#efa6dc"
     ),
 
     getThemeValue(
-      "--cozy-chart-5",
-      "#f4da91", // soft yellow
+      "--spending-chart-5",
+      "#f4da91"
     )
   ];
 }
