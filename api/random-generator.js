@@ -3,10 +3,7 @@ const NOTION_TOKEN =
     ?.trim()
     .replace(/^["']|["']$/g, "");
 
-const DATABASE_ID =
-  process.env.RANDOM_GENERATOR_DATABASE_ID
-    ?.trim()
-    .replace(/^["']|["']$/g, "");
+const DATABASE_ID = "3abdbd801b57801e9164ebfb8e55ae23";
 
 const NOTION_VERSION = "2026-03-11";
 
