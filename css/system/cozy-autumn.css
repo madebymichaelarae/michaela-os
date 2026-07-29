@@ -27,12 +27,34 @@
      MAIN SURFACES
      ================================================== */
 
-  --card-background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.78),
-      rgba(247, 244, 255, 0.62)
-    );
+ --card-background:
+  radial-gradient(
+    circle at 15% 18%,
+    rgba(170, 208, 255, 0.28),
+    transparent 32%
+  ),
+  radial-gradient(
+    circle at 82% 18%,
+    rgba(255, 186, 231, 0.24),
+    transparent 30%
+  ),
+  radial-gradient(
+    circle at 72% 78%,
+    rgba(135, 239, 232, 0.24),
+    transparent 34%
+  ),
+  radial-gradient(
+    circle at 28% 82%,
+    rgba(203, 184, 255, 0.20),
+    transparent 36%
+  ),
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.94),
+    rgba(242,239,255,.90) 32%,
+    rgba(237,247,255,.90) 64%,
+    rgba(255,246,252,.92) 100%
+  );
 
   --panel-background:
     linear-gradient(
@@ -368,27 +390,27 @@ body {
   pointer-events:
     none;
 
-  background:
-    radial-gradient(
-      circle at 12% 14%,
-      rgba(174, 154, 255, 0.20),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 88% 12%,
-      rgba(126, 220, 255, 0.19),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 76% 82%,
-      rgba(255, 171, 226, 0.17),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 18% 88%,
-      rgba(126, 238, 229, 0.17),
-      transparent 34%
-    );
+background:
+  radial-gradient(
+    circle at 12% 14%,
+    rgba(176,156,255,.14),
+    transparent 28%
+  ),
+  radial-gradient(
+    circle at 88% 18%,
+    rgba(133,223,255,.12),
+    transparent 30%
+  ),
+  radial-gradient(
+    circle at 74% 78%,
+    rgba(255,188,229,.11),
+    transparent 32%
+  ),
+  radial-gradient(
+    circle at 18% 88%,
+    rgba(149,240,229,.11),
+    transparent 34%
+  );
 }
 
 .widget-card > *,
