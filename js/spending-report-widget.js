@@ -127,27 +127,27 @@ function getChartColors() {
   return [
     getThemeValue(
       "--cozy-chart-1",
-      "#b96f55"
+      "#a995f4", // lavender
     ),
 
     getThemeValue(
       "--cozy-chart-2",
-      "#d5a15d"
+     "#8fcff4", // aqua blue
     ),
 
     getThemeValue(
       "--cozy-chart-3",
-      "#87966f"
+      "#a7eee0", // mint
     ),
 
     getThemeValue(
       "--cozy-chart-4",
-      "#9b786f"
+      "#efa6dc", // blush pink
     ),
 
     getThemeValue(
       "--cozy-chart-5",
-      "#c49a8c"
+      "#f4da91", // soft yellow
     )
   ];
 }
