@@ -21,35 +21,7 @@
      PAGE
      ================================================== */
 
-  --page-background:
-    radial-gradient(
-      circle at 12% 16%,
-      rgba(174, 157, 255, 0.58),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 82% 18%,
-      rgba(126, 221, 255, 0.48),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 68% 52%,
-      rgba(255, 182, 232, 0.48),
-      transparent 33%
-    ),
-    radial-gradient(
-      circle at 28% 72%,
-      rgba(129, 244, 242, 0.42),
-      transparent 35%
-    ),
-    linear-gradient(
-      145deg,
-      #b7a6f7 0%,
-      #c8d9ff 28%,
-      #edc9f4 52%,
-      #bff2f4 73%,
-      #b7a5f0 100%
-    );
+--page-background: #ffffff;
 
   /* ==================================================
      MAIN SURFACES
@@ -336,16 +308,9 @@ body {
 }
 
 body {
-  background:
-    var(--page-background);
-
-  background-attachment:
-    fixed;
-
-  color:
-    var(--text-primary);
+  background: #ffffff;
+  color: var(--text-primary);
 }
-
 /* ==================================================
    GLASS CARD EFFECT
    ================================================== */
