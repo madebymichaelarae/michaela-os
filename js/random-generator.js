@@ -57,8 +57,11 @@ document.addEventListener(
     function setLoading(loading) {
       isGenerating = loading;
 
-      generateButton.disabled = loading;
-      categorySelect.disabled = loading;
+      generateButton.disabled =
+        loading;
+
+      categorySelect.disabled =
+        loading;
 
       generateButtonText.textContent =
         loading
@@ -72,16 +75,21 @@ document.addEventListener(
     }
 
     function showResult(item) {
-      resultText.textContent = item.name;
+      resultText.textContent =
+        item.name;
 
       if (item.category) {
         resultCategory.textContent =
           item.category;
 
-        resultCategory.hidden = false;
+        resultCategory.hidden =
+          false;
       } else {
-        resultCategory.textContent = "";
-        resultCategory.hidden = true;
+        resultCategory.textContent =
+          "";
+
+        resultCategory.hidden =
+          true;
       }
 
       resultContainer.classList.remove(
@@ -119,6 +127,118 @@ document.addEventListener(
         "The random option could not be generated.";
     }
 
+    function createCategoryOption(
+      value,
+      label
+    ) {
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value = value;
+      option.textContent = label;
+
+      return option;
+    }
+
+    async function loadCategories() {
+      categorySelect.disabled = true;
+      categorySelect.innerHTML = "";
+
+      categorySelect.appendChild(
+        createCategoryOption(
+          "",
+          "Loading categories..."
+        )
+      );
+
+      try {
+        const url = new URL(
+          "/api/random-generator",
+          window.location.origin
+        );
+
+        url.searchParams.set(
+          "mode",
+          "categories"
+        );
+
+        const response = await fetch(
+          url.toString(),
+          {
+            method: "GET",
+            headers: {
+              Accept:
+                "application/json",
+            },
+            cache: "no-store",
+          }
+        );
+
+        const data =
+          await response.json();
+
+        if (
+          !response.ok ||
+          !data.success
+        ) {
+          throw new Error(
+            typeof data.error ===
+              "string"
+              ? data.error
+              : "Categories could not be loaded."
+          );
+        }
+
+        categorySelect.innerHTML = "";
+
+        categorySelect.appendChild(
+          createCategoryOption(
+            "",
+            "All Categories"
+          )
+        );
+
+        for (
+          const category of
+          data.categories || []
+        ) {
+          categorySelect.appendChild(
+            createCategoryOption(
+              category,
+              category
+            )
+          );
+        }
+
+        categorySelect.disabled =
+          false;
+
+        statusText.textContent = "";
+      } catch (error) {
+        console.error(
+          "Category loading error:",
+          error
+        );
+
+        categorySelect.innerHTML = "";
+
+        categorySelect.appendChild(
+          createCategoryOption(
+            "",
+            "All Categories"
+          )
+        );
+
+        categorySelect.disabled =
+          false;
+
+        statusText.textContent =
+          "Categories could not be loaded.";
+      }
+    }
+
     async function generateRandomItem() {
       if (isGenerating) {
         return;
@@ -147,7 +267,8 @@ document.addEventListener(
           {
             method: "GET",
             headers: {
-              Accept: "application/json",
+              Accept:
+                "application/json",
             },
             cache: "no-store",
           }
@@ -159,7 +280,8 @@ document.addEventListener(
         let data;
 
         try {
-          data = JSON.parse(rawText);
+          data =
+            JSON.parse(rawText);
         } catch {
           console.error(
             "Raw API response:",
@@ -178,7 +300,8 @@ document.addEventListener(
 
         if (!response.ok) {
           throw new Error(
-            typeof data.error === "string"
+            typeof data.error ===
+              "string"
               ? data.error
               : "The API request failed."
           );
@@ -186,7 +309,8 @@ document.addEventListener(
 
         if (!data.success) {
           throw new Error(
-            typeof data.error === "string"
+            typeof data.error ===
+              "string"
               ? data.error
               : "The generator was unsuccessful."
           );
@@ -194,7 +318,8 @@ document.addEventListener(
 
         if (
           !data.item ||
-          typeof data.item.name !== "string"
+          typeof data.item.name !==
+            "string"
         ) {
           throw new Error(
             "The API did not return a valid generator item."
@@ -222,6 +347,8 @@ document.addEventListener(
       "click",
       generateRandomItem
     );
+
+    loadCategories();
 
     console.log(
       "Random generator JavaScript loaded."
