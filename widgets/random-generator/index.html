@@ -5,138 +5,126 @@
 
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0"
+      content="width=device-width, initial-scale=1"
     />
 
-    <meta
-      name="description"
-      content="A random idea generator for Michaela OS."
+    <title>Random Generator | Michaela OS</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/themes.css"
     />
 
-    <title>Random Generator</title>
-
-<link
-  rel="stylesheet"
-  href="/css/styles.css?v=3"
-/>
+    <link
+      rel="stylesheet"
+      href="/css/random-generator-widget.css"
+    />
   </head>
 
   <body>
-    <main class="widget-page">
+    <main
+      class="random-generator"
+      data-theme="cozy-autumn"
+    >
       <section
-        class="widget-card random-generator-card"
-        aria-labelledby="generator-title"
+        class="random-generator__card"
+        aria-labelledby="random-generator-title"
       >
-        <header class="widget-header">
-          <div class="widget-icon" aria-hidden="true">
-            ✨
-          </div>
-
-          <div class="widget-heading">
-            <p class="widget-eyebrow">
-              MICHAELA OS
+        <header class="random-generator__header">
+          <div>
+            <p class="random-generator__eyebrow">
+              Michaela OS
             </p>
 
             <h1
-              class="widget-title"
-              id="generator-title"
+              class="random-generator__title"
+              id="random-generator-title"
             >
               Random Generator
             </h1>
           </div>
+
+          <div
+            class="random-generator__icon"
+            aria-hidden="true"
+          >
+            ✨
+          </div>
         </header>
 
-        <div class="generator-controls">
+        <div
+          class="random-generator__divider"
+          aria-hidden="true"
+        ></div>
+
+        <div class="random-generator__controls">
           <label
-            class="generator-label"
+            class="random-generator__label"
             for="category-select"
           >
             Choose a category
           </label>
 
           <select
-            class="generator-select"
+            class="random-generator__select"
             id="category-select"
           >
             <option value="">
               Surprise me
             </option>
 
-            <!--
-              Replace these with the exact category names
-              used in your Notion Category property.
-            -->
-
-            <option value="Finish a Goal">
-              Finish a Goal
-            </option>
-
-            <option value="Hobby Time">
-              Hobby Time
-            </option>
-
-            <option value="Free Time">
-              Free Time
-            </option>
-
-            <option value="5 minute reset">
-              5 minute reset
-            </option>
-
-                <option value="Walking pad activity">
-              Walking pad activity
-            </option>
-
-                <option value="Art Journal">
-              Art Journal
-            </option>
-
-                <option value="5 minute journal prompt">
+            <option value="5 minute journal prompt">
               5 minute journal prompt
             </option>
           </select>
         </div>
 
-        <div
-          class="generator-result"
+        <section
+          class="random-generator__result"
           id="generator-result"
           aria-live="polite"
         >
-          <p class="generator-result-label">
-            YOUR PICK
+          <p class="random-generator__result-label">
+            Your pick
           </p>
 
           <p
-            class="generator-result-text"
+            class="random-generator__result-text"
             id="generator-result-text"
           >
-            Tap the button and let fate do the admin.
+            Choose a category and let fate handle the paperwork.
           </p>
 
           <p
-            class="generator-result-category"
+            class="random-generator__result-category"
             id="generator-result-category"
             hidden
           ></p>
-        </div>
+        </section>
 
         <button
-          class="generator-button"
+          class="random-generator__button"
           id="generate-button"
           type="button"
         >
           <span aria-hidden="true">🎲</span>
-          Generate
+
+          <span id="generate-button-text">
+            Generate
+          </span>
         </button>
 
         <p
-          class="generator-status"
+          class="random-generator__status"
           id="generator-status"
           role="status"
         ></p>
       </section>
     </main>
 
-<script src="/js/random-generator.js?v=3"></script>
+    <script
+      src="/js/random-generator.js"
+      defer
+    ></script>
   </body>
 </html>
