@@ -1,523 +1,1051 @@
-
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url(
+  "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+);
 
 :root {
-    color-scheme: light;
+  color-scheme: light;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
 }
 
 body {
-    padding: 0;
-    background: transparent;
-    font-family: "Inter", Arial, sans-serif;
-    color: #4a3528;
+  padding: 0;
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  background: transparent;
+
+  font-family: var(
+    --font-body,
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif
+  );
 }
+
+/* ==================================================
+   WELCOME WIDGET
+   ================================================== */
 
 .welcome-widget {
---welcome-bg-start: #fff8ec;
---welcome-bg-middle: #f8ead8;
---welcome-bg-end: #f2dfca;
+  /*
+   * These local variables now point back to
+   * the shared system theme.
+   *
+   * Changing the main theme file will update
+   * this widget automatically.
+   */
 
---welcome-text: #493326;
---welcome-muted: rgba(73,51,38,.68);
+  --welcome-text:
+    var(
+      --text-primary,
+      #453d68
+    );
 
---welcome-accent: #bb6f32;
---welcome-accent-bright: #8f4f24;
+  --welcome-muted:
+    var(
+      --text-secondary,
+      #746d91
+    );
 
---welcome-glow: rgba(255,180,92,.34);
---welcome-glow-soft: rgba(255,211,146,.30);
---welcome-border: rgba(193,126,70,.32);
+  --welcome-accent:
+    var(
+      --accent,
+      #9079e8
+    );
 
-    position: relative;
-    width: 100%;
-    min-height: 235px;
-    overflow: hidden;
+  --welcome-accent-bright:
+    var(
+      --accent-dark,
+      #6651bd
+    );
 
-    padding: 30px 34px;
+  --welcome-glow:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-purple,
+        #a995f4
+      )
+      32%,
+      transparent
+    );
 
-    border: 1px solid var(--welcome-border);
-    border-radius: 28px;
+  --welcome-glow-soft:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      )
+      25%,
+      transparent
+    );
 
-    background:
-        radial-gradient(
-            circle at 10% 15%,
-            var(--welcome-glow-soft) 0%,
-            transparent 38%
-        ),
-        linear-gradient(
-            125deg,
-            var(--welcome-bg-start) 0%,
-            var(--welcome-bg-middle) 48%,
-            var(--welcome-bg-end) 100%
-        );
+  --welcome-border:
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
 
-    box-shadow:
-        0 18px 50px rgba(111, 72, 42, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+
+  width: 100%;
+  min-height: 235px;
+  overflow: hidden;
+
+  padding: 30px 34px;
+
+  color:
+    var(--welcome-text);
+
+  background:
+    var(
+      --card-background,
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.94),
+        rgba(242, 239, 255, 0.9) 32%,
+        rgba(237, 247, 255, 0.9) 64%,
+        rgba(255, 246, 252, 0.92)
+      )
+    );
+
+  border:
+    1px solid
+    var(--welcome-border);
+
+  border-radius:
+    var(
+      --radius-card,
+      20px
+    );
+
+  box-shadow:
+    var(
+      --shadow-card,
+      0 2px 4px
+        rgba(81, 65, 133, 0.05),
+      0 12px 30px
+        rgba(91, 73, 157, 0.13)
+    );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  transition:
+    var(
+      --transition-widget,
+      transform 160ms ease,
+      box-shadow 160ms ease,
+      border-color 160ms ease
+    );
 }
 
+.welcome-widget:hover {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  box-shadow:
+    var(
+      --shadow-card-hover,
+      0 4px 8px
+        rgba(81, 65, 133, 0.07),
+      0 18px 38px
+        rgba(91, 73, 157, 0.18)
+    );
+}
+
+/* ==================================================
+   TIME-OF-DAY ACCENTS
+   ================================================== */
+
+/*
+ * These states keep a slight personality shift,
+ * but every color still comes from the shared
+ * system theme.
+ */
+
 .welcome-widget[data-period="morning"] {
-    --welcome-bg-start: #fff9ed;
-    --welcome-bg-middle: #f9e9d2;
-    --welcome-bg-end: #f4d9bc;
-    --welcome-text: ...;
---welcome-muted: ...;
+  --welcome-accent:
+    var(
+      --pastel-pink,
+      #efa6dc
+    );
 
-    --welcome-text: #4b3323;
-    --welcome-muted: rgba(75, 51, 35, 0.68);
+  --welcome-accent-bright:
+    var(
+      --accent-dark,
+      #6651bd
+    );
 
-    --welcome-accent: #c87831;
-    --welcome-accent-bright: #98531f;
+  --welcome-glow:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-pink,
+        #efa6dc
+      )
+      30%,
+      transparent
+    );
 
-    --welcome-glow: rgba(255, 174, 73, 0.4);
-    --welcome-glow-soft: rgba(255, 219, 157, 0.34);
-    --welcome-border: rgba(208, 137, 72, 0.34);
+  --welcome-glow-soft:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-blue,
+        #8fcff4
+      )
+      24%,
+      transparent
+    );
 }
 
 .welcome-widget[data-period="afternoon"] {
-    --welcome-bg-start: #fff9ef;
-    --welcome-bg-middle: #f8ebd8;
-    --welcome-bg-end: #f1ddc3;
-        --welcome-text: ...;
---welcome-muted: ...;
+  --welcome-accent:
+    var(
+      --pastel-blue,
+      #8fcff4
+    );
 
-    --welcome-text: #493426;
-    --welcome-muted: rgba(73, 52, 38, 0.67);
+  --welcome-accent-bright:
+    var(
+      --accent-dark,
+      #6651bd
+    );
 
-    --welcome-accent: #b96c2e;
-    --welcome-accent-bright: #8b4d22;
+  --welcome-glow:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-blue,
+        #8fcff4
+      )
+      29%,
+      transparent
+    );
 
-    --welcome-glow: rgba(255, 185, 91, 0.34);
-    --welcome-glow-soft: rgba(255, 222, 170, 0.3);
-    --welcome-border: rgba(190, 122, 63, 0.3);
+  --welcome-glow-soft:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-mint,
+        #a7eee0
+      )
+      24%,
+      transparent
+    );
 }
 
 .welcome-widget[data-period="evening"] {
-    --welcome-bg-start: #fff5ec;
-    --welcome-bg-middle: #f7e3d7;
-    --welcome-bg-end: #efcfbf;
-    --welcome-text: ...;
---welcome-muted: ...;
+  --welcome-accent:
+    var(
+      --pastel-lilac,
+      #c5a9ef
+    );
 
-    --welcome-text: #513129;
-    --welcome-muted: rgba(81, 49, 41, 0.66);
+  --welcome-accent-bright:
+    var(
+      --accent-dark,
+      #6651bd
+    );
 
-    --welcome-accent: #b75f43;
-    --welcome-accent-bright: #8f432f;
+  --welcome-glow:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-lilac,
+        #c5a9ef
+      )
+      31%,
+      transparent
+    );
 
-    --welcome-glow: rgba(240, 132, 88, 0.31);
-    --welcome-glow-soft: rgba(255, 186, 148, 0.3);
-    --welcome-border: rgba(188, 103, 73, 0.3);
+  --welcome-glow-soft:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-pink,
+        #efa6dc
+      )
+      22%,
+      transparent
+    );
 }
 
 .welcome-widget[data-period="night"] {
-    --welcome-bg-start: #fffaf3;
-    --welcome-bg-middle: #f1e8df;
-    --welcome-bg-end: #e8ddd4;
-    --welcome-text: ...;
---welcome-muted: ...;
+  --welcome-accent:
+    var(
+      --pastel-purple,
+      #a995f4
+    );
 
-    --welcome-text: #443630;
-    --welcome-muted: rgba(68, 54, 48, 0.65);
+  --welcome-accent-bright:
+    var(
+      --accent-dark,
+      #6651bd
+    );
 
-    --welcome-accent: #9d7055;
-    --welcome-accent-bright: #76503d;
+  --welcome-glow:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-purple,
+        #a995f4
+      )
+      28%,
+      transparent
+    );
 
-    --welcome-glow: rgba(210, 164, 126, 0.22);
-    --welcome-glow-soft: rgba(235, 211, 190, 0.35);
-    --welcome-border: rgba(155, 113, 87, 0.26);
+  --welcome-glow-soft:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-blue,
+        #8fcff4
+      )
+      20%,
+      transparent
+    );
+}
+
+/* ==================================================
+   PASTEL GLOW LAYERS
+   ================================================== */
+
+.welcome-widget::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        14%,
+        transparent
+      ),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 18%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-blue,
+          #8fcff4
+        )
+        12%,
+        transparent
+      ),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 74% 78%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-pink,
+          #efa6dc
+        )
+        11%,
+        transparent
+      ),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 18% 88%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-cyan,
+          #8ce5e3
+        )
+        11%,
+        transparent
+      ),
+      transparent 34%
+    );
+}
+
+.welcome-widget > * {
+  position: relative;
+  z-index: 1;
 }
 
 .welcome-glow {
-    position: absolute;
-    pointer-events: none;
-    border-radius: 999px;
-    filter: blur(10px);
+  position: absolute;
+
+  pointer-events: none;
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
+
+  filter:
+    blur(14px);
+
+  opacity:
+    0.85;
 }
 
 .welcome-glow-one {
-    top: -100px;
-    left: -80px;
+  top: -100px;
+  left: -80px;
 
-    width: 330px;
-    height: 330px;
+  width: 330px;
+  height: 330px;
 
-    background:
-        radial-gradient(
-            circle,
-            var(--welcome-glow) 0%,
-            transparent 68%
-        );
+  background:
+    radial-gradient(
+      circle,
+      var(--welcome-glow) 0%,
+      transparent 68%
+    );
 }
 
 .welcome-glow-two {
-    right: 8%;
-    bottom: -190px;
+  right: 8%;
+  bottom: -190px;
 
-    width: 380px;
-    height: 380px;
+  width: 380px;
+  height: 380px;
 
-    background:
-        radial-gradient(
-            circle,
-            var(--welcome-glow-soft) 0%,
-            transparent 70%
-        );
+  background:
+    radial-gradient(
+      circle,
+      var(--welcome-glow-soft) 0%,
+      transparent 70%
+    );
 }
 
+/* ==================================================
+   MAIN CONTENT
+   ================================================== */
+
 .welcome-content {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: 34px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 34px;
 
-    width: 100%;
+  width: 100%;
 }
 
 .welcome-main {
-    display: flex;
-    align-items: center;
-    gap: 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 
-    min-width: 0;
-    flex: 1;
+  min-width: 0;
+
+  flex: 1;
 }
+
+/* ==================================================
+   TIME ICON
+   ================================================== */
 
 .time-icon {
-    display: grid;
-    place-items: center;
+  display: grid;
 
-    width: 88px;
-    height: 88px;
-    flex: 0 0 88px;
+  width: 88px;
+  height: 88px;
 
-    border: 1px solid rgba(255, 255, 255, 0.11);
-    border-radius: 26px;
+  flex: 0 0 88px;
 
-background:
-    linear-gradient(
+  place-items: center;
+
+  color:
+    var(--welcome-accent-bright);
+
+  background:
+    var(
+      --panel-background,
+      linear-gradient(
         145deg,
-        rgba(255, 255, 255, 0.75),
-        rgba(255, 247, 235, 0.45)
+        rgba(255, 255, 255, 0.66),
+        rgba(246, 240, 255, 0.46)
+      )
     );
 
-box-shadow:
-    0 12px 28px rgba(135, 93, 55, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
 
-    font-size: 42px;
-    line-height: 1;
+  border-radius:
+    calc(
+      var(
+        --radius-card,
+        20px
+      ) + 6px
+    );
 
-    text-shadow:
-        0 0 24px var(--welcome-glow);
+  box-shadow:
+    var(
+      --shadow-panel,
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.76),
+      0 8px 20px
+        rgba(106, 85, 173, 0.08)
+    );
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  font-size: 42px;
+  line-height: 1;
+
+  text-shadow:
+    0 0 24px
+    var(--welcome-glow);
 }
 
+/* ==================================================
+   WELCOME COPY
+   ================================================== */
+
 .welcome-copy {
-    min-width: 0;
+  min-width: 0;
 }
 
 .welcome-label {
-    margin: 0 0 6px;
+  margin: 0 0 6px;
 
-    color: var(--welcome-accent);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+  color:
+    var(--welcome-accent-bright);
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .welcome-copy h1 {
-    margin: 0;
+  margin: 0;
 
-color: var(--welcome-text);
-    font-size: clamp(28px, 4vw, 45px);
-    font-weight: 750;
-    letter-spacing: -0.045em;
-    line-height: 1.08;
+  color:
+    var(--welcome-text);
+
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      "Times New Roman",
+      serif
+    );
+
+  font-size:
+    clamp(
+      28px,
+      4vw,
+      45px
+    );
+
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
 }
 
+/* ==================================================
+   WEATHER
+   ================================================== */
+
 .weather {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 
-    min-height: 34px;
-    margin-top: 18px;
+  min-height: 34px;
+  margin-top: 18px;
 
-  color: var(--welcome-muted);
+  color:
+    var(--welcome-muted);
 }
 
 .weather-icon {
-    font-size: 24px;
-    line-height: 1;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .weather-temperature {
-    color: var(--welcome-accent-bright);
-    font-size: 24px;
-    font-weight: 750;
-    letter-spacing: -0.03em;
+  color:
+    var(--welcome-accent-bright);
+
+  font-size: 24px;
+  font-weight: 750;
+  letter-spacing: -0.03em;
 }
 
 .weather-divider {
-    width: 1px;
-    height: 20px;
+  width: 1px;
+  height: 20px;
 
-    margin: 0 3px;
+  margin: 0 3px;
 
-    background: rgba(255, 255, 255, 0.19);
+  background:
+    var(
+      --border-strong,
+      rgba(104, 83, 171, 0.23)
+    );
 }
 
 .weather-condition {
-    font-size: 15px;
-    font-weight: 500;
+  font-size: 15px;
+  font-weight: 500;
 }
 
+/* ==================================================
+   CALENDAR PANEL
+   ================================================== */
+
 .calendar-block {
-    position: relative;
+  position: relative;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    width: 154px;
-    min-width: 154px;
-    min-height: 174px;
-    padding: 16px 18px;
+  width: 154px;
+  min-width: 154px;
+  min-height: 174px;
 
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 22px;
+  padding: 16px 18px;
 
-border: 1px solid rgba(180, 138, 97, 0.25);
+  color:
+    var(--welcome-text);
 
-background:
-    linear-gradient(
-        155deg,
-        rgba(255, 255, 255, 0.78),
-        rgba(255, 247, 236, 0.52)
+  background:
+    var(
+      --panel-background,
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.66),
+        rgba(246, 240, 255, 0.46)
+      )
     );
 
-box-shadow:
-    0 16px 34px rgba(135, 93, 55, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
 
-    text-align: center;
+  border-radius:
+    calc(
+      var(
+        --radius-panel,
+        14px
+      ) + 8px
+    );
+
+  box-shadow:
+    var(
+      --shadow-panel,
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.76),
+      0 8px 20px
+        rgba(106, 85, 173, 0.08)
+    );
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  text-align: center;
+}
+
+.calendar-block::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  border-radius: inherit;
+
+  background:
+    radial-gradient(
+      circle at 18% 12%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        12%,
+        transparent
+      ),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 82% 84%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-cyan,
+          #8ce5e3
+        )
+        10%,
+        transparent
+      ),
+      transparent 44%
+    );
+}
+
+.calendar-block > * {
+  position: relative;
+  z-index: 1;
 }
 
 .calendar-month {
-    color: var(--welcome-accent);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.19em;
+  color:
+    var(--welcome-accent-bright);
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.19em;
 }
 
 .calendar-day {
-    margin-top: 2px;
+  margin-top: 2px;
 
-color: var(--welcome-text);
-    font-size: 55px;
-    font-weight: 750;
-    letter-spacing: -0.06em;
-    line-height: 1;
+  color:
+    var(--welcome-text);
+
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      "Times New Roman",
+      serif
+    );
+
+  font-size: 55px;
+  font-weight: 750;
+  letter-spacing: -0.06em;
+  line-height: 1;
 }
 
 .calendar-weekday {
-    margin-top: 5px;
+  margin-top: 5px;
 
-color: var(--welcome-muted);
-    font-size: 12px;
-    font-weight: 600;
+  color:
+    var(--welcome-muted);
+
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .calendar-line {
-    width: 100%;
-    height: 1px;
-    margin: 13px 0 11px;
+  width: 100%;
+  height: 1px;
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.22),
-            transparent
-        );
+  margin: 13px 0 11px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(
+        --border-strong,
+        rgba(104, 83, 171, 0.23)
+      ),
+      transparent
+    );
 }
 
 .calendar-time {
-    color: var(--welcome-accent-bright);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.015em;
+  color:
+    var(--welcome-accent-bright);
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.015em;
 }
 
+/* ==================================================
+   STATUS
+   ================================================== */
+
 .weather-status {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    min-height: 14px;
-    margin: 14px 0 0;
+  min-height: 14px;
+  margin: 14px 0 0;
 
-color: rgba(73,51,38,.5);
-    font-size: 11px;
-    text-align: right;
+  color:
+    var(
+      --text-soft,
+      #aaa3c2
+    );
+
+  font-size: 11px;
+  text-align: right;
 }
 
 .weather-status:empty {
-    display: none;
+  display: none;
 }
 
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
 @media (max-width: 700px) {
-    .welcome-widget {
-        min-height: 0;
-        padding: 24px;
+  .welcome-widget {
+    min-height: 0;
 
-        border-radius: 24px;
-    }
+    padding: 24px;
 
-    .welcome-content {
-        align-items: center;
-        gap: 22px;
-    }
+    border-radius:
+      calc(
+        var(
+          --radius-card,
+          20px
+        ) + 4px
+      );
+  }
 
-    .welcome-main {
-        gap: 16px;
-    }
+  .welcome-content {
+    align-items: center;
+    gap: 22px;
+  }
 
-    .time-icon {
-        width: 68px;
-        height: 68px;
-        flex-basis: 68px;
+  .welcome-main {
+    gap: 16px;
+  }
 
-        border-radius: 21px;
+  .time-icon {
+    width: 68px;
+    height: 68px;
 
-        font-size: 32px;
-    }
+    flex-basis: 68px;
 
-    .welcome-copy h1 {
-        font-size: clamp(25px, 7vw, 34px);
-    }
+    border-radius:
+      calc(
+        var(
+          --radius-panel,
+          14px
+        ) + 7px
+      );
 
-    .calendar-block {
-        width: 126px;
-        min-width: 126px;
-        min-height: 154px;
-    }
+    font-size: 32px;
+  }
 
-    .calendar-day {
-        font-size: 46px;
-    }
+  .welcome-copy h1 {
+    font-size:
+      clamp(
+        25px,
+        7vw,
+        34px
+      );
+  }
+
+  .calendar-block {
+    width: 126px;
+    min-width: 126px;
+    min-height: 154px;
+  }
+
+  .calendar-day {
+    font-size: 46px;
+  }
 }
 
 @media (max-width: 520px) {
-    .welcome-widget {
-        padding: 22px 20px;
-    }
+  .welcome-widget {
+    padding: 22px 20px;
+  }
 
-    .welcome-content {
-        display: grid;
-        grid-template-columns: 1fr 104px;
-        gap: 18px;
-    }
+  .welcome-content {
+    display: grid;
+    grid-template-columns:
+      1fr
+      104px;
 
-    .welcome-main {
-        display: block;
-    }
+    gap: 18px;
+  }
 
-    .time-icon {
-        width: 58px;
-        height: 58px;
-        margin-bottom: 16px;
+  .welcome-main {
+    display: block;
+  }
 
-        border-radius: 18px;
+  .time-icon {
+    width: 58px;
+    height: 58px;
 
-        font-size: 29px;
-    }
+    margin-bottom: 16px;
 
-    .welcome-label {
-        font-size: 10px;
-    }
+    border-radius:
+      calc(
+        var(
+          --radius-panel,
+          14px
+        ) + 4px
+      );
 
-    .welcome-copy h1 {
-        font-size: 27px;
-        line-height: 1.12;
-    }
+    font-size: 29px;
+  }
 
-    .weather {
-        align-items: flex-start;
-        gap: 7px;
+  .welcome-label {
+    font-size: 10px;
+  }
 
-        margin-top: 14px;
-    }
+  .welcome-copy h1 {
+    font-size: 27px;
+    line-height: 1.12;
+  }
 
-    .weather-temperature {
-        font-size: 21px;
-    }
+  .weather {
+    align-items: flex-start;
+    gap: 7px;
 
-    .weather-condition {
-        width: 100%;
-        padding-left: 31px;
+    margin-top: 14px;
+  }
 
-        font-size: 13px;
-    }
+  .weather-temperature {
+    font-size: 21px;
+  }
 
-    .weather-divider {
-        display: none;
-    }
+  .weather-condition {
+    width: 100%;
 
-    .calendar-block {
-        width: 104px;
-        min-width: 104px;
-        min-height: 150px;
-        padding: 14px 10px;
+    padding-left: 31px;
 
-        border-radius: 20px;
-    }
+    font-size: 13px;
+  }
 
-    .calendar-day {
-        font-size: 43px;
-    }
+  .weather-divider {
+    display: none;
+  }
 
-    .calendar-weekday {
-        max-width: 86px;
-        overflow: hidden;
+  .calendar-block {
+    width: 104px;
+    min-width: 104px;
+    min-height: 150px;
 
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    padding: 14px 10px;
 
-    .weather-status {
-        text-align: left;
-    }
+    border-radius:
+      calc(
+        var(
+          --radius-panel,
+          14px
+        ) + 6px
+      );
+  }
+
+  .calendar-day {
+    font-size: 43px;
+  }
+
+  .calendar-weekday {
+    max-width: 86px;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .weather-status {
+    text-align: left;
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .time-icon {
-        animation: welcome-breathe 5s ease-in-out infinite;
+/* ==================================================
+   MOTION
+   ================================================== */
+
+@media (
+  prefers-reduced-motion:
+  no-preference
+) {
+  .time-icon {
+    animation:
+      welcome-breathe
+      5s
+      ease-in-out
+      infinite;
+  }
+
+  @keyframes welcome-breathe {
+    0%,
+    100% {
+      transform:
+        translateY(0);
     }
 
-    @keyframes welcome-breathe {
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-3px);
-        }
+    50% {
+      transform:
+        translateY(-3px);
     }
+  }
+}
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .welcome-widget,
+  .time-icon {
+    animation: none;
+    transition: none;
+  }
 }
