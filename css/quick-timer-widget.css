@@ -1,68 +1,1035 @@
-* { box-sizing: border-box; }
-html, body { width: 100%; min-height: 100%; margin: 0; }
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  color: var(--text-primary, #40342e);
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
   background: transparent;
-  font-family: var(--font-body, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+
+  font-family: var(
+    --font-body,
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif
+  );
 }
-button, input { font: inherit; }
-button { -webkit-tap-highlight-color: transparent; }
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
 .sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+
+  white-space: nowrap;
+
+  border: 0;
 }
-.timer-widget { width: 100%; padding: 6px; }
+
+/* ==================================================
+   OUTER SHELL
+   ================================================== */
+
+.timer-widget {
+  width: 100%;
+  padding: 6px;
+}
+
+/* ==================================================
+   TIMER CARD
+   ================================================== */
+
 .timer-card {
-  --timer-accent: #b76e55;
-  --timer-accent-dark: #94513e;
-  --timer-accent-soft: #efd8cd;
+  --timer-accent:
+    var(
+      --accent,
+      #9079e8
+    );
+
+  --timer-accent-dark:
+    var(
+      --accent-dark,
+      #6651bd
+    );
+
+  --timer-accent-soft:
+    var(
+      --accent-soft,
+      rgba(218, 209, 255, 0.78)
+    );
+
   position: relative;
-  width: 100%; min-width: 0; padding: 15px 16px 14px; overflow: hidden;
-  background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(255,248,243,.97));
-  border: 1px solid var(--border-default, rgba(91,65,49,.12));
-  border-radius: var(--radius-card, 18px);
-  box-shadow: var(--shadow-card, 0 1px 2px rgba(77,52,38,.05), 0 8px 22px rgba(77,52,38,.08));
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 15px 16px 14px;
+
+  overflow: hidden;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  background:
+    var(
+      --card-background,
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.94),
+        rgba(242, 239, 255, 0.9) 32%,
+        rgba(237, 247, 255, 0.9) 64%,
+        rgba(255, 246, 252, 0.92)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius:
+    var(
+      --radius-card,
+      20px
+    );
+
+  box-shadow:
+    var(
+      --shadow-card,
+      0 2px 4px
+        rgba(81, 65, 133, 0.05),
+      0 12px 30px
+        rgba(91, 73, 157, 0.13)
+    );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  transition:
+    var(
+      --transition-widget,
+      transform 160ms ease,
+      box-shadow 160ms ease,
+      border-color 160ms ease
+    );
 }
+
 .timer-card::before {
-  position: absolute; inset: 0; content: ""; pointer-events: none; opacity: .45;
-  background: radial-gradient(circle at 96% 0%, var(--timer-accent-soft), transparent 38%);
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 15%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        14%,
+        transparent
+      ),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 92% 8%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-blue,
+          #8fcff4
+        )
+        13%,
+        transparent
+      ),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 82% 90%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-pink,
+          #efa6dc
+        )
+        11%,
+        transparent
+      ),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 15% 92%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-cyan,
+          #8ce5e3
+        )
+        10%,
+        transparent
+      ),
+      transparent 34%
+    );
 }
-.timer-card > * { position: relative; z-index: 1; }
-.timer-card:hover { transform: translateY(-1px); }
-.timer-card.is-running { --timer-accent: #84966e; --timer-accent-dark: #667653; --timer-accent-soft: #dfe8d7; }
-.timer-card.is-paused { --timer-accent: #a8875f; --timer-accent-dark: #806548; --timer-accent-soft: #eadfce; }
-.timer-card.is-finished { animation: timer-finished-pulse 900ms ease-in-out infinite alternate; }
+
+.timer-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.timer-card:hover {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  box-shadow:
+    var(
+      --shadow-card-hover,
+      0 4px 8px
+        rgba(81, 65, 133, 0.07),
+      0 18px 38px
+        rgba(91, 73, 157, 0.18)
+    );
+}
+
+/* ==================================================
+   TIMER STATES
+   ================================================== */
+
+.timer-card.is-running {
+  --timer-accent:
+    var(
+      --color-success,
+      #65baa9
+    );
+
+  --timer-accent-dark:
+    color-mix(
+      in srgb,
+      var(
+        --color-success,
+        #65baa9
+      )
+      74%,
+      #453d68
+    );
+
+  --timer-accent-soft:
+    color-mix(
+      in srgb,
+      var(
+        --color-success,
+        #65baa9
+      )
+      22%,
+      transparent
+    );
+}
+
+.timer-card.is-paused {
+  --timer-accent:
+    var(
+      --pastel-pink,
+      #efa6dc
+    );
+
+  --timer-accent-dark:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-pink,
+        #efa6dc
+      )
+      68%,
+      #453d68
+    );
+
+  --timer-accent-soft:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-pink,
+        #efa6dc
+      )
+      24%,
+      transparent
+    );
+}
+
+.timer-card.is-finished {
+  --timer-accent:
+    var(
+      --pastel-cyan,
+      #8ce5e3
+    );
+
+  --timer-accent-dark:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      )
+      70%,
+      #453d68
+    );
+
+  --timer-accent-soft:
+    color-mix(
+      in srgb,
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      )
+      24%,
+      transparent
+    );
+
+  animation:
+    timer-finished-pulse
+    900ms
+    ease-in-out
+    infinite
+    alternate;
+}
+
 @keyframes timer-finished-pulse {
-  from { box-shadow: 0 1px 2px rgba(77,52,38,.05), 0 8px 22px rgba(77,52,38,.08); }
-  to { box-shadow: 0 2px 6px rgba(77,52,38,.08), 0 12px 28px color-mix(in srgb, var(--timer-accent) 22%, transparent); }
+  from {
+    box-shadow:
+      var(
+        --shadow-card,
+        0 2px 4px
+          rgba(81, 65, 133, 0.05),
+        0 12px 30px
+          rgba(91, 73, 157, 0.13)
+      );
+  }
+
+  to {
+    box-shadow:
+      0 3px 8px
+        rgba(91, 73, 157, 0.08),
+      0 16px 34px
+        color-mix(
+          in srgb,
+          var(--timer-accent)
+          24%,
+          transparent
+        ),
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.82);
+  }
 }
-.timer-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 11px; }
-.timer-eyebrow { margin: 0 0 2px; color: var(--text-secondary,#806f65); font-size: .59rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
-.timer-header h1 { margin: 0; color: var(--text-primary,#40342e); font-family: var(--font-heading, Georgia, "Times New Roman", serif); font-size: 1.17rem; line-height: 1.05; }
-.timer-header-icon { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; background: var(--timer-accent-soft); border: 1px solid color-mix(in srgb, var(--timer-accent) 20%, transparent); border-radius: 11px; font-size: .95rem; }
-.timer-name { width: 100%; height: 38px; padding: 8px 11px; color: var(--text-primary,#40342e); background: rgba(255,255,255,.62); border: 1px solid var(--border-default,rgba(91,65,49,.12)); border-radius: 11px; outline: none; font-size: .72rem; font-weight: 650; }
-.timer-name:focus { border-color: color-mix(in srgb, var(--timer-accent) 42%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--timer-accent) 14%, transparent); }
-.timer-row { display: grid; grid-template-columns: 42px minmax(0,1fr) 42px; align-items: center; gap: 9px; margin-top: 11px; }
-.time-adjust-button { display: grid; width: 42px; height: 42px; padding: 0; place-items: center; color: var(--timer-accent-dark); cursor: pointer; background: var(--timer-accent-soft); border: 1px solid color-mix(in srgb, var(--timer-accent) 24%, transparent); border-radius: 12px; font-size: 1.22rem; font-weight: 700; }
-.time-adjust-button:hover:not(:disabled) { transform: translateY(-1px); }
-.timer-display { min-width: 0; text-align: center; }
-.timer-display span { display: block; color: var(--text-primary,#40342e); font-family: var(--font-heading, Georgia, "Times New Roman", serif); font-size: clamp(1.85rem,8vw,2.65rem); font-variant-numeric: tabular-nums; font-weight: 700; letter-spacing: -.045em; line-height: .95; }
-.timer-display small { display: block; margin-top: 5px; color: var(--text-secondary,#806f65); font-size: .57rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
-.timer-controls { display: grid; grid-template-columns: 1.3fr .8fr; gap: 8px; margin-top: 11px; }
-.primary-control, .secondary-control { min-height: 38px; padding: 9px 11px; cursor: pointer; border-radius: 11px; font-size: .69rem; font-weight: 850; }
-.primary-control { display: flex; align-items: center; justify-content: center; gap: 6px; color: #fffaf7; background: var(--timer-accent); border: 1px solid var(--timer-accent); }
-.primary-control:hover { transform: translateY(-1px); background: var(--timer-accent-dark); border-color: var(--timer-accent-dark); }
-.secondary-control { color: var(--text-primary,#40342e); background: rgba(255,255,255,.58); border: 1px solid var(--border-default,rgba(91,65,49,.13)); }
-.secondary-control:hover:not(:disabled) { transform: translateY(-1px); }
-button:disabled { cursor: not-allowed; opacity: .42; transform: none !important; }
-.timer-message { margin: 9px 0 0; color: var(--text-secondary,#806f65); text-align: center; font-size: .59rem; font-weight: 650; }
-button:focus-visible { outline: 3px solid color-mix(in srgb, var(--timer-accent) 26%, transparent); outline-offset: 2px; }
+
+/* ==================================================
+   HEADER
+   ================================================== */
+
+.timer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-bottom: 11px;
+}
+
+.timer-eyebrow {
+  margin: 0 0 2px;
+
+  color:
+    var(
+      --text-secondary,
+      #746d91
+    );
+
+  font-size: 0.59rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.timer-header h1 {
+  margin: 0;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
+
+  font-size: 1.17rem;
+  line-height: 1.05;
+}
+
+/* ==================================================
+   HEADER ICON
+   ================================================== */
+
+.timer-header-icon {
+  display: grid;
+
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  place-items: center;
+
+  color:
+    var(--timer-accent-dark);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82),
+      var(--timer-accent-soft)
+    );
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--timer-accent)
+      20%,
+      transparent
+    );
+
+  border-radius:
+    var(
+      --radius-icon,
+      12px
+    );
+
+  box-shadow:
+    var(
+      --shadow-panel,
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.76),
+      0 8px 20px
+        rgba(106, 85, 173, 0.08)
+    );
+
+  font-size: 0.95rem;
+}
+
+/* ==================================================
+   TIMER NAME INPUT
+   ================================================== */
+
+.timer-name {
+  width: 100%;
+  height: 38px;
+
+  padding: 8px 11px;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  background:
+    var(
+      --panel-background-soft,
+      rgba(255, 255, 255, 0.52)
+    );
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius:
+    var(
+      --radius-small,
+      10px
+    );
+
+  outline: none;
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.72);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+  font-size: 0.72rem;
+  font-weight: 650;
+
+  transition:
+    border-color
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    box-shadow
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    background
+      var(
+        --transition-fast,
+        150ms ease
+      );
+}
+
+.timer-name::placeholder {
+  color:
+    var(
+      --text-soft,
+      #aaa3c2
+    );
+}
+
+.timer-name:hover {
+  border-color:
+    var(
+      --border-strong,
+      rgba(104, 83, 171, 0.23)
+    );
+}
+
+.timer-name:focus {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--timer-accent)
+      48%,
+      transparent
+    );
+
+  box-shadow:
+    0 0 0 3px
+      color-mix(
+        in srgb,
+        var(--timer-accent)
+        15%,
+        transparent
+      ),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8);
+
+  background:
+    rgba(255, 255, 255, 0.66);
+}
+
+/* ==================================================
+   TIMER ROW
+   ================================================== */
+
+.timer-row {
+  display: grid;
+
+  grid-template-columns:
+    42px
+    minmax(0, 1fr)
+    42px;
+
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 11px;
+}
+
+/* ==================================================
+   ADJUSTMENT BUTTONS
+   ================================================== */
+
+.time-adjust-button {
+  display: grid;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  place-items: center;
+
+  color:
+    var(--timer-accent-dark);
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.72),
+      var(--timer-accent-soft)
+    );
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--timer-accent)
+      23%,
+      transparent
+    );
+
+  border-radius:
+    var(
+      --radius-small,
+      10px
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.78),
+    0 6px 14px
+      rgba(100, 79, 170, 0.08);
+
+  font-size: 1.22rem;
+  font-weight: 700;
+
+  transition:
+    transform
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    box-shadow
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    border-color
+      var(
+        --transition-fast,
+        150ms ease
+      );
+}
+
+.time-adjust-button:hover:not(:disabled) {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--timer-accent)
+      40%,
+      transparent
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 9px 18px
+      color-mix(
+        in srgb,
+        var(--timer-accent)
+        15%,
+        transparent
+      );
+}
+
+.time-adjust-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.98);
+}
+
+/* ==================================================
+   TIME DISPLAY
+   ================================================== */
+
+.timer-display {
+  min-width: 0;
+  text-align: center;
+}
+
+.timer-display span {
+  display: block;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
+
+  font-size:
+    clamp(
+      1.85rem,
+      8vw,
+      2.65rem
+    );
+
+  font-variant-numeric:
+    tabular-nums;
+
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+
+  text-shadow:
+    0 1px 0
+      rgba(255, 255, 255, 0.7);
+}
+
+.timer-display small {
+  display: block;
+
+  margin-top: 5px;
+
+  color:
+    var(
+      --text-secondary,
+      #746d91
+    );
+
+  font-size: 0.57rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* ==================================================
+   MAIN CONTROLS
+   ================================================== */
+
+.timer-controls {
+  display: grid;
+
+  grid-template-columns:
+    1.3fr
+    0.8fr;
+
+  gap: 8px;
+
+  margin-top: 11px;
+}
+
+.primary-control,
+.secondary-control {
+  min-height: 38px;
+
+  padding: 9px 11px;
+
+  cursor: pointer;
+
+  border-radius:
+    var(
+      --radius-small,
+      10px
+    );
+
+  font-size: 0.69rem;
+  font-weight: 850;
+
+  transition:
+    transform
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    box-shadow
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    border-color
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    background
+      var(
+        --transition-fast,
+        150ms ease
+      );
+}
+
+.primary-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  color:
+    var(
+      --text-on-accent,
+      #ffffff
+    );
+
+  background:
+    linear-gradient(
+      120deg,
+      var(
+        --accent,
+        #9079e8
+      )
+      0%,
+      var(
+        --pastel-lilac,
+        #c5a9ef
+      )
+      34%,
+      var(
+        --pastel-pink,
+        #efa6dc
+      )
+      66%,
+      var(
+        --pastel-blue,
+        #8fcff4
+      )
+      100%
+    );
+
+  background-size:
+    180% 180%;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+
+  box-shadow:
+    0 7px 18px
+      rgba(112, 88, 192, 0.22),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.35);
+}
+
+.primary-control:hover:not(:disabled) {
+  transform:
+    translateY(-1px);
+
+  background-position:
+    100% 50%;
+
+  box-shadow:
+    0 10px 22px
+      rgba(112, 88, 192, 0.28),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.38);
+}
+
+.primary-control:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.99);
+}
+
+.secondary-control {
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  background:
+    var(
+      --panel-background-soft,
+      rgba(255, 255, 255, 0.52)
+    );
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.75);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+}
+
+.secondary-control:hover:not(:disabled) {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  background:
+    var(
+      --panel-background,
+      rgba(255, 255, 255, 0.66)
+    );
+
+  box-shadow:
+    0 7px 15px
+      rgba(100, 79, 170, 0.09),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8);
+}
+
+.secondary-control:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.99);
+}
+
+/* ==================================================
+   DISABLED AND MESSAGE STATES
+   ================================================== */
+
+button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.42;
+
+  transform:
+    none !important;
+}
+
+.timer-message {
+  min-height: 12px;
+
+  margin: 9px 0 0;
+
+  color:
+    var(
+      --text-secondary,
+      #746d91
+    );
+
+  text-align: center;
+
+  font-size: 0.59rem;
+  font-weight: 650;
+}
+
+/* ==================================================
+   FOCUS STATES
+   ================================================== */
+
+button:focus-visible {
+  outline:
+    3px solid
+    color-mix(
+      in srgb,
+      var(--timer-accent)
+      27%,
+      transparent
+    );
+
+  outline-offset: 2px;
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
 @media (max-width: 310px) {
-  .timer-card { padding: 13px; }
-  .timer-row { grid-template-columns: 38px minmax(0,1fr) 38px; gap: 6px; }
-  .time-adjust-button { width: 38px; height: 38px; }
+  .timer-card {
+    padding: 13px;
+  }
+
+  .timer-row {
+    grid-template-columns:
+      38px
+      minmax(0, 1fr)
+      38px;
+
+    gap: 6px;
+  }
+
+  .time-adjust-button {
+    width: 38px;
+    height: 38px;
+  }
 }
-@media (prefers-reduced-motion: reduce) {
-  .timer-card, .time-adjust-button, .primary-control, .secondary-control { animation: none !important; transition: none !important; }
+
+/* ==================================================
+   REDUCED MOTION
+   ================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .timer-card,
+  .time-adjust-button,
+  .primary-control,
+  .secondary-control {
+    animation:
+      none !important;
+
+    transition:
+      none !important;
+  }
 }
