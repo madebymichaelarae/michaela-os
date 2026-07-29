@@ -10,9 +10,25 @@ body {
 }
 
 body {
-  color: var(--text-primary);
-  background: var(--page-background);
-  font-family: var(--font-body);
+  padding: 0;
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  background: transparent;
+
+  font-family: var(
+    --font-body,
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif
+  );
 }
 
 button,
@@ -22,45 +38,191 @@ select {
   font: inherit;
 }
 
+/* ==================================================
+   OUTER SHELL
+   ================================================== */
+
 .health-widget-shell {
   width: 100%;
   max-width: none;
   margin: 0;
+  padding: 6px;
 }
 
+/* ==================================================
+   MAIN CARD
+   ================================================== */
 
 .health-card {
-  background: var(--card-background);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  transition: var(--transition-widget);
+  position: relative;
+
   display: block;
+
   width: 100%;
   min-width: 0;
+
   padding: 18px 20px 20px;
 
+  overflow: hidden;
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  background: var(
+    --card-background,
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.94),
+      rgba(242, 239, 255, 0.9) 32%,
+      rgba(237, 247, 255, 0.9) 64%,
+      rgba(255, 246, 252, 0.92)
+    )
+  );
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius: var(
+    --radius-card,
+    20px
+  );
+
+  box-shadow: var(
+    --shadow-card,
+    0 2px 4px
+      rgba(81, 65, 133, 0.05),
+    0 12px 30px
+      rgba(91, 73, 157, 0.13)
+  );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  transition: var(
+    --transition-widget,
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease
+  );
+}
+
+.health-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        14%,
+        transparent
+      ),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-blue,
+          #8fcff4
+        )
+        12%,
+        transparent
+      ),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 82% 88%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-pink,
+          #efa6dc
+        )
+        11%,
+        transparent
+      ),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 16% 90%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-cyan,
+          #8ce5e3
+        )
+        10%,
+        transparent
+      ),
+      transparent 35%
+    );
+}
+
+.health-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .health-card:hover {
   transform: translateY(-1px);
 
   border-color: var(
-    --theme-border-strong,
-    rgba(91, 65, 49, 0.18)
+    --border-accent,
+    rgba(144, 121, 232, 0.24)
   );
 
-  box-shadow:
-    0 2px 4px rgba(77, 52, 38, 0.06),
-    0 12px 28px rgba(77, 52, 38, 0.1);
+  box-shadow: var(
+    --shadow-card-hover,
+    0 4px 8px
+      rgba(81, 65, 133, 0.07),
+    0 18px 38px
+      rgba(91, 73, 157, 0.18)
+  );
 }
-
-
 
 .health-card:focus-visible {
-  outline: 3px solid rgba(183, 110, 85, 0.24);
+  outline:
+    3px solid
+    color-mix(
+      in srgb,
+      var(
+        --accent,
+        #9079e8
+      )
+      24%,
+      transparent
+    );
+
   outline-offset: 3px;
 }
+
+/* ==================================================
+   HEADER
+   ================================================== */
 
 .health-card__header {
   display: flex;
@@ -79,23 +241,58 @@ select {
 
 .health-card__icon {
   display: grid;
+
   width: 37px;
   height: 37px;
+
   flex: 0 0 auto;
+
   place-items: center;
 
-  color: var(--theme-accent-dark, #92533f);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82),
+      var(
+        --accent-soft,
+        rgba(218, 209, 255, 0.78)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  border-radius: var(
+    --radius-icon,
+    12px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 7px 16px
+      rgba(100, 79, 170, 0.1);
+
   font-size: 17px;
   line-height: 1;
-
-  background: var(--theme-accent-soft, #eed8cc);
-  border-radius: 12px;
 }
 
 .health-card__eyebrow {
   margin: 0 0 2px;
 
-  color: var(--theme-text-secondary, #7c6b61);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.64rem;
   font-weight: 800;
@@ -107,54 +304,139 @@ select {
 .health-card__title {
   margin: 0;
 
-  color: var(--theme-text-primary, #3f332c);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
-  font-family:
+  font-family: var(
+    --font-heading,
     Georgia,
     "Times New Roman",
-    serif;
+    serif
+  );
 
   font-size: 1.35rem;
   font-weight: 700;
   line-height: 1.05;
 }
 
+/* ==================================================
+   HEADER ARROW
+   ================================================== */
+
 .health-card__arrow {
   display: grid;
+
   width: 31px;
   height: 31px;
+
   flex: 0 0 auto;
+
   place-items: center;
 
-  color: var(--theme-accent-dark, #92533f);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.7),
+      var(
+        --accent-soft,
+        rgba(218, 209, 255, 0.78)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: var(
+    --radius-pill,
+    999px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 5px 12px
+      rgba(100, 79, 170, 0.08);
 
   font-size: 1rem;
   font-weight: 800;
-
-  background: rgba(183, 110, 85, 0.09);
-  border: 1px solid rgba(183, 110, 85, 0.1);
-  border-radius: 50%;
 }
+
+/* ==================================================
+   LOADING AND ERROR
+   ================================================== */
 
 .health-card__loading,
 .health-card__error {
   padding: 14px;
 
-  color: var(--theme-text-secondary, #7c6b61);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
+
   text-align: center;
 
   font-size: 0.8rem;
   font-weight: 650;
 
-  background: rgba(255, 255, 255, 0.52);
-  border: 1px solid var(--theme-border, rgba(91, 65, 49, 0.12));
-  border-radius: 13px;
+  background: var(
+    --panel-background,
+    rgba(255, 255, 255, 0.62)
+  );
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius: var(
+    --radius-panel,
+    14px
+  );
+
+  box-shadow: var(
+    --shadow-panel,
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76)
+  );
 }
 
 .health-card__error {
-  color: #9c4d45;
-  background: rgba(184, 91, 79, 0.08);
-  border-color: rgba(184, 91, 79, 0.14);
+  color: var(
+    --color-danger,
+    #d777a9
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 247, 252, 0.82),
+      rgba(248, 229, 241, 0.7)
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(
+        --color-danger,
+        #d777a9
+      )
+      25%,
+      transparent
+    );
 }
 
 .health-card__content[hidden],
@@ -163,23 +445,126 @@ select {
   display: none;
 }
 
+/* ==================================================
+   METRIC GRID
+   ================================================== */
+
 .health-metrics {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
   gap: 16px;
 }
+
+/* ==================================================
+   METRIC PANELS
+   ================================================== */
+
 .metric-panel {
-    display: flex;
+  position: relative;
+
+  display: flex;
+
   min-width: 0;
   min-height: 128px;
+
   padding: 18px 20px;
+
+  overflow: hidden;
+
   flex-direction: column;
   justify-content: space-between;
-  
-  background: var(--panel-background);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-panel);
+
+  background: var(
+    --panel-background,
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.66),
+      rgba(246, 240, 255, 0.46)
+    )
+  );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: var(
+    --radius-panel,
+    14px
+  );
+
+  box-shadow: var(
+    --shadow-panel,
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76),
+    0 8px 20px
+      rgba(106, 85, 173, 0.08)
+  );
+
+  backdrop-filter:
+    blur(11px);
+
+  -webkit-backdrop-filter:
+    blur(11px);
 }
+
+.metric-panel::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  opacity: 0.8;
+
+  background:
+    radial-gradient(
+      circle at 12% 8%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        9%,
+        transparent
+      ),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 88% 92%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-cyan,
+          #8ce5e3
+        )
+        8%,
+        transparent
+      ),
+      transparent 42%
+    );
+}
+
+.metric-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==================================================
+   PANEL HEADINGS
+   ================================================== */
 
 .metric-panel__heading {
   display: flex;
@@ -191,29 +576,72 @@ select {
 
 .metric-panel__icon {
   display: grid;
+
   width: 27px;
   height: 27px;
+
   flex: 0 0 auto;
+
   place-items: center;
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: 9px;
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8);
 
   font-size: 14px;
   line-height: 1;
-
-  border-radius: 9px;
 }
 
 .metric-panel__icon--water {
-  background: var(--theme-water-soft, #dcecf0);
+  color: var(
+    --color-water-dark,
+    #459bbd
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.76),
+      var(
+        --color-water-soft,
+        rgba(204, 242, 252, 0.78)
+      )
+    );
 }
 
 .metric-panel__icon--walking {
-  background: var(--theme-walking-soft, #eee2cf);
+  color: var(
+    --color-walking-dark,
+    #7664bd
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.76),
+      var(
+        --color-walking-soft,
+        rgba(226, 218, 255, 0.78)
+      )
+    );
 }
 
 .metric-panel__label {
   margin: 0;
 
-  color: var(--theme-text-secondary, #7c6b61);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.72rem;
   font-weight: 800;
@@ -222,24 +650,46 @@ select {
   text-transform: uppercase;
 }
 
+/* ==================================================
+   VALUES
+   ================================================== */
+
 .metric-panel__value {
   margin: 0 0 16px;
 
-  color: var(--text-primary, #3f332c);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
-  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-size: clamp(
+    1.65rem,
+    3vw,
+    2.25rem
+  );
+
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
+
+  font-variant-numeric:
+    tabular-nums;
 }
 
 .metric-panel__goal {
-  color: var(--theme-text-secondary, #7c6b61);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0;
 }
+
+/* ==================================================
+   WALKING TOTALS
+   ================================================== */
 
 .walking-values {
   display: flex;
@@ -250,7 +700,9 @@ select {
 
 .week-total {
   display: grid;
+
   flex: 0 0 auto;
+
   gap: 2px;
 
   padding-top: 2px;
@@ -259,24 +711,41 @@ select {
 }
 
 .week-total__value {
-  color: var(--theme-accent-dark, #92533f);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
 
   font-size: 1rem;
   font-weight: 800;
   line-height: 1;
+
+  font-variant-numeric:
+    tabular-nums;
 }
 
 .week-total__label {
-  color: var(--theme-text-secondary, #7c6b61);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.6rem;
   font-weight: 650;
   line-height: 1.15;
 }
 
+/* ==================================================
+   PROGRESS BARS
+   ================================================== */
+
 .progress {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
   align-items: center;
   gap: 9px;
 }
@@ -289,11 +758,26 @@ select {
 
   overflow: hidden;
 
-  background: var(--progress-track, rgba(91, 65, 49, 0.09));
-  border-radius: var(--radius-pill, 999px);
+  background: var(
+    --progress-track,
+    rgba(125, 108, 189, 0.14)
   );
 
-  border-radius: 999px;
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: var(
+    --radius-pill,
+    999px
+  );
+
+  box-shadow:
+    inset 0 1px 2px
+      rgba(92, 73, 151, 0.06);
 }
 
 .progress__fill {
@@ -302,31 +786,92 @@ select {
 
   border-radius: inherit;
 
-  transition: width 500ms ease;
+  transition:
+    width 500ms ease,
+    background 180ms ease;
 }
 
 .progress__fill--water {
-  background: var(--theme-water, #78aab7);
+  background:
+    linear-gradient(
+      90deg,
+      var(
+        --color-water,
+        #75cde8
+      ),
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      )
+    );
+
+  box-shadow:
+    0 0 10px
+      color-mix(
+        in srgb,
+        var(
+          --color-water,
+          #75cde8
+        )
+        28%,
+        transparent
+      );
 }
 
 .progress__fill--walking {
-  background: var(--theme-walking, #b59263);
+  background:
+    linear-gradient(
+      90deg,
+      var(
+        --color-walking,
+        #a995ef
+      ),
+      var(
+        --pastel-pink,
+        #efa6dc
+      )
+    );
+
+  box-shadow:
+    0 0 10px
+      color-mix(
+        in srgb,
+        var(
+          --color-walking,
+          #a995ef
+        )
+        28%,
+        transparent
+      );
 }
 
 .progress__percent {
   min-width: 31px;
 
-  color: var(--theme-text-secondary, #7c6b61);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
+
   text-align: right;
 
   font-size: 0.66rem;
   font-weight: 800;
   line-height: 1;
+
+  font-variant-numeric:
+    tabular-nums;
 }
+
+/* ==================================================
+   SUMMARY STRIP
+   ================================================== */
 
 .progress-summary {
   display: flex;
+
   min-height: 54px;
+
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -334,56 +879,145 @@ select {
   margin-top: 16px;
   padding: 13px 16px;
 
-  color: var(--accent-dark, #92533f);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
 
-  background: var(--accent-faint, rgba(183, 110, 85, 0.08));
-  border: 1px solid var(--accent-border, rgba(183, 110, 85, 0.1));
-  border-radius: var(--radius-panel, 13px);
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        17%,
+        rgba(255, 255, 255, 0.62)
+      ),
+      color-mix(
+        in srgb,
+        var(
+          --pastel-blue,
+          #8fcff4
+        )
+        14%,
+        rgba(255, 255, 255, 0.62)
+      ),
+      color-mix(
+        in srgb,
+        var(
+          --pastel-pink,
+          #efa6dc
+        )
+        14%,
+        rgba(255, 255, 255, 0.62)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  border-radius: var(
+    --radius-panel,
+    14px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 7px 16px
+      rgba(100, 79, 170, 0.08);
 }
 
 .progress-summary__badge {
   display: grid;
+
   width: 25px;
   height: 25px;
+
   flex: 0 0 auto;
+
   place-items: center;
 
-  color: var(--theme-accent-dark, #92533f);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.72),
+      var(
+        --accent-soft,
+        rgba(218, 209, 255, 0.78)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: var(
+    --radius-pill,
+    999px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.78);
 
   font-size: 0.85rem;
   font-weight: 800;
   line-height: 1;
-
-  background: rgba(183, 110, 85, 0.13);
-  border-radius: 50%;
 }
 
 .progress-summary__value {
-  color: var(--theme-accent-dark, #92533f);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
 
   font-size: 1rem;
   font-weight: 800;
   line-height: 1;
+
+  font-variant-numeric:
+    tabular-nums;
 }
 
 .progress-summary__unit {
-  color: var(--theme-text-secondary, #7c6b61);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.7rem;
   font-weight: 700;
   line-height: 1;
 }
 
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
 @media (max-width: 620px) {
-  body {
+  .health-widget-shell {
     padding: 6px;
   }
-
 
   .health-metrics {
     gap: 9px;
   }
-
 
   .walking-values {
     display: block;
@@ -404,19 +1038,15 @@ select {
   }
 }
 
-@media (max-width: 620px) {
-  body {
-    padding: 6px;
-  }
-
-  .health-metrics {
-    gap: 10px;
-  }
-}
-
 @media (max-width: 430px) {
   .health-metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    gap: 8px;
   }
 
   .health-card {
@@ -424,6 +1054,38 @@ select {
   }
 
   .metric-panel {
+    min-height: 116px;
     padding: 11px;
+  }
+
+  .metric-panel__heading {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .metric-panel__label {
+    font-size: 0.63rem;
+  }
+
+  .metric-panel__value {
+    font-size: clamp(
+      1.35rem,
+      7vw,
+      1.9rem
+    );
+  }
+}
+
+/* ==================================================
+   REDUCED MOTION
+   ================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .health-card,
+  .progress__fill {
+    transition: none;
   }
 }
