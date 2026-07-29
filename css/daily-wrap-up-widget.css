@@ -1,6 +1,6 @@
 /* ==================================================
    DAILY WRAP-UP WIDGET
-   Compact layout built on Michaela OS theme variables
+   Shared Michaela OS pastel theme
    ================================================== */
 
 * {
@@ -15,8 +15,12 @@ body {
 }
 
 body {
-  color: var(--text-primary, #40342e);
-  background: var(--page-background, transparent);
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  background: transparent;
 
   font-family: var(
     --font-body,
@@ -37,7 +41,8 @@ textarea {
 }
 
 button,
-textarea {
+textarea,
+input {
   color: inherit;
 }
 
@@ -58,8 +63,11 @@ textarea {
 
   width: calc(100% - 16px);
   min-width: 0;
+
   margin: 8px;
   padding: 18px 20px 20px;
+
+  overflow: hidden;
 
   color: inherit;
 
@@ -67,23 +75,40 @@ textarea {
     --card-background,
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(255, 250, 246, 0.96)
+      rgba(255, 255, 255, 0.94),
+      rgba(242, 239, 255, 0.9) 32%,
+      rgba(237, 247, 255, 0.9) 64%,
+      rgba(255, 246, 252, 0.92)
     )
   );
 
-  border: 1px solid var(
-    --border-default,
-    rgba(91, 65, 49, 0.12)
-  );
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
 
-  border-radius: var(--radius-card, 20px);
+  border-radius: var(
+    --radius-card,
+    20px
+  );
 
   box-shadow: var(
     --shadow-card,
-    0 1px 2px rgba(77, 52, 38, 0.05),
-    0 8px 22px rgba(77, 52, 38, 0.08)
+    0 2px 4px
+      rgba(81, 65, 133, 0.05),
+    0 12px 30px
+      rgba(91, 73, 157, 0.13)
   );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
 
   transition: var(
     --transition-widget,
@@ -93,18 +118,90 @@ textarea {
   );
 }
 
+.wrap-up-widget::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        14%,
+        transparent
+      ),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-blue,
+          #8fcff4
+        )
+        12%,
+        transparent
+      ),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 82% 88%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-pink,
+          #efa6dc
+        )
+        11%,
+        transparent
+      ),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 16% 90%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-cyan,
+          #8ce5e3
+        )
+        10%,
+        transparent
+      ),
+      transparent 35%
+    );
+}
+
+.wrap-up-widget > * {
+  position: relative;
+  z-index: 1;
+}
+
 .wrap-up-widget:hover {
   transform: translateY(-1px);
 
   border-color: var(
-    --border-strong,
-    rgba(91, 65, 49, 0.18)
+    --border-accent,
+    rgba(144, 121, 232, 0.24)
   );
 
   box-shadow: var(
     --shadow-card-hover,
-    0 2px 5px rgba(77, 52, 38, 0.07),
-    0 13px 30px rgba(77, 52, 38, 0.11)
+    0 4px 8px
+      rgba(81, 65, 133, 0.07),
+    0 18px 38px
+      rgba(91, 73, 157, 0.18)
   );
 }
 
@@ -114,7 +211,9 @@ textarea {
 
 .widget-header {
   display: flex;
+
   min-width: 0;
+
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
@@ -130,7 +229,10 @@ textarea {
 .widget-eyebrow {
   margin: 0 0 4px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.64rem;
   font-weight: 800;
@@ -141,7 +243,9 @@ textarea {
 
 .title-row {
   display: flex;
+
   min-width: 0;
+
   align-items: center;
   justify-content: space-between;
   gap: 14px;
@@ -149,13 +253,18 @@ textarea {
 
 .widget-title {
   display: flex;
+
   min-width: 0;
+
   align-items: center;
   gap: 9px;
 
   margin: 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-family: var(
     --font-heading,
@@ -171,10 +280,46 @@ textarea {
 
 .title-icon {
   display: grid;
+
   width: 34px;
   height: 34px;
+
   flex: 0 0 auto;
+
   place-items: center;
+
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82),
+      var(
+        --accent-soft,
+        rgba(218, 209, 255, 0.78)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  border-radius: var(
+    --radius-icon,
+    12px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 7px 16px
+      rgba(100, 79, 170, 0.1);
 
   font-family: var(
     --font-body,
@@ -187,38 +332,49 @@ textarea {
   font-size: 1rem;
   line-height: 1;
 
-  background: var(
-    --color-walking-soft,
-    #f0e5d2
-  );
-
-  border-radius: var(--radius-icon, 12px);
-
   transition:
-    transform var(--transition-fast, 150ms ease),
-    background var(--transition-fast, 150ms ease);
+    transform var(
+      --transition-fast,
+      150ms ease
+    ),
+    background var(
+      --transition-fast,
+      150ms ease
+    );
 }
 
 .widget-subtitle {
   margin: 5px 0 0 43px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.72rem;
   font-weight: 600;
   line-height: 1.35;
 }
 
+/* ==================================================
+   SAVE INDICATOR
+   ================================================== */
+
 .save-indicator {
   display: inline-flex;
+
   flex: 0 0 auto;
+
   align-items: center;
   gap: 5px;
 
   min-height: 25px;
   padding: 5px 9px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.66rem;
   font-weight: 800;
@@ -226,20 +382,43 @@ textarea {
 
   background: var(
     --panel-background-soft,
-    rgba(255, 255, 255, 0.58)
+    rgba(255, 255, 255, 0.52)
   );
 
-  border: 1px solid var(
-    --border-soft,
-    rgba(91, 65, 49, 0.08)
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: var(
+    --radius-pill,
+    999px
   );
 
-  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
 
   transition:
-    opacity var(--transition-fast, 150ms ease),
-    color var(--transition-fast, 150ms ease),
-    background var(--transition-fast, 150ms ease);
+    opacity var(
+      --transition-fast,
+      150ms ease
+    ),
+    color var(
+      --transition-fast,
+      150ms ease
+    ),
+    background var(
+      --transition-fast,
+      150ms ease
+    );
 }
 
 .save-indicator-icon {
@@ -251,17 +430,27 @@ textarea {
 }
 
 .save-indicator.is-error {
-  color: var(--color-danger, #b9655b);
+  color: var(
+    --color-danger,
+    #d777a9
+  );
 }
 
 .wrap-up-widget.is-complete
-  .title-icon {
-  transform: rotate(-6deg) scale(1.05);
+.title-icon {
+  transform:
+    rotate(-6deg)
+    scale(1.05);
 
-  background: var(
-    --surface-accent-strong,
-    rgba(183, 110, 85, 0.13)
-  );
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.78),
+      var(
+        --surface-accent-strong,
+        rgba(150, 128, 255, 0.17)
+      )
+    );
 }
 
 /* ==================================================
@@ -269,33 +458,96 @@ textarea {
    ================================================== */
 
 .widget-card {
+  position: relative;
+
   min-width: 0;
+
+  overflow: hidden;
 
   background: var(
     --panel-background,
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.88),
-      rgba(255, 252, 249, 0.74)
+      rgba(255, 255, 255, 0.66),
+      rgba(246, 240, 255, 0.46)
     )
   );
 
-  border: 1px solid var(
-    --border-default,
-    rgba(91, 65, 49, 0.12)
-  );
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
 
-  border-radius: var(--radius-panel, 14px);
+  border-radius: var(
+    --radius-panel,
+    14px
+  );
 
   box-shadow: var(
     --shadow-panel,
-    inset 0 1px 0 rgba(255, 255, 255, 0.72)
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76),
+    0 8px 20px
+      rgba(106, 85, 173, 0.08)
   );
+
+  backdrop-filter: blur(11px);
+
+  -webkit-backdrop-filter:
+    blur(11px);
+}
+
+.widget-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 8%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-purple,
+          #a995f4
+        )
+        8%,
+        transparent
+      ),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 88% 92%,
+      color-mix(
+        in srgb,
+        var(
+          --pastel-cyan,
+          #8ce5e3
+        )
+        7%,
+        transparent
+      ),
+      transparent 44%
+    );
+}
+
+.widget-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .card-heading {
   display: flex;
+
   min-width: 0;
+
   align-items: center;
   gap: 10px;
 
@@ -309,7 +561,10 @@ textarea {
 .card-eyebrow {
   margin: 0 0 3px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.58rem;
   font-weight: 800;
@@ -321,7 +576,10 @@ textarea {
 .card-title {
   margin: 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-size: 0.78rem;
   font-weight: 800;
@@ -334,21 +592,27 @@ textarea {
 
 .checklist-grid {
   display: grid;
+
   grid-template-columns:
     minmax(0, 1.1fr)
     minmax(0, 0.9fr);
+
   gap: 12px;
 }
 
 .checklist-card {
   display: flex;
+
   min-height: 218px;
+
   flex-direction: column;
+
   padding: 14px 16px;
 }
 
 .checklist-list {
   display: grid;
+
   align-content: start;
   gap: 7px;
 
@@ -358,11 +622,19 @@ textarea {
 .fixed-checklist,
 .extra-reminder-list {
   max-height: 162px;
+
   overflow-y: auto;
-  overscroll-behavior: contain;
+
+  overscroll-behavior:
+    contain;
+
   scrollbar-width: thin;
+
   scrollbar-color:
-    var(--border-strong, rgba(91, 65, 49, 0.18))
+    var(
+      --border-strong,
+      rgba(104, 83, 171, 0.23)
+    )
     transparent;
 }
 
@@ -377,23 +649,31 @@ textarea {
 .checklist-list::-webkit-scrollbar-thumb {
   background: var(
     --border-strong,
-    rgba(91, 65, 49, 0.18)
+    rgba(104, 83, 171, 0.23)
   );
 
-  border-radius: 999px;
+  border-radius: var(
+    --radius-pill,
+    999px
+  );
 }
 
 .checklist-item {
   display: grid;
+
   grid-template-columns:
     18px
     minmax(0, 1fr);
+
   align-items: start;
   gap: 8px;
 
   min-width: 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-size: 0.74rem;
   font-weight: 650;
@@ -407,14 +687,19 @@ textarea {
     24px;
 }
 
+/* ==================================================
+   CHECKBOXES
+   ================================================== */
+
 .checklist-checkbox {
   width: 17px;
   height: 17px;
+
   margin: 1px 0 0;
 
   accent-color: var(
-    --color-walking,
-    #c1a06e
+    --accent,
+    #9079e8
   );
 
   cursor: pointer;
@@ -422,120 +707,234 @@ textarea {
 
 .checklist-label {
   min-width: 0;
+
   overflow-wrap: anywhere;
 }
 
 .checklist-checkbox:checked
-  + .checklist-label {
-  color: var(--text-soft, #ad9c92);
++ .checklist-label {
+  color: var(
+    --text-soft,
+    #aaa3c2
+  );
+
   text-decoration: line-through;
 }
+
+/* ==================================================
+   REMINDER INPUTS
+   ================================================== */
 
 .reminder-text-input {
   width: 100%;
   min-width: 0;
+
   padding: 2px 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-size: 0.74rem;
   font-weight: 650;
   line-height: 1.35;
 
   background: transparent;
+
   border: 0;
-  border-bottom: 1px solid transparent;
+  border-bottom:
+    1px solid transparent;
+
   outline: none;
 
   transition:
-    border-color var(--transition-fast, 150ms ease);
+    border-color var(
+      --transition-fast,
+      150ms ease
+    );
 }
 
 .reminder-text-input::placeholder {
-  color: var(--text-soft, #ad9c92);
+  color: var(
+    --text-soft,
+    #aaa3c2
+  );
+
   font-weight: 500;
 }
 
 .reminder-text-input:focus {
   border-bottom-color: var(
-    --border-strong,
-    rgba(91, 65, 49, 0.18)
+    --accent,
+    #9079e8
   );
 }
 
+/* ==================================================
+   DELETE BUTTON
+   ================================================== */
+
 .delete-reminder-button {
   display: grid;
+
   width: 24px;
   height: 24px;
+
   place-items: center;
 
   margin: -2px 0 0;
 
-  color: var(--text-soft, #ad9c92);
+  color: var(
+    --text-soft,
+    #aaa3c2
+  );
 
   font-size: 0.78rem;
   font-weight: 800;
   line-height: 1;
 
   background: transparent;
-  border-radius: 50%;
+
+  border-radius: var(
+    --radius-pill,
+    999px
+  );
 
   cursor: pointer;
 
   transition:
-    color var(--transition-fast, 150ms ease),
-    background var(--transition-fast, 150ms ease);
+    color var(
+      --transition-fast,
+      150ms ease
+    ),
+    background var(
+      --transition-fast,
+      150ms ease
+    ),
+    transform var(
+      --transition-fast,
+      150ms ease
+    );
 }
 
 .delete-reminder-button:hover {
-  color: var(--color-danger, #b9655b);
-  background: rgba(185, 101, 91, 0.08);
+  transform: translateY(-1px);
+
+  color: var(
+    --color-danger,
+    #d777a9
+  );
+
+  background:
+    color-mix(
+      in srgb,
+      var(
+        --color-danger,
+        #d777a9
+      )
+      12%,
+      transparent
+    );
 }
+
+/* ==================================================
+   ADD REMINDER BUTTON
+   ================================================== */
 
 .add-reminder-button {
   display: inline-flex;
+
   flex: 0 0 auto;
+
   align-items: center;
   gap: 4px;
 
   min-height: 28px;
   padding: 6px 9px;
 
-  color: var(--color-walking-dark, #967642);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
 
   font-size: 0.66rem;
   font-weight: 800;
   line-height: 1;
 
-  background: var(
-    --color-walking-soft,
-    #f0e5d2
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.72),
+      var(
+        --accent-soft,
+        rgba(218, 209, 255, 0.78)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  border-radius: var(
+    --radius-small,
+    10px
   );
 
-  border: 1px solid rgba(193, 160, 110, 0.25);
-  border-radius: var(--radius-small, 10px);
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8),
+    0 5px 12px
+      rgba(100, 79, 170, 0.08);
 
   cursor: pointer;
 
   transition:
-    transform var(--transition-fast, 150ms ease),
-    background var(--transition-fast, 150ms ease);
+    transform var(
+      --transition-fast,
+      150ms ease
+    ),
+    background var(
+      --transition-fast,
+      150ms ease
+    ),
+    box-shadow var(
+      --transition-fast,
+      150ms ease
+    );
 }
 
 .add-reminder-button:hover {
   transform: translateY(-1px);
 
-  background: var(
-    --surface-accent-strong,
-    #eadbbf
-  );
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.78),
+      var(
+        --surface-accent-strong,
+        rgba(150, 128, 255, 0.17)
+      )
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 8px 16px
+      rgba(100, 79, 170, 0.11);
 }
 
 .empty-reminder-message {
   margin: auto 0 0;
   padding-top: 10px;
 
-  color: var(--text-soft, #ad9c92);
+  color: var(
+    --text-soft,
+    #aaa3c2
+  );
 
   font-size: 0.68rem;
   font-style: italic;
@@ -554,26 +953,57 @@ textarea {
 .progress-track {
   width: 100%;
   height: 7px;
+
   overflow: hidden;
 
   background: var(
-    --panel-background-soft,
-    rgba(91, 65, 49, 0.08)
+    --progress-track,
+    rgba(125, 108, 189, 0.14)
   );
 
-  border-radius: 999px;
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: var(
+    --radius-pill,
+    999px
+  );
+
+  box-shadow:
+    inset 0 1px 2px
+      rgba(92, 73, 151, 0.06);
 }
 
 .progress-fill {
   width: 0;
   height: 100%;
 
-  background: var(
-    --color-walking,
-    #c1a06e
-  );
+  background:
+    linear-gradient(
+      90deg,
+      var(
+        --accent,
+        #9079e8
+      ),
+      var(
+        --pastel-pink,
+        #efa6dc
+      ),
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      )
+    );
 
   border-radius: inherit;
+
+  box-shadow:
+    0 0 10px
+      rgba(143, 121, 231, 0.26);
 
   transition:
     width 320ms ease,
@@ -581,11 +1011,23 @@ textarea {
 }
 
 .wrap-up-widget.is-complete
-  .progress-fill {
-  background: var(
-    --accent,
-    #b76e55
-  );
+.progress-fill {
+  background:
+    linear-gradient(
+      90deg,
+      var(
+        --color-success,
+        #65baa9
+      ),
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      ),
+      var(
+        --pastel-purple,
+        #a995f4
+      )
+    );
 }
 
 /* ==================================================
@@ -594,17 +1036,23 @@ textarea {
 
 .reflection-grid {
   display: grid;
-  grid-template-columns: repeat(
-    3,
-    minmax(0, 1fr)
-  );
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
   gap: 10px;
 }
 
 .reflection-card {
   display: flex;
+
   min-height: 112px;
+
   flex-direction: column;
+
   padding: 12px 14px;
 }
 
@@ -613,7 +1061,10 @@ textarea {
 
   margin: 0 0 7px;
 
-  color: var(--color-walking-dark, #967642);
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
 
   font-size: 0.67rem;
   font-weight: 800;
@@ -625,23 +1076,34 @@ textarea {
 .tomorrow-input {
   width: 100%;
   min-width: 0;
+
   flex: 1;
+
   padding: 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-size: 0.74rem;
   font-weight: 600;
   line-height: 1.4;
 
   background: transparent;
+
   border: 0;
+
   outline: none;
 }
 
 .reflection-input::placeholder,
 .tomorrow-input::placeholder {
-  color: var(--text-soft, #ad9c92);
+  color: var(
+    --text-soft,
+    #aaa3c2
+  );
+
   font-weight: 500;
 }
 
@@ -651,9 +1113,11 @@ textarea {
 
 .tomorrow-card {
   display: grid;
+
   grid-template-columns:
     minmax(150px, 0.27fr)
     minmax(0, 1fr);
+
   align-items: stretch;
   gap: 16px;
 
@@ -673,12 +1137,15 @@ textarea {
 
 .tomorrow-input {
   min-height: 58px;
+
   padding-left: 16px;
 
-  border-left: 1px solid var(
-    --border-soft,
-    rgba(91, 65, 49, 0.08)
-  );
+  border-left:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
 }
 
 /* ==================================================
@@ -689,16 +1156,44 @@ textarea {
 .delete-reminder-button:focus-visible,
 .retry-button:focus-visible,
 .checklist-checkbox:focus-visible {
-  outline: 3px solid rgba(193, 160, 110, 0.3);
+  outline:
+    3px solid
+    color-mix(
+      in srgb,
+      var(
+        --accent,
+        #9079e8
+      )
+      26%,
+      transparent
+    );
+
   outline-offset: 2px;
 }
 
 .reflection-card:focus-within,
 .tomorrow-card:focus-within {
   border-color: var(
-    --border-strong,
-    rgba(91, 65, 49, 0.18)
+    --border-accent,
+    rgba(144, 121, 232, 0.24)
   );
+
+  box-shadow:
+    0 0 0 3px
+      color-mix(
+        in srgb,
+        var(
+          --accent,
+          #9079e8
+        )
+        10%,
+        transparent
+      ),
+    var(
+      --shadow-panel,
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.76)
+    );
 }
 
 /* ==================================================
@@ -707,6 +1202,7 @@ textarea {
 
 .widget-message-layer {
   position: absolute;
+
   z-index: 10;
   inset: 0;
 
@@ -715,13 +1211,15 @@ textarea {
 
   padding: 20px;
 
-  background: var(
-    --card-overlay,
-    rgba(255, 250, 246, 0.82)
-  );
+  background:
+    rgba(250, 248, 255, 0.78);
 
   border-radius: inherit;
-  backdrop-filter: blur(4px);
+
+  backdrop-filter: blur(6px);
+
+  -webkit-backdrop-filter:
+    blur(6px);
 }
 
 .widget-message-layer.is-hidden {
@@ -730,14 +1228,19 @@ textarea {
 
 .message-card {
   display: flex;
+
   align-items: center;
   justify-content: center;
   gap: 10px;
 
   max-width: 360px;
+
   padding: 14px 18px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   text-align: center;
 
@@ -746,19 +1249,25 @@ textarea {
 
   background: var(
     --panel-background,
-    rgba(255, 255, 255, 0.92)
+    rgba(255, 255, 255, 0.76)
   );
 
-  border: 1px solid var(
-    --border-default,
-    rgba(91, 65, 49, 0.12)
-  );
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
 
-  border-radius: var(--radius-panel, 14px);
+  border-radius: var(
+    --radius-panel,
+    14px
+  );
 
   box-shadow: var(
     --shadow-card,
-    0 8px 22px rgba(77, 52, 38, 0.08)
+    0 8px 22px
+      rgba(91, 73, 157, 0.13)
   );
 }
 
@@ -771,44 +1280,84 @@ textarea {
 }
 
 .error-message {
-  color: var(--color-danger, #b9655b);
+  color: var(
+    --color-danger,
+    #d777a9
+  );
 }
 
 .loading-spinner {
   width: 16px;
   height: 16px;
+
   flex: 0 0 auto;
 
-  border: 2px solid var(
-    --border-strong,
-    rgba(91, 65, 49, 0.18)
-  );
+  border:
+    2px solid
+    var(
+      --border-strong,
+      rgba(104, 83, 171, 0.23)
+    );
 
   border-top-color: var(
-    --color-walking-dark,
-    #967642
+    --accent,
+    #9079e8
   );
 
-  border-radius: 50%;
+  border-radius: var(
+    --radius-pill,
+    999px
+  );
 
-  animation: wrap-up-spin 700ms linear infinite;
+  animation:
+    wrap-up-spin
+    700ms
+    linear
+    infinite;
 }
 
 .retry-button {
   padding: 8px 12px;
 
-  color: var(--color-walking-dark, #967642);
+  color: var(
+    --text-on-accent,
+    #ffffff
+  );
 
   font-size: 0.7rem;
   font-weight: 800;
 
-  background: var(
-    --color-walking-soft,
-    #f0e5d2
+  background:
+    linear-gradient(
+      120deg,
+      var(
+        --accent,
+        #9079e8
+      ),
+      var(
+        --pastel-pink,
+        #efa6dc
+      ),
+      var(
+        --pastel-blue,
+        #8fcff4
+      )
+    );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.28);
+
+  border-radius: var(
+    --radius-small,
+    10px
   );
 
-  border: 1px solid rgba(193, 160, 110, 0.25);
-  border-radius: var(--radius-small, 10px);
+  box-shadow:
+    0 7px 16px
+      rgba(112, 88, 192, 0.2),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.34);
 
   cursor: pointer;
 }
@@ -861,6 +1410,7 @@ textarea {
 @media (max-width: 520px) {
   .wrap-up-widget {
     width: calc(100% - 12px);
+
     margin: 6px;
     padding: 16px;
   }
@@ -892,18 +1442,28 @@ textarea {
 
   .tomorrow-input {
     min-height: 64px;
+
     padding: 10px 0 0;
 
-    border-top: 1px solid var(
-      --border-soft,
-      rgba(91, 65, 49, 0.08)
-    );
+    border-top:
+      1px solid
+      var(
+        --border-soft,
+        rgba(104, 83, 171, 0.09)
+      );
 
     border-left: 0;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* ==================================================
+   REDUCED MOTION
+   ================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
   .wrap-up-widget,
   .title-icon,
   .save-indicator,
