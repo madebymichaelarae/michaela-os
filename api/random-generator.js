@@ -1,8 +1,12 @@
 const NOTION_TOKEN =
-  process.env.NOTION_TOKEN;
+  process.env.NOTION_TOKEN
+    ?.trim()
+    .replace(/^["']|["']$/g, "");
 
 const DATABASE_ID =
-  process.env.RANDOM_GENERATOR_DATABASE_ID;
+  process.env.RANDOM_GENERATOR_DATABASE_ID
+    ?.trim()
+    .replace(/^["']|["']$/g, "");
 
 const NOTION_VERSION = "2026-03-11";
 
