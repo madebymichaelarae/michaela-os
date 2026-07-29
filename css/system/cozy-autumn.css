@@ -21,7 +21,35 @@
      PAGE
      ================================================== */
 
-  --page-background: transparent;
+  --page-background:
+    radial-gradient(
+      circle at 12% 16%,
+      rgba(174, 157, 255, 0.58),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(126, 221, 255, 0.48),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 68% 52%,
+      rgba(255, 182, 232, 0.48),
+      transparent 33%
+    ),
+    radial-gradient(
+      circle at 28% 72%,
+      rgba(129, 244, 242, 0.42),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #b7a6f7 0%,
+      #c8d9ff 28%,
+      #edc9f4 52%,
+      #bff2f4 73%,
+      #b7a5f0 100%
+    );
 
   /* ==================================================
      MAIN SURFACES
@@ -30,134 +58,772 @@
   --card-background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(255, 250, 246, 0.96)
+      rgba(255, 255, 255, 0.78),
+      rgba(247, 244, 255, 0.62)
     );
 
   --panel-background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.88),
-      rgba(255, 252, 249, 0.74)
+      rgba(255, 255, 255, 0.66),
+      rgba(246, 240, 255, 0.46)
     );
 
-  --panel-background-soft: rgba(255, 255, 255, 0.58);
-  --surface-muted: rgba(248, 239, 233, 0.62);
-  --surface-accent: rgba(183, 110, 85, 0.08);
-  --surface-accent-strong: rgba(183, 110, 85, 0.13);
+  --panel-background-soft:
+    rgba(255, 255, 255, 0.42);
+
+  --surface-muted:
+    rgba(229, 225, 255, 0.44);
+
+  --surface-accent:
+    rgba(150, 128, 255, 0.10);
+
+  --surface-accent-strong:
+    rgba(150, 128, 255, 0.17);
+
+  --surface-soft:
+    rgba(250, 248, 255, 0.68);
+
+  --surface-primary:
+    rgba(255, 255, 255, 0.82);
 
   /* ==================================================
      TEXT
      ================================================== */
 
-  --text-primary: #40342e;
-  --text-secondary: #806f65;
-  --text-soft: #ad9c92;
-  --text-on-accent: #ffffff;
+  --text-primary:
+    #453d68;
+
+  --text-secondary:
+    #746d91;
+
+  --text-muted:
+    #817a9f;
+
+  --text-soft:
+    #aaa3c2;
+
+  --text-on-accent:
+    #ffffff;
 
   /* ==================================================
      MAIN ACCENT
      ================================================== */
 
-  --accent: #b86f57;
-  --accent-dark: #94513e;
-  --accent-soft: #efd8cd;
-  --accent-pale: #f8ebe5;
+  --accent:
+    #9079e8;
+
+  --accent-color:
+    #9079e8;
+
+  --accent-dark:
+    #6651bd;
+
+  --accent-soft:
+    rgba(218, 209, 255, 0.78);
+
+  --accent-pale:
+    rgba(241, 236, 255, 0.86);
+
+  /* ==================================================
+     SECONDARY PASTEL ACCENTS
+     ================================================== */
+
+  --pastel-purple:
+    #a995f4;
+
+  --pastel-blue:
+    #8fcff4;
+
+  --pastel-cyan:
+    #8ce5e3;
+
+  --pastel-pink:
+    #efa6dc;
+
+  --pastel-lilac:
+    #c5a9ef;
+
+  --pastel-mint:
+    #a7eee0;
 
   /* ==================================================
      SEMANTIC COLORS
      ================================================== */
 
-  --color-water: #78aeb9;
-  --color-water-dark: #538e9b;
-  --color-water-soft: #dceef1;
+  --color-water:
+    #75cde8;
 
-  --color-walking: #c1a06e;
-  --color-walking-dark: #967642;
-  --color-walking-soft: #f0e5d2;
+  --color-water-dark:
+    #459bbd;
 
-  --color-calories: #d59170;
-  --color-calories-dark: #a86044;
-  --color-calories-soft: #f4dfd4;
+  --color-water-soft:
+    rgba(204, 242, 252, 0.78);
 
-  --color-protein: #c97968;
-  --color-protein-dark: #9d5548;
-  --color-protein-soft: #f0d8d1;
+  --color-walking:
+    #a995ef;
 
-  --color-carbs: #d9a75f;
-  --color-carbs-dark: #aa7a34;
-  --color-carbs-soft: #f4e7ce;
+  --color-walking-dark:
+    #7664bd;
 
-  --color-fat: #b790bd;
-  --color-fat-dark: #86628c;
-  --color-fat-soft: #eaddec;
+  --color-walking-soft:
+    rgba(226, 218, 255, 0.78);
 
-  --color-fiber: #92a77d;
-  --color-fiber-dark: #687b57;
-  --color-fiber-soft: #e2ead9;
+  --color-calories:
+    #e9a1cf;
 
-  --color-success: #7f9b75;
-  --color-danger: #b9655b;
+  --color-calories-dark:
+    #b76e9e;
+
+  --color-calories-soft:
+    rgba(250, 218, 239, 0.78);
+
+  --color-protein:
+    #d797e8;
+
+  --color-protein-dark:
+    #a567bb;
+
+  --color-protein-soft:
+    rgba(241, 215, 250, 0.78);
+
+  --color-carbs:
+    #8bd8db;
+
+  --color-carbs-dark:
+    #57a7aa;
+
+  --color-carbs-soft:
+    rgba(207, 245, 244, 0.78);
+
+  --color-fat:
+    #b9a1ed;
+
+  --color-fat-dark:
+    #816ac0;
+
+  --color-fat-soft:
+    rgba(229, 220, 250, 0.78);
+
+  --color-fiber:
+    #95dfd0;
+
+  --color-fiber-dark:
+    #5aa89a;
+
+  --color-fiber-soft:
+    rgba(213, 247, 240, 0.78);
+
+  --color-success:
+    #65baa9;
+
+  --color-danger:
+    #d777a9;
 
   /* ==================================================
      BORDERS
      ================================================== */
 
-  --border-default: rgba(91, 65, 49, 0.12);
-  --border-soft: rgba(91, 65, 49, 0.08);
-  --border-strong: rgba(91, 65, 49, 0.18);
-  --border-accent: rgba(183, 110, 85, 0.12);
+  --border-default:
+    rgba(104, 83, 171, 0.15);
+
+  --border-color:
+    rgba(104, 83, 171, 0.15);
+
+  --border-soft:
+    rgba(104, 83, 171, 0.09);
+
+  --border-strong:
+    rgba(104, 83, 171, 0.23);
+
+  --border-accent:
+    rgba(144, 121, 232, 0.24);
 
   /* ==================================================
      CORNERS
      ================================================== */
 
-  --radius-card: 20px;
-  --radius-panel: 14px;
-  --radius-small: 10px;
-  --radius-icon: 12px;
-  --radius-pill: 999px;
+  --radius-card:
+    20px;
+
+  --radius-panel:
+    14px;
+
+  --radius-small:
+    10px;
+
+  --radius-icon:
+    12px;
+
+  --radius-pill:
+    999px;
 
   /* ==================================================
      SHADOWS
      ================================================== */
 
   --shadow-card:
-    0 1px 2px rgba(77, 52, 38, 0.05),
-    0 8px 22px rgba(77, 52, 38, 0.08);
+    0 2px 4px
+      rgba(81, 65, 133, 0.05),
+    0 12px 30px
+      rgba(91, 73, 157, 0.13),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76);
 
   --shadow-card-hover:
-    0 2px 5px rgba(77, 52, 38, 0.07),
-    0 13px 30px rgba(77, 52, 38, 0.11);
+    0 4px 8px
+      rgba(81, 65, 133, 0.07),
+    0 18px 38px
+      rgba(91, 73, 157, 0.18),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82);
 
   --shadow-panel:
-    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76),
+    0 8px 20px
+      rgba(106, 85, 173, 0.08);
 
   /* ==================================================
      PROGRESS
      ================================================== */
 
-  --progress-track: rgba(91, 65, 49, 0.09);
+  --progress-track:
+    rgba(125, 108, 189, 0.14);
 
   /* ==================================================
      SPACING
      ================================================== */
 
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-lg: 16px;
-  --space-xl: 20px;
-  --space-2xl: 24px;
+  --space-xs:
+    4px;
+
+  --space-sm:
+    8px;
+
+  --space-md:
+    12px;
+
+  --space-lg:
+    16px;
+
+  --space-xl:
+    20px;
+
+  --space-2xl:
+    24px;
 
   /* ==================================================
      MOTION
      ================================================== */
 
-  --transition-fast: 150ms ease;
+  --transition-fast:
+    150ms ease;
 
   --transition-widget:
     transform 160ms ease,
     box-shadow 160ms ease,
     border-color 160ms ease;
+}
+
+/* ==================================================
+   PAGE BACKGROUND
+   ================================================== */
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    var(--page-background);
+
+  background-attachment:
+    fixed;
+
+  color:
+    var(--text-primary);
+}
+
+/* ==================================================
+   GLASS CARD EFFECT
+   ================================================== */
+
+.widget-card,
+.health-reading-stats__card,
+.random-generator-card,
+.tracker-card {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    var(--card-background);
+
+  border:
+    1px solid
+    var(--border-default);
+
+  box-shadow:
+    var(--shadow-card);
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  transition:
+    var(--transition-widget);
+}
+
+/* Soft holographic glow inside cards */
+
+.widget-card::before,
+.health-reading-stats__card::before,
+.random-generator-card::before,
+.tracker-card::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  pointer-events:
+    none;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      rgba(174, 154, 255, 0.20),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(126, 220, 255, 0.19),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 76% 82%,
+      rgba(255, 171, 226, 0.17),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 18% 88%,
+      rgba(126, 238, 229, 0.17),
+      transparent 34%
+    );
+}
+
+.widget-card > *,
+.health-reading-stats__card > *,
+.random-generator-card > *,
+.tracker-card > * {
+  position:
+    relative;
+
+  z-index:
+    1;
+}
+
+.widget-card:hover,
+.health-reading-stats__card:hover,
+.random-generator-card:hover,
+.tracker-card:hover {
+  border-color:
+    var(--border-accent);
+
+  box-shadow:
+    var(--shadow-card-hover);
+}
+
+/* ==================================================
+   HEADINGS AND EYEBROWS
+   ================================================== */
+
+.widget-title,
+.health-reading-stats__title,
+.tracker-title {
+  color:
+    var(--text-primary);
+}
+
+.widget-eyebrow,
+.health-reading-stats__eyebrow,
+.tracker-eyebrow {
+  color:
+    var(--accent-dark);
+}
+
+/* ==================================================
+   ICON SURFACES
+   ================================================== */
+
+.widget-icon,
+.health-reading-stats__icon,
+.tracker-icon {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.86),
+      rgba(233, 226, 255, 0.72)
+    );
+
+  border:
+    1px solid
+    rgba(137, 113, 218, 0.15);
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.88),
+    0 7px 16px
+      rgba(100, 79, 170, 0.10);
+}
+
+/* ==================================================
+   PANELS
+   ================================================== */
+
+.tracker-stat,
+.tracker-goal,
+.tracker-chart-panel,
+.generator-result,
+.weight-goal {
+  background:
+    var(--panel-background);
+
+  border:
+    1px solid
+    var(--border-soft);
+
+  box-shadow:
+    var(--shadow-panel);
+
+  backdrop-filter:
+    blur(11px);
+
+  -webkit-backdrop-filter:
+    blur(11px);
+}
+
+/* ==================================================
+   FORM CONTROLS
+   ================================================== */
+
+.generator-select {
+  color:
+    var(--text-primary);
+
+  background-color:
+    rgba(255, 255, 255, 0.62);
+
+  border:
+    1px solid
+    var(--border-default);
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+}
+
+.generator-select:hover {
+  border-color:
+    var(--accent);
+}
+
+.generator-select:focus-visible {
+  border-color:
+    var(--accent);
+
+  box-shadow:
+    0 0 0 3px
+      rgba(144, 121, 232, 0.19),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82);
+}
+
+/* ==================================================
+   BUTTONS
+   ================================================== */
+
+.generator-button {
+  color:
+    #ffffff;
+
+  background:
+    linear-gradient(
+      120deg,
+      #927cf0 0%,
+      #b184eb 34%,
+      #de8fd2 64%,
+      #77cddc 100%
+    );
+
+  background-size:
+    180% 180%;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.30);
+
+  box-shadow:
+    0 8px 20px
+      rgba(112, 88, 192, 0.24),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.35);
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    background-position 300ms ease,
+    opacity 150ms ease;
+}
+
+.generator-button:hover:not(:disabled) {
+  transform:
+    translateY(-1px);
+
+  background-position:
+    100% 50%;
+
+  box-shadow:
+    0 11px 25px
+      rgba(112, 88, 192, 0.30),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.38);
+}
+
+.generator-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.995);
+}
+
+.generator-button:focus-visible {
+  outline:
+    3px solid
+    rgba(151, 129, 239, 0.27);
+
+  outline-offset:
+    3px;
+}
+
+/* ==================================================
+   RESULT AREA
+   ================================================== */
+
+.generator-result {
+  background:
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(167, 149, 245, 0.20),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 82% 78%,
+      rgba(122, 225, 229, 0.20),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.66),
+      rgba(242, 236, 255, 0.50)
+    );
+}
+
+.generator-result-label {
+  color:
+    var(--accent-dark);
+}
+
+.generator-result-text {
+  color:
+    var(--text-primary);
+}
+
+.generator-result-category {
+  color:
+    var(--accent-dark);
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(222, 211, 255, 0.82),
+      rgba(215, 239, 250, 0.78),
+      rgba(246, 214, 239, 0.78)
+    );
+
+  border:
+    1px solid
+    rgba(123, 101, 199, 0.12);
+}
+
+/* ==================================================
+   PROGRESS BARS
+   ================================================== */
+
+.tracker-progress-track,
+.weight-progress-track {
+  background:
+    var(--progress-track);
+}
+
+.tracker-progress-bar,
+.weight-progress-bar {
+  background:
+    linear-gradient(
+      90deg,
+      #967fed,
+      #d594e2,
+      #84d7e2
+    );
+
+  box-shadow:
+    0 0 10px
+      rgba(143, 121, 231, 0.26);
+}
+
+/* ==================================================
+   TRACKER THEMES
+   ================================================== */
+
+.theme-weight {
+  --widget-accent:
+    #bd86dc;
+
+  --widget-soft:
+    rgba(235, 218, 251, 0.64);
+
+  --widget-dark:
+    #7653a5;
+
+  --widget-surface:
+    rgba(252, 248, 255, 0.76);
+
+  --widget-chart-surface:
+    rgba(239, 230, 251, 0.56);
+}
+
+.theme-water {
+  --widget-accent:
+    #75cce3;
+
+  --widget-soft:
+    rgba(209, 242, 250, 0.64);
+
+  --widget-dark:
+    #4c91ad;
+
+  --widget-surface:
+    rgba(247, 253, 255, 0.76);
+
+  --widget-chart-surface:
+    rgba(220, 245, 250, 0.56);
+}
+
+/* Remove the old heavy tracker border while
+   preserving its rounded shape */
+
+.tracker-card {
+  border:
+    1px solid
+    var(--border-default);
+
+  background:
+    var(--card-background);
+}
+
+/* ==================================================
+   ERROR STATES
+   ================================================== */
+
+.generator-result.has-error {
+  border-color:
+    rgba(204, 105, 158, 0.34);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 245, 251, 0.78),
+      rgba(247, 228, 241, 0.68)
+    );
+}
+
+.generator-result.has-error
+.generator-result-label {
+  color:
+    #a75483;
+}
+
+/* ==================================================
+   SCROLLBAR
+   ================================================== */
+
+* {
+  scrollbar-width:
+    thin;
+
+  scrollbar-color:
+    rgba(138, 117, 210, 0.42)
+    rgba(255, 255, 255, 0.20);
+}
+
+*::-webkit-scrollbar {
+  width:
+    8px;
+
+  height:
+    8px;
+}
+
+*::-webkit-scrollbar-track {
+  background:
+    rgba(255, 255, 255, 0.18);
+}
+
+*::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(158, 135, 233, 0.64),
+      rgba(112, 204, 218, 0.64)
+    );
+
+  border-radius:
+    999px;
+}
+
+/* ==================================================
+   REDUCED MOTION
+   ================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .widget-card,
+  .health-reading-stats__card,
+  .random-generator-card,
+  .tracker-card,
+  .generator-button {
+    transition:
+      none;
+  }
 }
