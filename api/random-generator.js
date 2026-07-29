@@ -143,16 +143,13 @@ async function notionRequest(
   if (!response.ok) {
     throw new Error(
       data.message ||
-      `Notion request failed with status ${response.status}.`
+        `Notion request failed with status ${response.status}.`
     );
   }
 
   return data;
 }
 
-/**
- * Finds the data source connected to the database.
- */
 async function getDataSourceId() {
   const database = await notionRequest(
     `/databases/${DATABASE_ID}`,
@@ -173,9 +170,6 @@ async function getDataSourceId() {
   return dataSource.id;
 }
 
-/**
- * Retrieves every row from the Notion data source.
- */
 async function getAllPages(
   dataSourceId
 ) {
@@ -211,6 +205,44 @@ async function getAllPages(
   } while (startCursor);
 
   return pages;
+}
+
+function buildOptions(pages) {
+  const options = [];
+
+  for (const page of pages) {
+    const properties =
+      page.properties || {};
+
+    const name = readText(
+      findTitleProperty(properties)
+    );
+
+    const category =
+      readCategory(
+        findCategoryProperty(
+          properties
+        )
+      ).trim();
+
+    const active =
+      readActive(
+        properties.Active ||
+          properties.Enabled
+      );
+
+    if (!name || !active) {
+      continue;
+    }
+
+    options.push({
+      id: page.id,
+      name,
+      category,
+    });
+  }
+
+  return options;
 }
 
 module.exports = async function handler(
@@ -258,6 +290,52 @@ module.exports = async function handler(
       );
     }
 
+    const dataSourceId =
+      await getDataSourceId();
+
+    const pages =
+      await getAllPages(
+        dataSourceId
+      );
+
+    const allOptions =
+      buildOptions(pages);
+
+    const rawMode =
+      request.query.mode;
+
+    const mode =
+      typeof rawMode === "string"
+        ? rawMode.trim().toLowerCase()
+        : "";
+
+    /*
+     * Return the dropdown category list.
+     */
+    if (mode === "categories") {
+      const categories = [
+        ...new Set(
+          allOptions
+            .map(
+              (option) =>
+                option.category
+            )
+            .filter(Boolean)
+        ),
+      ].sort((a, b) =>
+        a.localeCompare(b)
+      );
+
+      return response.status(200).json({
+        success: true,
+        count: categories.length,
+        categories,
+      });
+    }
+
+    /*
+     * Return one random item.
+     */
     const rawCategory =
       request.query.category;
 
@@ -269,58 +347,19 @@ module.exports = async function handler(
     const normalizedCategory =
       requestedCategory.toLowerCase();
 
-    const dataSourceId =
-      await getDataSourceId();
-
-    const pages =
-      await getAllPages(
-        dataSourceId
-      );
-
-    const options = [];
-
-    for (const page of pages) {
-      const properties =
-        page.properties || {};
-
-      const name = readText(
-        findTitleProperty(properties)
-      );
-
-      const category =
-        readCategory(
-          findCategoryProperty(
-            properties
+    const filteredOptions =
+      normalizedCategory
+        ? allOptions.filter(
+            (option) =>
+              option.category
+                .trim()
+                .toLowerCase() ===
+              normalizedCategory
           )
-        );
-
-      const active =
-        readActive(
-          properties.Active ||
-          properties.Enabled
-        );
-
-      if (!name || !active) {
-        continue;
-      }
-
-      if (
-        normalizedCategory &&
-        category.trim().toLowerCase() !==
-          normalizedCategory
-      ) {
-        continue;
-      }
-
-      options.push({
-        id: page.id,
-        name,
-        category,
-      });
-    }
+        : allOptions;
 
     const item =
-      pickRandom(options);
+      pickRandom(filteredOptions);
 
     if (!item) {
       return response.status(404).json({
@@ -340,7 +379,7 @@ module.exports = async function handler(
       success: true,
       category:
         requestedCategory || "All",
-      count: options.length,
+      count: filteredOptions.length,
       item,
     });
   } catch (error) {
