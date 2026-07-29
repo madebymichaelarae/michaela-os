@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="A random idea generator for Michaela OS."
+    />
+
+    <title>Random Generator</title>
+
+    <link
+      rel="stylesheet"
+      href="../../css/styles.css"
+    />
+  </head>
+
+  <body>
+    <main class="widget-page">
+      <section
+        class="widget-card random-generator-card"
+        aria-labelledby="generator-title"
+      >
+        <header class="widget-header">
+          <div class="widget-icon" aria-hidden="true">
+            ✨
+          </div>
+
+          <div class="widget-heading">
+            <p class="widget-eyebrow">
+              MICHAELA OS
+            </p>
+
+            <h1
+              class="widget-title"
+              id="generator-title"
+            >
+              Random Generator
+            </h1>
+          </div>
+        </header>
+
+        <div class="generator-controls">
+          <label
+            class="generator-label"
+            for="category-select"
+          >
+            Choose a category
+          </label>
+
+          <select
+            class="generator-select"
+            id="category-select"
+          >
+            <option value="">
+              Surprise me
+            </option>
+
+            <!--
+              Replace these with the exact category names
+              used in your Notion Category property.
+            -->
+
+            <option value="Creative">
+              Creative
+            </option>
+
+            <option value="Self Care">
+              Self Care
+            </option>
+
+            <option value="Adventure">
+              Adventure
+            </option>
+
+            <option value="Home">
+              Home
+            </option>
+          </select>
+        </div>
+
+        <div
+          class="generator-result"
+          id="generator-result"
+          aria-live="polite"
+        >
+          <p class="generator-result-label">
+            YOUR PICK
+          </p>
+
+          <p
+            class="generator-result-text"
+            id="generator-result-text"
+          >
+            Tap the button and let fate do the admin.
+          </p>
+
+          <p
+            class="generator-result-category"
+            id="generator-result-category"
+            hidden
+          ></p>
+        </div>
+
+        <button
+          class="generator-button"
+          id="generate-button"
+          type="button"
+        >
+          <span aria-hidden="true">🎲</span>
+          Generate
+        </button>
+
+        <p
+          class="generator-status"
+          id="generator-status"
+          role="status"
+        ></p>
+      </section>
+    </main>
+
+    <script src="./random-generator.js"></script>
+  </body>
+</html>
