@@ -1,7 +1,7 @@
 /* =========================================================
-   Michaela OS
-   Productivity — Focus Timer
-   Cozy Autumn Theme
+   MICHAELA OS
+   Work — Focus Timer
+   Shared Dreamy Pastel Theme
    ========================================================= */
 
 * {
@@ -16,7 +16,11 @@ body {
 }
 
 body {
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
   background: transparent;
 
   font-family: var(
@@ -33,6 +37,7 @@ body {
 
 button {
   font: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 [hidden] {
@@ -51,31 +56,73 @@ button {
 .focus-card {
   --timer-progress: 100%;
 
+  --focus-accent: var(
+    --accent,
+    #9079e8
+  );
+
+  --focus-accent-dark: var(
+    --accent-dark,
+    #6651bd
+  );
+
+  --focus-accent-soft: var(
+    --accent-soft,
+    rgba(218, 209, 255, 0.78)
+  );
+
+  position: relative;
+
   width: 100%;
   min-width: 0;
+
   padding: 18px 20px 21px;
+
+  overflow: hidden;
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   background: var(
     --card-background,
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(255, 250, 246, 0.96)
+      rgba(255, 255, 255, 0.94),
+      rgba(242, 239, 255, 0.9) 32%,
+      rgba(237, 247, 255, 0.9) 64%,
+      rgba(255, 246, 252, 0.92)
     )
   );
 
-  border: 1px solid var(
-    --border-default,
-    rgba(91, 65, 49, 0.12)
-  );
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
 
-  border-radius: var(--radius-card, 20px);
+  border-radius: var(
+    --radius-card,
+    20px
+  );
 
   box-shadow: var(
     --shadow-card,
-    0 1px 2px rgba(77, 52, 38, 0.05),
-    0 8px 22px rgba(77, 52, 38, 0.08)
+    0 2px 4px
+      rgba(81, 65, 133, 0.05),
+    0 12px 30px
+      rgba(91, 73, 157, 0.13)
   );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
 
   transition:
     transform 160ms ease,
@@ -84,29 +131,139 @@ button {
     background 240ms ease;
 }
 
+.focus-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 10% 8%,
+      color-mix(
+        in srgb,
+        var(--pastel-purple, #a995f4)
+        14%,
+        transparent
+      ),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 92% 12%,
+      color-mix(
+        in srgb,
+        var(--pastel-blue, #8fcff4)
+        12%,
+        transparent
+      ),
+      transparent 33%
+    ),
+    radial-gradient(
+      circle at 84% 92%,
+      color-mix(
+        in srgb,
+        var(--pastel-pink, #efa6dc)
+        10%,
+        transparent
+      ),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 10% 94%,
+      color-mix(
+        in srgb,
+        var(--pastel-cyan, #8ce5e3)
+        9%,
+        transparent
+      ),
+      transparent 35%
+    );
+}
+
+.focus-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 .focus-card:hover {
   transform: translateY(-1px);
 
   border-color: var(
-    --border-strong,
-    rgba(91, 65, 49, 0.18)
+    --border-accent,
+    rgba(144, 121, 232, 0.24)
   );
 
   box-shadow: var(
     --shadow-card-hover,
-    0 2px 5px rgba(77, 52, 38, 0.07),
-    0 13px 30px rgba(77, 52, 38, 0.11)
+    0 4px 8px
+      rgba(81, 65, 133, 0.07),
+    0 18px 38px
+      rgba(91, 73, 157, 0.18)
   );
 }
 
-/* Break mode is added later by JavaScript */
+/* =========================================================
+   BREAK MODE
+   ========================================================= */
 
 .focus-card.break-mode {
+  --focus-accent: var(
+    --pastel-cyan,
+    #8ce5e3
+  );
+
+  --focus-accent-dark:
+    color-mix(
+      in srgb,
+      var(--pastel-cyan, #8ce5e3)
+      68%,
+      #453d68
+    );
+
+  --focus-accent-soft:
+    color-mix(
+      in srgb,
+      var(--pastel-cyan, #8ce5e3)
+      24%,
+      rgba(255, 255, 255, 0.65)
+    );
+}
+
+.focus-card.break-mode::before {
   background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(247, 250, 242, 0.97)
+    radial-gradient(
+      circle at 10% 8%,
+      color-mix(
+        in srgb,
+        var(--pastel-cyan, #8ce5e3)
+        15%,
+        transparent
+      ),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 92% 12%,
+      color-mix(
+        in srgb,
+        var(--pastel-mint, #a7eee0)
+        13%,
+        transparent
+      ),
+      transparent 33%
+    ),
+    radial-gradient(
+      circle at 84% 92%,
+      color-mix(
+        in srgb,
+        var(--pastel-blue, #8fcff4)
+        10%,
+        transparent
+      ),
+      transparent 35%
     );
 }
 
@@ -124,7 +281,10 @@ button {
 .focus-eyebrow {
   margin: 0 0 3px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.64rem;
   font-weight: 800;
@@ -136,7 +296,10 @@ button {
 .focus-header h1 {
   margin: 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-family: var(
     --font-heading,
@@ -153,38 +316,54 @@ button {
 
 .focus-icon {
   display: grid;
+
   width: 39px;
   height: 39px;
+
   flex: 0 0 39px;
+
   place-items: center;
+
+  color: var(--focus-accent-dark);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.8),
+      var(--focus-accent-soft)
+    );
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--focus-accent)
+      22%,
+      transparent
+    );
+
+  border-radius: var(
+    --radius-icon,
+    12px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.78),
+    0 6px 15px
+      rgba(100, 79, 170, 0.09);
 
   font-size: 1.1rem;
   line-height: 1;
 
-  background: var(--accent-soft, #efd8cd);
-
-  border: 1px solid var(
-    --border-accent,
-    rgba(183, 110, 85, 0.13)
-  );
-
-  border-radius: var(--radius-icon, 12px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.64),
-    0 3px 8px rgba(77, 52, 38, 0.06);
-
   transition:
     background 240ms ease,
-    transform 160ms ease;
+    transform 160ms ease,
+    color 240ms ease;
 }
 
 .focus-card:hover .focus-icon {
   transform: rotate(3deg);
-}
-
-.break-mode .focus-icon {
-  background: var(--sage-soft, #dfe8d7);
 }
 
 /* =========================================================
@@ -194,12 +373,19 @@ button {
 .focus-divider {
   width: 100%;
   height: 1px;
+
   margin: 18px 0;
 
-  background: var(
-    --border-default,
-    rgba(91, 65, 49, 0.12)
-  );
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(
+        --border-default,
+        rgba(104, 83, 171, 0.15)
+      ),
+      transparent
+    );
 }
 
 /* =========================================================
@@ -210,9 +396,12 @@ button {
   position: relative;
 
   display: grid;
+
   width: min(224px, 72vw);
   aspect-ratio: 1;
+
   margin: 25px auto 22px;
+
   place-content: center;
 
   text-align: center;
@@ -220,24 +409,41 @@ button {
   background:
     radial-gradient(
       circle at center,
-      var(--card-solid, #fffaf6) 0 67%,
-      transparent 68%
+      rgba(255, 255, 255, 0.9)
+        0 65%,
+      transparent 66%
     ),
     conic-gradient(
-      var(--accent, #b76e55)
+      var(--focus-accent)
         var(--timer-progress),
       var(
-          --progress-track,
-          rgba(91, 65, 49, 0.09)
-        )
+        --progress-track,
+        rgba(125, 108, 189, 0.14)
+      )
         0
+    );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
     );
 
   border-radius: 50%;
 
   box-shadow:
-    inset 0 0 0 1px rgba(91, 65, 49, 0.06),
-    0 9px 24px rgba(77, 52, 38, 0.09);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.86),
+    inset 0 0 0 11px
+      rgba(255, 255, 255, 0.2),
+    0 12px 28px
+      rgba(91, 73, 157, 0.13);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
 
   transition:
     background 240ms ease,
@@ -245,42 +451,58 @@ button {
 }
 
 .timer-display::before {
+  content: "";
+
   position: absolute;
   inset: 12px;
 
-  content: "";
-
   pointer-events: none;
 
-  border: 1px solid rgba(91, 65, 49, 0.07);
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
   border-radius: 50%;
 }
 
-.break-mode .timer-display {
+.timer-display::after {
+  content: "";
+
+  position: absolute;
+  inset: 25%;
+
+  pointer-events: none;
+
   background:
     radial-gradient(
-      circle at center,
-      #fbfcf8 0 67%,
-      transparent 68%
-    ),
-    conic-gradient(
-      var(--sage, #84966e)
-        var(--timer-progress),
-      rgba(91, 65, 49, 0.08) 0
+      circle,
+      color-mix(
+        in srgb,
+        var(--focus-accent)
+        13%,
+        transparent
+      ),
+      transparent 70%
     );
 
-  box-shadow:
-    inset 0 0 0 1px rgba(87, 104, 72, 0.07),
-    0 9px 24px rgba(87, 104, 72, 0.11);
+  border-radius: 50%;
+
+  filter: blur(15px);
 }
 
 .timer-time {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   margin: 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-family: var(
     --font-heading,
@@ -289,20 +511,32 @@ button {
     serif
   );
 
-  font-size: clamp(2.75rem, 14vw, 4.15rem);
-  font-variant-numeric: tabular-nums;
+  font-size:
+    clamp(
+      2.75rem,
+      14vw,
+      4.15rem
+    );
+
+  font-variant-numeric:
+    tabular-nums;
+
   font-weight: 700;
   letter-spacing: -0.055em;
   line-height: 0.95;
+
+  text-shadow:
+    0 1px 0
+      rgba(255, 255, 255, 0.72);
 }
 
 .timer-state {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   margin: 12px 0 0;
 
-  color: var(--accent-dark, #94513e);
+  color: var(--focus-accent-dark);
 
   font-size: 0.68rem;
   font-weight: 850;
@@ -313,48 +547,44 @@ button {
   transition: color 240ms ease;
 }
 
-.break-mode .timer-state {
-  color: var(--sage-dark, #667653);
-}
+/* =========================================================
+   RUNNING ANIMATION
+   ========================================================= */
 
-/* Gentle pulse while running */
-
-.focus-card.is-running .timer-display {
-  animation: timer-breathe 3.2s ease-in-out infinite;
+.focus-card.is-running
+.timer-display {
+  animation:
+    timer-breathe
+    3.2s
+    ease-in-out
+    infinite;
 }
 
 @keyframes timer-breathe {
   0%,
   100% {
     box-shadow:
-      inset 0 0 0 1px rgba(91, 65, 49, 0.06),
-      0 9px 24px rgba(77, 52, 38, 0.09);
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.86),
+      inset 0 0 0 11px
+        rgba(255, 255, 255, 0.2),
+      0 12px 28px
+        rgba(91, 73, 157, 0.13);
   }
 
   50% {
     box-shadow:
-      inset 0 0 0 1px rgba(91, 65, 49, 0.06),
-      0 12px 31px rgba(183, 110, 85, 0.16);
-  }
-}
-
-.focus-card.break-mode.is-running
-  .timer-display {
-  animation-name: break-timer-breathe;
-}
-
-@keyframes break-timer-breathe {
-  0%,
-  100% {
-    box-shadow:
-      inset 0 0 0 1px rgba(87, 104, 72, 0.06),
-      0 9px 24px rgba(87, 104, 72, 0.09);
-  }
-
-  50% {
-    box-shadow:
-      inset 0 0 0 1px rgba(87, 104, 72, 0.06),
-      0 12px 31px rgba(132, 150, 110, 0.18);
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.9),
+      inset 0 0 0 11px
+        rgba(255, 255, 255, 0.25),
+      0 16px 36px
+        color-mix(
+          in srgb,
+          var(--focus-accent)
+          25%,
+          transparent
+        );
   }
 }
 
@@ -364,33 +594,54 @@ button {
 
 .timer-buttons {
   display: grid;
-  grid-template-columns: 1.25fr 1fr 1fr;
+
+  grid-template-columns:
+    1.25fr
+    1fr
+    1fr;
+
   gap: 9px;
 }
 
 .timer-buttons button {
   min-height: 42px;
+
   padding: 10px 12px;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   cursor: pointer;
 
   background: var(
     --panel-background-soft,
-    rgba(255, 255, 255, 0.64)
+    rgba(255, 255, 255, 0.52)
   );
 
-  border: 1px solid var(
-    --border-default,
-    rgba(91, 65, 49, 0.13)
-  );
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
 
-  border-radius: 12px;
+  border-radius: var(
+    --radius-small,
+    10px
+  );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.74),
-    0 3px 8px rgba(77, 52, 38, 0.05);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76),
+    0 5px 12px
+      rgba(100, 79, 170, 0.07);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
 
   font-size: 0.72rem;
   font-weight: 800;
@@ -404,59 +655,111 @@ button {
     border-color 150ms ease;
 }
 
-.timer-buttons button:hover {
+.timer-buttons button:hover:not(:disabled) {
   transform: translateY(-1px);
 
   border-color: var(
-    --border-strong,
-    rgba(91, 65, 49, 0.2)
+    --border-accent,
+    rgba(144, 121, 232, 0.24)
+  );
+
+  background: var(
+    --panel-background,
+    rgba(255, 255, 255, 0.66)
   );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 6px 12px rgba(77, 52, 38, 0.08);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 8px 16px
+      rgba(100, 79, 170, 0.11);
 }
 
-.timer-buttons button:active {
+.timer-buttons button:active:not(:disabled) {
   transform: translateY(0);
 }
 
 .timer-buttons button:focus-visible,
-.preset:focus-visible {
-  outline: 3px solid rgba(183, 110, 85, 0.22);
+.preset:focus-visible,
+.focus-completion-prompt__close:focus-visible {
+  outline:
+    3px solid
+    color-mix(
+      in srgb,
+      var(--focus-accent)
+      26%,
+      transparent
+    );
+
   outline-offset: 2px;
 }
 
 #startBtn {
-  color: #fffaf7;
+  color: var(
+    --text-on-accent,
+    #ffffff
+  );
 
-  background: var(--accent, #b76e55);
-  border-color: var(--accent, #b76e55);
+  background:
+    linear-gradient(
+      120deg,
+      var(--focus-accent),
+      color-mix(
+        in srgb,
+        var(--focus-accent)
+        64%,
+        var(--pastel-pink, #efa6dc)
+      ),
+      color-mix(
+        in srgb,
+        var(--focus-accent)
+        58%,
+        var(--pastel-blue, #8fcff4)
+      )
+    );
+
+  background-size: 180% 180%;
+
+  border-color:
+    rgba(255, 255, 255, 0.3);
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 5px 12px rgba(148, 81, 62, 0.18);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.3),
+    0 7px 18px
+      color-mix(
+        in srgb,
+        var(--focus-accent)
+        28%,
+        transparent
+      );
 }
 
-#startBtn:hover {
-  background: var(--accent-dark, #94513e);
-  border-color: var(--accent-dark, #94513e);
-}
+#startBtn:hover:not(:disabled) {
+  background-position: 100% 50%;
 
-.break-mode #startBtn {
-  background: var(--sage, #84966e);
-  border-color: var(--sage, #84966e);
-}
+  border-color:
+    rgba(255, 255, 255, 0.36);
 
-.break-mode #startBtn:hover {
-  background: var(--sage-dark, #667653);
-  border-color: var(--sage-dark, #667653);
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.35),
+    0 10px 22px
+      color-mix(
+        in srgb,
+        var(--focus-accent)
+        34%,
+        transparent
+      );
 }
 
 button:disabled {
   cursor: not-allowed;
+
   opacity: 0.46;
+
   transform: none !important;
+
   box-shadow: none;
 }
 
@@ -468,7 +771,10 @@ button:disabled {
 .today-stats h2 {
   margin: 0 0 13px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.65rem;
   font-weight: 850;
@@ -479,29 +785,45 @@ button:disabled {
 
 .preset-buttons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
   gap: 8px;
 }
 
 .preset {
   min-height: 40px;
+
   padding: 9px 8px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   cursor: pointer;
 
   background: var(
     --panel-background-soft,
-    rgba(255, 255, 255, 0.54)
+    rgba(255, 255, 255, 0.52)
   );
 
-  border: 1px solid var(
-    --border-default,
-    rgba(91, 65, 49, 0.12)
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius: var(
+    --radius-pill,
+    999px
   );
 
-  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.7);
 
   font-size: 0.72rem;
   font-weight: 800;
@@ -518,20 +840,45 @@ button:disabled {
 .preset:hover {
   transform: translateY(-1px);
 
-  color: var(--accent-dark, #94513e);
-  border-color: rgba(183, 110, 85, 0.23);
+  color: var(--focus-accent-dark);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--focus-accent)
+      32%,
+      transparent
+    );
 }
 
 .preset.active {
-  color: var(--accent-dark, #94513e);
+  color: var(--focus-accent-dark);
 
-  background: var(--accent-soft, #efd8cd);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.72),
+      var(--focus-accent-soft)
+    );
 
-  border-color: rgba(183, 110, 85, 0.22);
+  border-color:
+    color-mix(
+      in srgb,
+      var(--focus-accent)
+      30%,
+      transparent
+    );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.54),
-    0 4px 9px rgba(148, 81, 62, 0.08);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.78),
+    0 6px 14px
+      color-mix(
+        in srgb,
+        var(--focus-accent)
+        13%,
+        transparent
+      );
 }
 
 /* =========================================================
@@ -545,17 +892,21 @@ button:disabled {
 
 .stat {
   display: flex;
+
   min-height: 47px;
+
   align-items: center;
   justify-content: space-between;
   gap: 16px;
 
   padding: 11px 2px;
 
-  border-bottom: 1px solid var(
-    --border-default,
-    rgba(91, 65, 49, 0.1)
-  );
+  border-bottom:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
 }
 
 .stat:last-child {
@@ -564,7 +915,10 @@ button:disabled {
 }
 
 .stat span {
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.75rem;
   font-weight: 680;
@@ -574,7 +928,10 @@ button:disabled {
 .stat strong {
   flex: 0 0 auto;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-family: var(
     --font-heading,
@@ -584,9 +941,211 @@ button:disabled {
   );
 
   font-size: 1rem;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric:
+    tabular-nums;
+
   font-weight: 700;
   line-height: 1;
+}
+
+/* =========================================================
+   COMPLETION PROMPT
+   ========================================================= */
+
+.focus-completion-prompt {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    minmax(0, 1fr);
+
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 18px;
+  padding: 14px 42px 14px 14px;
+
+  opacity: 0;
+
+  transform: translateY(7px);
+
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(
+        in srgb,
+        var(--pastel-purple, #a995f4)
+        13%,
+        rgba(255, 255, 255, 0.64)
+      ),
+      color-mix(
+        in srgb,
+        var(--pastel-blue, #8fcff4)
+        11%,
+        rgba(255, 255, 255, 0.64)
+      ),
+      color-mix(
+        in srgb,
+        var(--pastel-pink, #efa6dc)
+        11%,
+        rgba(255, 255, 255, 0.64)
+      )
+    );
+
+  border:
+    1px solid
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  border-radius: var(
+    --radius-panel,
+    14px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8),
+    0 8px 18px
+      rgba(100, 79, 170, 0.09);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.focus-completion-prompt.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.focus-completion-prompt__icon {
+  display: grid;
+
+  width: 34px;
+  height: 34px;
+
+  place-items: center;
+
+  color: var(--focus-accent-dark);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.76),
+      var(--focus-accent-soft)
+    );
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--focus-accent)
+      20%,
+      transparent
+    );
+
+  border-radius: 11px;
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.78);
+
+  font-size: 0.95rem;
+}
+
+.focus-completion-prompt strong {
+  display: block;
+
+  margin: 0 0 3px;
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
+
+  font-size: 0.9rem;
+  line-height: 1.15;
+}
+
+.focus-completion-prompt p {
+  margin: 0;
+
+  color: var(
+    --text-secondary,
+    #746d91
+  );
+
+  font-size: 0.72rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.focus-completion-prompt__close {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+
+  display: grid;
+
+  width: 27px;
+  height: 27px;
+
+  padding: 0;
+
+  place-items: center;
+
+  color: var(
+    --text-secondary,
+    #746d91
+  );
+
+  cursor: pointer;
+
+  background: transparent;
+  border: 0;
+
+  border-radius: 50%;
+
+  font-size: 1.05rem;
+  line-height: 1;
+
+  transition:
+    color 150ms ease,
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.focus-completion-prompt__close:hover {
+  transform: rotate(5deg);
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--focus-accent)
+      12%,
+      transparent
+    );
 }
 
 /* =========================================================
@@ -608,7 +1167,9 @@ button:disabled {
   }
 
   .timer-buttons {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      1fr
+      1fr;
   }
 
   #startBtn {
@@ -626,7 +1187,10 @@ button:disabled {
   }
 
   .preset {
-    border-radius: 12px;
+    border-radius: var(
+      --radius-small,
+      10px
+    );
   }
 }
 
@@ -634,173 +1198,18 @@ button:disabled {
    REDUCED MOTION
    ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
   .focus-card,
   .focus-icon,
   .timer-display,
   .timer-buttons button,
-  .preset {
+  .preset,
+  .focus-completion-prompt,
+  .focus-completion-prompt__close {
     animation: none !important;
     transition: none !important;
   }
-}
-
-/* =========================================================
-   COMPLETION PROMPT
-   ========================================================= */
-
-.focus-completion-prompt {
-  position: relative;
-
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 12px;
-
-  margin-top: 18px;
-  padding: 14px 42px 14px 14px;
-
-  opacity: 0;
-  transform: translateY(7px);
-
-  background:
-    var(
-      --panel-background,
-      linear-gradient(
-        145deg,
-        rgba(255, 255, 255, 0.88),
-        rgba(255, 247, 241, 0.82)
-      )
-    );
-
-  border: 1px solid
-    var(
-      --border-accent,
-      rgba(183, 110, 85, 0.16)
-    );
-
-  border-radius:
-    var(
-      --radius-panel,
-      14px
-    );
-
-  box-shadow:
-    inset 0 1px 0
-      rgba(255, 255, 255, 0.72),
-    0 6px 16px
-      rgba(77, 52, 38, 0.07);
-
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease;
-}
-
-.focus-completion-prompt.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.focus-completion-prompt__icon {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-
-  background:
-    var(
-      --accent-soft,
-      #efd8cd
-    );
-
-  border-radius: 11px;
-
-  font-size: 0.95rem;
-}
-
-.break-mode
-  .focus-completion-prompt__icon {
-  background:
-    var(
-      --sage-soft,
-      #dfe8d7
-    );
-}
-
-.focus-completion-prompt strong {
-  display: block;
-  margin: 0 0 3px;
-
-  color:
-    var(
-      --text-primary,
-      #40342e
-    );
-
-  font-family:
-    var(
-      --font-heading,
-      Georgia,
-      "Times New Roman",
-      serif
-    );
-
-  font-size: 0.9rem;
-  line-height: 1.15;
-}
-
-.focus-completion-prompt p {
-  margin: 0;
-
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
-
-  font-size: 0.72rem;
-  font-weight: 650;
-  line-height: 1.4;
-}
-
-.focus-completion-prompt__close {
-  position: absolute;
-  top: 8px;
-  right: 9px;
-
-  display: grid;
-  width: 27px;
-  height: 27px;
-  padding: 0;
-  place-items: center;
-
-  color:
-    var(
-      --text-secondary,
-      #806f65
-    );
-
-  cursor: pointer;
-
-  background: transparent;
-  border: 0;
-  border-radius: 50%;
-
-  font-size: 1.05rem;
-  line-height: 1;
-
-  transition:
-    color 150ms ease,
-    background 150ms ease;
-}
-
-.focus-completion-prompt__close:hover {
-  color:
-    var(
-      --text-primary,
-      #40342e
-    );
-
-  background:
-    rgba(91, 65, 49, 0.07);
 }
