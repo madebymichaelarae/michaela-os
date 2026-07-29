@@ -1,1034 +1,1285 @@
+/* =========================================================
+   MICHAELA OS
+   Finance — Spending Report
+   Shared Dreamy Pastel Theme
+   ========================================================= */
+
+@import url("/css/system/cozy-autumn.css");
+
 :root {
-  --spending-surface:
-    var(
-      --cozy-surface,
-      #fffaf4
-    );
-
-  --spending-surface-raised:
-    var(
-      --cozy-surface-raised,
-      rgba(
-        255,
-        255,
-        255,
-        0.48
-      )
-    );
-
-  --spending-border:
-    var(
-      --cozy-border,
-      rgba(
-        102,
-        74,
-        55,
-        0.14
-      )
-    );
-
-  --spending-text:
-    var(
-      --cozy-text,
-      #40352e
-    );
-
-  --spending-muted:
-    var(
-      --cozy-text-muted,
-      #7e6c60
-    );
-
-  --spending-heading:
-    var(
-      --cozy-heading,
-      #40352e
-    );
-
-  --spending-accent:
-    var(
-      --cozy-accent,
-      #b96f55
-    );
-
-  --spending-accent-soft:
-    var(
-      --cozy-accent-soft,
-      #f3dfd5
-    );
-
-  --spending-success:
-    var(
-      --cozy-success,
-      #70835f
-    );
-
-  --spending-danger:
-    var(
-      --cozy-danger,
-      #b15f55
-    );
-
   --spending-chart-1:
     var(
-      --cozy-chart-1,
-      #b96f55
+      --pastel-purple,
+      #a995f4
     );
 
   --spending-chart-2:
     var(
-      --cozy-chart-2,
-      #d5a15d
+      --pastel-blue,
+      #8fcff4
     );
 
   --spending-chart-3:
     var(
-      --cozy-chart-3,
-      #87966f
+      --pastel-mint,
+      #a7eee0
     );
 
   --spending-chart-4:
     var(
-      --cozy-chart-4,
-      #9b786f
+      --pastel-pink,
+      #efa6dc
     );
 
   --spending-chart-5:
     var(
-      --cozy-chart-5,
-      #c49a8c
-    );
-
-  --spending-shadow:
-    var(
-      --cozy-shadow,
-      0 10px 30px
-        rgba(
-          70,
-          45,
-          30,
-          0.08
-        )
+      --pastel-yellow,
+      #f4da91
     );
 }
 
 * {
-  box-sizing:
-    border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-  margin:
-    0;
-
-  padding:
-    0;
-
-  min-height:
-    100%;
-
-  background:
-    transparent;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  color:
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  background: transparent;
+
+  font-family: var(
+    --font-body,
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif
+  );
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================================
+   WIDGET SHELL
+   ========================================================= */
+
+.spending-widget {
+  position: relative;
+
+  width: 100%;
+  min-height: 100%;
+
+  padding: 18px;
+
+  overflow: hidden;
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  background: var(
+    --card-background,
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(242, 239, 255, 0.91) 31%,
+      rgba(237, 247, 255, 0.9) 62%,
+      rgba(255, 246, 252, 0.92)
+    )
+  );
+
+  border:
+    1px solid
     var(
-      --spending-text
+      --border-default,
+      rgba(104, 83, 171, 0.15)
     );
 
-  font-family:
-    var(
-      --font-body,
-      Inter,
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      sans-serif
+  border-radius: var(
+    --radius-card,
+    20px
+  );
+
+  box-shadow: var(
+    --shadow-card,
+    0 2px 4px rgba(81, 65, 133, 0.05),
+    0 12px 30px rgba(91, 73, 157, 0.13)
+  );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.spending-widget::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 8% 6%,
+      color-mix(
+        in srgb,
+        var(--pastel-purple, #a995f4)
+        14%,
+        transparent
+      ),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 94% 8%,
+      color-mix(
+        in srgb,
+        var(--pastel-blue, #8fcff4)
+        12%,
+        transparent
+      ),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 92% 95%,
+      color-mix(
+        in srgb,
+        var(--pastel-pink, #efa6dc)
+        10%,
+        transparent
+      ),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 5% 94%,
+      color-mix(
+        in srgb,
+        var(--pastel-mint, #a7eee0)
+        9%,
+        transparent
+      ),
+      transparent 36%
     );
 }
 
-.spending-widget {
-  width:
-    100%;
+.spending-widget > * {
+  position: relative;
+  z-index: 1;
+}
 
-  min-height:
-    100%;
+.spending-widget:hover {
+  transform: translateY(-1px);
 
-  padding:
-    18px;
+  border-color: var(
+    --border-accent,
+    rgba(144, 121, 232, 0.24)
+  );
 
-  overflow:
-    hidden;
+  box-shadow: var(
+    --shadow-card-hover,
+    0 4px 8px rgba(81, 65, 133, 0.07),
+    0 18px 38px rgba(91, 73, 157, 0.18)
+  );
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.spending-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+}
+
+.spending-heading {
+  display: flex;
+
+  align-items: center;
+  gap: 9px;
+}
+
+.spending-heading-icon {
+  display: inline-flex;
+
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 32px;
+
+  align-items: center;
+  justify-content: center;
+
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
 
   background:
-    var(
-      --spending-surface
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.8),
+      color-mix(
+        in srgb,
+        var(--pastel-purple, #a995f4)
+        32%,
+        transparent
+      )
     );
 
   border:
     1px solid
+    color-mix(
+      in srgb,
+      var(--pastel-purple, #a995f4)
+      35%,
       var(
-        --spending-border
-      );
+        --border-soft,
+        rgba(104, 83, 171, 0.09)
+      )
+    );
 
-  border-radius:
-    20px;
+  border-radius: var(
+    --radius-icon,
+    11px
+  );
 
   box-shadow:
-    var(
-      --spending-shadow
-    );
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.84),
+    0 6px 15px
+      rgba(102, 81, 189, 0.1);
+
+  font-size: 16px;
+  line-height: 1;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
-.spending-header {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    space-between;
-
-  margin-bottom:
-    10px;
-}
-
-.spending-heading {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    9px;
-}
-
+.spending-widget:hover
 .spending-heading-icon {
-  display:
-    inline-flex;
+  transform: rotate(3deg);
 
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  width:
-    30px;
-
-  height:
-    30px;
-
-  flex:
-    0 0 30px;
-
-  font-size:
-    16px;
-
-  line-height:
-    1;
-
-  background:
-    var(
-      --spending-accent-soft
-    );
-
-  border-radius:
-    10px;
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.88),
+    0 9px 19px
+      rgba(102, 81, 189, 0.15);
 }
 
 .spending-title {
-  margin:
-    0;
+  margin: 0;
 
-  color:
-    var(
-      --spending-heading
-    );
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
-  font-family:
-    var(
-      --font-heading,
-      Georgia,
-      serif
-    );
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
 
-  font-size:
-    22px;
-
-  font-weight:
-    700;
-
-  line-height:
-    1.1;
-
-  letter-spacing:
-    -0.02em;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
 }
+
+/* =========================================================
+   MAIN REPORT PANEL
+   ========================================================= */
 
 .spending-main {
-  display:
-    grid;
+  display: grid;
 
   grid-template-columns:
-    minmax(
-      0,
-      1.75fr
-    )
-    minmax(
-      145px,
-      0.85fr
+    minmax(0, 1.75fr)
+    minmax(145px, 0.85fr);
+
+  align-items: center;
+  gap: 18px;
+
+  min-height: 220px;
+
+  padding: 12px 14px;
+
+  background: var(
+    --panel-background-soft,
+    rgba(255, 255, 255, 0.5)
+  );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
     );
 
-  align-items:
-    center;
+  border-radius: var(
+    --radius-panel,
+    17px
+  );
 
-  gap:
-    18px;
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 6px 17px
+      rgba(91, 73, 157, 0.05);
 
-  min-height:
-    220px;
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
 }
 
+/* =========================================================
+   CHART
+   ========================================================= */
+
 .spending-chart-area {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  min-width: 0;
 
-  justify-content:
-    center;
-
-  min-width:
-    0;
+  align-items: center;
+  justify-content: center;
 }
 
 .spending-chart-wrapper {
-  position:
-    relative;
+  position: relative;
 
-  width:
-    min(
-      100%,
-      270px
+  width: min(
+    100%,
+    270px
+  );
+
+  height: 220px;
+
+  filter:
+    drop-shadow(
+      0 8px 14px
+      rgba(102, 81, 189, 0.08)
+    );
+}
+
+.spending-chart-wrapper::before {
+  content: "";
+
+  position: absolute;
+  inset: 29px;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.68),
+      rgba(247, 244, 255, 0.36) 58%,
+      transparent 72%
     );
 
-  height:
-    220px;
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--pastel-purple, #a995f4)
+      13%,
+      transparent
+    );
+
+  border-radius: 50%;
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.88),
+    0 0 24px
+      rgba(132, 106, 210, 0.07);
+
+  backdrop-filter: blur(5px);
+
+  -webkit-backdrop-filter:
+    blur(5px);
 }
 
 .spending-chart-wrapper canvas {
-  width:
-    100% !important;
+  position: relative;
+  z-index: 1;
 
-  height:
-    100% !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .spending-chart-center {
-  position:
-    absolute;
+  position: absolute;
+  inset: 0;
 
-  inset:
-    0;
+  z-index: 2;
 
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  align-items:
-    center;
+  padding: 48px;
 
-  justify-content:
-    center;
+  pointer-events: none;
 
-  padding:
-    48px;
-
-  pointer-events:
-    none;
-
-  text-align:
-    center;
+  text-align: center;
 }
 
 .spending-total {
-  max-width:
-    100%;
+  max-width: 100%;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  color:
-    var(
-      --spending-text
-    );
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
 
-  font-size:
-    clamp(
-      22px,
-      4vw,
-      31px
-    );
+  font-size: clamp(
+    22px,
+    4vw,
+    31px
+  );
 
-  font-weight:
-    800;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
 
-  line-height:
-    1;
-
-  letter-spacing:
-    -0.04em;
-
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   font-variant-numeric:
     tabular-nums;
+
+  background:
+    linear-gradient(
+      120deg,
+      var(--accent-dark, #6651bd),
+      var(--pastel-purple, #a995f4),
+      var(--pastel-pink, #efa6dc)
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
 }
 
 .spending-month {
-  margin-top:
-    6px;
+  margin-top: 6px;
 
-  color:
-    var(
-      --spending-muted
-    );
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
-  font-size:
-    12px;
-
-  font-weight:
-    700;
-
-  line-height:
-    1;
-
-  text-transform:
-    uppercase;
-
-  letter-spacing:
-    0.08em;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
 .spending-legend-area {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  min-width: 0;
 
-  min-width:
-    0;
+  align-items: center;
 }
 
 .spending-legend {
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  width: 100%;
 
-  gap:
-    13px;
+  margin: 0;
+  padding: 0;
 
-  width:
-    100%;
+  flex-direction: column;
+  gap: 9px;
 
-  margin:
-    0;
-
-  padding:
-    0;
-
-  list-style:
-    none;
+  list-style: none;
 }
 
 .spending-legend-item {
-  display:
-    grid;
+  display: grid;
 
   grid-template-columns:
     10px
-    minmax(
-      0,
-      1fr
-    )
+    minmax(0, 1fr)
     auto;
 
-  align-items:
-    center;
+  align-items: center;
+  gap: 8px;
 
-  gap:
-    8px;
+  min-width: 0;
+
+  padding: 7px 8px;
+
+  background:
+    rgba(255, 255, 255, 0.34);
+
+  border:
+    1px solid
+    transparent;
+
+  border-radius: 11px;
+
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.spending-legend-item:hover {
+  transform: translateY(-1px);
+
+  background:
+    rgba(255, 255, 255, 0.62);
+
+  border-color: var(
+    --border-soft,
+    rgba(104, 83, 171, 0.09)
+  );
+
+  box-shadow:
+    0 5px 12px
+      rgba(91, 73, 157, 0.05);
 }
 
 .spending-legend-dot {
-  display:
-    block;
+  display: block;
 
-  width:
-    9px;
+  width: 9px;
+  height: 9px;
 
-  height:
-    9px;
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.55);
 
-  border-radius:
-    50%;
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 7px
+      color-mix(
+        in srgb,
+        currentColor
+        45%,
+        transparent
+      );
 }
 
 .spending-legend-dot-1 {
-  background:
-    var(
-      --spending-chart-1
-    );
+  color: var(
+    --spending-chart-1
+  );
+
+  background: var(
+    --spending-chart-1
+  );
 }
 
 .spending-legend-dot-2 {
-  background:
-    var(
-      --spending-chart-2
-    );
+  color: var(
+    --spending-chart-2
+  );
+
+  background: var(
+    --spending-chart-2
+  );
 }
 
 .spending-legend-dot-3 {
-  background:
-    var(
-      --spending-chart-3
-    );
+  color: var(
+    --spending-chart-3
+  );
+
+  background: var(
+    --spending-chart-3
+  );
 }
 
 .spending-legend-dot-4 {
-  background:
-    var(
-      --spending-chart-4
-    );
+  color: var(
+    --spending-chart-4
+  );
+
+  background: var(
+    --spending-chart-4
+  );
 }
 
 .spending-legend-dot-5 {
-  background:
-    var(
-      --spending-chart-5
-    );
+  color: var(
+    --spending-chart-5
+  );
+
+  background: var(
+    --spending-chart-5
+  );
 }
 
 .spending-legend-name {
-  min-width:
-    0;
+  min-width: 0;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  color:
-    var(
-      --spending-text
-    );
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
-  font-size:
-    12px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
 
-  font-weight:
-    700;
-
-  line-height:
-    1.2;
-
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .spending-legend-amount {
-  padding-left:
-    4px;
+  padding-left: 4px;
 
-  color:
-    var(
-      --spending-muted
-    );
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
-  font-size:
-    12px;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1;
+  text-align: right;
 
-  font-weight:
-    700;
-
-  line-height:
-    1;
-
-  text-align:
-    right;
-
-  white-space:
-    nowrap;
+  white-space: nowrap;
 
   font-variant-numeric:
     tabular-nums;
 }
 
+/* =========================================================
+   TRENDS
+   ========================================================= */
+
 .spending-trends {
-  display:
-    grid;
+  display: grid;
 
   grid-template-columns:
     repeat(
       3,
-      minmax(
-        0,
-        1fr
-      )
+      minmax(0, 1fr)
     );
 
-  margin-top:
-    10px;
+  margin-top: 11px;
 
-  padding-top:
-    13px;
+  overflow: hidden;
 
-  border-top:
+  background: var(
+    --panel-background-soft,
+    rgba(255, 255, 255, 0.48)
+  );
+
+  border:
     1px solid
-      var(
-        --spending-border
-      );
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius: var(
+    --radius-panel,
+    15px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.78),
+    0 5px 14px
+      rgba(91, 73, 157, 0.04);
+
+  backdrop-filter: blur(9px);
+
+  -webkit-backdrop-filter:
+    blur(9px);
 }
 
 .spending-trend {
-  display:
-    flex;
+  position: relative;
 
-  flex-direction:
-    column;
+  display: flex;
 
-  align-items:
-    center;
+  min-width: 0;
 
-  min-width:
-    0;
+  padding: 13px 10px 14px;
 
-  padding:
-    0 10px;
+  flex-direction: column;
+  align-items: center;
 
-  text-align:
-    center;
+  text-align: center;
 }
 
-.spending-trend +
-.spending-trend {
+.spending-trend::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(
+        in srgb,
+        var(--pastel-purple, #a995f4)
+        5%,
+        transparent
+      ),
+      transparent
+    );
+}
+
+.spending-trend:nth-child(2)::before {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(
+        in srgb,
+        var(--pastel-blue, #8fcff4)
+        6%,
+        transparent
+      ),
+      transparent
+    );
+}
+
+.spending-trend:nth-child(3)::before {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(
+        in srgb,
+        var(--pastel-mint, #a7eee0)
+        6%,
+        transparent
+      ),
+      transparent
+    );
+}
+
+.spending-trend > * {
+  position: relative;
+  z-index: 1;
+}
+
+.spending-trend
++ .spending-trend {
   border-left:
     1px solid
-      var(
-        --spending-border
-      );
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
 }
 
 .spending-trend-main {
-  display:
-    block;
+  display: block;
 
-  max-width:
-    100%;
+  max-width: 100%;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  font-size:
-    13px;
+  color: var(
+    --accent-dark,
+    #6651bd
+  );
 
-  font-weight:
-    800;
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
 
-  line-height:
-    1.25;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
 
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .spending-trend-label {
-  display:
-    block;
+  display: block;
 
-  max-width:
-    100%;
+  max-width: 100%;
 
-  margin-top:
-    3px;
+  margin-top: 3px;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  color:
-    var(
-      --spending-muted
-    );
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
-  font-size:
-    11px;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.2;
 
-  font-weight:
-    650;
-
-  line-height:
-    1.2;
-
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .trend-good
 .spending-trend-main {
-  color:
-    var(
-      --spending-success
-    );
+  color: var(
+    --color-success-dark,
+    #4f8d80
+  );
 }
 
 .trend-bad
 .spending-trend-main {
-  color:
-    var(
-      --spending-danger
-    );
+  color: var(
+    --color-danger,
+    #bd6687
+  );
 }
 
 .trend-neutral
 .spending-trend-main {
-  color:
-    var(
-      --spending-muted
-    );
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 }
+
+/* =========================================================
+   LOADING
+   ========================================================= */
 
 .spending-loading {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  min-height: 260px;
 
-  justify-content:
-    center;
+  align-items: center;
+  justify-content: center;
 
-  min-height:
-    260px;
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
-  color:
+  background: var(
+    --panel-background-soft,
+    rgba(255, 255, 255, 0.45)
+  );
+
+  border:
+    1px solid
     var(
-      --spending-muted
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
     );
 
-  font-size:
-    13px;
+  border-radius: var(
+    --radius-panel,
+    16px
+  );
+
+  font-size: 13px;
+  font-weight: 650;
 }
 
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
 .spending-empty {
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  min-height: 240px;
 
-  align-items:
-    center;
+  padding: 18px;
 
-  justify-content:
-    center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  min-height:
-    240px;
+  text-align: center;
 
-  padding:
-    18px;
+  background: var(
+    --panel-background-soft,
+    rgba(255, 255, 255, 0.5)
+  );
 
-  text-align:
-    center;
-
-  background:
+  border:
+    1px solid
     var(
-      --spending-surface-raised
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
     );
 
-  border-radius:
-    15px;
+  border-radius: var(
+    --radius-panel,
+    16px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8);
 }
 
 .spending-empty-icon {
-  margin-bottom:
-    7px;
+  display: grid;
 
-  font-size:
-    22px;
+  width: 38px;
+  height: 38px;
 
-  line-height:
-    1;
-}
+  margin-bottom: 8px;
 
-.spending-empty-title {
-  margin:
-    0 0 4px;
-
-  color:
-    var(
-      --spending-text
-    );
-
-  font-size:
-    14px;
-
-  font-weight:
-    800;
-}
-
-.spending-empty-text {
-  margin:
-    0;
-
-  color:
-    var(
-      --spending-muted
-    );
-
-  font-size:
-    12px;
-
-  line-height:
-    1.4;
-}
-
-.spending-error {
-  display:
-    flex;
-
-  align-items:
-    flex-start;
-
-  gap:
-    10px;
-
-  min-height:
-    100px;
-
-  padding:
-    14px;
+  place-items: center;
 
   background:
-    color-mix(
-      in srgb,
-      var(
-        --spending-danger
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.75),
+      color-mix(
+        in srgb,
+        var(--pastel-blue, #8fcff4)
+        25%,
+        transparent
       )
-      8%,
-      transparent
     );
 
   border:
     1px solid
+    color-mix(
+      in srgb,
+      var(--pastel-blue, #8fcff4)
+      25%,
+      transparent
+    );
+
+  border-radius: 12px;
+
+  font-size: 20px;
+  line-height: 1;
+}
+
+.spending-empty-title {
+  margin: 0 0 4px;
+
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
+  font-family: var(
+    --font-heading,
+    Georgia,
+    "Times New Roman",
+    serif
+  );
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.spending-empty-text {
+  margin: 0;
+
+  color: var(
+    --text-secondary,
+    #746d91
+  );
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   ERROR STATE
+   ========================================================= */
+
+.spending-error {
+  display: flex;
+
+  min-height: 100px;
+
+  padding: 14px;
+
+  align-items: flex-start;
+  gap: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.62),
       color-mix(
         in srgb,
-        var(
-          --spending-danger
-        )
+        var(--pastel-pink, #efa6dc)
         18%,
         transparent
-      );
+      )
+    );
 
-  border-radius:
-    14px;
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--pastel-pink, #efa6dc)
+      27%,
+      transparent
+    );
+
+  border-radius: var(
+    --radius-panel,
+    14px
+  );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76);
 }
 
 .spending-error-icon {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  width: 25px;
+  height: 25px;
 
-  justify-content:
-    center;
+  flex: 0 0 25px;
 
-  width:
-    24px;
+  align-items: center;
+  justify-content: center;
 
-  height:
-    24px;
-
-  flex:
-    0 0 24px;
-
-  color:
-    var(
-      --spending-danger
-    );
+  color: var(
+    --color-danger,
+    #9f5d81
+  );
 
   background:
-    var(
-      --spending-accent-soft
+    color-mix(
+      in srgb,
+      var(--pastel-pink, #efa6dc)
+      24%,
+      rgba(255, 255, 255, 0.58)
     );
 
-  border-radius:
-    50%;
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--pastel-pink, #efa6dc)
+      24%,
+      transparent
+    );
 
-  font-size:
-    13px;
+  border-radius: 50%;
 
-  font-weight:
-    900;
+  font-size: 13px;
+  font-weight: 900;
 }
 
 .spending-error-title {
-  margin:
-    1px 0 3px;
+  margin: 1px 0 3px;
 
-  color:
-    var(
-      --spending-text
-    );
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
-  font-size:
-    13px;
-
-  font-weight:
-    800;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .spending-error-text {
-  margin:
-    0;
+  margin: 0;
 
-  color:
-    var(
-      --spending-muted
-    );
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
-  font-size:
-    12px;
-
-  line-height:
-    1.4;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
-@media (
-  max-width: 520px
-) {
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 520px) {
   .spending-widget {
-    padding:
-      14px;
+    padding: 14px;
   }
 
   .spending-main {
     grid-template-columns:
-      minmax(
-        0,
-        1.45fr
-      )
-      minmax(
-        105px,
-        0.8fr
-      );
+      minmax(0, 1.45fr)
+      minmax(105px, 0.8fr);
 
-    gap:
-      10px;
+    gap: 8px;
 
-    min-height:
-      190px;
+    min-height: 190px;
+
+    padding: 9px 8px;
   }
 
   .spending-chart-wrapper {
-    height:
-      185px;
+    height: 185px;
+  }
+
+  .spending-chart-wrapper::before {
+    inset: 25px;
   }
 
   .spending-chart-center {
-    padding:
-      39px;
+    padding: 39px;
   }
 
   .spending-total {
-    font-size:
-      22px;
+    font-size: 22px;
   }
 
   .spending-legend {
-    gap:
-      10px;
+    gap: 6px;
+  }
+
+  .spending-legend-item {
+    gap: 6px;
+
+    padding: 6px;
   }
 
   .spending-legend-name,
   .spending-legend-amount {
-    font-size:
-      11px;
+    font-size: 11px;
   }
 
   .spending-trend {
-    padding:
-      0 5px;
+    padding: 12px 5px 13px;
   }
 
   .spending-trend-main {
-    font-size:
-      11px;
+    font-size: 11px;
   }
 
   .spending-trend-label {
-    font-size:
-      10px;
+    font-size: 10px;
   }
 }
 
-@media (
-  max-width: 370px
-) {
+@media (max-width: 370px) {
   .spending-main {
     grid-template-columns:
-      minmax(
-        0,
-        1fr
-      );
+      minmax(0, 1fr);
 
-    gap:
-      4px;
+    gap: 4px;
   }
 
   .spending-chart-wrapper {
-    height:
-      190px;
+    height: 190px;
   }
 
   .spending-legend {
-    display:
-      grid;
+    display: grid;
 
     grid-template-columns:
       repeat(
         2,
-        minmax(
-          0,
-          1fr
-        )
+        minmax(0, 1fr)
       );
 
-    gap:
-      8px 14px;
+    gap: 7px 9px;
+  }
+
+  .spending-legend-item {
+    grid-template-columns:
+      9px
+      minmax(0, 1fr);
+
+    padding: 6px 7px;
+  }
+
+  .spending-legend-amount {
+    grid-column: 2;
+
+    padding-left: 0;
+
+    font-size: 10px;
+    text-align: left;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .spending-widget,
+  .spending-heading-icon,
+  .spending-legend-item {
+    transition: none;
+  }
+
+  .spending-widget:hover,
+  .spending-legend-item:hover {
+    transform: none;
   }
 }
