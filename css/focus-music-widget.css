@@ -1,7 +1,7 @@
 /* =========================================================
-   Michaela OS
-   Productivity — Focus Soundtrack
-   Cozy Autumn Theme
+   MICHAELA OS
+   Work — Focus Soundtrack
+   Shared Dreamy Pastel Theme
    ========================================================= */
 
 * {
@@ -16,7 +16,11 @@ body {
 }
 
 body {
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
   background: transparent;
 
   font-family: var(
@@ -54,30 +58,53 @@ button {
 }
 
 .music-card {
-  --soundtrack-accent: #b76e55;
-  --soundtrack-accent-dark: #94513e;
-  --soundtrack-accent-soft: #efd8cd;
-  --soundtrack-surface: rgba(255, 248, 243, 0.97);
+  --soundtrack-accent:
+    var(
+      --accent,
+      #9079e8
+    );
+
+  --soundtrack-accent-dark:
+    var(
+      --accent-dark,
+      #6651bd
+    );
+
+  --soundtrack-accent-soft:
+    var(
+      --accent-soft,
+      rgba(218, 209, 255, 0.78)
+    );
+
+  --soundtrack-surface:
+    rgba(246, 242, 255, 0.9);
 
   position: relative;
 
   width: 100%;
   min-width: 0;
+
   padding: 18px 20px 20px;
 
   overflow: hidden;
 
+  color: var(
+    --text-primary,
+    #453d68
+  );
+
   background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.98),
+      rgba(255, 255, 255, 0.94),
       var(--soundtrack-surface)
     );
 
-  border: 1px solid
+  border:
+    1px solid
     var(
       --border-default,
-      rgba(91, 65, 49, 0.12)
+      rgba(104, 83, 171, 0.15)
     );
 
   border-radius:
@@ -89,9 +116,19 @@ button {
   box-shadow:
     var(
       --shadow-card,
-      0 1px 2px rgba(77, 52, 38, 0.05),
-      0 8px 22px rgba(77, 52, 38, 0.08)
+      0 2px 4px
+        rgba(81, 65, 133, 0.05),
+      0 12px 30px
+        rgba(91, 73, 157, 0.13)
     );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
 
   transition:
     transform 160ms ease,
@@ -101,19 +138,45 @@ button {
 }
 
 .music-card::before {
+  content: "";
+
   position: absolute;
   inset: 0;
 
-  content: "";
   pointer-events: none;
 
-  opacity: 0.45;
+  opacity: 0.85;
 
   background:
     radial-gradient(
-      circle at 96% 0%,
-      var(--soundtrack-accent-soft),
+      circle at 95% 2%,
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent-soft)
+        80%,
+        transparent
+      ),
       transparent 35%
+    ),
+    radial-gradient(
+      circle at 8% 92%,
+      color-mix(
+        in srgb,
+        var(--pastel-cyan, #8ce5e3)
+        9%,
+        transparent
+      ),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 80% 88%,
+      color-mix(
+        in srgb,
+        var(--pastel-pink, #efa6dc)
+        8%,
+        transparent
+      ),
+      transparent 38%
     );
 
   transition:
@@ -129,16 +192,20 @@ button {
   transform: translateY(-1px);
 
   border-color:
-    var(
-      --border-strong,
-      rgba(91, 65, 49, 0.18)
+    color-mix(
+      in srgb,
+      var(--soundtrack-accent)
+      24%,
+      transparent
     );
 
   box-shadow:
     var(
       --shadow-card-hover,
-      0 2px 5px rgba(77, 52, 38, 0.07),
-      0 13px 30px rgba(77, 52, 38, 0.11)
+      0 4px 8px
+        rgba(81, 65, 133, 0.07),
+      0 18px 38px
+        rgba(91, 73, 157, 0.18)
     );
 }
 
@@ -147,66 +214,66 @@ button {
    ========================================================= */
 
 .music-card[data-theme="late-night"] {
-  --soundtrack-accent: #73657c;
-  --soundtrack-accent-dark: #54475d;
-  --soundtrack-accent-soft: #e3dce8;
-  --soundtrack-surface: rgba(249, 247, 251, 0.97);
+  --soundtrack-accent: #a493da;
+  --soundtrack-accent-dark: #665998;
+  --soundtrack-accent-soft: rgba(226, 218, 255, 0.82);
+  --soundtrack-surface: rgba(243, 239, 255, 0.92);
 }
 
 .music-card[data-theme="beach"] {
-  --soundtrack-accent: #789ca2;
-  --soundtrack-accent-dark: #55777d;
-  --soundtrack-accent-soft: #dcebed;
-  --soundtrack-surface: rgba(247, 251, 251, 0.97);
+  --soundtrack-accent: #7fd4df;
+  --soundtrack-accent-dark: #4d8b98;
+  --soundtrack-accent-soft: rgba(207, 245, 249, 0.82);
+  --soundtrack-surface: rgba(239, 251, 253, 0.92);
 }
 
 .music-card[data-theme="cafe"] {
-  --soundtrack-accent: #a06f4f;
-  --soundtrack-accent-dark: #795039;
-  --soundtrack-accent-soft: #ead8ca;
-  --soundtrack-surface: rgba(253, 248, 243, 0.97);
+  --soundtrack-accent: #d3a0d5;
+  --soundtrack-accent-dark: #8d6391;
+  --soundtrack-accent-soft: rgba(244, 220, 246, 0.82);
+  --soundtrack-surface: rgba(253, 244, 253, 0.92);
 }
 
 .music-card[data-theme="storm"] {
-  --soundtrack-accent: #6f7d8b;
-  --soundtrack-accent-dark: #4e5b68;
-  --soundtrack-accent-soft: #dce2e7;
-  --soundtrack-surface: rgba(247, 249, 251, 0.97);
+  --soundtrack-accent: #91a9d9;
+  --soundtrack-accent-dark: #5f709a;
+  --soundtrack-accent-soft: rgba(220, 229, 250, 0.82);
+  --soundtrack-surface: rgba(243, 247, 255, 0.92);
 }
 
 .music-card[data-theme="fireplace"] {
-  --soundtrack-accent: #b76743;
-  --soundtrack-accent-dark: #8c482d;
-  --soundtrack-accent-soft: #f0d4c5;
-  --soundtrack-surface: rgba(255, 248, 243, 0.97);
+  --soundtrack-accent: #efa6c8;
+  --soundtrack-accent-dark: #a96786;
+  --soundtrack-accent-soft: rgba(253, 222, 237, 0.84);
+  --soundtrack-surface: rgba(255, 244, 250, 0.92);
 }
 
 .music-card[data-theme="office"] {
-  --soundtrack-accent: #87946f;
-  --soundtrack-accent-dark: #647052;
-  --soundtrack-accent-soft: #e0e7d8;
-  --soundtrack-surface: rgba(249, 251, 247, 0.97);
+  --soundtrack-accent: #93d9c8;
+  --soundtrack-accent-dark: #5f9488;
+  --soundtrack-accent-soft: rgba(213, 246, 238, 0.82);
+  --soundtrack-surface: rgba(240, 253, 249, 0.92);
 }
 
 .music-card[data-theme="car"] {
-  --soundtrack-accent: #6d7788;
-  --soundtrack-accent-dark: #4f5868;
-  --soundtrack-accent-soft: #dce0e7;
-  --soundtrack-surface: rgba(247, 248, 251, 0.97);
+  --soundtrack-accent: #91bde8;
+  --soundtrack-accent-dark: #5d7fa5;
+  --soundtrack-accent-soft: rgba(216, 236, 255, 0.82);
+  --soundtrack-surface: rgba(241, 248, 255, 0.92);
 }
 
 .music-card[data-theme="good-vibes"] {
-  --soundtrack-accent: #c58b4a;
-  --soundtrack-accent-dark: #936530;
-  --soundtrack-accent-soft: #f2e0c7;
-  --soundtrack-surface: rgba(255, 251, 245, 0.97);
+  --soundtrack-accent: #e7b3df;
+  --soundtrack-accent-dark: #9a7094;
+  --soundtrack-accent-soft: rgba(252, 225, 247, 0.84);
+  --soundtrack-surface: rgba(255, 246, 253, 0.92);
 }
 
 .music-card[data-theme="emo"] {
-  --soundtrack-accent: #745d66;
-  --soundtrack-accent-dark: #513e46;
-  --soundtrack-accent-soft: #e3d9dd;
-  --soundtrack-surface: rgba(249, 247, 248, 0.97);
+  --soundtrack-accent: #aa96c9;
+  --soundtrack-accent-dark: #705f8d;
+  --soundtrack-accent-soft: rgba(231, 221, 247, 0.82);
+  --soundtrack-surface: rgba(247, 243, 252, 0.92);
 }
 
 /* =========================================================
@@ -223,7 +290,10 @@ button {
 .music-eyebrow {
   margin: 0 0 3px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.64rem;
   font-weight: 800;
@@ -235,7 +305,10 @@ button {
 .music-header h1 {
   margin: 0;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-family: var(
     --font-heading,
@@ -252,9 +325,13 @@ button {
 
 .music-subtitle {
   max-width: 460px;
+
   margin: 7px 0 0;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.72rem;
   font-weight: 620;
@@ -263,35 +340,57 @@ button {
 
 .music-header-icon {
   display: grid;
+
   width: 39px;
   height: 39px;
+
   flex: 0 0 39px;
+
   place-items: center;
+
+  color: var(
+    --soundtrack-accent-dark
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.8),
+      var(--soundtrack-accent-soft)
+    );
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--soundtrack-accent)
+      22%,
+      transparent
+    );
+
+  border-radius:
+    var(
+      --radius-icon,
+      12px
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8),
+    0 6px 15px
+      rgba(100, 79, 170, 0.09);
 
   font-size: 1.1rem;
   line-height: 1;
 
-  background: var(--soundtrack-accent-soft);
-
-  border: 1px solid
-    color-mix(
-      in srgb,
-      var(--soundtrack-accent) 20%,
-      transparent
-    );
-
-  border-radius: var(--radius-icon, 12px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.64),
-    0 3px 8px rgba(77, 52, 38, 0.06);
-
   transition:
     background 300ms ease,
+    color 300ms ease,
     transform 160ms ease;
 }
 
-.music-card:hover .music-header-icon {
+.music-card:hover
+.music-header-icon {
   transform: rotate(3deg);
 }
 
@@ -302,19 +401,28 @@ button {
 .music-divider {
   width: 100%;
   height: 1px;
+
   margin: 18px 0;
 
   background:
-    var(
-      --border-default,
-      rgba(91, 65, 49, 0.12)
+    linear-gradient(
+      90deg,
+      transparent,
+      var(
+        --border-default,
+        rgba(104, 83, 171, 0.15)
+      ),
+      transparent
     );
 }
 
 .section-label {
   margin: 0 0 13px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.65rem;
   font-weight: 850;
@@ -343,7 +451,10 @@ button {
 
   margin: 0 0 8px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.66rem;
   font-weight: 800;
@@ -358,6 +469,7 @@ button {
 
 .soundtrack-button {
   display: inline-flex;
+
   min-height: 36px;
 
   align-items: center;
@@ -365,19 +477,39 @@ button {
 
   padding: 8px 12px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   cursor: pointer;
 
-  background: rgba(255, 255, 255, 0.53);
+  background: var(
+    --panel-background-soft,
+    rgba(255, 255, 255, 0.52)
+  );
 
-  border: 1px solid
+  border:
+    1px solid
     var(
       --border-default,
-      rgba(91, 65, 49, 0.12)
+      rgba(104, 83, 171, 0.15)
     );
 
-  border-radius: 999px;
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.72);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
 
   font-size: 0.69rem;
   font-weight: 800;
@@ -394,30 +526,60 @@ button {
 .soundtrack-button:hover {
   transform: translateY(-1px);
 
-  color: var(--soundtrack-accent-dark);
+  color: var(
+    --soundtrack-accent-dark
+  );
 
   border-color:
     color-mix(
       in srgb,
-      var(--soundtrack-accent) 32%,
-      transparent
-    );
-}
-
-.soundtrack-button.active {
-  color: var(--soundtrack-accent-dark);
-  background: var(--soundtrack-accent-soft);
-
-  border-color:
-    color-mix(
-      in srgb,
-      var(--soundtrack-accent) 28%,
+      var(--soundtrack-accent)
+      32%,
       transparent
     );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.56),
-    0 4px 9px rgba(77, 52, 38, 0.07);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8),
+    0 6px 13px
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent)
+        12%,
+        transparent
+      );
+}
+
+.soundtrack-button.active {
+  color: var(
+    --soundtrack-accent-dark
+  );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.72),
+      var(--soundtrack-accent-soft)
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--soundtrack-accent)
+      30%,
+      transparent
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.8),
+    0 7px 15px
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent)
+        15%,
+        transparent
+      );
 }
 
 .soundtrack-button-icon {
@@ -432,7 +594,8 @@ button {
   display: grid;
 
   grid-template-columns:
-    76px minmax(0, 1fr);
+    76px
+    minmax(0, 1fr);
 
   align-items: center;
   gap: 15px;
@@ -442,50 +605,93 @@ button {
 
 .station-artwork {
   display: grid;
+
   width: 76px;
   height: 76px;
+
   place-items: center;
+
+  color: var(
+    --soundtrack-accent-dark
+  );
 
   background:
     linear-gradient(
       145deg,
       var(--soundtrack-accent-soft),
-      rgba(255, 255, 255, 0.72)
+      rgba(255, 255, 255, 0.78)
     );
 
-  border: 1px solid
+  border:
+    1px solid
     color-mix(
       in srgb,
-      var(--soundtrack-accent) 22%,
+      var(--soundtrack-accent)
+      24%,
       transparent
     );
 
   border-radius: 18px;
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    0 8px 18px rgba(77, 52, 38, 0.08);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.82),
+    0 10px 22px
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent)
+        15%,
+        transparent
+      );
 
   font-size: 1.9rem;
 
   transition:
     background 300ms ease,
-    transform 200ms ease;
+    color 300ms ease,
+    transform 200ms ease,
+    box-shadow 300ms ease;
 }
 
-.music-card.is-playing .station-artwork {
+.music-card.is-playing
+.station-artwork {
   animation:
-    artwork-breathe 3.2s ease-in-out infinite;
+    artwork-breathe
+    3.2s
+    ease-in-out
+    infinite;
 }
 
 @keyframes artwork-breathe {
   0%,
   100% {
     transform: scale(1);
+
+    box-shadow:
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.82),
+      0 10px 22px
+        color-mix(
+          in srgb,
+          var(--soundtrack-accent)
+          15%,
+          transparent
+        );
   }
 
   50% {
     transform: scale(1.035);
+
+    box-shadow:
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.86),
+      0 14px 30px
+        color-mix(
+          in srgb,
+          var(--soundtrack-accent)
+          24%,
+          transparent
+        );
   }
 }
 
@@ -496,7 +702,10 @@ button {
 .station-status-label {
   margin: 0 0 3px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.59rem;
   font-weight: 850;
@@ -508,7 +717,10 @@ button {
 .station-information h2 {
   margin: 0 0 5px;
 
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-family: var(
     --font-heading,
@@ -523,10 +735,14 @@ button {
   line-height: 1.1;
 }
 
-.station-information > p:last-child {
+.station-information
+> p:last-child {
   margin: 0;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.72rem;
   font-weight: 620;
@@ -552,22 +768,44 @@ button {
       rgba(255, 255, 255, 0.82)
     );
 
-  border: 1px solid
+  border:
+    1px solid
     color-mix(
       in srgb,
-      var(--soundtrack-accent) 20%,
-      rgba(91, 65, 49, 0.08)
+      var(--soundtrack-accent)
+      22%,
+      var(
+        --border-soft,
+        rgba(104, 83, 171, 0.09)
+      )
     );
 
-  border-radius: 16px;
+  border-radius:
+    var(
+      --radius-panel,
+      16px
+    );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    0 8px 18px rgba(77, 52, 38, 0.07);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.78),
+    0 10px 22px
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent)
+        11%,
+        transparent
+      );
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
 }
 
 .youtube-player {
   display: block;
+
   width: 100%;
   height: 100%;
 
@@ -576,6 +814,7 @@ button {
 
 .video-placeholder {
   display: flex;
+
   width: 100%;
   height: 100%;
 
@@ -594,7 +833,10 @@ button {
 }
 
 .video-placeholder strong {
-  color: var(--text-primary, #40342e);
+  color: var(
+    --text-primary,
+    #453d68
+  );
 
   font-family: var(
     --font-heading,
@@ -609,14 +851,22 @@ button {
 .video-placeholder p {
   margin: 0 0 5px;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.69rem;
   font-weight: 620;
 }
 
+/* =========================================================
+   PRIMARY CONTROL
+   ========================================================= */
+
 .primary-control {
   display: inline-flex;
+
   min-height: 40px;
 
   align-items: center;
@@ -625,20 +875,52 @@ button {
 
   padding: 10px 15px;
 
-  color: #fffaf7;
+  color: var(
+    --text-on-accent,
+    #ffffff
+  );
 
   cursor: pointer;
 
-  background: var(--soundtrack-accent);
-  border: 1px solid var(--soundtrack-accent);
-  border-radius: 12px;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.17),
-    0 5px 12px
+  background:
+    linear-gradient(
+      120deg,
+      var(--soundtrack-accent),
       color-mix(
         in srgb,
-        var(--soundtrack-accent) 25%,
+        var(--soundtrack-accent)
+        62%,
+        var(--pastel-pink, #efa6dc)
+      ),
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent)
+        58%,
+        var(--pastel-blue, #8fcff4)
+      )
+    );
+
+  background-size:
+    180% 180%;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+
+  border-radius:
+    var(
+      --radius-small,
+      10px
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.28),
+    0 7px 18px
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent)
+        28%,
         transparent
       );
 
@@ -649,14 +931,33 @@ button {
   transition:
     transform 150ms ease,
     background 150ms ease,
-    border-color 150ms ease;
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .primary-control:hover {
   transform: translateY(-1px);
 
-  background: var(--soundtrack-accent-dark);
-  border-color: var(--soundtrack-accent-dark);
+  background-position:
+    100% 50%;
+
+  border-color:
+    rgba(255, 255, 255, 0.38);
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.34),
+    0 10px 22px
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent)
+        34%,
+        transparent
+      );
+}
+
+.primary-control:active {
+  transform: translateY(0);
 }
 
 /* =========================================================
@@ -665,6 +966,7 @@ button {
 
 .soundtrack-message {
   display: flex;
+
   align-items: center;
   gap: 9px;
 
@@ -672,26 +974,44 @@ button {
   padding: 10px 12px;
 
   background:
-    color-mix(
-      in srgb,
-      var(--soundtrack-accent-soft) 45%,
-      rgba(255, 255, 255, 0.58)
+    linear-gradient(
+      120deg,
+      color-mix(
+        in srgb,
+        var(--soundtrack-accent-soft)
+        58%,
+        rgba(255, 255, 255, 0.58)
+      ),
+      rgba(255, 255, 255, 0.48)
     );
 
-  border: 1px solid
+  border:
+    1px solid
     color-mix(
       in srgb,
-      var(--soundtrack-accent) 15%,
+      var(--soundtrack-accent)
+      18%,
       transparent
     );
 
-  border-radius: 12px;
+  border-radius:
+    var(
+      --radius-small,
+      12px
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.76);
 }
 
 .soundtrack-message p {
   margin: 0;
 
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 
   font-size: 0.67rem;
   font-weight: 650;
@@ -704,6 +1024,7 @@ button {
 
 .music-footer {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -719,11 +1040,17 @@ button {
 }
 
 .music-footer span {
-  color: var(--text-secondary, #806f65);
+  color: var(
+    --text-secondary,
+    #746d91
+  );
 }
 
 .music-footer a {
-  color: var(--soundtrack-accent-dark);
+  color: var(
+    --soundtrack-accent-dark
+  );
+
   text-decoration: none;
 }
 
@@ -737,10 +1064,12 @@ button {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid
+  outline:
+    3px solid
     color-mix(
       in srgb,
-      var(--soundtrack-accent) 25%,
+      var(--soundtrack-accent)
+      26%,
       transparent
     );
 
@@ -762,7 +1091,8 @@ a:focus-visible {
 
   .now-playing-heading {
     grid-template-columns:
-      64px minmax(0, 1fr);
+      64px
+      minmax(0, 1fr);
 
     gap: 12px;
   }
@@ -803,7 +1133,10 @@ a:focus-visible {
    REDUCED MOTION
    ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
   .music-card,
   .music-header-icon,
   .soundtrack-button,
