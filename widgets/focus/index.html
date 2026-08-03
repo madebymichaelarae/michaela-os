@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Focus Mode</title>
+
+    <link
+      rel="stylesheet"
+      href="../../css/focus.css"
+    />
+  </head>
+
+  <body>
+    <main
+      class="focus-widget"
+      aria-live="polite"
+    >
+      <section class="focus-card">
+        <header class="focus-header">
+          <div>
+            <p class="eyebrow">
+              Michaela OS
+            </p>
+
+            <h1>Focus Mode</h1>
+          </div>
+
+          <div class="header-actions">
+            <button
+              class="sound-button"
+              id="soundButton"
+              type="button"
+              aria-pressed="false"
+            >
+              🔕 Chimes
+            </button>
+
+            <button
+              class="refresh-button"
+              id="refreshButton"
+              type="button"
+              aria-label="Refresh schedule"
+              title="Refresh schedule"
+            >
+              ↻
+            </button>
+          </div>
+        </header>
+
+        <section
+          class="loading-state"
+          id="loadingState"
+        >
+          <span class="loading-dot"></span>
+
+          Loading today’s plan…
+        </section>
+
+        <section
+          class="error-state"
+          id="errorState"
+          hidden
+        >
+          <strong>
+            Schedule unavailable
+          </strong>
+
+          <p id="errorMessage">
+            Time blocks could not be loaded.
+          </p>
+
+          <button
+            class="secondary-button"
+            id="retryButton"
+            type="button"
+          >
+            Try again
+          </button>
+        </section>
+
+        <section
+          class="empty-state"
+          id="emptyState"
+          hidden
+        >
+          <div class="empty-icon">
+            ☀️
+          </div>
+
+          <strong id="emptyTitle">
+            No blocks today
+          </strong>
+
+          <p id="emptyMessage">
+            Your schedule is clear.
+          </p>
+        </section>
+
+        <div
+          id="focusContent"
+          hidden
+        >
+          <section class="current-section">
+            <div class="section-label-row">
+              <p
+                class="section-label"
+                id="currentLabel"
+              >
+                Current block
+              </p>
+
+              <span
+                class="status-pill"
+                id="blockStatus"
+              >
+                In progress
+              </span>
+            </div>
+
+            <h2 id="currentTitle">
+              Focus block
+            </h2>
+
+            <div class="time-row">
+              <span id="currentTimeRange">
+                9:00 AM–10:30 AM
+              </span>
+
+              <span
+                class="countdown"
+                id="countdown"
+              >
+                45 min left
+              </span>
+            </div>
+
+            <div
+              class="progress-track"
+              id="progressTrack"
+              role="progressbar"
+              aria-label="Current block progress"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div
+                class="progress-fill"
+                id="progressFill"
+              ></div>
+            </div>
+
+            <p
+              class="block-message"
+              id="blockMessage"
+              hidden
+            ></p>
+          </section>
+
+          <section
+            class="tasks-section"
+            id="tasksSection"
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                Tasks
+              </p>
+
+              <span
+                class="task-count"
+                id="taskCount"
+              >
+                0 of 0
+              </span>
+            </div>
+
+            <ul
+              class="task-list"
+              id="taskList"
+            ></ul>
+          </section>
+
+          <section
+            class="next-section"
+            id="nextSection"
+          >
+            <p class="section-label">
+              Up next
+            </p>
+
+            <div class="next-block">
+              <div>
+                <h3 id="nextTitle">
+                  Next block
+                </h3>
+
+                <p id="nextTime">
+                  10:30 AM
+                </p>
+              </div>
+
+              <span
+                class="next-duration"
+                id="nextDuration"
+              >
+                30 min
+              </span>
+            </div>
+          </section>
+
+          <footer class="widget-footer">
+            <span id="scheduleProgress">
+              0 of 0 blocks complete
+            </span>
+
+            <span id="lastUpdated">
+              Updated now
+            </span>
+          </footer>
+        </div>
+      </section>
+    </main>
+
+    <script src="../../js/focus.js"></script>
+  </body>
+</html>
