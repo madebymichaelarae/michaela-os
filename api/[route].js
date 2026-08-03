@@ -52,7 +52,7 @@ const ROUTE_HANDLERS = {
 
   finance: financeHandler,
 
-  "daily-wrap-up": dailyWrapUpHandler
+  "daily-wrap-up": dailyWrapUpHandler,
 
    timeblocks: timeBlocksHandler
 };
