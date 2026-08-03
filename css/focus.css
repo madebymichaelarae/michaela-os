@@ -1,5 +1,6 @@
 /* =========================================================
-   Michaela OS — Focus Mode Widget
+   Michaela OS — Focus Mode
+   Shared holographic theme compatible
    ========================================================= */
 
 * {
@@ -13,21 +14,24 @@ body {
 }
 
 body {
-  background: transparent;
+  background:
+    var(
+      --page-background,
+      #ffffff
+    );
 
   color:
     var(
       --text-primary,
-      #3f352f
+      #453d68
     );
 
   font-family:
     var(
       --font-body,
+      Inter,
+      ui-sans-serif,
       system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
       sans-serif
     );
 }
@@ -50,13 +54,16 @@ button {
 }
 
 .focus-card {
+  position: relative;
+
   width: 100%;
   overflow: hidden;
 
-  border: 1px solid
+  border:
+    1px solid
     var(
       --border-default,
-      rgba(95, 75, 63, 0.18)
+      rgba(104, 83, 171, 0.15)
     );
 
   border-radius:
@@ -67,17 +74,87 @@ button {
 
   background:
     var(
-      --surface-card,
-      rgba(255, 252, 247, 0.94)
+      --card-background,
+      rgba(255, 255, 255, 0.94)
     );
 
   box-shadow:
     var(
       --shadow-card,
-      0 10px 30px rgba(83, 62, 49, 0.1)
+      0 12px 30px
+        rgba(91, 73, 157, 0.13)
     );
 
-  backdrop-filter: blur(14px);
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  transition:
+    var(
+      --transition-widget,
+      transform 160ms ease,
+      box-shadow 160ms ease,
+      border-color 160ms ease
+    );
+}
+
+.focus-card:hover {
+  border-color:
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  box-shadow:
+    var(
+      --shadow-card-hover,
+      0 18px 38px
+        rgba(91, 73, 157, 0.18)
+    );
+}
+
+/* Soft holographic card glow */
+
+.focus-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      rgba(176, 156, 255, 0.14),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(133, 223, 255, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 74% 78%,
+      rgba(255, 188, 229, 0.11),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 18% 88%,
+      rgba(149, 240, 229, 0.11),
+      transparent 34%
+    );
+}
+
+.focus-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================================================
@@ -88,9 +165,17 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap:
+    var(
+      --space-lg,
+      16px
+    );
 
-  padding: 18px 18px 14px;
+  padding:
+    var(
+      --space-xl,
+      20px
+    );
 }
 
 .eyebrow,
@@ -99,57 +184,96 @@ button {
 
   color:
     var(
-      --text-muted,
-      #81726a
+      --accent-dark,
+      #6651bd
     );
 
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 750;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
 }
 
 .focus-header h1 {
   margin: 3px 0 0;
 
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
   font-family:
     var(
       --font-heading,
-      inherit
+      Georgia,
+      serif
     );
 
-  font-size: 1.2rem;
+  font-size: 1.28rem;
   line-height: 1.15;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap:
+    var(
+      --space-sm,
+      8px
+    );
 }
+
+/* =========================================================
+   Header buttons
+   ========================================================= */
 
 .refresh-button,
 .sound-button {
-  border: 1px solid
+  border:
+    1px solid
     var(
       --border-default,
-      rgba(95, 75, 63, 0.16)
+      rgba(104, 83, 171, 0.15)
     );
 
   background:
-    var(
-      --surface-soft,
-      rgba(255, 255, 255, 0.58)
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(238, 232, 255, 0.64)
     );
 
-  color: inherit;
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.88),
+    0 6px 14px
+      rgba(100, 79, 170, 0.09);
 
   cursor: pointer;
 
   transition:
-    transform 160ms ease,
-    background 160ms ease,
-    opacity 160ms ease;
+    transform
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    border-color
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    box-shadow
+      var(
+        --transition-fast,
+        150ms ease
+      );
 }
 
 .refresh-button {
@@ -159,55 +283,76 @@ button {
   width: 36px;
   height: 36px;
 
-  border-radius: 50%;
-}
-
-.refresh-button:hover {
-  transform: rotate(20deg);
-
-  background:
+  border-radius:
     var(
-      --surface-hover,
-      rgba(255, 255, 255, 0.9)
+      --radius-pill,
+      999px
     );
-}
 
-.refresh-button:disabled {
-  cursor: wait;
-  opacity: 0.55;
+  font-size: 1rem;
 }
 
 .sound-button {
   min-height: 36px;
-  padding: 7px 10px;
+  padding: 7px 11px;
 
-  border-radius: 999px;
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
 
   font-size: 0.7rem;
   font-weight: 750;
 }
 
+.refresh-button:hover,
+.sound-button:hover {
+  border-color:
+    var(
+      --accent,
+      #9079e8
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.9),
+    0 8px 18px
+      rgba(112, 88, 192, 0.16);
+}
+
+.refresh-button:hover {
+  transform: rotate(20deg);
+}
+
 .sound-button:hover {
   transform: translateY(-1px);
+}
 
-  background:
-    var(
-      --surface-hover,
-      rgba(255, 255, 255, 0.9)
-    );
+.refresh-button:disabled {
+  cursor: wait;
+  opacity: 0.52;
 }
 
 .sound-button.is-enabled {
-  background:
-    var(
-      --accent-soft,
-      rgba(128, 154, 123, 0.17)
-    );
-
   color:
     var(
-      --accent-strong,
-      #4f6d4e
+      --accent-dark,
+      #6651bd
+    );
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(222, 211, 255, 0.88),
+      rgba(215, 239, 250, 0.82),
+      rgba(246, 214, 239, 0.8)
+    );
+
+  border-color:
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
     );
 }
 
@@ -216,68 +361,134 @@ button {
    ========================================================= */
 
 .current-section {
-  padding: 18px;
-
-  border-top: 1px solid
+  margin:
+    0
     var(
-      --border-subtle,
-      rgba(95, 75, 63, 0.1)
+      --space-lg,
+      16px
+    );
+
+  padding:
+    var(
+      --space-xl,
+      20px
+    );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius:
+    var(
+      --radius-panel,
+      14px
     );
 
   background:
-    var(
-      --focus-gradient,
-      linear-gradient(
-        135deg,
-        rgba(255, 220, 196, 0.48),
-        rgba(231, 215, 255, 0.42),
-        rgba(201, 235, 229, 0.42)
-      )
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(167, 149, 245, 0.2),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 82% 78%,
+      rgba(122, 225, 229, 0.2),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 82% 16%,
+      rgba(239, 166, 220, 0.13),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.66),
+      rgba(242, 236, 255, 0.5)
     );
+
+  box-shadow:
+    var(
+      --shadow-panel,
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.76),
+      0 8px 20px
+        rgba(106, 85, 173, 0.08)
+    );
+
+  backdrop-filter: blur(11px);
+
+  -webkit-backdrop-filter:
+    blur(11px);
 }
 
 .section-label-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap:
+    var(
+      --space-md,
+      12px
+    );
 }
 
 .status-pill {
-  padding: 5px 9px;
+  padding: 5px 10px;
 
-  border-radius: 999px;
+  border:
+    1px solid
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
 
   background:
     var(
-      --accent-soft,
-      rgba(128, 154, 123, 0.17)
+      --accent-pale,
+      rgba(241, 236, 255, 0.86)
     );
 
   color:
     var(
-      --accent-strong,
-      #4f6d4e
+      --accent-dark,
+      #6651bd
     );
 
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 750;
 }
 
 .current-section h2 {
-  margin: 12px 0 6px;
+  margin: 13px 0 6px;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
 
   font-family:
     var(
       --font-heading,
-      inherit
+      Georgia,
+      serif
     );
 
-  font-size: clamp(
-    1.45rem,
-    7vw,
-    2rem
-  );
+  font-size:
+    clamp(
+      1.5rem,
+      7vw,
+      2.05rem
+    );
 
   line-height: 1.08;
 }
@@ -287,35 +498,58 @@ button {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+
   gap: 7px 14px;
 
   color:
     var(
       --text-secondary,
-      #685c55
+      #746d91
     );
 
   font-size: 0.83rem;
 }
 
 .countdown {
-  font-weight: 750;
+  color:
+    var(
+      --accent-dark,
+      #6651bd
+    );
+
+  font-weight: 780;
 }
+
+/* =========================================================
+   Progress
+   ========================================================= */
 
 .progress-track {
   width: 100%;
   height: 9px;
   overflow: hidden;
 
-  margin-top: 16px;
+  margin-top:
+    var(
+      --space-lg,
+      16px
+    );
 
-  border-radius: 999px;
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
 
   background:
     var(
       --progress-track,
-      rgba(255, 255, 255, 0.65)
+      rgba(125, 108, 189, 0.14)
     );
+
+  box-shadow:
+    inset 0 1px 2px
+      rgba(82, 64, 142, 0.08);
 }
 
 .progress-fill {
@@ -325,17 +559,19 @@ button {
   border-radius: inherit;
 
   background:
-    var(
-      --progress-fill,
-      linear-gradient(
-        90deg,
-        #b17968,
-        #9b7ab2,
-        #658e83
-      )
+    linear-gradient(
+      90deg,
+      #967fed,
+      #d594e2,
+      #84d7e2
     );
 
-  transition: width 500ms ease;
+  box-shadow:
+    0 0 10px
+      rgba(143, 121, 231, 0.26);
+
+  transition:
+    width 500ms ease;
 }
 
 .block-message {
@@ -344,7 +580,7 @@ button {
   color:
     var(
       --text-secondary,
-      #685c55
+      #746d91
     );
 
   font-size: 0.78rem;
@@ -356,12 +592,49 @@ button {
    ========================================================= */
 
 .tasks-section {
-  padding: 16px 18px;
-
-  border-top: 1px solid
+  margin:
     var(
-      --border-subtle,
-      rgba(95, 75, 63, 0.1)
+      --space-md,
+      12px
+    )
+    var(
+      --space-lg,
+      16px
+    )
+    0;
+
+  padding:
+    var(
+      --space-lg,
+      16px
+    );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius:
+    var(
+      --radius-panel,
+      14px
+    );
+
+  background:
+    var(
+      --panel-background,
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.66),
+        rgba(246, 240, 255, 0.46)
+      )
+    );
+
+  box-shadow:
+    var(
+      --shadow-panel
     );
 }
 
@@ -369,7 +642,7 @@ button {
   color:
     var(
       --text-muted,
-      #81726a
+      #817a9f
     );
 
   font-size: 0.74rem;
@@ -378,9 +651,20 @@ button {
 
 .task-list {
   display: grid;
-  gap: 8px;
+  gap:
+    var(
+      --space-sm,
+      8px
+    );
 
-  margin: 12px 0 0;
+  margin:
+    var(
+      --space-md,
+      12px
+    )
+    0
+    0;
+
   padding: 0;
 
   list-style: none;
@@ -393,12 +677,23 @@ button {
 
   padding: 10px 11px;
 
-  border-radius: 12px;
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius:
+    var(
+      --radius-small,
+      10px
+    );
 
   background:
     var(
-      --surface-soft,
-      rgba(116, 91, 73, 0.055)
+      --panel-background-soft,
+      rgba(255, 255, 255, 0.42)
     );
 }
 
@@ -413,20 +708,27 @@ button {
 
   margin-top: 1px;
 
-  border: 1.5px solid
+  border:
+    1.5px solid
     var(
       --border-strong,
-      rgba(95, 75, 63, 0.35)
+      rgba(104, 83, 171, 0.23)
     );
 
   border-radius: 5px;
+
+  color:
+    var(
+      --text-on-accent,
+      #ffffff
+    );
 
   font-size: 0.68rem;
   font-weight: 800;
 }
 
 .task-item.is-complete {
-  opacity: 0.62;
+  opacity: 0.64;
 }
 
 .task-item.is-complete
@@ -435,11 +737,9 @@ button {
 
   background:
     var(
-      --accent-strong,
-      #657f62
+      --color-success,
+      #65baa9
     );
-
-  color: white;
 }
 
 .task-content {
@@ -449,7 +749,11 @@ button {
 .task-title {
   display: block;
 
-  color: inherit;
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
 
   font-size: 0.82rem;
   font-weight: 650;
@@ -457,9 +761,20 @@ button {
   text-decoration: none;
 }
 
+a.task-title:hover {
+  color:
+    var(
+      --accent-dark,
+      #6651bd
+    );
+
+  text-decoration: underline;
+}
+
 .task-item.is-complete
 .task-title {
-  text-decoration: line-through;
+  text-decoration:
+    line-through;
 }
 
 .task-status {
@@ -470,7 +785,7 @@ button {
   color:
     var(
       --text-muted,
-      #81726a
+      #817a9f
     );
 
   font-size: 0.68rem;
@@ -481,12 +796,45 @@ button {
    ========================================================= */
 
 .next-section {
-  padding: 16px 18px;
-
-  border-top: 1px solid
+  margin:
     var(
-      --border-subtle,
-      rgba(95, 75, 63, 0.1)
+      --space-md,
+      12px
+    )
+    var(
+      --space-lg,
+      16px
+    )
+    0;
+
+  padding:
+    var(
+      --space-lg,
+      16px
+    );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius:
+    var(
+      --radius-panel,
+      14px
+    );
+
+  background:
+    var(
+      --panel-background,
+      rgba(255, 255, 255, 0.5)
+    );
+
+  box-shadow:
+    var(
+      --shadow-panel
     );
 }
 
@@ -502,6 +850,12 @@ button {
 .next-block h3 {
   margin: 0;
 
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
   font-size: 0.92rem;
   line-height: 1.25;
 }
@@ -512,7 +866,7 @@ button {
   color:
     var(
       --text-muted,
-      #81726a
+      #817a9f
     );
 
   font-size: 0.74rem;
@@ -521,14 +875,30 @@ button {
 .next-duration {
   flex: 0 0 auto;
 
-  padding: 6px 9px;
+  padding: 6px 10px;
 
-  border-radius: 999px;
+  border:
+    1px solid
+    rgba(123, 101, 199, 0.12);
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
 
   background:
+    linear-gradient(
+      120deg,
+      rgba(222, 211, 255, 0.82),
+      rgba(215, 239, 250, 0.78),
+      rgba(246, 214, 239, 0.78)
+    );
+
+  color:
     var(
-      --surface-soft,
-      rgba(116, 91, 73, 0.065)
+      --accent-dark,
+      #6651bd
     );
 
   font-size: 0.72rem;
@@ -536,7 +906,7 @@ button {
 }
 
 /* =========================================================
-   Footer and states
+   Footer
    ========================================================= */
 
 .widget-footer {
@@ -545,32 +915,65 @@ button {
   flex-wrap: wrap;
   gap: 6px 12px;
 
-  padding: 11px 18px;
-
-  border-top: 1px solid
+  margin-top:
     var(
-      --border-subtle,
-      rgba(95, 75, 63, 0.1)
+      --space-md,
+      12px
     );
+
+  padding: 11px 18px 14px;
 
   color:
     var(
       --text-muted,
-      #81726a
+      #817a9f
     );
 
   font-size: 0.66rem;
 }
 
+/* =========================================================
+   Loading, error and empty states
+   ========================================================= */
+
 .loading-state,
 .error-state,
 .empty-state {
+  margin:
+    0
+    var(
+      --space-lg,
+      16px
+    )
+    var(
+      --space-lg,
+      16px
+    );
+
   padding: 28px 18px 30px;
 
-  border-top: 1px solid
+  border:
+    1px solid
     var(
-      --border-subtle,
-      rgba(95, 75, 63, 0.1)
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius:
+    var(
+      --radius-panel,
+      14px
+    );
+
+  background:
+    var(
+      --panel-background,
+      rgba(255, 255, 255, 0.5)
+    );
+
+  box-shadow:
+    var(
+      --shadow-panel
     );
 
   text-align: center;
@@ -585,7 +988,7 @@ button {
   color:
     var(
       --text-muted,
-      #81726a
+      #817a9f
     );
 
   font-size: 0.82rem;
@@ -595,16 +998,32 @@ button {
   width: 8px;
   height: 8px;
 
-  border-radius: 50%;
-
-  background:
+  border-radius:
     var(
-      --accent-strong,
-      #7a6b91
+      --radius-pill,
+      999px
     );
 
+  background:
+    linear-gradient(
+      135deg,
+      var(
+        --pastel-purple,
+        #a995f4
+      ),
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      )
+    );
+
+  box-shadow:
+    0 0 10px
+      rgba(143, 121, 231, 0.28);
+
   animation:
-    pulse 1.1s ease-in-out infinite;
+    pulse 1.1s ease-in-out
+    infinite;
 }
 
 .empty-icon {
@@ -615,7 +1034,21 @@ button {
 .error-state strong,
 .empty-state strong {
   display: block;
-  font-size: 0.95rem;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+
+  font-size: 1rem;
 }
 
 .error-state p,
@@ -625,7 +1058,7 @@ button {
   color:
     var(
       --text-muted,
-      #81726a
+      #817a9f
     );
 
   font-size: 0.78rem;
@@ -634,26 +1067,62 @@ button {
 
 .secondary-button {
   margin-top: 14px;
-  padding: 8px 13px;
+  padding: 8px 14px;
 
-  border: 1px solid
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+
+  border-radius:
     var(
-      --border-default,
-      rgba(95, 75, 63, 0.18)
+      --radius-pill,
+      999px
     );
 
-  border-radius: 999px;
+  color:
+    var(
+      --text-on-accent,
+      #ffffff
+    );
 
   background:
-    var(
-      --surface-soft,
-      rgba(255, 255, 255, 0.72)
+    linear-gradient(
+      120deg,
+      #927cf0 0%,
+      #b184eb 34%,
+      #de8fd2 64%,
+      #77cddc 100%
     );
 
-  color: inherit;
+  background-size: 180% 180%;
+
+  box-shadow:
+    0 8px 20px
+      rgba(112, 88, 192, 0.24),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.35);
 
   cursor: pointer;
+
+  transition:
+    transform
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    background-position 300ms ease;
 }
+
+.secondary-button:hover {
+  transform: translateY(-1px);
+
+  background-position:
+    100% 50%;
+}
+
+/* =========================================================
+   Motion and responsive layout
+   ========================================================= */
 
 @keyframes pulse {
   0%,
@@ -669,20 +1138,59 @@ button {
 }
 
 @media (max-width: 380px) {
-  .focus-header,
-  .current-section,
-  .tasks-section,
-  .next-section {
-    padding-left: 14px;
-    padding-right: 14px;
+  .focus-header {
+    padding:
+      var(
+        --space-lg,
+        16px
+      );
   }
 
-  .widget-footer {
-    padding-left: 14px;
-    padding-right: 14px;
+  .current-section,
+  .tasks-section,
+  .next-section,
+  .loading-state,
+  .error-state,
+  .empty-state {
+    margin-left:
+      var(
+        --space-md,
+        12px
+      );
+
+    margin-right:
+      var(
+        --space-md,
+        12px
+      );
+  }
+
+  .current-section {
+    padding:
+      var(
+        --space-lg,
+        16px
+      );
   }
 
   .sound-button {
     padding-inline: 8px;
+  }
+}
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .focus-card,
+  .refresh-button,
+  .sound-button,
+  .secondary-button,
+  .progress-fill {
+    transition: none;
+  }
+
+  .loading-dot {
+    animation: none;
   }
 }
