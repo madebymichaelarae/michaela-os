@@ -12,6 +12,9 @@ import {
 
 import dailyWrapUpHandler from "../lib/api/daily-wrap-up.js";
 
+import timeBlocksHandler
+  from "../lib/api/timeblocks.js";
+
 /**
  * Adapts the finance function to match the same
  * request/response handler format as the other routes.
@@ -50,6 +53,8 @@ const ROUTE_HANDLERS = {
   finance: financeHandler,
 
   "daily-wrap-up": dailyWrapUpHandler
+
+   timeblocks: timeBlocksHandler
 };
 
 function getRequestedRoute(request) {
