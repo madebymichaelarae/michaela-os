@@ -10,15 +10,15 @@
 
     <title>Focus Mode</title>
 
-<link
-  rel="stylesheet"
-  href="../../css/cozy-autumn.css"
-/>
+    <link
+      rel="stylesheet"
+      href="../../css/cozy-autumn.css"
+    />
 
-<link
-  rel="stylesheet"
-  href="../../css/focus.css"
-/>
+    <link
+      rel="stylesheet"
+      href="../../css/focus.css"
+    />
   </head>
 
   <body>
@@ -26,7 +26,9 @@
       class="focus-widget"
       aria-live="polite"
     >
-  <section class="focus-card widget-card">
+      <section
+        class="focus-card widget-card"
+      >
         <header class="focus-header">
           <div>
             <p class="eyebrow">
@@ -163,6 +165,68 @@
             <p
               class="block-message"
               id="blockMessage"
+              hidden
+            ></p>
+          </section>
+
+          <section
+            class="focus-controls"
+            id="focusControls"
+            hidden
+          >
+            <div class="focus-control-row">
+              <button
+                class="focus-action-button focus-action-button--primary"
+                id="completeBlockButton"
+                type="button"
+              >
+                ✓ Complete
+              </button>
+
+              <button
+                class="focus-action-button"
+                id="endEarlyButton"
+                type="button"
+              >
+                ⏭ End Early
+              </button>
+            </div>
+
+            <div class="extension-controls">
+              <span class="extension-label">
+                Need more time?
+              </span>
+
+              <div class="extension-buttons">
+                <button
+                  class="extension-button"
+                  type="button"
+                  data-extension-minutes="5"
+                >
+                  +5
+                </button>
+
+                <button
+                  class="extension-button"
+                  type="button"
+                  data-extension-minutes="10"
+                >
+                  +10
+                </button>
+
+                <button
+                  class="extension-button"
+                  type="button"
+                  data-extension-minutes="15"
+                >
+                  +15
+                </button>
+              </div>
+            </div>
+
+            <p
+              class="control-feedback"
+              id="controlFeedback"
               hidden
             ></p>
           </section>
