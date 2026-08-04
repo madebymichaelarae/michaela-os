@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Build My Day</title>
+
+    <link
+      rel="stylesheet"
+      href="../../css/cozy-autumn.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../css/build-my-day.css"
+    />
+  </head>
+
+  <body>
+    <main class="day-builder-widget">
+      <section class="day-builder-card widget-card">
+        <header class="day-builder-header">
+          <div>
+            <p class="eyebrow">
+              Planning Mode
+            </p>
+
+            <h1>Build My Day</h1>
+          </div>
+
+          <span class="builder-icon">
+            ✨
+          </span>
+        </header>
+
+        <section
+          class="builder-loading"
+          id="loadingState"
+        >
+          <span class="loading-dot"></span>
+          Loading templates…
+        </section>
+
+        <section
+          class="builder-error"
+          id="errorState"
+          hidden
+        >
+          <strong>
+            Builder unavailable
+          </strong>
+
+          <p id="errorMessage">
+            The day builder could not load.
+          </p>
+
+          <button
+            class="secondary-button"
+            id="retryButton"
+            type="button"
+          >
+            Try again
+          </button>
+        </section>
+
+        <form
+          class="builder-form"
+          id="builderForm"
+          hidden
+        >
+          <label class="builder-field">
+            <span>Date</span>
+
+            <input
+              id="dateInput"
+              type="date"
+              required
+            />
+          </label>
+
+          <label class="builder-field">
+            <span>Start time</span>
+
+            <input
+              id="startTimeInput"
+              type="time"
+              required
+            />
+          </label>
+
+          <label class="builder-field">
+            <span>Template</span>
+
+            <select
+              id="templateSelect"
+              required
+            ></select>
+          </label>
+
+          <label class="builder-field">
+            <span>If blocks already exist</span>
+
+            <select id="existingModeSelect">
+              <option value="cancel">
+                Stop and ask me
+              </option>
+
+              <option value="replace">
+                Replace existing schedule
+              </option>
+
+              <option value="append">
+                Add after existing blocks
+              </option>
+            </select>
+          </label>
+
+          <button
+            class="generate-button"
+            id="generateButton"
+            type="submit"
+          >
+            ✨ Generate Schedule
+          </button>
+
+          <p
+            class="builder-feedback"
+            id="feedbackMessage"
+            hidden
+          ></p>
+        </form>
+
+        <section
+          class="builder-success"
+          id="successState"
+          hidden
+        >
+          <div class="success-icon">
+            ✓
+          </div>
+
+          <strong id="successTitle">
+            Schedule created
+          </strong>
+
+          <p id="successMessage"></p>
+
+          <button
+            class="secondary-button"
+            id="buildAnotherButton"
+            type="button"
+          >
+            Build another day
+          </button>
+        </section>
+      </section>
+    </main>
+
+    <script src="../../js/build-my-day.js"></script>
+  </body>
+</html>
