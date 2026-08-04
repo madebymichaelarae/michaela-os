@@ -1138,6 +1138,22 @@ function createTaskStatusSelect(
 }
 
 function renderTasks(block) {
+  const activeElement =
+    document.activeElement;
+
+  const taskDropdownIsOpen =
+    activeElement?.classList?.contains(
+      "task-status-select"
+    );
+
+  /*
+   * Do not rebuild the task list while
+   * a status dropdown is being used.
+   */
+  if (taskDropdownIsOpen) {
+    return;
+  }
+
   const tasks =
     Array.isArray(
       block?.tasks
