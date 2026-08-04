@@ -12,7 +12,8 @@ const COMPLETE_STATUSES =
     "done",
     "complete",
     "completed",
-    "finished"
+    "finished",
+    "skipped"
   ]);
 
 const elements = {
@@ -106,6 +107,33 @@ const elements = {
       "blockMessage"
     ),
 
+  focusControls:
+    document.getElementById(
+      "focusControls"
+    ),
+
+  completeBlockButton:
+    document.getElementById(
+      "completeBlockButton"
+    ),
+
+  endEarlyButton:
+    document.getElementById(
+      "endEarlyButton"
+    ),
+
+  extensionButtons:
+    Array.from(
+      document.querySelectorAll(
+        "[data-extension-minutes]"
+      )
+    ),
+
+  controlFeedback:
+    document.getElementById(
+      "controlFeedback"
+    ),
+
   tasksSection:
     document.getElementById(
       "tasksSection"
@@ -153,8 +181,19 @@ const elements = {
 };
 
 let blocks = [];
+
+let taskStatusOptions = [];
+
+let scheduleDate = null;
+
+let currentScheduleState =
+  null;
+
 let lastLoadedAt = null;
+
 let isLoading = false;
+
+let isUpdating = false;
 
 let audioContext = null;
 
@@ -377,6 +416,20 @@ function getBlockTimes(block) {
 function sortBlocks(entries) {
   return [...entries].sort(
     (first, second) => {
+      if (
+        typeof first.order ===
+          "number" &&
+        typeof second.order ===
+          "number" &&
+        first.order !==
+          second.order
+      ) {
+        return (
+          first.order -
+          second.order
+        );
+      }
+
       const firstStart =
         parseDate(
           first.start
@@ -407,6 +460,161 @@ function sortBlocks(entries) {
         secondStart.getTime()
       );
     }
+  );
+}
+
+function setControlFeedback(
+  message,
+  type = "success"
+) {
+  if (!message) {
+    elements.controlFeedback.hidden =
+      true;
+
+    elements.controlFeedback.textContent =
+      "";
+
+    elements.controlFeedback.classList.remove(
+      "is-success",
+      "is-error"
+    );
+
+    return;
+  }
+
+  elements.controlFeedback.hidden =
+    false;
+
+  elements.controlFeedback.textContent =
+    message;
+
+  elements.controlFeedback.classList.toggle(
+    "is-success",
+    type === "success"
+  );
+
+  elements.controlFeedback.classList.toggle(
+    "is-error",
+    type === "error"
+  );
+}
+
+function setUpdatingState(
+  updating
+) {
+  isUpdating = updating;
+
+  elements.completeBlockButton.disabled =
+    updating;
+
+  elements.endEarlyButton.disabled =
+    updating;
+
+  for (
+    const button of
+    elements.extensionButtons
+  ) {
+    button.disabled =
+      updating;
+  }
+
+  const taskSelects =
+    elements.taskList.querySelectorAll(
+      "select"
+    );
+
+  for (
+    const select of
+    taskSelects
+  ) {
+    select.disabled =
+      updating;
+  }
+}
+
+/* =========================================================
+   API helpers
+   ========================================================= */
+
+async function parseApiResponse(
+  response
+) {
+  let data;
+
+  try {
+    data =
+      await response.json();
+  } catch {
+    throw new Error(
+      "The server returned an unreadable response."
+    );
+  }
+
+  if (
+    !response.ok ||
+    data.success === false
+  ) {
+    throw new Error(
+      data.error ||
+      "The request could not be completed."
+    );
+  }
+
+  return data;
+}
+
+function applyApiData(data) {
+  blocks =
+    sortBlocks(
+      Array.isArray(
+        data.blocks
+      )
+        ? data.blocks
+        : []
+    );
+
+  taskStatusOptions =
+    Array.isArray(
+      data.taskStatusOptions
+    )
+      ? data.taskStatusOptions
+      : [];
+
+  scheduleDate =
+    data.date || null;
+
+  lastLoadedAt =
+    new Date();
+}
+
+async function sendTimeBlockAction(
+  payload
+) {
+  const response =
+    await fetch(
+      TIME_BLOCKS_API_URL,
+      {
+        method: "PATCH",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        cache: "no-store",
+
+        body:
+          JSON.stringify({
+            ...payload,
+
+            date:
+              scheduleDate
+          })
+      }
+    );
+
+  return parseApiResponse(
+    response
   );
 }
 
@@ -700,9 +908,21 @@ function checkBlockChimes(
    Schedule state
    ========================================================= */
 
+function getActiveBlocks() {
+  return blocks.filter(
+    (block) =>
+      !isCompleteStatus(
+        block.status
+      )
+  );
+}
+
 function findScheduleState(now) {
+  const activeBlocks =
+    getActiveBlocks();
+
   const currentIndex =
-    blocks.findIndex(
+    activeBlocks.findIndex(
       (block) => {
         const {
           start,
@@ -724,19 +944,19 @@ function findScheduleState(now) {
       mode: "current",
 
       current:
-        blocks[
+        activeBlocks[
           currentIndex
         ],
 
       next:
-        blocks[
+        activeBlocks[
           currentIndex + 1
         ] || null
     };
   }
 
   const nextIndex =
-    blocks.findIndex(
+    activeBlocks.findIndex(
       (block) => {
         const { start } =
           getBlockTimes(block);
@@ -749,41 +969,173 @@ function findScheduleState(now) {
     );
 
   if (nextIndex >= 0) {
-    const previousBlocks =
-      blocks.slice(
+    const earlierActiveBlocks =
+      activeBlocks.slice(
         0,
         nextIndex
       );
 
     return {
       mode:
-        previousBlocks.length > 0
+        earlierActiveBlocks.length > 0
           ? "gap"
           : "before",
 
       current:
-        blocks[nextIndex],
+        activeBlocks[
+          nextIndex
+        ],
 
       next:
-        blocks[
+        activeBlocks[
           nextIndex + 1
         ] || null
     };
   }
 
+  if (
+    activeBlocks.length > 0
+  ) {
+    return {
+      mode: "overdue",
+
+      current:
+        activeBlocks[0],
+
+      next:
+        activeBlocks[1] ||
+        null
+    };
+  }
+
   return {
     mode: "finished",
-    current:
-      blocks[
-        blocks.length - 1
-      ] || null,
+    current: null,
     next: null
   };
 }
 
 /* =========================================================
-   Tasks
+   Task rendering and updates
    ========================================================= */
+
+function createTaskStatusSelect(
+  task
+) {
+  const select =
+    document.createElement(
+      "select"
+    );
+
+  select.className =
+    "task-status-select";
+
+  select.setAttribute(
+    "aria-label",
+    `Status for ${task.title || "task"}`
+  );
+
+  const options =
+    [...taskStatusOptions];
+
+  if (
+    task.status &&
+    !options.includes(
+      task.status
+    )
+  ) {
+    options.unshift(
+      task.status
+    );
+  }
+
+  for (
+    const statusName of
+    options
+  ) {
+    const option =
+      document.createElement(
+        "option"
+      );
+
+    option.value =
+      statusName;
+
+    option.textContent =
+      statusName.trim();
+
+    option.selected =
+      statusName ===
+      task.status;
+
+    select.append(
+      option
+    );
+  }
+
+  select.disabled =
+    isUpdating ||
+    task.unavailable;
+
+  select.addEventListener(
+    "change",
+    async () => {
+      const previousStatus =
+        task.status;
+
+      const nextStatus =
+        select.value;
+
+      select.disabled =
+        true;
+
+      setControlFeedback(
+        "Updating task…",
+        "success"
+      );
+
+      try {
+        const data =
+          await sendTimeBlockAction({
+            action:
+              "update-task-status",
+
+            taskId:
+              task.id,
+
+            status:
+              nextStatus
+          });
+
+        applyApiData(
+          data
+        );
+
+        setControlFeedback(
+          `Task moved to ${nextStatus.trim()}.`,
+          "success"
+        );
+
+        renderSchedule();
+      } catch (error) {
+        select.value =
+          previousStatus || "";
+
+        setControlFeedback(
+          error instanceof Error
+            ? error.message
+            : String(error),
+          "error"
+        );
+      } finally {
+        select.disabled =
+          false;
+      }
+    }
+  );
+
+  return select;
+}
 
 function renderTasks(block) {
   const tasks =
@@ -816,7 +1168,30 @@ function renderTasks(block) {
   elements.taskCount.textContent =
     `${completeCount} of ${tasks.length}`;
 
-  for (const task of tasks) {
+  const sortedTasks =
+    [...tasks].sort(
+      (first, second) => {
+        const firstComplete =
+          isCompleteStatus(
+            first.status
+          );
+
+        const secondComplete =
+          isCompleteStatus(
+            second.status
+          );
+
+        return (
+          Number(firstComplete) -
+          Number(secondComplete)
+        );
+      }
+    );
+
+  for (
+    const task of
+    sortedTasks
+  ) {
     const complete =
       isCompleteStatus(
         task.status
@@ -878,21 +1253,14 @@ function renderTasks(block) {
         "noopener noreferrer";
     }
 
-    const status =
-      document.createElement(
-        "span"
+    const select =
+      createTaskStatusSelect(
+        task
       );
-
-    status.className =
-      "task-status";
-
-    status.textContent =
-      task.status ||
-      "No status";
 
     content.append(
       title,
-      status
+      select
     );
 
     item.append(
@@ -902,6 +1270,106 @@ function renderTasks(block) {
 
     elements.taskList.append(
       item
+    );
+  }
+}
+
+/* =========================================================
+   Block actions
+   ========================================================= */
+
+function getCurrentActionBlock() {
+  if (
+    currentScheduleState?.mode ===
+      "current" ||
+    currentScheduleState?.mode ===
+      "overdue"
+  ) {
+    return (
+      currentScheduleState.current ||
+      null
+    );
+  }
+
+  return null;
+}
+
+async function runBlockAction({
+  action,
+  minutes = null
+}) {
+  const block =
+    getCurrentActionBlock();
+
+  if (!block) {
+    setControlFeedback(
+      "There is no active block to update.",
+      "error"
+    );
+
+    return;
+  }
+
+  setUpdatingState(
+    true
+  );
+
+  setControlFeedback(
+    "Saving changes…",
+    "success"
+  );
+
+  try {
+    const payload = {
+      action,
+      blockId:
+        block.id
+    };
+
+    if (
+      minutes !== null
+    ) {
+      payload.minutes =
+        minutes;
+    }
+
+    const data =
+      await sendTimeBlockAction(
+        payload
+      );
+
+    applyApiData(
+      data
+    );
+
+    const feedbackMessages = {
+      "complete-block":
+        "Block marked complete.",
+
+      "end-early":
+        "Block ended early. Moving forward.",
+
+      "extend-block":
+        `Added ${minutes} minutes.`
+    };
+
+    setControlFeedback(
+      feedbackMessages[action] ||
+      "Schedule updated.",
+      "success"
+    );
+
+    renderSchedule();
+  } catch (error) {
+    setControlFeedback(
+      error instanceof Error
+        ? error.message
+        : String(error),
+      "error"
+    );
+  } finally {
+    setUpdatingState(
+      false
     );
   }
 }
@@ -1021,7 +1489,12 @@ function renderCurrentMode(
   elements.blockMessage.hidden =
     true;
 
-  renderTasks(block);
+  elements.focusControls.hidden =
+    false;
+
+  renderTasks(
+    block
+  );
 
   renderNextBlock(
     state.next
@@ -1046,7 +1519,9 @@ function renderUpcomingMode(
   } =
     getBlockTimes(block);
 
-  resetBlockChimes(null);
+  resetBlockChimes(
+    null
+  );
 
   elements.currentLabel.textContent =
     state.mode === "before"
@@ -1090,7 +1565,78 @@ function renderUpcomingMode(
       ? "Your day has not started yet."
       : "You have a little breathing room before the next block.";
 
-  renderTasks(block);
+  elements.focusControls.hidden =
+    true;
+
+  renderTasks(
+    block
+  );
+
+  renderNextBlock(
+    state.next
+  );
+}
+
+function renderOverdueMode(
+  state,
+  now
+) {
+  const block =
+    state.current;
+
+  const {
+    start,
+    end
+  } =
+    getBlockTimes(block);
+
+  resetBlockChimes(
+    null
+  );
+
+  elements.currentLabel.textContent =
+    "Needs attention";
+
+  elements.currentTitle.textContent =
+    block.title ||
+    "Untitled block";
+
+  elements.currentTimeRange.textContent =
+    formatTimeRange(
+      start,
+      end
+    );
+
+  elements.countdown.textContent =
+    `${formatCountdown(
+      now.getTime() -
+      end.getTime()
+    )} overdue`;
+
+  elements.blockStatus.textContent =
+    block.status ||
+    "Not finished";
+
+  elements.progressFill.style.width =
+    "100%";
+
+  elements.progressTrack.setAttribute(
+    "aria-valuenow",
+    "100"
+  );
+
+  elements.blockMessage.hidden =
+    false;
+
+  elements.blockMessage.textContent =
+    "This block passed its scheduled end but is still unfinished.";
+
+  elements.focusControls.hidden =
+    false;
+
+  renderTasks(
+    block
+  );
 
   renderNextBlock(
     state.next
@@ -1098,7 +1644,9 @@ function renderUpcomingMode(
 }
 
 function renderFinishedMode() {
-  resetBlockChimes(null);
+  resetBlockChimes(
+    null
+  );
 
   elements.currentLabel.textContent =
     "Day complete";
@@ -1107,7 +1655,7 @@ function renderFinishedMode() {
     "You made it 🎉";
 
   elements.currentTimeRange.textContent =
-    "No more scheduled blocks";
+    "No unfinished blocks";
 
   elements.countdown.textContent =
     "Done for today";
@@ -1129,6 +1677,9 @@ function renderFinishedMode() {
   elements.blockMessage.textContent =
     "Your scheduled workday is finished.";
 
+  elements.focusControls.hidden =
+    true;
+
   elements.tasksSection.hidden =
     true;
 
@@ -1138,7 +1689,12 @@ function renderFinishedMode() {
 
 function renderSchedule() {
   if (blocks.length === 0) {
-    showOnly("empty");
+    currentScheduleState =
+      null;
+
+    showOnly(
+      "empty"
+    );
 
     elements.emptyTitle.textContent =
       "No blocks today";
@@ -1149,13 +1705,20 @@ function renderSchedule() {
     return;
   }
 
-  showOnly("content");
+  showOnly(
+    "content"
+  );
 
   const now =
     new Date();
 
   const state =
-    findScheduleState(now);
+    findScheduleState(
+      now
+    );
+
+  currentScheduleState =
+    state;
 
   if (
     state.mode ===
@@ -1172,6 +1735,14 @@ function renderSchedule() {
       "gap"
   ) {
     renderUpcomingMode(
+      state,
+      now
+    );
+  } else if (
+    state.mode ===
+    "overdue"
+  ) {
+    renderOverdueMode(
       state,
       now
     );
@@ -1196,7 +1767,10 @@ function renderSchedule() {
 async function loadSchedule({
   showLoading = false
 } = {}) {
-  if (isLoading) {
+  if (
+    isLoading ||
+    isUpdating
+  ) {
     return;
   }
 
@@ -1206,7 +1780,9 @@ async function loadSchedule({
     true;
 
   if (showLoading) {
-    showOnly("loading");
+    showOnly(
+      "loading"
+    );
   }
 
   try {
@@ -1214,34 +1790,19 @@ async function loadSchedule({
       await fetch(
         TIME_BLOCKS_API_URL,
         {
-          cache: "no-store"
+          cache:
+            "no-store"
         }
       );
 
     const data =
-      await response.json();
-
-    if (
-      !response.ok ||
-      data.success === false
-    ) {
-      throw new Error(
-        data.error ||
-        "Time blocks could not be loaded."
-      );
-    }
-
-    blocks =
-      sortBlocks(
-        Array.isArray(
-          data.blocks
-        )
-          ? data.blocks
-          : []
+      await parseApiResponse(
+        response
       );
 
-    lastLoadedAt =
-      new Date();
+    applyApiData(
+      data
+    );
 
     renderSchedule();
   } catch (error) {
@@ -1250,7 +1811,9 @@ async function loadSchedule({
       error
     );
 
-    showOnly("error");
+    showOnly(
+      "error"
+    );
 
     elements.errorMessage.textContent =
       error instanceof Error
@@ -1273,6 +1836,10 @@ elements.refreshButton.addEventListener(
   async () => {
     await unlockAudio();
 
+    setControlFeedback(
+      ""
+    );
+
     await loadSchedule({
       showLoading: true
     });
@@ -1293,6 +1860,49 @@ elements.soundButton.addEventListener(
   toggleChimes
 );
 
+elements.completeBlockButton.addEventListener(
+  "click",
+  () => {
+    runBlockAction({
+      action:
+        "complete-block"
+    });
+  }
+);
+
+elements.endEarlyButton.addEventListener(
+  "click",
+  () => {
+    runBlockAction({
+      action:
+        "end-early"
+    });
+  }
+);
+
+for (
+  const button of
+  elements.extensionButtons
+) {
+  button.addEventListener(
+    "click",
+    () => {
+      const minutes =
+        Number(
+          button.dataset
+            .extensionMinutes
+        );
+
+      runBlockAction({
+        action:
+          "extend-block",
+
+        minutes
+      });
+    }
+  );
+}
+
 updateSoundButton();
 
 loadSchedule({
@@ -1300,7 +1910,14 @@ loadSchedule({
 });
 
 window.setInterval(
-  renderSchedule,
+  () => {
+    if (
+      !isLoading &&
+      !isUpdating
+    ) {
+      renderSchedule();
+    }
+  },
   CLOCK_INTERVAL_MS
 );
 
