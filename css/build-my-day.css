@@ -1,0 +1,948 @@
+/* =========================================================
+   Michaela OS — Build My Day
+   Cozy Autumn theme compatible
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    var(
+      --page-background,
+      transparent
+    );
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  font-family:
+    var(
+      --font-body,
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      sans-serif
+    );
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================================
+   Widget shell
+   ========================================================= */
+
+.day-builder-widget {
+  width: 100%;
+  padding: 2px;
+}
+
+.day-builder-card {
+  position: relative;
+
+  width: 100%;
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius:
+    var(
+      --radius-card,
+      20px
+    );
+
+  background:
+    var(
+      --card-background,
+      rgba(255, 255, 255, 0.94)
+    );
+
+  box-shadow:
+    var(
+      --shadow-card,
+      0 12px 30px
+        rgba(91, 73, 157, 0.13)
+    );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(135%);
+
+  transition:
+    var(
+      --transition-widget,
+      transform 160ms ease,
+      box-shadow 160ms ease,
+      border-color 160ms ease
+    );
+}
+
+.day-builder-card:hover {
+  border-color:
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  box-shadow:
+    var(
+      --shadow-card-hover,
+      0 18px 38px
+        rgba(91, 73, 157, 0.18)
+    );
+}
+
+/* Soft Michaela OS glow */
+
+.day-builder-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 10% 12%,
+      rgba(176, 156, 255, 0.15),
+      transparent 29%
+    ),
+    radial-gradient(
+      circle at 90% 16%,
+      rgba(133, 223, 255, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 76% 84%,
+      rgba(255, 188, 229, 0.12),
+      transparent 33%
+    ),
+    radial-gradient(
+      circle at 15% 88%,
+      rgba(149, 240, 229, 0.1),
+      transparent 34%
+    );
+}
+
+.day-builder-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.day-builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap:
+    var(
+      --space-lg,
+      16px
+    );
+
+  padding:
+    var(
+      --space-xl,
+      20px
+    );
+}
+
+.eyebrow {
+  margin: 0;
+
+  color:
+    var(
+      --accent-dark,
+      #6651bd
+    );
+
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.day-builder-header h1 {
+  margin: 3px 0 0;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+
+  font-size: 1.32rem;
+  line-height: 1.15;
+}
+
+.builder-icon {
+  display: grid;
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  border:
+    1px solid
+    var(
+      --border-accent,
+      rgba(144, 121, 232, 0.24)
+    );
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(222, 211, 255, 0.9),
+      rgba(215, 239, 250, 0.82),
+      rgba(246, 214, 239, 0.82)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.9),
+    0 7px 17px
+      rgba(112, 88, 192, 0.14);
+
+  font-size: 1.05rem;
+}
+
+/* =========================================================
+   Form panel
+   ========================================================= */
+
+.builder-form {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap:
+    var(
+      --space-md,
+      12px
+    );
+
+  margin:
+    0
+    var(
+      --space-lg,
+      16px
+    )
+    var(
+      --space-lg,
+      16px
+    );
+
+  padding:
+    var(
+      --space-lg,
+      16px
+    );
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius:
+    var(
+      --radius-panel,
+      14px
+    );
+
+  background:
+    radial-gradient(
+      circle at 12% 10%,
+      rgba(167, 149, 245, 0.15),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 88% 88%,
+      rgba(140, 229, 227, 0.14),
+      transparent 36%
+    ),
+    var(
+      --panel-background,
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.67),
+        rgba(246, 240, 255, 0.47)
+      )
+    );
+
+  box-shadow:
+    var(
+      --shadow-panel,
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.76),
+      0 8px 20px
+        rgba(106, 85, 173, 0.08)
+    );
+
+  backdrop-filter:
+    blur(11px);
+
+  -webkit-backdrop-filter:
+    blur(11px);
+}
+
+.builder-field {
+  display: grid;
+  gap: 6px;
+
+  min-width: 0;
+}
+
+.builder-field > span {
+  color:
+    var(
+      --text-secondary,
+      #746d91
+    );
+
+  font-size: 0.7rem;
+  font-weight: 720;
+  letter-spacing: 0.025em;
+}
+
+.builder-field input,
+.builder-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+
+  padding: 8px 10px;
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius:
+    var(
+      --radius-small,
+      10px
+    );
+
+  background:
+    rgba(255, 255, 255, 0.7);
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.9),
+    0 5px 12px
+      rgba(100, 79, 170, 0.055);
+
+  font-size: 0.78rem;
+  font-weight: 620;
+
+  transition:
+    border-color
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    box-shadow
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    background
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    opacity
+      var(
+        --transition-fast,
+        150ms ease
+      );
+}
+
+.builder-field input:hover:not(:disabled),
+.builder-field select:hover:not(:disabled) {
+  border-color:
+    var(
+      --accent,
+      #9079e8
+    );
+
+  background:
+    rgba(255, 255, 255, 0.84);
+}
+
+.builder-field input:focus-visible,
+.builder-field select:focus-visible {
+  outline: none;
+
+  border-color:
+    var(
+      --accent,
+      #9079e8
+    );
+
+  box-shadow:
+    0 0 0 3px
+      rgba(144, 121, 232, 0.18),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.9);
+}
+
+.builder-field input:disabled,
+.builder-field select:disabled {
+  cursor: wait;
+  opacity: 0.52;
+}
+
+/* Give native date/time controls the theme color */
+
+.builder-field input {
+  accent-color:
+    var(
+      --accent,
+      #9079e8
+    );
+
+  color-scheme: light;
+}
+
+/* =========================================================
+   Generate button
+   ========================================================= */
+
+.generate-button {
+  grid-column: 1 / -1;
+
+  min-height: 43px;
+  margin-top: 2px;
+  padding: 9px 15px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
+
+  color:
+    var(
+      --text-on-accent,
+      #ffffff
+    );
+
+  background:
+    linear-gradient(
+      120deg,
+      #927cf0 0%,
+      #b184eb 34%,
+      #de8fd2 64%,
+      #77cddc 100%
+    );
+
+  background-size:
+    180% 180%;
+
+  box-shadow:
+    0 9px 22px
+      rgba(112, 88, 192, 0.25),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.37);
+
+  font-size: 0.8rem;
+  font-weight: 780;
+
+  cursor: pointer;
+
+  transition:
+    transform
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    background-position 300ms ease,
+    box-shadow
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    opacity
+      var(
+        --transition-fast,
+        150ms ease
+      );
+}
+
+.generate-button:hover:not(:disabled) {
+  transform:
+    translateY(-1px);
+
+  background-position:
+    100% 50%;
+
+  box-shadow:
+    0 12px 27px
+      rgba(112, 88, 192, 0.31),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.4);
+}
+
+.generate-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.995);
+}
+
+.generate-button:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+/* =========================================================
+   Feedback
+   ========================================================= */
+
+.builder-feedback {
+  grid-column: 1 / -1;
+
+  margin: 0;
+  padding: 9px 11px;
+
+  border-radius:
+    var(
+      --radius-small,
+      10px
+    );
+
+  font-size: 0.72rem;
+  font-weight: 650;
+  line-height: 1.42;
+}
+
+.builder-feedback.is-success {
+  color: #477f74;
+
+  background:
+    rgba(213, 247, 240, 0.74);
+
+  border:
+    1px solid
+    rgba(101, 186, 169, 0.22);
+}
+
+.builder-feedback.is-warning {
+  color: #947036;
+
+  background:
+    rgba(255, 239, 203, 0.76);
+
+  border:
+    1px solid
+    rgba(218, 172, 82, 0.25);
+}
+
+.builder-feedback.is-error {
+  color: #a75483;
+
+  background:
+    rgba(250, 218, 239, 0.74);
+
+  border:
+    1px solid
+    rgba(215, 119, 169, 0.26);
+}
+
+/* =========================================================
+   Loading, error, and success panels
+   ========================================================= */
+
+.builder-loading,
+.builder-error,
+.builder-success {
+  margin:
+    0
+    var(
+      --space-lg,
+      16px
+    )
+    var(
+      --space-lg,
+      16px
+    );
+
+  padding: 28px 18px;
+
+  border:
+    1px solid
+    var(
+      --border-soft,
+      rgba(104, 83, 171, 0.09)
+    );
+
+  border-radius:
+    var(
+      --radius-panel,
+      14px
+    );
+
+  background:
+    var(
+      --panel-background,
+      rgba(255, 255, 255, 0.53)
+    );
+
+  box-shadow:
+    var(
+      --shadow-panel,
+      inset 0 1px 0
+        rgba(255, 255, 255, 0.76),
+      0 8px 20px
+        rgba(106, 85, 173, 0.08)
+    );
+
+  text-align: center;
+}
+
+.builder-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  color:
+    var(
+      --text-muted,
+      #817a9f
+    );
+
+  font-size: 0.8rem;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      var(
+        --pastel-purple,
+        #a995f4
+      ),
+      var(
+        --pastel-cyan,
+        #8ce5e3
+      )
+    );
+
+  box-shadow:
+    0 0 10px
+      rgba(143, 121, 231, 0.28);
+
+  animation:
+    builderPulse 1.1s ease-in-out
+    infinite;
+}
+
+.builder-error strong,
+.builder-success strong {
+  display: block;
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  font-family:
+    var(
+      --font-heading,
+      Georgia,
+      serif
+    );
+
+  font-size: 1rem;
+}
+
+.builder-error p,
+.builder-success p {
+  margin: 7px 0 0;
+
+  color:
+    var(
+      --text-muted,
+      #817a9f
+    );
+
+  font-size: 0.78rem;
+  line-height: 1.48;
+}
+
+.success-icon {
+  display: grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+
+  margin: 0 auto 11px;
+
+  border:
+    1px solid
+    rgba(101, 186, 169, 0.25);
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(213, 247, 240, 0.92),
+      rgba(222, 211, 255, 0.82)
+    );
+
+  color: #477f74;
+
+  box-shadow:
+    0 7px 18px
+      rgba(101, 186, 169, 0.14);
+
+  font-size: 1.15rem;
+  font-weight: 850;
+}
+
+/* =========================================================
+   Secondary buttons
+   ========================================================= */
+
+.secondary-button {
+  min-height: 36px;
+
+  margin-top: 14px;
+  padding: 7px 13px;
+
+  border:
+    1px solid
+    var(
+      --border-default,
+      rgba(104, 83, 171, 0.15)
+    );
+
+  border-radius:
+    var(
+      --radius-pill,
+      999px
+    );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.84),
+      rgba(238, 232, 255, 0.65)
+    );
+
+  color:
+    var(
+      --text-primary,
+      #453d68
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.88),
+    0 6px 14px
+      rgba(100, 79, 170, 0.09);
+
+  font-size: 0.72rem;
+  font-weight: 740;
+
+  cursor: pointer;
+
+  transition:
+    transform
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    border-color
+      var(
+        --transition-fast,
+        150ms ease
+      ),
+    box-shadow
+      var(
+        --transition-fast,
+        150ms ease
+      );
+}
+
+.secondary-button:hover {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    var(
+      --accent,
+      #9079e8
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.92),
+    0 9px 18px
+      rgba(112, 88, 192, 0.16);
+}
+
+/* =========================================================
+   Keyboard focus
+   ========================================================= */
+
+.generate-button:focus-visible,
+.secondary-button:focus-visible {
+  outline:
+    3px solid
+    rgba(151, 129, 239, 0.27);
+
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   Responsive layout
+   ========================================================= */
+
+@keyframes builderPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.88);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@media (max-width: 520px) {
+  .builder-form {
+    grid-template-columns: 1fr;
+  }
+
+  .generate-button,
+  .builder-feedback {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 380px) {
+  .day-builder-header {
+    padding:
+      var(
+        --space-lg,
+        16px
+      );
+  }
+
+  .builder-form,
+  .builder-loading,
+  .builder-error,
+  .builder-success {
+    margin-left:
+      var(
+        --space-md,
+        12px
+      );
+
+    margin-right:
+      var(
+        --space-md,
+        12px
+      );
+  }
+}
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .day-builder-card,
+  .generate-button,
+  .secondary-button,
+  .builder-field input,
+  .builder-field select {
+    transition: none;
+  }
+
+  .loading-dot {
+    animation: none;
+  }
+}
