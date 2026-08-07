@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Pick My Next Read</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/pick-next-read-widget.css?v=1"
+    />
+  </head>
+
+  <body>
+    <main class="next-read">
+      <section
+        class="next-read__card"
+        aria-labelledby="next-read-title"
+      >
+        <header class="next-read__header">
+          <div>
+            <p class="next-read__eyebrow">
+              Reading
+            </p>
+
+            <h1
+              class="next-read__title"
+              id="next-read-title"
+            >
+              Pick My Next Read
+            </h1>
+          </div>
+
+          <div
+            class="next-read__icon"
+            aria-hidden="true"
+          >
+            📚
+          </div>
+        </header>
+
+        <div class="next-read__divider"></div>
+
+        <div
+          class="next-read__loading"
+          id="next-read-loading"
+        >
+          Choosing from your TBR…
+        </div>
+
+        <div
+          class="next-read__error"
+          id="next-read-error"
+          hidden
+        >
+          Your TBR could not be loaded.
+        </div>
+
+        <div
+          class="next-read__empty"
+          id="next-read-empty"
+          hidden
+        >
+          <div
+            class="next-read__empty-icon"
+            aria-hidden="true"
+          >
+            ✨
+          </div>
+
+          <p class="next-read__empty-title">
+            Your TBR is empty
+          </p>
+
+          <p class="next-read__empty-copy">
+            Add books with the status Want to Read.
+          </p>
+        </div>
+
+        <div
+          class="next-read__content"
+          id="next-read-content"
+          hidden
+        >
+          <div class="next-read__book">
+            <div class="next-read__cover-wrap">
+              <img
+                class="next-read__cover"
+                id="next-read-cover"
+                alt=""
+                hidden
+              />
+
+              <div
+                class="next-read__cover-placeholder"
+                id="next-read-cover-placeholder"
+                aria-hidden="true"
+              >
+                📖
+              </div>
+            </div>
+
+            <div class="next-read__details">
+              <p class="next-read__result-label">
+                Your next read
+              </p>
+
+              <h2
+                class="next-read__book-title"
+                id="next-read-book-title"
+              >
+                Untitled Book
+              </h2>
+
+              <p
+                class="next-read__author"
+                id="next-read-author"
+              >
+                Unknown Author
+              </p>
+
+              <p
+                class="next-read__pages"
+                id="next-read-pages"
+              >
+                Pages unavailable
+              </p>
+
+              <a
+                class="next-read__notion-link"
+                id="next-read-notion-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open book entry
+              </a>
+            </div>
+          </div>
+
+          <div class="next-read__actions">
+            <button
+              class="next-read__button next-read__button--secondary"
+              id="next-read-reroll"
+              type="button"
+            >
+              <span aria-hidden="true">🎲</span>
+              Pick Another
+            </button>
+
+            <button
+              class="next-read__button next-read__button--primary"
+              id="next-read-start"
+              type="button"
+            >
+              <span aria-hidden="true">📖</span>
+              Start Reading
+            </button>
+          </div>
+
+          <p
+            class="next-read__status"
+            id="next-read-status"
+            aria-live="polite"
+          ></p>
+        </div>
+      </section>
+    </main>
+
+    <script
+      src="/js/pick-next-read-widget.js?v=1"
+      defer
+    ></script>
+  </body>
+</html>
