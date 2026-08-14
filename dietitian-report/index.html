@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Dietitian Report</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/dietitian-report.css?v=1"
+    />
+  </head>
+
+  <body>
+    <main class="dietitian-report">
+      <section class="dietitian-report__shell">
+        <header class="dietitian-report__header">
+          <div>
+            <p class="dietitian-report__eyebrow">
+              Michaela OS · Nutrition
+            </p>
+
+            <h1 class="dietitian-report__title">
+              Dietitian Report
+            </h1>
+
+            <p
+              class="dietitian-report__range"
+              id="report-range"
+            >
+              Loading reporting period…
+            </p>
+          </div>
+
+          <div
+            class="dietitian-report__icon"
+            aria-hidden="true"
+          >
+            🥗
+          </div>
+        </header>
+
+        <section class="dietitian-report__controls no-print">
+          <div class="dietitian-report__field">
+            <label
+              for="report-start"
+              class="dietitian-report__label"
+            >
+              Start date
+            </label>
+
+            <input
+              type="date"
+              id="report-start"
+              class="dietitian-report__input"
+              value="2026-06-05"
+            />
+          </div>
+
+          <button
+            type="button"
+            id="report-generate"
+            class="dietitian-report__button dietitian-report__button--secondary"
+          >
+            Refresh Report
+          </button>
+
+          <button
+            type="button"
+            id="report-print"
+            class="dietitian-report__button dietitian-report__button--primary"
+          >
+            Print / Save PDF
+          </button>
+        </section>
+
+        <div
+          id="report-loading"
+          class="dietitian-report__state"
+        >
+          Building your report…
+        </div>
+
+        <div
+          id="report-error"
+          class="dietitian-report__state dietitian-report__state--error"
+          hidden
+        >
+          Report could not be loaded.
+        </div>
+
+        <div
+          id="report-content"
+          hidden
+        >
+          <section class="dietitian-report__summary">
+            <div class="dietitian-report__summary-header">
+              <div>
+                <p class="dietitian-report__section-eyebrow">
+                  At a Glance
+                </p>
+
+                <h2 class="dietitian-report__section-title">
+                  Reporting Summary
+                </h2>
+              </div>
+
+              <p class="dietitian-report__summary-note">
+                Nutrition averages reflect days with food entries and may include partial logging days.
+              </p>
+            </div>
+
+            <div class="dietitian-report__stats">
+              <article class="dietitian-report__stat">
+                <span
+                  class="dietitian-report__stat-value"
+                  id="summary-logged-days"
+                >
+                  —
+                </span>
+
+                <span class="dietitian-report__stat-label">
+                  Days with food logs
+                </span>
+              </article>
+
+              <article class="dietitian-report__stat">
+                <span
+                  class="dietitian-report__stat-value"
+                  id="summary-meals"
+                >
+                  —
+                </span>
+
+                <span class="dietitian-report__stat-label">
+                  Meals logged
+                </span>
+              </article>
+
+              <article class="dietitian-report__stat">
+                <span
+                  class="dietitian-report__stat-value"
+                  id="summary-calories"
+                >
+                  —
+                </span>
+
+                <span class="dietitian-report__stat-label">
+                  Avg calories
+                </span>
+              </article>
+
+              <article class="dietitian-report__stat">
+                <span
+                  class="dietitian-report__stat-value"
+                  id="summary-protein"
+                >
+                  —
+                </span>
+
+                <span class="dietitian-report__stat-label">
+                  Avg protein
+                </span>
+              </article>
+
+              <article class="dietitian-report__stat">
+                <span
+                  class="dietitian-report__stat-value"
+                  id="summary-fiber"
+                >
+                  —
+                </span>
+
+                <span class="dietitian-report__stat-label">
+                  Avg fiber
+                </span>
+              </article>
+
+              <article class="dietitian-report__stat">
+                <span
+                  class="dietitian-report__stat-value"
+                  id="summary-water"
+                >
+                  —
+                </span>
+
+                <span class="dietitian-report__stat-label">
+                  Avg water
+                </span>
+              </article>
+            </div>
+
+            <div class="dietitian-report__behavior">
+              <div class="dietitian-report__behavior-item">
+                <span>Avg hunger before</span>
+                <strong id="summary-hunger">—</strong>
+              </div>
+
+              <div class="dietitian-report__behavior-item">
+                <span>Avg fullness after</span>
+                <strong id="summary-fullness">—</strong>
+              </div>
+
+              <div class="dietitian-report__behavior-item">
+                <span>Avg satisfaction</span>
+                <strong id="summary-satisfaction">—</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="dietitian-report__daily">
+            <div class="dietitian-report__daily-header">
+              <p class="dietitian-report__section-eyebrow">
+                Daily Detail
+              </p>
+
+              <h2 class="dietitian-report__section-title">
+                Food & Hydration Log
+              </h2>
+            </div>
+
+            <div
+              id="report-days"
+              class="dietitian-report__days"
+            ></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script
+      src="/js/dietitian-report.js?v=1"
+      defer
+    ></script>
+  </body>
+</html>
