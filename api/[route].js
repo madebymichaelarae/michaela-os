@@ -16,6 +16,8 @@ import timeBlocksHandler
   from "../lib/api/timeblocks.js";
 import dayGeneratorHandler
   from "../lib/api/day-generator.js";
+import dietitianReportHandler
+  from "../lib/api/dietitian-report.js";
 
 /**
  * Adapts the finance function to match the same
@@ -57,7 +59,9 @@ const ROUTE_HANDLERS = {
   "daily-wrap-up": dailyWrapUpHandler,
 
    timeblocks: timeBlocksHandler, 
-  "day-generator": dayGeneratorHandler
+  "day-generator": dayGeneratorHandler, 
+  "dietitian-report":
+  dietitianReportHandler,
 };
 
 function getRequestedRoute(request) {
