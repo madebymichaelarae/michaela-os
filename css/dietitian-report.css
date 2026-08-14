@@ -1369,3 +1369,52 @@ input {
     font-size: 8.5pt;
   }
 }
+
+/* =========================================================
+   RELATED FOOD / RECIPE
+   ========================================================= */
+
+.dietitian-meal__related {
+  margin: 6px 0 0;
+
+  color:
+    var(
+      --color-text,
+      #4f3b31
+    );
+
+  font-size: 0.7rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.dietitian-meal__related-label {
+  margin-right: 4px;
+
+  color:
+    var(
+      --color-text-muted,
+      #937969
+    );
+
+  font-size: 0.59rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media print {
+  .dietitian-meal__related {
+    margin-top: 3pt;
+
+    color: #333333;
+
+    font-size: 6.3pt;
+  }
+
+  .dietitian-meal__related-label {
+    color: #666666;
+
+    font-size: 5.4pt;
+  }
+}
