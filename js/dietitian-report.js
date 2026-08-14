@@ -355,10 +355,10 @@ function renderSummary(
       null &&
     averages.calories !==
       undefined
-      ? `${formatNumber(
+      ? formatNumber(
           averages.calories,
           0
-        )}`
+        )
       : "—";
 
   elements.protein.textContent =
@@ -420,6 +420,74 @@ function renderSummary(
           averages.satisfaction
         )
       : "—";
+}
+
+/* =========================================================
+   RELATED FOOD NAMES
+   ========================================================= */
+
+function createRelatedFoodsHtml(
+  meal
+) {
+  const names =
+    Array.isArray(
+      meal.relatedFoodNames
+    )
+      ? meal.relatedFoodNames
+          .map(
+            (name) =>
+              String(
+                name || ""
+              ).trim()
+          )
+          .filter(Boolean)
+      : [];
+
+  if (
+    names.length ===
+    0
+  ) {
+    return "";
+  }
+
+  /*
+   * Avoid showing a duplicate when the Food Log title
+   * already matches the related food name.
+   */
+  const mealTitle =
+    String(
+      meal.title || ""
+    )
+      .trim()
+      .toLowerCase();
+
+  const uniqueNames =
+    names.filter(
+      (name) =>
+        name.toLowerCase() !==
+        mealTitle
+    );
+
+  if (
+    uniqueNames.length ===
+    0
+  ) {
+    return "";
+  }
+
+  return `
+    <p class="dietitian-meal__related">
+      <span class="dietitian-meal__related-label">
+        Related food
+      </span>
+
+      ${escapeHtml(
+        uniqueNames.join(
+          ", "
+        )
+      )}
+    </p>
+  `;
 }
 
 /* =========================================================
@@ -603,6 +671,11 @@ function createMealHtml(
       `
       : "";
 
+  const relatedFoodsHtml =
+    createRelatedFoodsHtml(
+      meal
+    );
+
   const notesHtml =
     notes
       ? `
@@ -656,6 +729,7 @@ function createMealHtml(
           )}
         </h4>
 
+        ${relatedFoodsHtml}
         ${metaHtml}
         ${notesHtml}
 
@@ -762,12 +836,6 @@ function renderDays(
       ? report.days
       : [];
 
-  /*
-   * Only show dates that contain actual food entries.
-   *
-   * This keeps the PDF compact instead of printing
-   * dozens of blank June/July dates.
-   */
   const loggedDays =
     days.filter(
       (day) =>
@@ -914,16 +982,6 @@ elements.print.addEventListener(
     }
 
     window.print();
-  }
-);
-
-elements.start.addEventListener(
-  "change",
-  () => {
-    /*
-     * Do not auto-query while the date picker is still being
-     * adjusted. The Refresh Report button keeps it deliberate.
-     */
   }
 );
 
