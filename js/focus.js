@@ -1269,12 +1269,6 @@ function showOnlyState(
     section.hidden =
       section !== target;
   }
-
-  elements.breakPicker.hidden =
-    true;
-
-  elements.lunchPicker.hidden =
-    true;
 }
 
 function showContent() {
