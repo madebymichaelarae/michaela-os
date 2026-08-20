@@ -8,7 +8,7 @@
       content="width=device-width, initial-scale=1"
     />
 
-    <title>Focus Mode</title>
+    <title>Clocked In</title>
 
     <link
       rel="stylesheet"
@@ -32,10 +32,10 @@
         <header class="focus-header">
           <div>
             <p class="eyebrow">
-              Focus Mode
+              CLOCKED IN
             </p>
 
-            <h1>Timeblock</h1>
+            <h1>Workday</h1>
           </div>
 
           <div class="header-actions">
@@ -45,15 +45,15 @@
               type="button"
               aria-pressed="false"
             >
-              🔕 Chimes
+              Chimes Off
             </button>
 
             <button
               class="refresh-button"
               id="refreshButton"
               type="button"
-              aria-label="Refresh schedule"
-              title="Refresh schedule"
+              aria-label="Refresh workday"
+              title="Refresh workday"
             >
               ↻
             </button>
@@ -66,7 +66,7 @@
         >
           <span class="loading-dot"></span>
 
-          Loading today’s plan…
+          Loading workday…
         </section>
 
         <section
@@ -75,11 +75,11 @@
           hidden
         >
           <strong>
-            Schedule unavailable
+            Workday unavailable
           </strong>
 
           <p id="errorMessage">
-            Time blocks could not be loaded.
+            Clocked In could not be loaded.
           </p>
 
           <button
@@ -96,16 +96,12 @@
           id="emptyState"
           hidden
         >
-          <div class="empty-icon">
-            ☀️
-          </div>
-
           <strong id="emptyTitle">
-            No blocks today
+            No work blocks today
           </strong>
 
           <p id="emptyMessage">
-            Your schedule is clear.
+            Your queue is currently empty.
           </p>
         </section>
 
@@ -113,20 +109,145 @@
           id="focusContent"
           hidden
         >
-          <section class="current-section">
+          <section class="workday-summary">
+            <div class="summary-grid">
+              <div class="summary-panel">
+                <p class="section-label">
+                  CURRENT TIME
+                </p>
+
+                <strong
+                  class="summary-value"
+                  id="currentTime"
+                >
+                  --:--
+                </strong>
+
+                <span
+                  class="summary-subtext"
+                  id="currentDate"
+                >
+                  —
+                </span>
+              </div>
+
+              <div class="summary-panel">
+                <p class="section-label">
+                  TOTAL WORKED
+                </p>
+
+                <strong
+                  class="summary-value"
+                  id="totalWorked"
+                >
+                  00:00:00
+                </strong>
+
+                <span
+                  class="summary-subtext"
+                  id="workedStatus"
+                >
+                  Clocked out
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="state-section"
+            id="clockedOutState"
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                WORKDAY
+              </p>
+
+              <span
+                class="status-pill"
+              >
+                Clocked out
+              </span>
+            </div>
+
+            <h2>
+              Ready when you are
+            </h2>
+
+            <p class="state-description">
+              Clock in to begin Opening Admin.
+            </p>
+
+            <button
+              class="focus-action-button focus-action-button--primary focus-action-button--wide"
+              id="clockInButton"
+              type="button"
+            >
+              Clock In
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="openingAdminState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                OPENING ADMIN
+              </p>
+
+              <span
+                class="status-pill"
+              >
+                Working
+              </span>
+            </div>
+
+            <div class="timer-row">
+              <strong
+                class="state-timer"
+                id="openingAdminTimer"
+              >
+                15:00
+              </strong>
+
+              <span class="timer-label">
+                remaining
+              </span>
+            </div>
+
+            <p class="state-description">
+              Review overnight updates, approvals, scheduling,
+              meetings, and confirm your first focus block.
+            </p>
+
+            <button
+              class="focus-action-button focus-action-button--primary"
+              id="startFocusButton"
+              type="button"
+            >
+              Start First Focus
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="focusState"
+            hidden
+          >
             <div class="section-label-row">
               <p
                 class="section-label"
                 id="currentLabel"
               >
-                Current block
+                CURRENT BLOCK
               </p>
 
               <span
                 class="status-pill"
                 id="blockStatus"
               >
-                In progress
+                Focus
               </span>
             </div>
 
@@ -134,16 +255,33 @@
               Focus block
             </h2>
 
-            <div class="time-row">
-              <span id="currentTimeRange">
-                9:00 AM–10:30 AM
+            <div class="focus-meta-row">
+              <span
+                id="plannedDuration"
+              >
+                60 min planned
               </span>
 
               <span
-                class="countdown"
+                id="focusElapsed"
+              >
+                0 min focused
+              </span>
+            </div>
+
+            <div class="timer-row timer-row--focus">
+              <strong
+                class="state-timer"
                 id="countdown"
               >
-                45 min left
+                60:00
+              </strong>
+
+              <span
+                class="timer-label"
+                id="countdownLabel"
+              >
+                remaining
               </span>
             </div>
 
@@ -162,39 +300,9 @@
               ></div>
             </div>
 
-            <p
-              class="block-message"
-              id="blockMessage"
-              hidden
-            ></p>
-          </section>
-
-          <section
-            class="focus-controls"
-            id="focusControls"
-            hidden
-          >
-            <div class="focus-control-row">
-              <button
-                class="focus-action-button focus-action-button--primary"
-                id="completeBlockButton"
-                type="button"
-              >
-                ✓ Complete
-              </button>
-
-              <button
-                class="focus-action-button"
-                id="endEarlyButton"
-                type="button"
-              >
-                ⏭ End Early
-              </button>
-            </div>
-
             <div class="extension-controls">
               <span class="extension-label">
-                Need more time?
+                Add time
               </span>
 
               <div class="extension-buttons">
@@ -224,6 +332,48 @@
               </div>
             </div>
 
+            <div class="focus-control-grid">
+              <button
+                class="focus-action-button"
+                id="breakButton"
+                type="button"
+              >
+                Break
+              </button>
+
+              <button
+                class="focus-action-button"
+                id="lunchButton"
+                type="button"
+              >
+                Lunch
+              </button>
+
+              <button
+                class="focus-action-button"
+                id="meetingButton"
+                type="button"
+              >
+                Meeting
+              </button>
+
+              <button
+                class="focus-action-button"
+                id="awayButton"
+                type="button"
+              >
+                Away
+              </button>
+            </div>
+
+            <button
+              class="focus-action-button focus-action-button--primary focus-action-button--wide"
+              id="finishBlockButton"
+              type="button"
+            >
+              Finish Block
+            </button>
+
             <p
               class="control-feedback"
               id="controlFeedback"
@@ -232,12 +382,541 @@
           </section>
 
           <section
-            class="tasks-section"
-            id="tasksSection"
+            class="duration-picker"
+            id="breakPicker"
+            hidden
+          >
+            <p class="section-label">
+              CHOOSE BREAK
+            </p>
+
+            <div class="duration-choice-grid">
+              <button
+                class="duration-choice-button"
+                type="button"
+                data-break-minutes="10"
+              >
+                10 min
+              </button>
+
+              <button
+                class="duration-choice-button"
+                type="button"
+                data-break-minutes="15"
+              >
+                15 min
+              </button>
+
+              <button
+                class="duration-choice-button"
+                type="button"
+                data-break-minutes="30"
+              >
+                30 min
+              </button>
+            </div>
+
+            <button
+              class="secondary-button"
+              id="cancelBreakPickerButton"
+              type="button"
+            >
+              Cancel
+            </button>
+          </section>
+
+          <section
+            class="duration-picker"
+            id="lunchPicker"
+            hidden
+          >
+            <p class="section-label">
+              CHOOSE LUNCH
+            </p>
+
+            <div class="duration-choice-grid">
+              <button
+                class="duration-choice-button"
+                type="button"
+                data-lunch-minutes="30"
+              >
+                30 min
+              </button>
+
+              <button
+                class="duration-choice-button"
+                type="button"
+                data-lunch-minutes="45"
+              >
+                45 min
+              </button>
+
+              <button
+                class="duration-choice-button"
+                type="button"
+                data-lunch-minutes="60"
+              >
+                60 min
+              </button>
+            </div>
+
+            <button
+              class="secondary-button"
+              id="cancelLunchPickerButton"
+              type="button"
+            >
+              Cancel
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="breakState"
+            hidden
           >
             <div class="section-label-row">
               <p class="section-label">
-                Tasks
+                BREAK
+              </p>
+
+              <span class="status-pill">
+                Paused
+              </span>
+            </div>
+
+            <div class="timer-row">
+              <strong
+                class="state-timer"
+                id="breakTimer"
+              >
+                10:00
+              </strong>
+
+              <span
+                class="timer-label"
+                id="breakTimerLabel"
+              >
+                remaining
+              </span>
+            </div>
+
+            <p class="state-description">
+              Your focus block is paused.
+            </p>
+
+            <p
+              class="paused-context"
+              id="breakPausedContext"
+            >
+              —
+            </p>
+
+            <button
+              class="focus-action-button focus-action-button--primary focus-action-button--wide"
+              id="returnFromBreakButton"
+              type="button"
+            >
+              Return to Work
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="lunchState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                LUNCH
+              </p>
+
+              <span class="status-pill">
+                Paused
+              </span>
+            </div>
+
+            <div class="timer-row">
+              <strong
+                class="state-timer"
+                id="lunchTimer"
+              >
+                30:00
+              </strong>
+
+              <span
+                class="timer-label"
+                id="lunchTimerLabel"
+              >
+                remaining
+              </span>
+            </div>
+
+            <p class="state-description">
+              Work time is paused.
+            </p>
+
+            <p
+              class="paused-context"
+              id="lunchPausedContext"
+            >
+              —
+            </p>
+
+            <button
+              class="focus-action-button focus-action-button--primary focus-action-button--wide"
+              id="returnFromLunchButton"
+              type="button"
+            >
+              Return to Work
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="meetingState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                MEETING
+              </p>
+
+              <span class="status-pill">
+                Working
+              </span>
+            </div>
+
+            <div class="timer-row">
+              <strong
+                class="state-timer"
+                id="meetingTimer"
+              >
+                00:00
+              </strong>
+
+              <span class="timer-label">
+                elapsed
+              </span>
+            </div>
+
+            <p class="state-description">
+              Meeting time counts toward Total Worked.
+              Your focus block is paused.
+            </p>
+
+            <p
+              class="paused-context"
+              id="meetingPausedContext"
+            >
+              —
+            </p>
+
+            <button
+              class="focus-action-button focus-action-button--primary focus-action-button--wide"
+              id="endMeetingButton"
+              type="button"
+            >
+              End Meeting
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="meetingEndedState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                MEETING COMPLETE
+              </p>
+
+              <span class="status-pill">
+                Choose next
+              </span>
+            </div>
+
+            <p
+              class="state-description"
+              id="meetingSummary"
+            >
+              Meeting complete.
+            </p>
+
+            <p
+              class="paused-context"
+              id="meetingResumeContext"
+            >
+              —
+            </p>
+
+            <div class="post-meeting-actions">
+              <button
+                class="focus-action-button focus-action-button--primary"
+                id="resumeAfterMeetingButton"
+                type="button"
+              >
+                Resume Focus
+              </button>
+
+              <button
+                class="focus-action-button"
+                type="button"
+                data-post-meeting-break="10"
+              >
+                Break 10
+              </button>
+
+              <button
+                class="focus-action-button"
+                type="button"
+                data-post-meeting-break="15"
+              >
+                Break 15
+              </button>
+
+              <button
+                class="focus-action-button"
+                type="button"
+                data-post-meeting-break="30"
+              >
+                Break 30
+              </button>
+            </div>
+          </section>
+
+          <section
+            class="state-section"
+            id="awayState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                AWAY
+              </p>
+
+              <span class="status-pill">
+                Paused
+              </span>
+            </div>
+
+            <div class="timer-row">
+              <strong
+                class="state-timer"
+                id="awayTimer"
+              >
+                00:00
+              </strong>
+
+              <span class="timer-label">
+                away
+              </span>
+            </div>
+
+            <p class="state-description">
+              Work and focus timers are paused.
+            </p>
+
+            <p
+              class="paused-context"
+              id="awayPausedContext"
+            >
+              —
+            </p>
+
+            <button
+              class="focus-action-button focus-action-button--primary focus-action-button--wide"
+              id="returnFromAwayButton"
+              type="button"
+            >
+              Return to Work
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="blockCompleteState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                BLOCK COMPLETE
+              </p>
+
+              <span class="status-pill">
+                Choose next
+              </span>
+            </div>
+
+            <p
+              class="state-description"
+              id="blockCompleteSummary"
+            >
+              Block complete.
+            </p>
+
+            <div class="post-block-actions">
+              <button
+                class="focus-action-button"
+                type="button"
+                data-post-block-break="10"
+              >
+                Break 10
+              </button>
+
+              <button
+                class="focus-action-button"
+                type="button"
+                data-post-block-break="15"
+              >
+                Break 15
+              </button>
+
+              <button
+                class="focus-action-button"
+                type="button"
+                data-post-block-break="30"
+              >
+                Break 30
+              </button>
+
+              <button
+                class="focus-action-button focus-action-button--primary"
+                id="startNextBlockButton"
+                type="button"
+              >
+                Start Next Block
+              </button>
+            </div>
+          </section>
+
+          <section
+            class="state-section"
+            id="closingAdminState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                CLOSING ADMIN
+              </p>
+
+              <span class="status-pill">
+                Working
+              </span>
+            </div>
+
+            <div class="timer-row">
+              <strong
+                class="state-timer"
+                id="closingAdminTimer"
+              >
+                00:00
+              </strong>
+
+              <span class="timer-label">
+                elapsed
+              </span>
+            </div>
+
+            <p class="state-description">
+              Process captures, communications, pipeline changes,
+              and build tomorrow before finishing work.
+            </p>
+
+            <button
+              class="focus-action-button focus-action-button--primary focus-action-button--wide"
+              id="finishWorkButton"
+              type="button"
+            >
+              Finish Work
+            </button>
+          </section>
+
+          <section
+            class="state-section"
+            id="workdayCompleteState"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                WORKDAY COMPLETE
+              </p>
+
+              <span class="status-pill">
+                Clocked out
+              </span>
+            </div>
+
+            <div class="workday-receipt">
+              <div>
+                <span class="receipt-label">
+                  TOTAL WORKED
+                </span>
+
+                <strong
+                  id="finalTotalWorked"
+                >
+                  00:00:00
+                </strong>
+              </div>
+
+              <div>
+                <span class="receipt-label">
+                  FOCUS
+                </span>
+
+                <strong
+                  id="finalFocusWorked"
+                >
+                  00:00:00
+                </strong>
+              </div>
+
+              <div>
+                <span class="receipt-label">
+                  MEETINGS
+                </span>
+
+                <strong
+                  id="finalMeetingWorked"
+                >
+                  00:00:00
+                </strong>
+              </div>
+
+              <div>
+                <span class="receipt-label">
+                  ADMIN
+                </span>
+
+                <strong
+                  id="finalAdminWorked"
+                >
+                  00:00:00
+                </strong>
+              </div>
+            </div>
+
+            <p class="state-description">
+              Tomorrow is ready. You are clocked out.
+            </p>
+
+            <button
+              class="secondary-button"
+              id="resetWorkdayButton"
+              type="button"
+            >
+              Reset for New Day
+            </button>
+          </section>
+
+          <section
+            class="tasks-section"
+            id="tasksSection"
+            hidden
+          >
+            <div class="section-label-row">
+              <p class="section-label">
+                CURRENT BLOCK TASKS
               </p>
 
               <span
@@ -257,9 +936,10 @@
           <section
             class="next-section"
             id="nextSection"
+            hidden
           >
             <p class="section-label">
-              Up next
+              UP NEXT
             </p>
 
             <div class="next-block">
@@ -269,7 +949,7 @@
                 </h3>
 
                 <p id="nextTime">
-                  10:30 AM
+                  Upcoming
                 </p>
               </div>
 
@@ -280,6 +960,20 @@
                 30 min
               </span>
             </div>
+          </section>
+
+          <section
+            class="clock-out-control"
+            id="clockOutControl"
+            hidden
+          >
+            <button
+              class="secondary-button secondary-button--danger"
+              id="clockOutButton"
+              type="button"
+            >
+              Start Closing Admin
+            </button>
           </section>
 
           <footer class="widget-footer">
