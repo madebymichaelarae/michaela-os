@@ -1,19 +1,41 @@
 const TIME_BLOCKS_API_URL =
   "/api/timeblocks";
 
-const REFRESH_INTERVAL_MS =
-  60 * 1000;
+const TIME_ZONE =
+  "America/New_York";
 
 const CLOCK_INTERVAL_MS =
   1000;
 
-const COMPLETE_STATUSES =
+const REFRESH_INTERVAL_MS =
+  60 * 1000;
+
+const OPENING_ADMIN_MS =
+  15 * 60 * 1000;
+
+const STORAGE_KEY =
+  "michaela-os-clocked-in-v1";
+
+const CHIMES_STORAGE_KEY =
+  "michaela-os-focus-chimes";
+
+const COMPLETE_TASK_STATUSES =
   new Set([
+    "scheduled",
+    "sent",
     "done",
+    "scrapped",
     "complete",
     "completed",
-    "finished",
-    "skipped"
+    "finished"
+  ]);
+
+const WORKING_STATES =
+  new Set([
+    "opening-admin",
+    "focus",
+    "meeting",
+    "closing-admin"
   ]);
 
 const elements = {
@@ -67,9 +89,54 @@ const elements = {
       "soundButton"
     ),
 
+  currentTime:
+    document.getElementById(
+      "currentTime"
+    ),
+
+  currentDate:
+    document.getElementById(
+      "currentDate"
+    ),
+
+  totalWorked:
+    document.getElementById(
+      "totalWorked"
+    ),
+
+  workedStatus:
+    document.getElementById(
+      "workedStatus"
+    ),
+
+  clockedOutState:
+    document.getElementById(
+      "clockedOutState"
+    ),
+
+  openingAdminState:
+    document.getElementById(
+      "openingAdminState"
+    ),
+
+  openingAdminTimer:
+    document.getElementById(
+      "openingAdminTimer"
+    ),
+
+  focusState:
+    document.getElementById(
+      "focusState"
+    ),
+
   currentLabel:
     document.getElementById(
       "currentLabel"
+    ),
+
+  blockStatus:
+    document.getElementById(
+      "blockStatus"
     ),
 
   currentTitle:
@@ -77,9 +144,14 @@ const elements = {
       "currentTitle"
     ),
 
-  currentTimeRange:
+  plannedDuration:
     document.getElementById(
-      "currentTimeRange"
+      "plannedDuration"
+    ),
+
+  focusElapsed:
+    document.getElementById(
+      "focusElapsed"
     ),
 
   countdown:
@@ -87,9 +159,9 @@ const elements = {
       "countdown"
     ),
 
-  blockStatus:
+  countdownLabel:
     document.getElementById(
-      "blockStatus"
+      "countdownLabel"
     ),
 
   progressTrack:
@@ -102,36 +174,149 @@ const elements = {
       "progressFill"
     ),
 
-  blockMessage:
-    document.getElementById(
-      "blockMessage"
-    ),
-
-  focusControls:
-    document.getElementById(
-      "focusControls"
-    ),
-
-  completeBlockButton:
-    document.getElementById(
-      "completeBlockButton"
-    ),
-
-  endEarlyButton:
-    document.getElementById(
-      "endEarlyButton"
-    ),
-
-  extensionButtons:
-    Array.from(
-      document.querySelectorAll(
-        "[data-extension-minutes]"
-      )
-    ),
-
   controlFeedback:
     document.getElementById(
       "controlFeedback"
+    ),
+
+  breakPicker:
+    document.getElementById(
+      "breakPicker"
+    ),
+
+  lunchPicker:
+    document.getElementById(
+      "lunchPicker"
+    ),
+
+  breakState:
+    document.getElementById(
+      "breakState"
+    ),
+
+  breakTimer:
+    document.getElementById(
+      "breakTimer"
+    ),
+
+  breakTimerLabel:
+    document.getElementById(
+      "breakTimerLabel"
+    ),
+
+  breakPausedContext:
+    document.getElementById(
+      "breakPausedContext"
+    ),
+
+  lunchState:
+    document.getElementById(
+      "lunchState"
+    ),
+
+  lunchTimer:
+    document.getElementById(
+      "lunchTimer"
+    ),
+
+  lunchTimerLabel:
+    document.getElementById(
+      "lunchTimerLabel"
+    ),
+
+  lunchPausedContext:
+    document.getElementById(
+      "lunchPausedContext"
+    ),
+
+  meetingState:
+    document.getElementById(
+      "meetingState"
+    ),
+
+  meetingTimer:
+    document.getElementById(
+      "meetingTimer"
+    ),
+
+  meetingPausedContext:
+    document.getElementById(
+      "meetingPausedContext"
+    ),
+
+  meetingEndedState:
+    document.getElementById(
+      "meetingEndedState"
+    ),
+
+  meetingSummary:
+    document.getElementById(
+      "meetingSummary"
+    ),
+
+  meetingResumeContext:
+    document.getElementById(
+      "meetingResumeContext"
+    ),
+
+  awayState:
+    document.getElementById(
+      "awayState"
+    ),
+
+  awayTimer:
+    document.getElementById(
+      "awayTimer"
+    ),
+
+  awayPausedContext:
+    document.getElementById(
+      "awayPausedContext"
+    ),
+
+  blockCompleteState:
+    document.getElementById(
+      "blockCompleteState"
+    ),
+
+  blockCompleteSummary:
+    document.getElementById(
+      "blockCompleteSummary"
+    ),
+
+  closingAdminState:
+    document.getElementById(
+      "closingAdminState"
+    ),
+
+  closingAdminTimer:
+    document.getElementById(
+      "closingAdminTimer"
+    ),
+
+  workdayCompleteState:
+    document.getElementById(
+      "workdayCompleteState"
+    ),
+
+  finalTotalWorked:
+    document.getElementById(
+      "finalTotalWorked"
+    ),
+
+  finalFocusWorked:
+    document.getElementById(
+      "finalFocusWorked"
+    ),
+
+  finalMeetingWorked:
+    document.getElementById(
+      "finalMeetingWorked"
+    ),
+
+  finalAdminWorked:
+    document.getElementById(
+      "finalAdminWorked"
     ),
 
   tasksSection:
@@ -169,6 +354,11 @@ const elements = {
       "nextDuration"
     ),
 
+  clockOutControl:
+    document.getElementById(
+      "clockOutControl"
+    ),
+
   scheduleProgress:
     document.getElementById(
       "scheduleProgress"
@@ -177,17 +367,147 @@ const elements = {
   lastUpdated:
     document.getElementById(
       "lastUpdated"
+    ),
+
+  clockInButton:
+    document.getElementById(
+      "clockInButton"
+    ),
+
+  startFocusButton:
+    document.getElementById(
+      "startFocusButton"
+    ),
+
+  breakButton:
+    document.getElementById(
+      "breakButton"
+    ),
+
+  lunchButton:
+    document.getElementById(
+      "lunchButton"
+    ),
+
+  meetingButton:
+    document.getElementById(
+      "meetingButton"
+    ),
+
+  awayButton:
+    document.getElementById(
+      "awayButton"
+    ),
+
+  finishBlockButton:
+    document.getElementById(
+      "finishBlockButton"
+    ),
+
+  cancelBreakPickerButton:
+    document.getElementById(
+      "cancelBreakPickerButton"
+    ),
+
+  cancelLunchPickerButton:
+    document.getElementById(
+      "cancelLunchPickerButton"
+    ),
+
+  returnFromBreakButton:
+    document.getElementById(
+      "returnFromBreakButton"
+    ),
+
+  returnFromLunchButton:
+    document.getElementById(
+      "returnFromLunchButton"
+    ),
+
+  endMeetingButton:
+    document.getElementById(
+      "endMeetingButton"
+    ),
+
+  resumeAfterMeetingButton:
+    document.getElementById(
+      "resumeAfterMeetingButton"
+    ),
+
+  returnFromAwayButton:
+    document.getElementById(
+      "returnFromAwayButton"
+    ),
+
+  startNextBlockButton:
+    document.getElementById(
+      "startNextBlockButton"
+    ),
+
+  clockOutButton:
+    document.getElementById(
+      "clockOutButton"
+    ),
+
+  finishWorkButton:
+    document.getElementById(
+      "finishWorkButton"
+    ),
+
+  resetWorkdayButton:
+    document.getElementById(
+      "resetWorkdayButton"
+    ),
+
+  extensionButtons:
+    Array.from(
+      document.querySelectorAll(
+        "[data-extension-minutes]"
+      )
+    ),
+
+  breakChoiceButtons:
+    Array.from(
+      document.querySelectorAll(
+        "[data-break-minutes]"
+      )
+    ),
+
+  lunchChoiceButtons:
+    Array.from(
+      document.querySelectorAll(
+        "[data-lunch-minutes]"
+      )
+    ),
+
+  postMeetingBreakButtons:
+    Array.from(
+      document.querySelectorAll(
+        "[data-post-meeting-break]"
+      )
+    ),
+
+  postBlockBreakButtons:
+    Array.from(
+      document.querySelectorAll(
+        "[data-post-block-break]"
+      )
     )
 };
 
+/* =========================================================
+   API data
+   ========================================================= */
+
 let blocks = [];
+
+let currentBlock = null;
+
+let nextBlock = null;
 
 let taskStatusOptions = [];
 
 let scheduleDate = null;
-
-let currentScheduleState =
-  null;
 
 let lastLoadedAt = null;
 
@@ -195,86 +515,148 @@ let isLoading = false;
 
 let isUpdating = false;
 
-let audioContext = null;
-
-let chimesEnabled =
-  localStorage.getItem(
-    "michaela-os-focus-chimes"
-  ) === "true";
-
-let activeBlockId = null;
-
-let fiveMinuteChimePlayed =
-  false;
-
-let endingChimePlayed =
-  false;
-
 /* =========================================================
-   General helpers
+   Workday state
    ========================================================= */
 
-function normalizeStatus(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase();
+function createFreshWorkday() {
+  return {
+    date:
+      getTodayKey(),
+
+    state:
+      "clocked-out",
+
+    stateStartedAt:
+      null,
+
+    previousState:
+      null,
+
+    totalWorkedMs:
+      0,
+
+    focusWorkedMs:
+      0,
+
+    meetingWorkedMs:
+      0,
+
+    adminWorkedMs:
+      0,
+
+    openingAdminRemainingMs:
+      OPENING_ADMIN_MS,
+
+    currentBlockId:
+      null,
+
+    blockPlannedMs:
+      0,
+
+    blockAddedMs:
+      0,
+
+    blockFocusElapsedMs:
+      0,
+
+    breakPlannedMs:
+      0,
+
+    lunchPlannedMs:
+      0,
+
+    lastMeetingDurationMs:
+      0,
+
+    completedBlockTitle:
+      null,
+
+    completedBlockDurationMs:
+      0,
+
+    workdayCompletedAt:
+      null
+  };
 }
 
-function isCompleteStatus(
-  status
+let workday =
+  createFreshWorkday();
+
+/* =========================================================
+   Date / time
+   ========================================================= */
+
+function getDateKey(
+  date
 ) {
-  return COMPLETE_STATUSES.has(
-    normalizeStatus(status)
-  );
-}
-
-function parseDate(value) {
-  if (!value) {
-    return null;
-  }
-
-  const date =
-    new Date(value);
-
-  return Number.isNaN(
-    date.getTime()
-  )
-    ? null
-    : date;
-}
-
-function formatTime(date) {
-  if (!date) {
-    return "Time unavailable";
-  }
-
   return new Intl.DateTimeFormat(
-    "en-US",
+    "en-CA",
     {
-      hour: "numeric",
-      minute: "2-digit"
+      timeZone:
+        TIME_ZONE,
+
+      year:
+        "numeric",
+
+      month:
+        "2-digit",
+
+      day:
+        "2-digit"
     }
   ).format(date);
 }
 
-function formatTimeRange(
-  start,
-  end
-) {
-  if (!start || !end) {
-    return "Time unavailable";
-  }
-
-  return (
-    `${formatTime(start)}–` +
-    `${formatTime(end)}`
+function getTodayKey() {
+  return getDateKey(
+    new Date()
   );
 }
 
-function formatDuration(
+function formatClockTime(
+  date
+) {
+  return new Intl.DateTimeFormat(
+    "en-US",
+    {
+      timeZone:
+        TIME_ZONE,
+
+      hour:
+        "numeric",
+
+      minute:
+        "2-digit"
+    }
+  ).format(date);
+}
+
+function formatFullDate(
+  date
+) {
+  return new Intl.DateTimeFormat(
+    "en-US",
+    {
+      timeZone:
+        TIME_ZONE,
+
+      weekday:
+        "long",
+
+      month:
+        "long",
+
+      day:
+        "numeric"
+    }
+  ).format(date);
+}
+
+function formatShortDuration(
   minutes
 ) {
-  const safeMinutes =
+  const safe =
     Math.max(
       0,
       Math.round(
@@ -282,37 +664,35 @@ function formatDuration(
       )
     );
 
-  if (safeMinutes < 60) {
-    return `${safeMinutes} min`;
+  if (safe < 60) {
+    return `${safe} min`;
   }
 
   const hours =
     Math.floor(
-      safeMinutes / 60
+      safe / 60
     );
 
-  const remainingMinutes =
-    safeMinutes % 60;
+  const remaining =
+    safe % 60;
 
-  if (
-    remainingMinutes === 0
-  ) {
+  if (remaining === 0) {
     return `${hours} hr`;
   }
 
   return (
     `${hours} hr ` +
-    `${remainingMinutes} min`
+    `${remaining} min`
   );
 }
 
-function formatCountdown(
+function formatTimer(
   milliseconds
 ) {
   const totalSeconds =
     Math.max(
       0,
-      Math.ceil(
+      Math.floor(
         milliseconds / 1000
       )
     );
@@ -334,293 +714,143 @@ function formatCountdown(
 
   if (hours > 0) {
     return (
-      `${hours}h ` +
-      `${String(minutes).padStart(2, "0")}m`
+      `${String(hours).padStart(2, "0")}:` +
+      `${String(minutes).padStart(2, "0")}:` +
+      `${String(seconds).padStart(2, "0")}`
     );
   }
 
-  if (minutes > 0) {
-    return (
-      `${minutes}m ` +
-      `${String(seconds).padStart(2, "0")}s`
-    );
-  }
-
-  return `${seconds}s`;
+  return (
+    `${String(minutes).padStart(2, "0")}:` +
+    `${String(seconds).padStart(2, "0")}`
+  );
 }
 
-function formatUpdatedTime() {
-  if (!lastLoadedAt) {
-    return "Not updated";
-  }
-
-  const secondsAgo =
+function formatLongTimer(
+  milliseconds
+) {
+  const totalSeconds =
     Math.max(
       0,
       Math.floor(
-        (
-          Date.now() -
-          lastLoadedAt.getTime()
-        ) / 1000
+        milliseconds / 1000
       )
     );
 
-  if (secondsAgo < 10) {
-    return "Updated now";
-  }
-
-  if (secondsAgo < 60) {
-    return (
-      `Updated ${secondsAgo}s ago`
-    );
-  }
-
-  const minutesAgo =
+  const hours =
     Math.floor(
-      secondsAgo / 60
+      totalSeconds / 3600
     );
+
+  const minutes =
+    Math.floor(
+      (
+        totalSeconds % 3600
+      ) / 60
+    );
+
+  const seconds =
+    totalSeconds % 60;
 
   return (
-    `Updated ${minutesAgo}m ago`
+    `${String(hours).padStart(2, "0")}:` +
+    `${String(minutes).padStart(2, "0")}:` +
+    `${String(seconds).padStart(2, "0")}`
   );
 }
 
-function showOnly(section) {
-  elements.loadingState.hidden =
-    section !== "loading";
-
-  elements.errorState.hidden =
-    section !== "error";
-
-  elements.emptyState.hidden =
-    section !== "empty";
-
-  elements.focusContent.hidden =
-    section !== "content";
-}
-
-function getBlockTimes(block) {
-  return {
-    start:
-      parseDate(
-        block?.start
-      ),
-
-    end:
-      parseDate(
-        block?.end
-      )
-  };
-}
-
-function sortBlocks(entries) {
-  return [...entries].sort(
-    (first, second) => {
-      if (
-        typeof first.order ===
-          "number" &&
-        typeof second.order ===
-          "number" &&
-        first.order !==
-          second.order
-      ) {
-        return (
-          first.order -
-          second.order
-        );
-      }
-
-      const firstStart =
-        parseDate(
-          first.start
-        );
-
-      const secondStart =
-        parseDate(
-          second.start
-        );
-
-      if (
-        !firstStart &&
-        !secondStart
-      ) {
-        return 0;
-      }
-
-      if (!firstStart) {
-        return 1;
-      }
-
-      if (!secondStart) {
-        return -1;
-      }
-
-      return (
-        firstStart.getTime() -
-        secondStart.getTime()
-      );
-    }
-  );
-}
-
-function setControlFeedback(
-  message,
-  type = "success"
+function getStateElapsedMs(
+  now = Date.now()
 ) {
-  if (!message) {
-    elements.controlFeedback.hidden =
-      true;
-
-    elements.controlFeedback.textContent =
-      "";
-
-    elements.controlFeedback.classList.remove(
-      "is-success",
-      "is-error"
-    );
-
-    return;
-  }
-
-  elements.controlFeedback.hidden =
-    false;
-
-  elements.controlFeedback.textContent =
-    message;
-
-  elements.controlFeedback.classList.toggle(
-    "is-success",
-    type === "success"
-  );
-
-  elements.controlFeedback.classList.toggle(
-    "is-error",
-    type === "error"
-  );
-}
-
-function setUpdatingState(
-  updating
-) {
-  isUpdating = updating;
-
-  elements.completeBlockButton.disabled =
-    updating;
-
-  elements.endEarlyButton.disabled =
-    updating;
-
-  for (
-    const button of
-    elements.extensionButtons
-  ) {
-    button.disabled =
-      updating;
-  }
-
-  const taskSelects =
-    elements.taskList.querySelectorAll(
-      "select"
-    );
-
-  for (
-    const select of
-    taskSelects
-  ) {
-    select.disabled =
-      updating;
-  }
-}
-
-/* =========================================================
-   API helpers
-   ========================================================= */
-
-async function parseApiResponse(
-  response
-) {
-  let data;
-
-  try {
-    data =
-      await response.json();
-  } catch {
-    throw new Error(
-      "The server returned an unreadable response."
-    );
-  }
-
   if (
-    !response.ok ||
-    data.success === false
+    !workday.stateStartedAt
   ) {
-    throw new Error(
-      data.error ||
-      "The request could not be completed."
-    );
+    return 0;
   }
 
-  return data;
-}
-
-function applyApiData(data) {
-  blocks =
-    sortBlocks(
-      Array.isArray(
-        data.blocks
-      )
-        ? data.blocks
-        : []
-    );
-
-  taskStatusOptions =
-    Array.isArray(
-      data.taskStatusOptions
-    )
-      ? data.taskStatusOptions
-      : [];
-
-  scheduleDate =
-    data.date || null;
-
-  lastLoadedAt =
-    new Date();
-}
-
-async function sendTimeBlockAction(
-  payload
-) {
-  const response =
-    await fetch(
-      TIME_BLOCKS_API_URL,
-      {
-        method: "PATCH",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        cache: "no-store",
-
-        body:
-          JSON.stringify({
-            ...payload,
-
-            date:
-              scheduleDate
-          })
-      }
-    );
-
-  return parseApiResponse(
-    response
+  return Math.max(
+    0,
+    now -
+      workday.stateStartedAt
   );
 }
 
 /* =========================================================
-   Audio and chimes
+   Persistence
    ========================================================= */
+
+function saveWorkday() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(
+        workday
+      )
+    );
+  } catch (error) {
+    console.error(
+      "Could not save workday:",
+      error
+    );
+  }
+}
+
+function loadStoredWorkday() {
+  try {
+    const raw =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+    if (!raw) {
+      workday =
+        createFreshWorkday();
+
+      return;
+    }
+
+    const parsed =
+      JSON.parse(raw);
+
+    if (
+      parsed?.date !==
+      getTodayKey()
+    ) {
+      workday =
+        createFreshWorkday();
+
+      saveWorkday();
+
+      return;
+    }
+
+    workday = {
+      ...createFreshWorkday(),
+      ...parsed
+    };
+  } catch (error) {
+    console.error(
+      "Could not restore workday:",
+      error
+    );
+
+    workday =
+      createFreshWorkday();
+  }
+}
+
+/* =========================================================
+   Chimes
+   ========================================================= */
+
+let audioContext = null;
+
+let chimesEnabled =
+  localStorage.getItem(
+    CHIMES_STORAGE_KEY
+  ) === "true";
+
+let lastChimeKey = null;
 
 function getAudioContext() {
   if (!audioContext) {
@@ -664,7 +894,7 @@ function playTone({
   frequency,
   startDelay = 0,
   duration = 0.25,
-  volume = 0.12
+  volume = 0.11
 }) {
   if (!chimesEnabled) {
     return;
@@ -704,10 +934,11 @@ function playTone({
       startTime
     );
 
-  gain.gain.setValueAtTime(
-    0.0001,
-    startTime
-  );
+  gain.gain
+    .setValueAtTime(
+      0.0001,
+      startTime
+    );
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -721,7 +952,9 @@ function playTone({
       endTime
     );
 
-  oscillator.connect(gain);
+  oscillator.connect(
+    gain
+  );
 
   gain.connect(
     context.destination
@@ -736,57 +969,70 @@ function playTone({
   );
 }
 
-function playFiveMinuteChime() {
+function playEndingChime() {
   playTone({
-    frequency: 659.25,
-    duration: 0.24,
-    volume: 0.1
+    frequency:
+      523.25,
+
+    duration:
+      0.22
   });
 
   playTone({
-    frequency: 783.99,
-    startDelay: 0.18,
-    duration: 0.32,
-    volume: 0.11
+    frequency:
+      659.25,
+
+    startDelay:
+      0.18,
+
+    duration:
+      0.25
+  });
+
+  playTone({
+    frequency:
+      783.99,
+
+    startDelay:
+      0.38,
+
+    duration:
+      0.38
   });
 }
 
-function playEndingChime() {
+function playFiveMinuteChime() {
   playTone({
-    frequency: 523.25,
-    duration: 0.25,
-    volume: 0.12
+    frequency:
+      659.25,
+
+    duration:
+      0.2
   });
 
   playTone({
-    frequency: 659.25,
-    startDelay: 0.2,
-    duration: 0.25,
-    volume: 0.12
-  });
+    frequency:
+      783.99,
 
-  playTone({
-    frequency: 783.99,
-    startDelay: 0.4,
-    duration: 0.46,
-    volume: 0.13
+    startDelay:
+      0.18,
+
+    duration:
+      0.28
   });
 }
 
 function updateSoundButton() {
   elements.soundButton.textContent =
     chimesEnabled
-      ? "🔔 Chimes"
-      : "🔕 Chimes";
-
-  elements.soundButton.classList.toggle(
-    "is-enabled",
-    chimesEnabled
-  );
+      ? "Chimes On"
+      : "Chimes Off";
 
   elements.soundButton.setAttribute(
     "aria-pressed",
-    String(chimesEnabled)
+    String(
+      chimesEnabled
+    )
   );
 }
 
@@ -797,7 +1043,7 @@ async function toggleChimes() {
 
     if (!unlocked) {
       window.alert(
-        "This browser could not enable audio."
+        "Audio could not be enabled."
       );
 
       return;
@@ -806,16 +1052,21 @@ async function toggleChimes() {
     chimesEnabled = true;
 
     localStorage.setItem(
-      "michaela-os-focus-chimes",
+      CHIMES_STORAGE_KEY,
       "true"
     );
 
     updateSoundButton();
 
     playTone({
-      frequency: 659.25,
-      duration: 0.15,
-      volume: 0.08
+      frequency:
+        659.25,
+
+      duration:
+        0.15,
+
+      volume:
+        0.08
     });
 
     return;
@@ -824,200 +1075,1028 @@ async function toggleChimes() {
   chimesEnabled = false;
 
   localStorage.setItem(
-    "michaela-os-focus-chimes",
+    CHIMES_STORAGE_KEY,
     "false"
   );
 
   updateSoundButton();
 }
 
-function resetBlockChimes(
-  blockId
+/* =========================================================
+   API helpers
+   ========================================================= */
+
+async function parseApiResponse(
+  response
 ) {
-  activeBlockId =
-    blockId || null;
+  let data;
 
-  fiveMinuteChimePlayed =
-    false;
-
-  endingChimePlayed =
-    false;
-}
-
-function checkBlockChimes(
-  block,
-  now
-) {
-  if (
-    !block ||
-    !chimesEnabled
-  ) {
-    return;
-  }
-
-  const {
-    start,
-    end
-  } =
-    getBlockTimes(block);
-
-  if (!start || !end) {
-    return;
-  }
-
-  if (
-    activeBlockId !==
-    block.id
-  ) {
-    resetBlockChimes(
-      block.id
+  try {
+    data =
+      await response.json();
+  } catch {
+    throw new Error(
+      "The server returned an unreadable response."
     );
   }
 
-  const remainingMs =
-    end.getTime() -
-    now.getTime();
-
-  const fiveMinutesMs =
-    5 * 60 * 1000;
-
   if (
-    remainingMs > 0 &&
-    remainingMs <=
-      fiveMinutesMs &&
-    !fiveMinuteChimePlayed
+    !response.ok ||
+    data.success === false
   ) {
-    fiveMinuteChimePlayed =
-      true;
-
-    playFiveMinuteChime();
+    throw new Error(
+      data.error ||
+      "The request could not be completed."
+    );
   }
 
-  if (
-    remainingMs <= 0 &&
-    !endingChimePlayed
-  ) {
-    endingChimePlayed =
-      true;
+  return data;
+}
 
-    playEndingChime();
+function applyApiData(
+  data
+) {
+  blocks =
+    Array.isArray(
+      data.blocks
+    )
+      ? data.blocks
+      : [];
+
+  currentBlock =
+    data.currentBlock ||
+    null;
+
+  nextBlock =
+    data.nextBlock ||
+    null;
+
+  taskStatusOptions =
+    Array.isArray(
+      data.taskStatusOptions
+    )
+      ? data.taskStatusOptions
+      : [];
+
+  scheduleDate =
+    data.date ||
+    getTodayKey();
+
+  lastLoadedAt =
+    new Date();
+
+  if (
+    currentBlock &&
+    !workday.currentBlockId
+  ) {
+    workday.currentBlockId =
+      currentBlock.id;
+  }
+
+  saveWorkday();
+}
+
+async function loadSchedule() {
+  if (isLoading) {
+    return;
+  }
+
+  isLoading = true;
+
+  try {
+    const response =
+      await fetch(
+        `${TIME_BLOCKS_API_URL}?date=${getTodayKey()}`,
+        {
+          cache:
+            "no-store"
+        }
+      );
+
+    const data =
+      await parseApiResponse(
+        response
+      );
+
+    applyApiData(
+      data
+    );
+
+    showContent();
+    render();
+  } catch (error) {
+    showError(
+      error instanceof Error
+        ? error.message
+        : String(error)
+    );
+  } finally {
+    isLoading =
+      false;
   }
 }
 
+async function sendTimeBlockAction(
+  payload
+) {
+  const response =
+    await fetch(
+      TIME_BLOCKS_API_URL,
+      {
+        method:
+          "PATCH",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        cache:
+          "no-store",
+
+        body:
+          JSON.stringify({
+            ...payload,
+
+            date:
+              scheduleDate ||
+              getTodayKey()
+          })
+      }
+    );
+
+  const data =
+    await parseApiResponse(
+      response
+    );
+
+  applyApiData(
+    data
+  );
+
+  return data;
+}
+
 /* =========================================================
-   Schedule state
+   UI states
    ========================================================= */
 
-function getActiveBlocks() {
-  return blocks.filter(
-    (block) =>
-      !isCompleteStatus(
-        block.status
-      )
+const stateSections = [
+  elements.clockedOutState,
+  elements.openingAdminState,
+  elements.focusState,
+  elements.breakState,
+  elements.lunchState,
+  elements.meetingState,
+  elements.meetingEndedState,
+  elements.awayState,
+  elements.blockCompleteState,
+  elements.closingAdminState,
+  elements.workdayCompleteState
+];
+
+function showOnlyState(
+  target
+) {
+  for (
+    const section of
+    stateSections
+  ) {
+    if (!section) {
+      continue;
+    }
+
+    section.hidden =
+      section !== target;
+  }
+
+  elements.breakPicker.hidden =
+    true;
+
+  elements.lunchPicker.hidden =
+    true;
+}
+
+function showContent() {
+  elements.loadingState.hidden =
+    true;
+
+  elements.errorState.hidden =
+    true;
+
+  elements.emptyState.hidden =
+    true;
+
+  elements.focusContent.hidden =
+    false;
+}
+
+function showError(
+  message
+) {
+  elements.loadingState.hidden =
+    true;
+
+  elements.errorState.hidden =
+    false;
+
+  elements.emptyState.hidden =
+    true;
+
+  elements.focusContent.hidden =
+    true;
+
+  elements.errorMessage.textContent =
+    message;
+}
+
+function setFeedback(
+  message,
+  type = "success"
+) {
+  if (!message) {
+    elements.controlFeedback.hidden =
+      true;
+
+    elements.controlFeedback.textContent =
+      "";
+
+    return;
+  }
+
+  elements.controlFeedback.hidden =
+    false;
+
+  elements.controlFeedback.textContent =
+    message;
+
+  elements.controlFeedback.classList.toggle(
+    "is-error",
+    type === "error"
+  );
+
+  elements.controlFeedback.classList.toggle(
+    "is-success",
+    type === "success"
   );
 }
 
-function findScheduleState(now) {
-  const activeBlocks =
-    getActiveBlocks();
+function setUpdating(
+  updating
+) {
+  isUpdating =
+    updating;
 
-  const currentIndex =
-    activeBlocks.findIndex(
-      (block) => {
-        const {
-          start,
-          end
-        } =
-          getBlockTimes(block);
-
-        return (
-          start &&
-          end &&
-          now >= start &&
-          now < end
-        );
-      }
+  const controls =
+    document.querySelectorAll(
+      "button, select"
     );
 
-  if (currentIndex >= 0) {
-    return {
-      mode: "current",
-
-      current:
-        activeBlocks[
-          currentIndex
-        ],
-
-      next:
-        activeBlocks[
-          currentIndex + 1
-        ] || null
-    };
-  }
-
-  const nextIndex =
-    activeBlocks.findIndex(
-      (block) => {
-        const { start } =
-          getBlockTimes(block);
-
-        return (
-          start &&
-          start > now
-        );
-      }
-    );
-
-  if (nextIndex >= 0) {
-    const earlierActiveBlocks =
-      activeBlocks.slice(
-        0,
-        nextIndex
-      );
-
-    return {
-      mode:
-        earlierActiveBlocks.length > 0
-          ? "gap"
-          : "before",
-
-      current:
-        activeBlocks[
-          nextIndex
-        ],
-
-      next:
-        activeBlocks[
-          nextIndex + 1
-        ] || null
-    };
-  }
-
-  if (
-    activeBlocks.length > 0
+  for (
+    const control of controls
   ) {
-    return {
-      mode: "overdue",
+    if (
+      control ===
+      elements.refreshButton
+    ) {
+      continue;
+    }
 
-      current:
-        activeBlocks[0],
-
-      next:
-        activeBlocks[1] ||
-        null
-    };
+    control.disabled =
+      updating;
   }
-
-  return {
-    mode: "finished",
-    current: null,
-    next: null
-  };
 }
 
 /* =========================================================
-   Task rendering and updates
+   Time accounting
    ========================================================= */
+
+function stateCountsAsWork(
+  state
+) {
+  return WORKING_STATES.has(
+    state
+  );
+}
+
+function commitCurrentStateTime() {
+  if (
+    !workday.stateStartedAt
+  ) {
+    return;
+  }
+
+  const elapsed =
+    getStateElapsedMs();
+
+  if (
+    elapsed <= 0
+  ) {
+    workday.stateStartedAt =
+      Date.now();
+
+    return;
+  }
+
+  if (
+    stateCountsAsWork(
+      workday.state
+    )
+  ) {
+    workday.totalWorkedMs +=
+      elapsed;
+  }
+
+  if (
+    workday.state ===
+    "focus"
+  ) {
+    workday.focusWorkedMs +=
+      elapsed;
+
+    workday.blockFocusElapsedMs +=
+      elapsed;
+  }
+
+  if (
+    workday.state ===
+    "meeting"
+  ) {
+    workday.meetingWorkedMs +=
+      elapsed;
+  }
+
+  if (
+    workday.state ===
+      "opening-admin" ||
+    workday.state ===
+      "closing-admin"
+  ) {
+    workday.adminWorkedMs +=
+      elapsed;
+  }
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+}
+
+function getLiveTotalWorkedMs() {
+  let value =
+    workday.totalWorkedMs;
+
+  if (
+    stateCountsAsWork(
+      workday.state
+    )
+  ) {
+    value +=
+      getStateElapsedMs();
+  }
+
+  return value;
+}
+
+function getLiveFocusWorkedMs() {
+  let value =
+    workday.focusWorkedMs;
+
+  if (
+    workday.state ===
+    "focus"
+  ) {
+    value +=
+      getStateElapsedMs();
+  }
+
+  return value;
+}
+
+function getLiveMeetingWorkedMs() {
+  let value =
+    workday.meetingWorkedMs;
+
+  if (
+    workday.state ===
+    "meeting"
+  ) {
+    value +=
+      getStateElapsedMs();
+  }
+
+  return value;
+}
+
+function getLiveAdminWorkedMs() {
+  let value =
+    workday.adminWorkedMs;
+
+  if (
+    workday.state ===
+      "opening-admin" ||
+    workday.state ===
+      "closing-admin"
+  ) {
+    value +=
+      getStateElapsedMs();
+  }
+
+  return value;
+}
+
+function getLiveBlockElapsedMs() {
+  let value =
+    workday.blockFocusElapsedMs;
+
+  if (
+    workday.state ===
+    "focus"
+  ) {
+    value +=
+      getStateElapsedMs();
+  }
+
+  return value;
+}
+
+function getBlockTargetMs() {
+  return (
+    workday.blockPlannedMs +
+    workday.blockAddedMs
+  );
+}
+
+function getBlockRemainingMs() {
+  return (
+    getBlockTargetMs() -
+    getLiveBlockElapsedMs()
+  );
+}
+
+/* =========================================================
+   State transitions
+   ========================================================= */
+
+function enterState(
+  state
+) {
+  commitCurrentStateTime();
+
+  workday.previousState =
+    workday.state;
+
+  workday.state =
+    state;
+
+  workday.stateStartedAt =
+    Date.now();
+
+  lastChimeKey =
+    null;
+
+  saveWorkday();
+
+  render();
+}
+
+function enterPausedState(
+  state
+) {
+  enterState(
+    state
+  );
+}
+
+function getResumeState() {
+  if (
+    workday.currentBlockId
+  ) {
+    return "focus";
+  }
+
+  return "opening-admin";
+}
+
+/* =========================================================
+   Workday actions
+   ========================================================= */
+
+async function clockIn() {
+  await unlockAudio();
+
+  if (
+    workday.state ===
+    "workday-complete"
+  ) {
+    workday =
+      createFreshWorkday();
+  }
+
+  workday.openingAdminRemainingMs =
+    OPENING_ADMIN_MS;
+
+  workday.state =
+    "opening-admin";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  workday.previousState =
+    "clocked-out";
+
+  saveWorkday();
+
+  render();
+}
+
+async function startFocus() {
+  setUpdating(
+    true
+  );
+
+  setFeedback("");
+
+  try {
+    let block =
+      currentBlock;
+
+    if (!block) {
+      block =
+        nextBlock;
+    }
+
+    if (!block) {
+      throw new Error(
+        "There is no upcoming work block to start."
+      );
+    }
+
+    if (
+      !currentBlock ||
+      currentBlock.id !==
+        block.id
+    ) {
+      const data =
+        await sendTimeBlockAction({
+          action:
+            "activate-block",
+
+          blockId:
+            block.id
+        });
+
+      block =
+        data.currentBlock ||
+        block;
+    }
+
+    commitCurrentStateTime();
+
+    workday.currentBlockId =
+      block.id;
+
+    workday.blockPlannedMs =
+      Math.max(
+        0,
+        Number(
+          block.duration || 0
+        )
+      ) *
+      60 *
+      1000;
+
+    workday.blockAddedMs =
+      0;
+
+    workday.blockFocusElapsedMs =
+      0;
+
+    workday.state =
+      "focus";
+
+    workday.stateStartedAt =
+      Date.now();
+
+    workday.previousState =
+      "opening-admin";
+
+    saveWorkday();
+
+    setFeedback("");
+
+    render();
+  } catch (error) {
+    setFeedback(
+      error instanceof Error
+        ? error.message
+        : String(error),
+      "error"
+    );
+  } finally {
+    setUpdating(
+      false
+    );
+  }
+}
+
+function extendFocus(
+  minutes
+) {
+  commitCurrentStateTime();
+
+  workday.blockAddedMs +=
+    minutes *
+    60 *
+    1000;
+
+  workday.state =
+    "focus";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  setFeedback(
+    `${minutes} minutes added.`
+  );
+
+  render();
+}
+
+function openBreakPicker() {
+  elements.breakPicker.hidden =
+    false;
+
+  elements.lunchPicker.hidden =
+    true;
+}
+
+function openLunchPicker() {
+  elements.lunchPicker.hidden =
+    false;
+
+  elements.breakPicker.hidden =
+    true;
+}
+
+function closePickers() {
+  elements.breakPicker.hidden =
+    true;
+
+  elements.lunchPicker.hidden =
+    true;
+}
+
+function beginBreak(
+  minutes
+) {
+  closePickers();
+
+  commitCurrentStateTime();
+
+  workday.breakPlannedMs =
+    minutes *
+    60 *
+    1000;
+
+  workday.previousState =
+    workday.state;
+
+  workday.state =
+    "break";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+function beginLunch(
+  minutes
+) {
+  closePickers();
+
+  commitCurrentStateTime();
+
+  workday.lunchPlannedMs =
+    minutes *
+    60 *
+    1000;
+
+  workday.previousState =
+    workday.state;
+
+  workday.state =
+    "lunch";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+function returnToFocus() {
+  workday.previousState =
+    workday.state;
+
+  workday.state =
+    "focus";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+function beginMeeting() {
+  commitCurrentStateTime();
+
+  workday.previousState =
+    workday.state;
+
+  workday.state =
+    "meeting";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+function endMeeting() {
+  const elapsed =
+    getStateElapsedMs();
+
+  commitCurrentStateTime();
+
+  workday.lastMeetingDurationMs =
+    elapsed;
+
+  workday.previousState =
+    "meeting";
+
+  workday.state =
+    "meeting-ended";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+function beginAway() {
+  commitCurrentStateTime();
+
+  workday.previousState =
+    workday.state;
+
+  workday.state =
+    "away";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+async function finishBlock() {
+  if (!currentBlock) {
+    setFeedback(
+      "There is no active block to finish.",
+      "error"
+    );
+
+    return;
+  }
+
+  setUpdating(
+    true
+  );
+
+  setFeedback("");
+
+  try {
+    commitCurrentStateTime();
+
+    const blockFocusMs =
+      workday.blockFocusElapsedMs;
+
+    const actualDurationMinutes =
+      Math.max(
+        0,
+        Math.round(
+          blockFocusMs /
+          60000
+        )
+      );
+
+    const completedTitle =
+      currentBlock.title;
+
+    await sendTimeBlockAction({
+      action:
+        "complete-block",
+
+      blockId:
+        currentBlock.id,
+
+      actualDuration:
+        actualDurationMinutes
+    });
+
+    workday.completedBlockTitle =
+      completedTitle;
+
+    workday.completedBlockDurationMs =
+      blockFocusMs;
+
+    workday.currentBlockId =
+      null;
+
+    workday.blockPlannedMs =
+      0;
+
+    workday.blockAddedMs =
+      0;
+
+    workday.blockFocusElapsedMs =
+      0;
+
+    workday.previousState =
+      "focus";
+
+    workday.state =
+      "block-complete";
+
+    workday.stateStartedAt =
+      Date.now();
+
+    saveWorkday();
+
+    render();
+  } catch (error) {
+    setFeedback(
+      error instanceof Error
+        ? error.message
+        : String(error),
+      "error"
+    );
+  } finally {
+    setUpdating(
+      false
+    );
+  }
+}
+
+async function startNextBlock() {
+  setUpdating(
+    true
+  );
+
+  try {
+    const data =
+      await sendTimeBlockAction({
+        action:
+          "start-next-block"
+      });
+
+    const block =
+      data.currentBlock;
+
+    if (!block) {
+      throw new Error(
+        "There are no remaining blocks in today's queue."
+      );
+    }
+
+    workday.currentBlockId =
+      block.id;
+
+    workday.blockPlannedMs =
+      Math.max(
+        0,
+        Number(
+          block.duration || 0
+        )
+      ) *
+      60 *
+      1000;
+
+    workday.blockAddedMs =
+      0;
+
+    workday.blockFocusElapsedMs =
+      0;
+
+    workday.state =
+      "focus";
+
+    workday.stateStartedAt =
+      Date.now();
+
+    workday.previousState =
+      "block-complete";
+
+    saveWorkday();
+
+    render();
+  } catch (error) {
+    setFeedback(
+      error instanceof Error
+        ? error.message
+        : String(error),
+      "error"
+    );
+  } finally {
+    setUpdating(
+      false
+    );
+  }
+}
+
+function startClosingAdmin() {
+  commitCurrentStateTime();
+
+  workday.previousState =
+    workday.state;
+
+  workday.state =
+    "closing-admin";
+
+  workday.stateStartedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+function finishWorkday() {
+  commitCurrentStateTime();
+
+  workday.state =
+    "workday-complete";
+
+  workday.previousState =
+    "closing-admin";
+
+  workday.stateStartedAt =
+    null;
+
+  workday.workdayCompletedAt =
+    Date.now();
+
+  saveWorkday();
+
+  render();
+}
+
+function resetWorkday() {
+  workday =
+    createFreshWorkday();
+
+  saveWorkday();
+
+  render();
+}
+
+/* =========================================================
+   Task status controls
+   ========================================================= */
+
+function normalizeStatus(
+  value
+) {
+  return String(
+    value || ""
+  )
+    .trim()
+    .toLowerCase();
+}
+
+function isTaskComplete(
+  status
+) {
+  return COMPLETE_TASK_STATUSES.has(
+    normalizeStatus(
+      status
+    )
+  );
+}
 
 function createTaskStatusSelect(
   task
@@ -1062,7 +2141,7 @@ function createTaskStatusSelect(
       statusName;
 
     option.textContent =
-      statusName.trim();
+      statusName;
 
     option.selected =
       statusName ===
@@ -1073,26 +2152,17 @@ function createTaskStatusSelect(
     );
   }
 
-  select.disabled =
-    isUpdating ||
-    task.unavailable;
-
   select.addEventListener(
     "change",
     async () => {
-      const previousStatus =
+      const previous =
         task.status;
 
-      const nextStatus =
+      const next =
         select.value;
 
       select.disabled =
         true;
-
-      setControlFeedback(
-        "Updating task…",
-        "success"
-      );
 
       try {
         const data =
@@ -1104,24 +2174,19 @@ function createTaskStatusSelect(
               task.id,
 
             status:
-              nextStatus
+              next
           });
 
         applyApiData(
           data
         );
 
-        setControlFeedback(
-          `Task moved to ${nextStatus.trim()}.`,
-          "success"
-        );
-
-        renderSchedule();
+        render();
       } catch (error) {
         select.value =
-          previousStatus || "";
+          previous || "";
 
-        setControlFeedback(
+        setFeedback(
           error instanceof Error
             ? error.message
             : String(error),
@@ -1137,22 +2202,9 @@ function createTaskStatusSelect(
   return select;
 }
 
-function renderTasks(block) {
-  const activeElement =
-    document.activeElement;
-
-  const taskDropdownIsOpen =
-    activeElement?.classList?.contains(
-      "task-status-select"
-    );
-
-  /*
-   * Do not rebuild the task list while
-   * a status dropdown is being used.
-   */
-  if (taskDropdownIsOpen) {
-    return;
-  }
+function renderTasks() {
+  const block =
+    currentBlock;
 
   const tasks =
     Array.isArray(
@@ -1163,7 +2215,11 @@ function renderTasks(block) {
 
   elements.taskList.replaceChildren();
 
-  if (tasks.length === 0) {
+  if (
+    !block ||
+    tasks.length === 0 ||
+    workday.state !== "focus"
+  ) {
     elements.tasksSection.hidden =
       true;
 
@@ -1176,7 +2232,7 @@ function renderTasks(block) {
   const completeCount =
     tasks.filter(
       (task) =>
-        isCompleteStatus(
+        isTaskComplete(
           task.status
         )
     ).length;
@@ -1184,55 +2240,26 @@ function renderTasks(block) {
   elements.taskCount.textContent =
     `${completeCount} of ${tasks.length}`;
 
-  const sortedTasks =
-    [...tasks].sort(
-      (first, second) => {
-        const firstComplete =
-          isCompleteStatus(
-            first.status
-          );
-
-        const secondComplete =
-          isCompleteStatus(
-            second.status
-          );
-
-        return (
-          Number(firstComplete) -
-          Number(secondComplete)
-        );
-      }
-    );
-
   for (
-    const task of
-    sortedTasks
+    const task of tasks
   ) {
-    const complete =
-      isCompleteStatus(
-        task.status
-      );
-
     const item =
       document.createElement(
         "li"
       );
 
     item.className =
-      complete
-        ? "task-item is-complete"
-        : "task-item";
+      "task-item";
 
-    const marker =
-      document.createElement(
-        "span"
+    if (
+      isTaskComplete(
+        task.status
+      )
+    ) {
+      item.classList.add(
+        "is-complete"
       );
-
-    marker.className =
-      "task-marker";
-
-    marker.textContent =
-      complete ? "✓" : "";
+    }
 
     const content =
       document.createElement(
@@ -1243,20 +2270,17 @@ function renderTasks(block) {
       "task-content";
 
     const title =
-      task.url
-        ? document.createElement(
-            "a"
-          )
-        : document.createElement(
-            "span"
-          );
+      document.createElement(
+        task.url
+          ? "a"
+          : "span"
+      );
 
     title.className =
       "task-title";
 
     title.textContent =
-      task.title ||
-      "Untitled task";
+      task.title;
 
     if (task.url) {
       title.href =
@@ -1269,18 +2293,21 @@ function renderTasks(block) {
         "noopener noreferrer";
     }
 
-    const select =
-      createTaskStatusSelect(
-        task
-      );
-
     content.append(
-      title,
-      select
+      title
     );
 
+    if (
+      taskStatusOptions.length > 0
+    ) {
+      content.append(
+        createTaskStatusSelect(
+          task
+        )
+      );
+    }
+
     item.append(
-      marker,
       content
     );
 
@@ -1291,120 +2318,370 @@ function renderTasks(block) {
 }
 
 /* =========================================================
-   Block actions
+   General render helpers
    ========================================================= */
 
-function getCurrentActionBlock() {
-  if (
-    currentScheduleState?.mode ===
-      "current" ||
-    currentScheduleState?.mode ===
-      "overdue"
-  ) {
-    return (
-      currentScheduleState.current ||
-      null
-    );
-  }
+function renderCurrentClock() {
+  const now =
+    new Date();
 
-  return null;
+  elements.currentTime.textContent =
+    formatClockTime(
+      now
+    );
+
+  elements.currentDate.textContent =
+    formatFullDate(
+      now
+    );
 }
 
-async function runBlockAction({
-  action,
-  minutes = null
-}) {
-  const block =
-    getCurrentActionBlock();
-
-  if (!block) {
-    setControlFeedback(
-      "There is no active block to update.",
-      "error"
+function renderTotalWorked() {
+  elements.totalWorked.textContent =
+    formatLongTimer(
+      getLiveTotalWorkedMs()
     );
+
+  const labels = {
+    "clocked-out":
+      "Clocked out",
+
+    "opening-admin":
+      "Opening Admin",
+
+    focus:
+      "Focus",
+
+    break:
+      "Break",
+
+    lunch:
+      "Lunch",
+
+    meeting:
+      "Meeting",
+
+    "meeting-ended":
+      "Meeting complete",
+
+    away:
+      "Away",
+
+    "block-complete":
+      "Block complete",
+
+    "closing-admin":
+      "Closing Admin",
+
+    "workday-complete":
+      "Clocked out"
+  };
+
+  elements.workedStatus.textContent =
+    labels[
+      workday.state
+    ] || "Clocked out";
+}
+
+function renderOpeningAdmin() {
+  const elapsed =
+    workday.state ===
+      "opening-admin"
+      ? getStateElapsedMs()
+      : 0;
+
+  const remaining =
+    workday.openingAdminRemainingMs -
+    elapsed;
+
+  if (remaining > 0) {
+    elements.openingAdminTimer.textContent =
+      formatTimer(
+        remaining
+      );
+  } else {
+    elements.openingAdminTimer.textContent =
+      `+${formatTimer(
+        Math.abs(
+          remaining
+        )
+      )}`;
+  }
+}
+
+function renderFocus() {
+  if (!currentBlock) {
+    elements.currentTitle.textContent =
+      "No active block";
 
     return;
   }
 
-  setUpdatingState(
-    true
-  );
+  const plannedMinutes =
+    Number(
+      currentBlock.duration || 0
+    );
 
-  setControlFeedback(
-    "Saving changes…",
-    "success"
-  );
+  elements.currentTitle.textContent =
+    currentBlock.title ||
+    "Focus block";
 
-  try {
-    const payload = {
-      action,
-      blockId:
-        block.id
-    };
+  elements.currentLabel.textContent =
+    "CURRENT BLOCK";
 
-    if (
-      minutes !== null
-    ) {
-      payload.minutes =
-        minutes;
-    }
+  elements.blockStatus.textContent =
+    "Focus";
 
-    const data =
-      await sendTimeBlockAction(
-        payload
+  const addedMinutes =
+    Math.round(
+      workday.blockAddedMs /
+      60000
+    );
+
+  elements.plannedDuration.textContent =
+    addedMinutes > 0
+      ? `${formatShortDuration(
+          plannedMinutes
+        )} planned · +${addedMinutes} added`
+      : `${formatShortDuration(
+          plannedMinutes
+        )} planned`;
+
+  const blockElapsed =
+    getLiveBlockElapsedMs();
+
+  elements.focusElapsed.textContent =
+    `${formatShortDuration(
+      blockElapsed /
+      60000
+    )} focused`;
+
+  const remaining =
+    getBlockRemainingMs();
+
+  if (remaining >= 0) {
+    elements.countdown.textContent =
+      formatTimer(
+        remaining
       );
 
-    applyApiData(
-      data
+    elements.countdownLabel.textContent =
+      "remaining";
+  } else {
+    elements.countdown.textContent =
+      `+${formatTimer(
+        Math.abs(
+          remaining
+        )
+      )}`;
+
+    elements.countdownLabel.textContent =
+      "over planned";
+  }
+
+  const target =
+    Math.max(
+      1,
+      getBlockTargetMs()
     );
 
-    const feedbackMessages = {
-      "complete-block":
-        "Block marked complete.",
-
-      "end-early":
-        "Block ended early. Moving forward.",
-
-      "extend-block":
-        `Added ${minutes} minutes.`
-    };
-
-    setControlFeedback(
-      feedbackMessages[action] ||
-      "Schedule updated.",
-      "success"
+  const progress =
+    Math.min(
+      100,
+      Math.max(
+        0,
+        (
+          blockElapsed /
+          target
+        ) * 100
+      )
     );
 
-    renderSchedule();
-  } catch (error) {
-    setControlFeedback(
-      error instanceof Error
-        ? error.message
-        : String(error),
-      "error"
-    );
-  } finally {
-    setUpdatingState(
-      false
+  elements.progressFill.style.width =
+    `${progress}%`;
+
+  elements.progressTrack.setAttribute(
+    "aria-valuenow",
+    String(
+      Math.round(
+        progress
+      )
+    )
+  );
+}
+
+function getPausedBlockContext() {
+  if (!currentBlock) {
+    return (
+      "No focus block is currently paused."
     );
   }
-}
 
-/* =========================================================
-   Rendering
-   ========================================================= */
+  const remaining =
+    getBlockRemainingMs();
 
-function getCompletedBlockCount() {
-  return blocks.filter(
-    (block) =>
-      isCompleteStatus(
-        block.status
+  if (remaining >= 0) {
+    return (
+      `${currentBlock.title} · ` +
+      `${formatTimer(
+        remaining
+      )} remaining`
+    );
+  }
+
+  return (
+    `${currentBlock.title} · ` +
+    `${formatTimer(
+      Math.abs(
+        remaining
       )
-  ).length;
+    )} over planned`
+  );
 }
 
-function renderNextBlock(block) {
-  if (!block) {
+function renderBreak() {
+  const elapsed =
+    getStateElapsedMs();
+
+  const remaining =
+    workday.breakPlannedMs -
+    elapsed;
+
+  if (remaining >= 0) {
+    elements.breakTimer.textContent =
+      formatTimer(
+        remaining
+      );
+
+    elements.breakTimerLabel.textContent =
+      "remaining";
+  } else {
+    elements.breakTimer.textContent =
+      `+${formatTimer(
+        Math.abs(
+          remaining
+        )
+      )}`;
+
+    elements.breakTimerLabel.textContent =
+      "over planned";
+  }
+
+  elements.breakPausedContext.textContent =
+    getPausedBlockContext();
+}
+
+function renderLunch() {
+  const elapsed =
+    getStateElapsedMs();
+
+  const remaining =
+    workday.lunchPlannedMs -
+    elapsed;
+
+  if (remaining >= 0) {
+    elements.lunchTimer.textContent =
+      formatTimer(
+        remaining
+      );
+
+    elements.lunchTimerLabel.textContent =
+      "remaining";
+  } else {
+    elements.lunchTimer.textContent =
+      `+${formatTimer(
+        Math.abs(
+          remaining
+        )
+      )}`;
+
+    elements.lunchTimerLabel.textContent =
+      "over planned";
+  }
+
+  elements.lunchPausedContext.textContent =
+    getPausedBlockContext();
+}
+
+function renderMeeting() {
+  elements.meetingTimer.textContent =
+    formatTimer(
+      getStateElapsedMs()
+    );
+
+  elements.meetingPausedContext.textContent =
+    getPausedBlockContext();
+}
+
+function renderMeetingEnded() {
+  elements.meetingSummary.textContent =
+    `Meeting complete · ${formatTimer(
+      workday.lastMeetingDurationMs
+    )}`;
+
+  elements.meetingResumeContext.textContent =
+    getPausedBlockContext();
+}
+
+function renderAway() {
+  elements.awayTimer.textContent =
+    formatTimer(
+      getStateElapsedMs()
+    );
+
+  elements.awayPausedContext.textContent =
+    getPausedBlockContext();
+}
+
+function renderBlockComplete() {
+  const title =
+    workday.completedBlockTitle ||
+    "Block";
+
+  elements.blockCompleteSummary.textContent =
+    `${title} complete · ${formatTimer(
+      workday.completedBlockDurationMs
+    )} focused`;
+
+  elements.startNextBlockButton.hidden =
+    !nextBlock;
+}
+
+function renderClosingAdmin() {
+  elements.closingAdminTimer.textContent =
+    formatTimer(
+      getStateElapsedMs()
+    );
+}
+
+function renderWorkdayReceipt() {
+  elements.finalTotalWorked.textContent =
+    formatLongTimer(
+      workday.totalWorkedMs
+    );
+
+  elements.finalFocusWorked.textContent =
+    formatLongTimer(
+      workday.focusWorkedMs
+    );
+
+  elements.finalMeetingWorked.textContent =
+    formatLongTimer(
+      workday.meetingWorkedMs
+    );
+
+  elements.finalAdminWorked.textContent =
+    formatLongTimer(
+      workday.adminWorkedMs
+    );
+}
+
+function renderNextBlock() {
+  if (
+    !nextBlock ||
+    workday.state ===
+      "workday-complete"
+  ) {
     elements.nextSection.hidden =
       true;
 
@@ -1414,461 +2691,298 @@ function renderNextBlock(block) {
   elements.nextSection.hidden =
     false;
 
-  const {
-    start,
-    end
-  } =
-    getBlockTimes(block);
-
   elements.nextTitle.textContent =
-    block.title ||
-    "Untitled block";
+    nextBlock.title ||
+    "Next block";
 
   elements.nextTime.textContent =
-    formatTimeRange(
-      start,
-      end
-    );
+    "Upcoming";
 
   elements.nextDuration.textContent =
-    formatDuration(
-      block.duration
+    formatShortDuration(
+      nextBlock.duration
     );
 }
 
-function renderCurrentMode(
-  state,
-  now
-) {
-  const block =
-    state.current;
+function renderScheduleProgress() {
+  const total =
+    blocks.length;
 
-  const {
-    start,
-    end
-  } =
-    getBlockTimes(block);
+  const complete =
+    blocks.filter(
+      (block) =>
+        block.queueState ===
+        "Complete"
+    ).length;
 
-  const durationMs =
-    end.getTime() -
-    start.getTime();
+  elements.scheduleProgress.textContent =
+    `${complete} of ${total} blocks complete`;
 
-  const elapsedMs =
-    now.getTime() -
-    start.getTime();
+  if (!lastLoadedAt) {
+    elements.lastUpdated.textContent =
+      "Not updated";
 
-  const progress =
-    Math.min(
-      100,
-      Math.max(
-        0,
+    return;
+  }
+
+  const seconds =
+    Math.max(
+      0,
+      Math.floor(
         (
-          elapsedMs /
-          durationMs
-        ) * 100
+          Date.now() -
+          lastLoadedAt.getTime()
+        ) /
+        1000
       )
     );
 
-  elements.currentLabel.textContent =
-    "Current block";
-
-  elements.currentTitle.textContent =
-    block.title ||
-    "Untitled block";
-
-  elements.currentTimeRange.textContent =
-    formatTimeRange(
-      start,
-      end
-    );
-
-  elements.countdown.textContent =
-    `${formatCountdown(
-      end.getTime() -
-      now.getTime()
-    )} left`;
-
-  elements.blockStatus.textContent =
-    block.status ||
-    "In progress";
-
-  elements.progressFill.style.width =
-    `${progress}%`;
-
-  elements.progressTrack.setAttribute(
-    "aria-valuenow",
-    String(
-      Math.round(progress)
-    )
-  );
-
-  elements.blockMessage.hidden =
-    true;
-
-  elements.focusControls.hidden =
-    false;
-
-  renderTasks(
-    block
-  );
-
-  renderNextBlock(
-    state.next
-  );
-
-  checkBlockChimes(
-    block,
-    now
-  );
-}
-
-function renderUpcomingMode(
-  state,
-  now
-) {
-  const block =
-    state.current;
-
-  const {
-    start,
-    end
-  } =
-    getBlockTimes(block);
-
-  resetBlockChimes(
-    null
-  );
-
-  elements.currentLabel.textContent =
-    state.mode === "before"
-      ? "First block"
-      : "Next block";
-
-  elements.currentTitle.textContent =
-    block.title ||
-    "Untitled block";
-
-  elements.currentTimeRange.textContent =
-    formatTimeRange(
-      start,
-      end
-    );
-
-  elements.countdown.textContent =
-    `Starts in ${formatCountdown(
-      start.getTime() -
-      now.getTime()
-    )}`;
-
-  elements.blockStatus.textContent =
-    state.mode === "before"
-      ? "Not started"
-      : "Between blocks";
-
-  elements.progressFill.style.width =
-    "0%";
-
-  elements.progressTrack.setAttribute(
-    "aria-valuenow",
-    "0"
-  );
-
-  elements.blockMessage.hidden =
-    false;
-
-  elements.blockMessage.textContent =
-    state.mode === "before"
-      ? "Your day has not started yet."
-      : "You have a little breathing room before the next block.";
-
-  elements.focusControls.hidden =
-    true;
-
-  renderTasks(
-    block
-  );
-
-  renderNextBlock(
-    state.next
-  );
-}
-
-function renderOverdueMode(
-  state,
-  now
-) {
-  const block =
-    state.current;
-
-  const {
-    start,
-    end
-  } =
-    getBlockTimes(block);
-
-  resetBlockChimes(
-    null
-  );
-
-  elements.currentLabel.textContent =
-    "Needs attention";
-
-  elements.currentTitle.textContent =
-    block.title ||
-    "Untitled block";
-
-  elements.currentTimeRange.textContent =
-    formatTimeRange(
-      start,
-      end
-    );
-
-  elements.countdown.textContent =
-    `${formatCountdown(
-      now.getTime() -
-      end.getTime()
-    )} overdue`;
-
-  elements.blockStatus.textContent =
-    block.status ||
-    "Not finished";
-
-  elements.progressFill.style.width =
-    "100%";
-
-  elements.progressTrack.setAttribute(
-    "aria-valuenow",
-    "100"
-  );
-
-  elements.blockMessage.hidden =
-    false;
-
-  elements.blockMessage.textContent =
-    "This block passed its scheduled end but is still unfinished.";
-
-  elements.focusControls.hidden =
-    false;
-
-  renderTasks(
-    block
-  );
-
-  renderNextBlock(
-    state.next
-  );
-}
-
-function renderFinishedMode() {
-  resetBlockChimes(
-    null
-  );
-
-  elements.currentLabel.textContent =
-    "Day complete";
-
-  elements.currentTitle.textContent =
-    "You made it 🎉";
-
-  elements.currentTimeRange.textContent =
-    "No unfinished blocks";
-
-  elements.countdown.textContent =
-    "Done for today";
-
-  elements.blockStatus.textContent =
-    "Complete";
-
-  elements.progressFill.style.width =
-    "100%";
-
-  elements.progressTrack.setAttribute(
-    "aria-valuenow",
-    "100"
-  );
-
-  elements.blockMessage.hidden =
-    false;
-
-  elements.blockMessage.textContent =
-    "Your scheduled workday is finished.";
-
-  elements.focusControls.hidden =
-    true;
-
-  elements.tasksSection.hidden =
-    true;
-
-  elements.nextSection.hidden =
-    true;
-}
-
-function renderSchedule() {
-  if (blocks.length === 0) {
-    currentScheduleState =
-      null;
-
-    showOnly(
-      "empty"
-    );
-
-    elements.emptyTitle.textContent =
-      "No blocks today";
-
-    elements.emptyMessage.textContent =
-      "Add time blocks in Notion and refresh.";
-
-    return;
-  }
-
-  showOnly(
-    "content"
-  );
-
-  const now =
-    new Date();
-
-  const state =
-    findScheduleState(
-      now
-    );
-
-  currentScheduleState =
-    state;
-
-  if (
-    state.mode ===
-    "current"
-  ) {
-    renderCurrentMode(
-      state,
-      now
-    );
+  if (seconds < 10) {
+    elements.lastUpdated.textContent =
+      "Updated now";
   } else if (
-    state.mode ===
-      "before" ||
-    state.mode ===
-      "gap"
+    seconds < 60
   ) {
-    renderUpcomingMode(
-      state,
-      now
-    );
-  } else if (
-    state.mode ===
-    "overdue"
-  ) {
-    renderOverdueMode(
-      state,
-      now
-    );
+    elements.lastUpdated.textContent =
+      `Updated ${seconds}s ago`;
   } else {
-    renderFinishedMode();
+    elements.lastUpdated.textContent =
+      `Updated ${Math.floor(
+        seconds / 60
+      )}m ago`;
   }
+}
 
-  const completeCount =
-    getCompletedBlockCount();
+function renderClockOutControl() {
+  const shouldShow =
+    [
+      "opening-admin",
+      "focus",
+      "break",
+      "lunch",
+      "meeting-ended",
+      "away",
+      "block-complete"
+    ].includes(
+      workday.state
+    );
 
-  elements.scheduleProgress.textContent =
-    `${completeCount} of ${blocks.length} blocks complete`;
-
-  elements.lastUpdated.textContent =
-    formatUpdatedTime();
+  elements.clockOutControl.hidden =
+    !shouldShow;
 }
 
 /* =========================================================
-   API loading
+   Timer chime checks
    ========================================================= */
 
-async function loadSchedule({
-  showLoading = false
-} = {}) {
+function maybePlayTimerChime() {
+  if (!chimesEnabled) {
+    return;
+  }
+
+  let remaining = null;
+  let keyBase = null;
+
   if (
-    isLoading ||
-    isUpdating
+    workday.state ===
+    "focus"
+  ) {
+    remaining =
+      getBlockRemainingMs();
+
+    keyBase =
+      `focus-${workday.currentBlockId}`;
+  } else if (
+    workday.state ===
+    "opening-admin"
+  ) {
+    remaining =
+      workday.openingAdminRemainingMs -
+      getStateElapsedMs();
+
+    keyBase =
+      "opening-admin";
+  } else if (
+    workday.state ===
+    "break"
+  ) {
+    remaining =
+      workday.breakPlannedMs -
+      getStateElapsedMs();
+
+    keyBase =
+      "break";
+  } else if (
+    workday.state ===
+    "lunch"
+  ) {
+    remaining =
+      workday.lunchPlannedMs -
+      getStateElapsedMs();
+
+    keyBase =
+      "lunch";
+  }
+
+  if (
+    remaining === null
   ) {
     return;
   }
 
-  isLoading = true;
+  if (
+    remaining <=
+      5 * 60 * 1000 &&
+    remaining > 0
+  ) {
+    const key =
+      `${keyBase}-five`;
 
-  elements.refreshButton.disabled =
-    true;
+    if (
+      lastChimeKey !== key
+    ) {
+      lastChimeKey =
+        key;
 
-  if (showLoading) {
-    showOnly(
-      "loading"
-    );
+      playFiveMinuteChime();
+    }
+
+    return;
   }
 
-  try {
-    const response =
-      await fetch(
-        TIME_BLOCKS_API_URL,
-        {
-          cache:
-            "no-store"
-        }
-      );
+  if (remaining <= 0) {
+    const key =
+      `${keyBase}-end`;
 
-    const data =
-      await parseApiResponse(
-        response
-      );
+    if (
+      lastChimeKey !== key
+    ) {
+      lastChimeKey =
+        key;
 
-    applyApiData(
-      data
-    );
-
-    renderSchedule();
-  } catch (error) {
-    console.error(
-      "Focus widget error:",
-      error
-    );
-
-    showOnly(
-      "error"
-    );
-
-    elements.errorMessage.textContent =
-      error instanceof Error
-        ? error.message
-        : String(error);
-  } finally {
-    isLoading = false;
-
-    elements.refreshButton.disabled =
-      false;
+      playEndingChime();
+    }
   }
 }
 
 /* =========================================================
-   Events and initialization
+   Main render
+   ========================================================= */
+
+function render() {
+  renderCurrentClock();
+  renderTotalWorked();
+
+  switch (
+    workday.state
+  ) {
+    case "opening-admin":
+      showOnlyState(
+        elements.openingAdminState
+      );
+
+      renderOpeningAdmin();
+      break;
+
+    case "focus":
+      showOnlyState(
+        elements.focusState
+      );
+
+      renderFocus();
+      break;
+
+    case "break":
+      showOnlyState(
+        elements.breakState
+      );
+
+      renderBreak();
+      break;
+
+    case "lunch":
+      showOnlyState(
+        elements.lunchState
+      );
+
+      renderLunch();
+      break;
+
+    case "meeting":
+      showOnlyState(
+        elements.meetingState
+      );
+
+      renderMeeting();
+      break;
+
+    case "meeting-ended":
+      showOnlyState(
+        elements.meetingEndedState
+      );
+
+      renderMeetingEnded();
+      break;
+
+    case "away":
+      showOnlyState(
+        elements.awayState
+      );
+
+      renderAway();
+      break;
+
+    case "block-complete":
+      showOnlyState(
+        elements.blockCompleteState
+      );
+
+      renderBlockComplete();
+      break;
+
+    case "closing-admin":
+      showOnlyState(
+        elements.closingAdminState
+      );
+
+      renderClosingAdmin();
+      break;
+
+    case "workday-complete":
+      showOnlyState(
+        elements.workdayCompleteState
+      );
+
+      renderWorkdayReceipt();
+      break;
+
+    case "clocked-out":
+    default:
+      showOnlyState(
+        elements.clockedOutState
+      );
+      break;
+  }
+
+  renderTasks();
+  renderNextBlock();
+  renderScheduleProgress();
+  renderClockOutControl();
+  maybePlayTimerChime();
+}
+
+/* =========================================================
+   Events
    ========================================================= */
 
 elements.refreshButton.addEventListener(
   "click",
-  async () => {
-    await unlockAudio();
-
-    setControlFeedback(
-      ""
-    );
-
-    await loadSchedule({
-      showLoading: true
-    });
-  }
+  loadSchedule
 );
 
 elements.retryButton.addEventListener(
   "click",
-  () => {
-    loadSchedule({
-      showLoading: true
-    });
-  }
+  loadSchedule
 );
 
 elements.soundButton.addEventListener(
@@ -1876,24 +2990,125 @@ elements.soundButton.addEventListener(
   toggleChimes
 );
 
-elements.completeBlockButton.addEventListener(
+elements.clockInButton.addEventListener(
   "click",
-  () => {
-    runBlockAction({
-      action:
-        "complete-block"
-    });
-  }
+  clockIn
 );
 
-elements.endEarlyButton.addEventListener(
+elements.startFocusButton.addEventListener(
   "click",
-  () => {
-    runBlockAction({
-      action:
-        "end-early"
-    });
-  }
+  startFocus
+);
+
+elements.breakButton.addEventListener(
+  "click",
+  openBreakPicker
+);
+
+elements.lunchButton.addEventListener(
+  "click",
+  openLunchPicker
+);
+
+elements.cancelBreakPickerButton.addEventListener(
+  "click",
+  closePickers
+);
+
+elements.cancelLunchPickerButton.addEventListener(
+  "click",
+  closePickers
+);
+
+for (
+  const button of
+  elements.breakChoiceButtons
+) {
+  button.addEventListener(
+    "click",
+    () => {
+      beginBreak(
+        Number(
+          button.dataset
+            .breakMinutes
+        )
+      );
+    }
+  );
+}
+
+for (
+  const button of
+  elements.lunchChoiceButtons
+) {
+  button.addEventListener(
+    "click",
+    () => {
+      beginLunch(
+        Number(
+          button.dataset
+            .lunchMinutes
+        )
+      );
+    }
+  );
+}
+
+elements.returnFromBreakButton.addEventListener(
+  "click",
+  returnToFocus
+);
+
+elements.returnFromLunchButton.addEventListener(
+  "click",
+  returnToFocus
+);
+
+elements.meetingButton.addEventListener(
+  "click",
+  beginMeeting
+);
+
+elements.endMeetingButton.addEventListener(
+  "click",
+  endMeeting
+);
+
+elements.resumeAfterMeetingButton.addEventListener(
+  "click",
+  returnToFocus
+);
+
+for (
+  const button of
+  elements.postMeetingBreakButtons
+) {
+  button.addEventListener(
+    "click",
+    () => {
+      beginBreak(
+        Number(
+          button.dataset
+            .postMeetingBreak
+        )
+      );
+    }
+  );
+}
+
+elements.awayButton.addEventListener(
+  "click",
+  beginAway
+);
+
+elements.returnFromAwayButton.addEventListener(
+  "click",
+  returnToFocus
+);
+
+elements.finishBlockButton.addEventListener(
+  "click",
+  finishBlock
 );
 
 for (
@@ -1903,27 +3118,69 @@ for (
   button.addEventListener(
     "click",
     () => {
-      const minutes =
+      extendFocus(
         Number(
           button.dataset
             .extensionMinutes
-        );
-
-      runBlockAction({
-        action:
-          "extend-block",
-
-        minutes
-      });
+        )
+      );
     }
   );
 }
 
+for (
+  const button of
+  elements.postBlockBreakButtons
+) {
+  button.addEventListener(
+    "click",
+    () => {
+      beginBreak(
+        Number(
+          button.dataset
+            .postBlockBreak
+        )
+      );
+    }
+  );
+}
+
+elements.startNextBlockButton.addEventListener(
+  "click",
+  startNextBlock
+);
+
+elements.clockOutButton.addEventListener(
+  "click",
+  startClosingAdmin
+);
+
+elements.finishWorkButton.addEventListener(
+  "click",
+  finishWorkday
+);
+
+elements.resetWorkdayButton.addEventListener(
+  "click",
+  resetWorkday
+);
+
+/* =========================================================
+   Startup
+   ========================================================= */
+
+loadStoredWorkday();
+
 updateSoundButton();
 
-loadSchedule({
-  showLoading: true
-});
+loadSchedule();
+
+window.setInterval(
+  () => {
+    render();
+  },
+  CLOCK_INTERVAL_MS
+);
 
 window.setInterval(
   () => {
@@ -1931,15 +3188,8 @@ window.setInterval(
       !isLoading &&
       !isUpdating
     ) {
-      renderSchedule();
+      loadSchedule();
     }
-  },
-  CLOCK_INTERVAL_MS
-);
-
-window.setInterval(
-  () => {
-    loadSchedule();
   },
   REFRESH_INTERVAL_MS
 );
