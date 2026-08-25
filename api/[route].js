@@ -19,6 +19,9 @@ import morningFocusHandler
 import readingHandler
   from "../lib/api/reading.js";
 
+import readingLogHandler
+  from "../lib/api/reading-log.js";
+
 import weatherHandler
   from "../lib/api/weather.js";
 
@@ -92,6 +95,9 @@ const ROUTE_HANDLERS = {
 
   reading:
     readingHandler,
+
+  "reading-log":
+    readingLogHandler,
 
   weather:
     weatherHandler,
