@@ -10,6 +10,9 @@ import healthSummaryHandler
 import healthHandler
   from "../lib/api/health.js";
 
+import healthLogHandler
+  from "../lib/api/health-log.js";
+
 import morningFocusHandler
   from "../lib/api/morning-focus.js";
 
@@ -42,11 +45,6 @@ import routineCompleteHandler
   from "../lib/api/routine-complete.js";
 
 
-/**
- * Adapts the finance function
- * to the same request/response
- * handler format as the other routes.
- */
 async function financeHandler(
   request,
   response
@@ -85,6 +83,9 @@ const ROUTE_HANDLERS = {
 
   health:
     healthHandler,
+
+  "health-log":
+    healthLogHandler,
 
   "morning-focus":
     morningFocusHandler,
