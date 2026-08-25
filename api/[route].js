@@ -47,6 +47,9 @@ import routinesHandler
 import routineCompleteHandler
   from "../lib/api/routine-complete.js";
 
+import habitsHandler
+  from "../lib/api/habits.js";
+
 
 async function financeHandler(
   request,
@@ -121,7 +124,10 @@ const ROUTE_HANDLERS = {
     routinesHandler,
 
   "routine-complete":
-    routineCompleteHandler
+    routineCompleteHandler, 
+
+  habits:
+  habitsHandler,
 };
 
 
