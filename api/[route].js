@@ -38,11 +38,14 @@ import dietitianReportHandler
 import routinesHandler
   from "../lib/api/routines.js";
 
+import routineCompleteHandler
+  from "../lib/api/routine-complete.js";
+
 
 /**
- * Adapts the finance function to match
- * the same request/response handler
- * format as the other routes.
+ * Adapts the finance function
+ * to the same request/response
+ * handler format as the other routes.
  */
 async function financeHandler(
   request,
@@ -108,7 +111,10 @@ const ROUTE_HANDLERS = {
     dietitianReportHandler,
 
   routines:
-    routinesHandler
+    routinesHandler,
+
+  "routine-complete":
+    routineCompleteHandler
 };
 
 
